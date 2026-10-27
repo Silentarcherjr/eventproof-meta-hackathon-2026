@@ -1,8 +1,8 @@
 # EventProof — STATUS (generated)
 
-Updated (America/Panama): 2026-10-27 15:35  
+Updated (America/Panama): 2026-10-27 15:37  
 Deadline: 2026-11-04 21:00 America/Panama (internal target 17:00)  
-P0 verified: 5/27 · P1: 0/6 · P2: 0/3
+P0 verified: 6/27 · P1: 1/6 · P2: 0/3
 
 ## In progress
 - G2-03: Challenge run finds a REAL counterexample against the built detector (challenge)

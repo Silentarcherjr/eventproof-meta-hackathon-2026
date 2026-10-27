@@ -435,7 +435,7 @@
       "title": "Counterexample minimizer (delta debugging) + side-by-side replay",
       "priority": "P0",
       "gate": "G3",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G2-03"
       ],
@@ -444,15 +444,16 @@
       "definition_of_done": "Minimal local pair shown with decisive frames",
       "test_commands": [],
       "evidence_paths": [
+        "GitHub Actions run 40579483313 success",
         "backend/tests/challenge/test_minimize.py",
         "benchmark/counterexamples/tailgate-0/"
       ],
-      "commit_sha": null,
+      "commit_sha": "24f5f40",
       "pr_url": null,
       "started_at": "2026-10-27T20:35:54Z",
-      "updated_at": "2026-10-27T20:35:54Z",
+      "updated_at": "2026-10-27T20:37:03Z",
       "blocker": null,
-      "next_action": "CI green -> DONE_VERIFIED; re-run with SAM perception when available",
+      "next_action": "Re-run with SAM perception when available",
       "cost_note": null
     },
     {
@@ -661,7 +662,7 @@
       "title": "Minimization on >=2 operators",
       "priority": "P1",
       "gate": "G3",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G3-01"
       ],
@@ -670,15 +671,16 @@
       "definition_of_done": "Tests",
       "test_commands": [],
       "evidence_paths": [
+        "GitHub Actions run 40579483313 success",
         "backend/tests/challenge/test_minimize.py",
         "benchmark/counterexamples/tailgate-0/"
       ],
-      "commit_sha": null,
+      "commit_sha": "24f5f40",
       "pr_url": null,
       "started_at": "2026-10-27T20:35:54Z",
-      "updated_at": "2026-10-27T20:35:54Z",
+      "updated_at": "2026-10-27T20:37:03Z",
       "blocker": null,
-      "next_action": "CI green -> DONE_VERIFIED; re-run with SAM perception when available",
+      "next_action": "Re-run with SAM perception when available",
       "cost_note": null
     },
     {

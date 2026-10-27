@@ -34,3 +34,4 @@
 - Results (mock perception): tailgate-0 pair at separation t 0.2861 vs 0.2863 — scenes differ by ≤123 px per frame in 24 frames; failing side merges both boxes into track 0 at f45 (false PASS), passing side splits them at f53. occluded_station-1: occluder 75% vs 90% shorter → identity loss (new id) at f34 → false alarm. drive_through-0 and brief_stop-5: spec-error boundaries on belt speed / stop duration.
 - Evidence committed: `benchmark/counterexamples/tailgate-0/` (2 PNG + replay.json + summary.json, 32 KB). Videos stay in `artifacts/` (untracked).
 - Tests: 97 passed; ruff clean.
+- CI run 40579483313 (24f5f40): success → G3-01 and P1-01 DONE_VERIFIED.
