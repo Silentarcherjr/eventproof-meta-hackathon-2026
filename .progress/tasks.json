@@ -252,7 +252,7 @@
       "title": "Muse Spark: natural language rule -> validated DSL",
       "priority": "P0",
       "gate": "G1",
-      "state": "TODO",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G0-03",
         "G1-02"
@@ -261,13 +261,17 @@
       "branch": null,
       "definition_of_done": "Live call compiles canonical rule; invalid output rejected by schema",
       "test_commands": [],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "GitHub Actions run 40604985293 success",
+        "backend/tests/test_muse_rules.py",
+        "benchmark/rules/2026-10-27_muse_compile_report.json"
+      ],
+      "commit_sha": "ac056a1",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "updated_at": "2026-10-27T23:53:03Z",
       "blocker": null,
-      "next_action": null,
+      "next_action": "-",
       "cost_note": null
     },
     {

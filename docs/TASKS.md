@@ -12,7 +12,7 @@
 - [x] **G0-04** (G0, DONE_VERIFIED) REAL SAM 3.1 API smoke test (video tracks) — DoD: scripts/check_meta_api.py sam returns per-frame boxes for a synthetic clip
 - [x] **G0-05** (G0, DONE_VERIFIED) Backend skeleton + CI (pytest, ruff) green — DoD: GitHub Actions CI green on main
 - [x] **G1-02** (G1, DONE_VERIFIED) Typed DSL (Pydantic) + deterministic tri-state evaluator PASS/FAIL/UNKNOWN — DoD: Unit + property tests for zones, crossings, dwell, BEFORE, UNKNOWN on gaps
-- [ ] **G1-03** (G1, TODO) Muse Spark: natural language rule -> validated DSL — DoD: Live call compiles canonical rule; invalid output rejected by schema
+- [x] **G1-03** (G1, DONE_VERIFIED) Muse Spark: natural language rule -> validated DSL — DoD: Live call compiles canonical rule; invalid output rejected by schema
 - [x] **G1-04** (G1, DONE_VERIFIED) SAM 3.1 adapter: video -> normalized TrackFrames (official parser) — DoD: Fixture-backed contract test + one live clip cached by sha256
 - [ ] **G1-05** (G1, TODO) Video ingestion: ffprobe validation, H.264 re-encode, <=20s — DoD: Rejects bad MIME/oversize; tests
 - [ ] **G1-01** (G1, TODO) Video -> SAM -> rule -> evidence E2E (API) — DoD: One real clip end-to-end with evidence JSON

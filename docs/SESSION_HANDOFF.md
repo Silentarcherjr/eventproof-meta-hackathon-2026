@@ -5,7 +5,7 @@ Written: 2026-10-27 (end of session 1, local). Overwrite at the end of every ses
 ## State
 - Gate G4. Repo `Silentarcherjr/eventproof-meta-hackathon-2026` (private). Tag `hackathon-start-2026-10-27` = 039c084.
 - Commit identity: Anthony Morell <153972162+Silentarcherjr@users.noreply.github.com> (repo-local git config; set it again in fresh cloud clones). No assistant attribution trailers in commits.
-- Done & verified: G0-03, G0-04, G1-04 (107d676, CI 40602048109), G0-02, G0-05, G1-02, G2-01, G2-02, G3-01, P1-01, G4-02 (frozen holdout_v2, c0c78de, CI run 40597330836). P0 10/27.
+- Done & verified: G1-03 (ac056a1, CI 40604985293), G0-03, G0-04, G1-04 (107d676, CI 40602048109), G0-02, G0-05, G1-02, G2-01, G2-02, G3-01, P1-01, G4-02 (frozen holdout_v2, c0c78de, CI run 40597330836). P0 11/27.
 - G4-01 IN_PROGRESS: full loop works with the `baseline-deterministic` proposer + mock perception (one accepted, one rejected repair per counterexample, `benchmark/repairs/`). Missing: Muse Spark as proposer (same `RulePatch` JSON schema).
 - Live Meta: WORKING. Key in `backend/.env` (local only). First SAM + Muse calls OK 2026-10-27 (`docs/evidence/2026-10-27_meta_api_smoke.md`). Raw SAM output cached in `artifacts/sam_cache/`.
 
