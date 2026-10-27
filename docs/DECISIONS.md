@@ -39,3 +39,10 @@
 - DSL extension: `DWELL.max_speed` (optional, frame units/s over ~1/3 s) so a rule can say "still in the zone", which is what the process intent means. Default unchanged; the schema field changes `rule_hash` of existing rules (recorded evidence updated).
 - Until Muse access exists, the proposer is a deterministic grid search labelled `baseline-deterministic`; a Muse proposer must return the same patch JSON.
 - 2026-10-27, CI finding: `holdout_v1` hashes were platform dependent (tailgate/20017 differed on Linux x86 vs macOS arm64; numpy may use FMA on arm64 so a sampled float differs in its last bit). The drift check refused to grade, as designed. Fix: scene coordinates are quantized to 1e-6 in `SceneSpec`; `holdout_v2` = same seeds and physical scenes with stable hashes. All repair verdicts and holdout metrics were re-run on v2 and are identical to v1; tailgate-0 evidence PNGs/frames identical, only scene hashes updated.
+
+## ADR-009 — 2026-10-27 — SAM 3.1 adapter
+- Hand-written strict parser for the documented wire format (`perception/sam_wire.py`) instead of `meta-sam-parser` (not installed; needs participant approval). Boxes only: x2/y2 are inclusive on the wire and converted to exclusive; frames without detections emit no line; ids are sparse. Malformed input raises with the line number — never skipped silently.
+- Mask payloads (base85, alphabet unpublished) are kept opaque (`mask_ref`); a mask token ends only at `|>` followed by end of line or the next `,<id><|box;` record, so payload characters cannot break parsing.
+- `SamTracker` caches the raw output by (video sha256, model, prompt, metadata) under `artifacts/sam_cache/` (untracked). Cache hits are real SAM output and are labelled `:cached` in `source_ref`.
+- Credits guard: live calls need an explicit allowance (`max_live_calls`, default 0; CLI `--max-live-calls`). Without key or allowance the call raises; there is no fallback to mock.
+- Challenge Mode uploads only rendered pixels to SAM; ground truth never leaves the process.

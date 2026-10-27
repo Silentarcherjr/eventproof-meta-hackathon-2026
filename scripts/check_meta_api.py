@@ -13,6 +13,7 @@ import argparse
 import json
 import sys
 import time
+from pathlib import Path
 
 from eventproof.meta.client import MetaApiUnavailable, MetaSettings, get_client
 
@@ -38,26 +39,17 @@ def check_muse(s: MetaSettings) -> dict:
 
 
 def check_sam(s: MetaSettings, video: str, prompt: str) -> dict:
-    client = get_client(s)
-    t0 = time.monotonic()
-    with open(video, "rb") as fh:
-        uploaded = client.files.create(file=fh, purpose="user_data")
-    text = []
-    with client.responses.stream(
-        model=s.sam_model,
-        input=[{"type": "message", "role": "user", "content": [
-            {"type": "input_text", "text": prompt},
-            {"type": "input_video", "file_id": uploaded.id},
-        ]}],
-        metadata={"include_confidence": "true"},
-    ) as stream:
-        for event in stream:
-            if event.type == "response.output_text.delta":
-                text.append(event.delta)
-        final = stream.get_final_response()
-    lines = [ln for ln in "".join(text).splitlines() if ln.strip()]
-    return {"model": s.sam_model, "response_id": final.id, "latency_s": round(time.monotonic() - t0, 2),
-            "frame_lines": len(lines), "first_line_prefix": lines[0][:80] if lines else None}
+    from eventproof.perception.sam import SamTracker
+    from eventproof.perception.sam_wire import parse_output
+
+    res = SamTracker(s, max_live_calls=1).track(Path(video), prompt)
+    frames = parse_output(res.deltas)  # strict: fails loudly if the real format differs from the docs
+    recs = [r for f in frames for r in f.records]
+    return {"model": res.model, "response_id": res.response_id, "cached": res.cached, "latency_s": res.latency_s,
+            "frame_lines": len(frames), "objects": sorted({r.object_id for r in recs}),
+            "frame_size": [recs[0].w, recs[0].h] if recs else None,
+            "has_confidence": all(r.confidence is not None for r in recs),
+            "first_line_prefix": res.deltas[0][:80] if res.deltas else None}
 
 
 def main() -> None:

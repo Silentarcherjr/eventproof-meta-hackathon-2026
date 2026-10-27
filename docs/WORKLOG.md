@@ -43,3 +43,9 @@
 - Results (mock perception, baseline proposer; `benchmark/repairs/`): drive_through-0 → "DWELL ≥ 2.0 s" REJECTED (holdout 144→152/200 but 11 regressions, false alarms 13→24); "DWELL still (≤0.05/s) ≥ 0.8 s" ACCEPTED (144→166/200, 0 regressions, false PASS 40→19). brief_stop-5 → "DWELL ≥ 1.7 s" rejected (1 regression), stillness patch accepted. occluded_station-1 / tailgate-0: no bounded rule patch fixes them (perception errors) → no proposal.
 - Tests: 111 passed; ruff clean.
 - CI run 40596781387 failed: the frozen-holdout drift check refused `tailgate/20017` on Linux (scene hash differs from macOS arm64; last-bit float difference from numpy, likely FMA). Fixed by quantizing scene coordinates to 1e-6; re-froze as `holdout_v2` (same seeds). Repair results re-run on v2: identical numbers. tailgate-0 evidence: PNGs/frames identical, scene hashes updated.
+
+## 2026-10-27 · session 1 (cont.) · local macOS · orchestrator — G1-04
+- Participant reports Meta credits are now available; `backend/.env` with `MODEL_API_KEY` not yet present on this machine, so no live call made. $0 spent.
+- Re-read dev.meta.ai SAM docs (segmenting, reading-segmentation, client-libraries) for the exact wire format.
+- `perception/sam_wire.py` (strict parser), `perception/sam.py` (TrackSet conversion, cached live tracker with live-call allowance, Challenge perceiver). `scripts/check_meta_api.py sam` now parses the real stream strictly. Runner: `--perception sam --max-live-calls N`.
+- Tests: 130 passed (documented-format fixture with skipped frames, sparse ids and hostile mask payloads; 9 malformed-line cases; delta chunking; hypothesis round trip ground truth → wire → TrackSet over all families; fake-client request shape, cache labelling, key never cached; credits guard; SAM perceiver inside Challenge Mode).

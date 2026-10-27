@@ -1,6 +1,7 @@
 """Run a detector (rule + perception) over adversarial families and classify every disagreement.
 
     uv run python -m eventproof.challenge.runner --seeds 0-29 --dwell-ms 1500
+    uv run python -m eventproof.challenge.runner --perception sam --families canonical --seeds 0-1 --max-live-calls 2
 
 Outcomes per case (case = one scene):
 - correct            detector verdict == intended verdict
@@ -121,13 +122,23 @@ def main() -> None:
     ap.add_argument("--seeds", default="0-19")
     ap.add_argument("--dwell-ms", type=float, default=1500.0)
     ap.add_argument("--out", help="write all case results as JSON lines")
+    ap.add_argument("--perception", choices=["mock", "sam"], default="mock")
+    ap.add_argument("--max-live-calls", type=int, default=0,
+                    help="SAM only: live (billed) calls allowed in this run; cached results are free")
     args = ap.parse_args()
-    results = run_suite(args.families.split(","), _seeds(args.seeds), args.dwell_ms)
+    perceiver: Perceiver = mock_perceiver
+    if args.perception == "sam":
+        from eventproof.perception.sam import SamTracker, sam_perceiver
+
+        tracker = SamTracker(max_live_calls=args.max_live_calls)
+        perceiver = sam_perceiver(tracker)
+    results = run_suite(args.families.split(","), _seeds(args.seeds), args.dwell_ms, perceiver)
     if args.out:
         with open(args.out, "w") as fh:
             for r in results:
                 fh.write(r.model_dump_json() + "\n")
-    print(json.dumps({"perception": "mock (NOT SAM)", "dwell_ms": args.dwell_ms, "cases": len(results),
+    label = "mock (NOT SAM)" if args.perception == "mock" else f"sam-3.1 ({tracker.live_calls} live calls, rest cached)"
+    print(json.dumps({"perception": label, "dwell_ms": args.dwell_ms, "cases": len(results),
                       "by_family": summarize(results)}, indent=2))
 
 
