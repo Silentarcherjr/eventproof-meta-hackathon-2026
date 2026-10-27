@@ -55,3 +55,4 @@
 - Evidence: `docs/evidence/2026-10-27_meta_api_smoke.md`. 2 live calls total; charge not read from Billing (UNKNOWN).
 - Tests: 131 passed.
 - Participant approved up to 10 SAM calls for Challenge Mode. `challenge/compare.py` ran 10 mock-failing scenes through live SAM 3.1 (10 live calls, cached): tailgate 5/5 correct with SAM (mock: 5 false PASS); occluded_station 5/5 UNKNOWN with SAM (mock: 5 false alarms). SAM kept the same id across 20–35 frame full occlusions; the detector abstains because the stop itself was hidden. Report `benchmark/reports/2026-10-27_sam_vs_mock.json`. Tests: 132 passed.
+- Metric bug found in own code: `identity_events` reported "merged" for heavily overlapping boxes even when the detector returned 2 boxes; now requires fewer boxes than visible objects. Report regenerated from cache (0 new calls). Checked per object: SAM fails exactly the uninspected tailgate box and passes the inspected one in 5/5.

@@ -54,7 +54,9 @@ def identity_events(gt: TrackSet, perceived: TrackSet, min_iou: float = 0.1) -> 
         preds = pr_by.get(fi, [])
         for p in preds:
             matches = [g for g in visible if coverage(g.box, p.box) >= 0.6]
-            if len(matches) > 1:
+            # heavily overlapping objects can each lie inside each other's box; it is only a merge when
+            # the detector reports fewer boxes than there are visible objects
+            if len(matches) > 1 and len(preds) < len(visible):
                 ids = ", ".join(str(g.object_id) for g in matches)
                 events.append(IdentityEvent(frame=fi, kind="merged",
                                             detail=f"track {p.object_id} covers true objects {ids}"))

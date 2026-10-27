@@ -3,7 +3,7 @@
     "mock (NOT SAM)",
     "sam-3.1 (live Meta API)"
   ],
-  "live_sam_calls_this_run": 10,
+  "live_sam_calls_this_run": 0,
   "dwell_ms": 1500.0,
   "cases": [
     {
@@ -40,21 +40,11 @@
       },
       "sam": {
         "source": "sam-3.1",
-        "source_ref": "sam-3.1:resp_6ae133bb86df2bcd43844ead:video=504dd2a4830496f1:prompt='blue box'",
+        "source_ref": "sam-3.1:resp_6ae133bb86df2bcd43844ead:video=504dd2a4830496f1:prompt='blue box':cached",
         "intended": "FAIL",
         "detector_verdict": "FAIL",
         "outcome": "correct",
         "identity_events": [
-          {
-            "frame": 69,
-            "kind": "merged",
-            "detail": "track 0 covers true objects 0, 1"
-          },
-          {
-            "frame": 69,
-            "kind": "merged",
-            "detail": "track 1 covers true objects 0, 1"
-          },
           {
             "frame": 72,
             "kind": "switch",
@@ -110,21 +100,11 @@
       },
       "sam": {
         "source": "sam-3.1",
-        "source_ref": "sam-3.1:resp_6ae133c4dd6712493fc04536:video=4dfc9916e5a014b6:prompt='blue box'",
+        "source_ref": "sam-3.1:resp_6ae133c4dd6712493fc04536:video=4dfc9916e5a014b6:prompt='blue box':cached",
         "intended": "FAIL",
         "detector_verdict": "FAIL",
         "outcome": "correct",
         "identity_events": [
-          {
-            "frame": 67,
-            "kind": "merged",
-            "detail": "track 0 covers true objects 0, 1"
-          },
-          {
-            "frame": 67,
-            "kind": "merged",
-            "detail": "track 1 covers true objects 0, 1"
-          },
           {
             "frame": 70,
             "kind": "switch",
@@ -180,21 +160,11 @@
       },
       "sam": {
         "source": "sam-3.1",
-        "source_ref": "sam-3.1:resp_6ae133cc7827ac38aaf04382:video=5f39544bd5571e1d:prompt='blue box'",
+        "source_ref": "sam-3.1:resp_6ae133cc7827ac38aaf04382:video=5f39544bd5571e1d:prompt='blue box':cached",
         "intended": "FAIL",
         "detector_verdict": "FAIL",
         "outcome": "correct",
         "identity_events": [
-          {
-            "frame": 72,
-            "kind": "merged",
-            "detail": "track 0 covers true objects 0, 1"
-          },
-          {
-            "frame": 72,
-            "kind": "merged",
-            "detail": "track 1 covers true objects 0, 1"
-          },
           {
             "frame": 73,
             "kind": "switch",
@@ -250,21 +220,11 @@
       },
       "sam": {
         "source": "sam-3.1",
-        "source_ref": "sam-3.1:resp_6ae133d3ed316b00bf9d4a97:video=5be2f866bc57cad2:prompt='blue box'",
+        "source_ref": "sam-3.1:resp_6ae133d3ed316b00bf9d4a97:video=5be2f866bc57cad2:prompt='blue box':cached",
         "intended": "FAIL",
         "detector_verdict": "FAIL",
         "outcome": "correct",
         "identity_events": [
-          {
-            "frame": 69,
-            "kind": "merged",
-            "detail": "track 0 covers true objects 0, 1"
-          },
-          {
-            "frame": 69,
-            "kind": "merged",
-            "detail": "track 1 covers true objects 0, 1"
-          },
           {
             "frame": 70,
             "kind": "switch",
@@ -320,18 +280,13 @@
       },
       "sam": {
         "source": "sam-3.1",
-        "source_ref": "sam-3.1:resp_6ae133dbd1274c6062db4325:video=6e2428fe407f128f:prompt='blue box'",
+        "source_ref": "sam-3.1:resp_6ae133dbd1274c6062db4325:video=6e2428fe407f128f:prompt='blue box':cached",
         "intended": "FAIL",
         "detector_verdict": "FAIL",
         "outcome": "correct",
         "identity_events": [
           {
-            "frame": 61,
-            "kind": "merged",
-            "detail": "track 0 covers true objects 0, 1"
-          },
-          {
-            "frame": 61,
+            "frame": 62,
             "kind": "merged",
             "detail": "track 1 covers true objects 0, 1"
           },
@@ -385,7 +340,7 @@
       },
       "sam": {
         "source": "sam-3.1",
-        "source_ref": "sam-3.1:resp_6ae133e2400416ce179448ba:video=ff9e82624922f39b:prompt='blue box'",
+        "source_ref": "sam-3.1:resp_6ae133e2400416ce179448ba:video=ff9e82624922f39b:prompt='blue box':cached",
         "intended": "PASS",
         "detector_verdict": "UNKNOWN",
         "outcome": "abstained",
@@ -428,7 +383,7 @@
       },
       "sam": {
         "source": "sam-3.1",
-        "source_ref": "sam-3.1:resp_6ae133ecde9d5b2669fa44fe:video=d0a8b6897b907fe7:prompt='blue box'",
+        "source_ref": "sam-3.1:resp_6ae133ecde9d5b2669fa44fe:video=d0a8b6897b907fe7:prompt='blue box':cached",
         "intended": "PASS",
         "detector_verdict": "UNKNOWN",
         "outcome": "abstained",
@@ -472,7 +427,7 @@
       },
       "sam": {
         "source": "sam-3.1",
-        "source_ref": "sam-3.1:resp_6ae133f372b993eb72534932:video=3f4b491a8a60a265:prompt='blue box'",
+        "source_ref": "sam-3.1:resp_6ae133f372b993eb72534932:video=3f4b491a8a60a265:prompt='blue box':cached",
         "intended": "PASS",
         "detector_verdict": "UNKNOWN",
         "outcome": "abstained",
@@ -517,7 +472,7 @@
       },
       "sam": {
         "source": "sam-3.1",
-        "source_ref": "sam-3.1:resp_6ae133fb47e7977ab063483b:video=e7a2688a9da66939:prompt='blue box'",
+        "source_ref": "sam-3.1:resp_6ae133fb47e7977ab063483b:video=e7a2688a9da66939:prompt='blue box':cached",
         "intended": "PASS",
         "detector_verdict": "UNKNOWN",
         "outcome": "abstained",
@@ -562,7 +517,7 @@
       },
       "sam": {
         "source": "sam-3.1",
-        "source_ref": "sam-3.1:resp_6ae13402e7fe0fb841644904:video=8832978ce6be36da:prompt='blue box'",
+        "source_ref": "sam-3.1:resp_6ae13402e7fe0fb841644904:video=8832978ce6be36da:prompt='blue box':cached",
         "intended": "PASS",
         "detector_verdict": "UNKNOWN",
         "outcome": "abstained",
@@ -577,5 +532,6 @@
         ]
       }
     }
-  ]
+  ],
+  "note": "SAM outputs come from 10 live calls on 2026-10-27 (response ids in each source_ref); this file was regenerated from the cache (0 new calls) after fixing a false 'merged' identity event for heavily overlapping boxes."
 }

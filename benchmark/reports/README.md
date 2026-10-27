@@ -20,6 +20,8 @@ n = 30 scenes per family; small sample, synthetic only — do not generalize to 
 | tailgate (5 cases) | FAIL | PASS ×5 — merged boxes hide the uninspected one (dangerous false PASS) | FAIL ×5 — **correct**; both boxes tracked separately, median IoU 0.98–1.0 |
 | occluded_station (5 cases) | PASS | FAIL ×5 — new id after the panel → false alarm | UNKNOWN ×5 — **abstained**; same id kept across the occlusion, but the stop happened under the panel so the inspection was never visible |
 
+Per object (not just overall): in all 5 tailgate cases the SAM track that FAILS is the uninspected box and the inspected box PASSES. Identity events on SAM are 1–2 frame IoU-matching ambiguities at maximum overlap that immediately revert (and one real 1-frame merge in seed 5), not lasting swaps.
+
 With SAM, 0/10 wrong verdicts (5 correct, 5 honest abstentions) vs 10/10 wrong with the mock. The abstentions are not a SAM
 error: bridging the 20–35 frame blind spot (`max_gap_frames` 30) would turn them into PASS only by *assuming* the box stayed put,
 which EventProof does not do by default. Selected cases are the ones the mock fails (not random); n = 10, synthetic only.
