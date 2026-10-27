@@ -7,17 +7,17 @@
 - [ ] **C-03** (G0, BLOCKED) Claim $150 Meta API credits + add card + spend alert — DoD: Billing page shows credits; COSTS.md updated
 - [ ] **C-04** (G6, TODO) License choice for repo + third-party license inventory/SBOM — DoD: LICENSE file + docs/compliance/LICENSE_INVENTORY.md complete
 - [ ] **G0-01** (G0, IN_REVIEW) Rules matrix from participant guide — DoD: Same as C-01
-- [ ] **G0-02** (G0, IN_PROGRESS) New private repo with safe initial commit + persistent tracker — DoD: gh repo view shows isPrivate=true; first commit contains tracker/handoff files
+- [x] **G0-02** (G0, DONE_VERIFIED) New private repo with safe initial commit + persistent tracker — DoD: gh repo view shows isPrivate=true; first commit contains tracker/handoff files
 - [ ] **G0-03** (G0, BLOCKED) REAL Muse Spark API smoke test (structured output) — DoD: scripts/check_meta_api.py muse exits 0 against live API; sanitized evidence in docs/evidence/
 - [ ] **G0-04** (G0, BLOCKED) REAL SAM 3.1 API smoke test (video tracks) — DoD: scripts/check_meta_api.py sam returns per-frame boxes for a synthetic clip
-- [ ] **G0-05** (G0, IN_REVIEW) Backend skeleton + CI (pytest, ruff) green — DoD: GitHub Actions CI green on main
-- [ ] **G1-02** (G1, IN_REVIEW) Typed DSL (Pydantic) + deterministic tri-state evaluator PASS/FAIL/UNKNOWN — DoD: Unit + property tests for zones, crossings, dwell, BEFORE, UNKNOWN on gaps
+- [x] **G0-05** (G0, DONE_VERIFIED) Backend skeleton + CI (pytest, ruff) green — DoD: GitHub Actions CI green on main
+- [x] **G1-02** (G1, DONE_VERIFIED) Typed DSL (Pydantic) + deterministic tri-state evaluator PASS/FAIL/UNKNOWN — DoD: Unit + property tests for zones, crossings, dwell, BEFORE, UNKNOWN on gaps
 - [ ] **G1-03** (G1, TODO) Muse Spark: natural language rule -> validated DSL — DoD: Live call compiles canonical rule; invalid output rejected by schema
 - [ ] **G1-04** (G1, TODO) SAM 3.1 adapter: video -> normalized TrackFrames (official parser) — DoD: Fixture-backed contract test + one live clip cached by sha256
 - [ ] **G1-05** (G1, TODO) Video ingestion: ffprobe validation, H.264 re-encode, <=20s — DoD: Rejects bad MIME/oversize; tests
 - [ ] **G1-01** (G1, TODO) Video -> SAM -> rule -> evidence E2E (API) — DoD: One real clip end-to-end with evidence JSON
 - [ ] **G1-06** (G1, TODO) Frontend studio: upload, rule editor, zone editor, overlay timeline — DoD: Playwright smoke: upload -> result visible
-- [ ] **G2-01** (G2, TODO) Deterministic Challenge renderer (MP4 + ground_truth.json by seed) — DoD: Same seed -> same sha256; ground truth from independent geometry
+- [ ] **G2-01** (G2, READY) Deterministic Challenge renderer (MP4 + ground_truth.json by seed) — DoD: Same seed -> same sha256; ground truth from independent geometry
 - [ ] **G2-02** (G2, TODO) Mutation classes: ID swap/crossing, occlusion, brief entry, near-threshold timing — DoD: >=3 families implemented with tests
 - [ ] **G2-03** (G2, TODO) Challenge run finds a REAL counterexample against the built detector — DoD: Reproducible failing case with seed + hash
 - [ ] **G3-01** (G3, TODO) Counterexample minimizer (delta debugging) + side-by-side replay — DoD: Minimal local pair shown with decisive frames

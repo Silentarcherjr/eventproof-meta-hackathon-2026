@@ -1,11 +1,11 @@
 # EventProof — STATUS (generated)
 
-Updated (America/Panama): 2026-10-27 14:17  
+Updated (America/Panama): 2026-10-27 14:19  
 Deadline: 2026-11-04 21:00 America/Panama (internal target 17:00)  
-P0 verified: 0/27 · P1: 0/6 · P2: 0/3
+P0 verified: 3/27 · P1: 0/6 · P2: 0/3
 
 ## In progress
-- G0-02: New private repo with safe initial commit + persistent tracker (orchestrator)
+- none
 
 ## Blocked
 - C-03: Participant has not claimed credits yet (form + card)

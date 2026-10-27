@@ -116,7 +116,7 @@
       "title": "New private repo with safe initial commit + persistent tracker",
       "priority": "P0",
       "gate": "G0",
-      "state": "IN_PROGRESS",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G0-01"
       ],
@@ -126,11 +126,13 @@
       "test_commands": [
         "gh repo view --json isPrivate"
       ],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "gh repo view: isPrivate=true"
+      ],
+      "commit_sha": "be4394d488af24f862e158bb4428b8554f36a2cf",
       "pr_url": null,
       "started_at": "2026-10-27T19:17:28Z",
-      "updated_at": "2026-10-27T19:17:28Z",
+      "updated_at": "2026-10-27T19:19:12Z",
       "blocker": null,
       "next_action": null,
       "cost_note": null
@@ -190,7 +192,7 @@
       "title": "Backend skeleton + CI (pytest, ruff) green",
       "priority": "P0",
       "gate": "G0",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G0-02"
       ],
@@ -200,11 +202,13 @@
       "test_commands": [
         "cd backend && uv run pytest"
       ],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "GitHub Actions run 40567887973 success"
+      ],
+      "commit_sha": "be4394d488af24f862e158bb4428b8554f36a2cf",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:17:28Z",
+      "updated_at": "2026-10-27T19:19:13Z",
       "blocker": null,
       "next_action": "Verify CI green on GitHub",
       "cost_note": null
@@ -214,7 +218,7 @@
       "title": "Typed DSL (Pydantic) + deterministic tri-state evaluator PASS/FAIL/UNKNOWN",
       "priority": "P0",
       "gate": "G1",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G0-05"
       ],
@@ -225,12 +229,13 @@
         "cd backend && uv run pytest tests/engine"
       ],
       "evidence_paths": [
+        "GitHub Actions run 40567887973 success",
         "backend/tests/engine"
       ],
-      "commit_sha": null,
+      "commit_sha": "be4394d488af24f862e158bb4428b8554f36a2cf",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:17:28Z",
+      "updated_at": "2026-10-27T19:19:13Z",
       "blocker": null,
       "next_action": "Merge after CI green",
       "cost_note": null
@@ -353,7 +358,7 @@
       "title": "Deterministic Challenge renderer (MP4 + ground_truth.json by seed)",
       "priority": "P0",
       "gate": "G2",
-      "state": "TODO",
+      "state": "READY",
       "dependencies": [
         "G1-02"
       ],
@@ -365,9 +370,9 @@
       "commit_sha": null,
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "updated_at": "2026-10-27T19:19:13Z",
       "blocker": null,
-      "next_action": null,
+      "next_action": "Deterministic renderer: MP4 + ground truth TrackSet by seed",
       "cost_note": null
     },
     {

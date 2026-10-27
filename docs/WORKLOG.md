@@ -9,3 +9,4 @@
 - Meta smoke test: `check_meta_api.py muse` → `BLOCKED` (no MODEL_API_KEY; credits not claimed). No Meta credits spent.
 - Issues: (1) a hypothesis property test failed on a 1e-12 edge-tolerance case → test now excludes the tolerance band (behaviour intended). (2) Running the unvetted `meta-sam-parser` PyPI package was denied by the local permission guard; SAM parser choice deferred to G1-04 (needs participant OK to install it).
 - Open design note: Muse strict schemas cannot be recursive; G1-03 must send a depth-bounded (non-recursive) schema and convert it to the recursive AST.
+- Pushed be4394d to private repo, tag hackathon-start-2026-10-27. CI run 40567887973: success. G0-02, G0-05, G1-02 → DONE_VERIFIED.
