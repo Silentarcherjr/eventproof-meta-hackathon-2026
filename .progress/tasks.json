@@ -127,12 +127,13 @@
         "gh repo view --json isPrivate"
       ],
       "evidence_paths": [
-        "gh repo view: isPrivate=true"
+        "gh repo view: isPrivate=true",
+        "CI re-run pending after history rewrite"
       ],
-      "commit_sha": "ec8e2f952d298400daa40353807d945cb5bb7b37",
+      "commit_sha": "039c084b66c50c00234e6a1037faa3a5e4ddd9f8",
       "pr_url": null,
       "started_at": "2026-10-27T19:17:28Z",
-      "updated_at": "2026-10-27T19:44:43Z",
+      "updated_at": "2026-10-27T19:49:53Z",
       "blocker": null,
       "next_action": null,
       "cost_note": null
@@ -183,7 +184,7 @@
       "pr_url": null,
       "started_at": null,
       "updated_at": "2026-10-27T19:17:28Z",
-      "blocker": "No MODEL_API_KEY / credits (C-03); also needs synthetic clip from G2-01",
+      "blocker": "No MODEL_API_KEY / credits (C-03). Test clip now available from G2-01 renderer.",
       "next_action": null,
       "cost_note": null
     },
@@ -203,12 +204,12 @@
         "cd backend && uv run pytest"
       ],
       "evidence_paths": [
-        "GitHub Actions run 40571762720 (on 1fb61f1, after author rewrite) success"
+        "CI re-run pending after history rewrite"
       ],
-      "commit_sha": "ec8e2f952d298400daa40353807d945cb5bb7b37",
+      "commit_sha": "039c084b66c50c00234e6a1037faa3a5e4ddd9f8",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:44:43Z",
+      "updated_at": "2026-10-27T19:49:53Z",
       "blocker": null,
       "next_action": "Verify CI green on GitHub",
       "cost_note": null
@@ -229,13 +230,13 @@
         "cd backend && uv run pytest tests/engine"
       ],
       "evidence_paths": [
-        "GitHub Actions run 40571762720 (on 1fb61f1, after author rewrite) success",
-        "backend/tests/engine"
+        "backend/tests/engine",
+        "CI re-run pending after history rewrite"
       ],
-      "commit_sha": "ec8e2f952d298400daa40353807d945cb5bb7b37",
+      "commit_sha": "039c084b66c50c00234e6a1037faa3a5e4ddd9f8",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:44:43Z",
+      "updated_at": "2026-10-27T19:49:53Z",
       "blocker": null,
       "next_action": "Merge after CI green",
       "cost_note": null
@@ -358,7 +359,7 @@
       "title": "Deterministic Challenge renderer (MP4 + ground_truth.json by seed)",
       "priority": "P0",
       "gate": "G2",
-      "state": "READY",
+      "state": "IN_REVIEW",
       "dependencies": [
         "G1-02"
       ],
@@ -366,13 +367,16 @@
       "branch": null,
       "definition_of_done": "Same seed -> same sha256; ground truth from independent geometry",
       "test_commands": [],
-      "evidence_paths": [],
+      "evidence_paths": [
+        "backend/tests/challenge/test_render.py",
+        "artifacts/challenge/<scene>/manifest.json (local, untracked)"
+      ],
       "commit_sha": null,
       "pr_url": null,
-      "started_at": null,
-      "updated_at": "2026-10-27T19:19:13Z",
+      "started_at": "2026-10-27T19:49:53Z",
+      "updated_at": "2026-10-27T19:49:53Z",
       "blocker": null,
-      "next_action": "Deterministic renderer: MP4 + ground truth TrackSet by seed",
+      "next_action": "CI green (with ffmpeg) -> DONE_VERIFIED",
       "cost_note": null
     },
     {
@@ -380,7 +384,7 @@
       "title": "Mutation classes: ID swap/crossing, occlusion, brief entry, near-threshold timing",
       "priority": "P0",
       "gate": "G2",
-      "state": "TODO",
+      "state": "READY",
       "dependencies": [
         "G2-01"
       ],
@@ -392,9 +396,9 @@
       "commit_sha": null,
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "updated_at": "2026-10-27T19:49:53Z",
       "blocker": null,
-      "next_action": null,
+      "next_action": "Families: drive-through near threshold, occlusion at station, crossing/ID swap",
       "cost_note": null
     },
     {
