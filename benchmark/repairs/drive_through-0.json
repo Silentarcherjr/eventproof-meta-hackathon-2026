@@ -44,8 +44,8 @@
         "correct",
         "correct"
       ],
-      "holdout_name": "holdout_v1",
-      "holdout_manifest_sha256": "f4ef37bba5654f078e15b3726440289d1c52535b8a12f24c2dc9a1bcbf3aad82",
+      "holdout_name": "holdout_v2",
+      "holdout_manifest_sha256": "bc76a6b52faf290f71c9a4d106059a2e95cb394703041b72cca78ea49c33fe32",
       "holdout_before": {
         "n": 200,
         "correct": 144,
@@ -185,8 +185,8 @@
         "correct",
         "correct"
       ],
-      "holdout_name": "holdout_v1",
-      "holdout_manifest_sha256": "f4ef37bba5654f078e15b3726440289d1c52535b8a12f24c2dc9a1bcbf3aad82",
+      "holdout_name": "holdout_v2",
+      "holdout_manifest_sha256": "bc76a6b52faf290f71c9a4d106059a2e95cb394703041b72cca78ea49c33fe32",
       "holdout_before": {
         "n": 200,
         "correct": 144,

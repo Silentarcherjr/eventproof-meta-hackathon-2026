@@ -4,11 +4,11 @@ Seed ranges are disjoint by construction:
 - DEV_SEEDS (0-29)            challenge cases; the counterexample search and the repairer may look at them
 - HOLDOUT_SEEDS (20000-20039) hidden; only the grader in `eventproof.repair.grader` loads them
 
-The committed manifest (`benchmark/holdout/holdout_v1.json`) lists every case with its scene hash.
+The committed manifest (`benchmark/holdout/holdout_v2.json`) lists every case with its scene hash.
 `load_frozen` regenerates each scene and refuses to grade if any hash drifted (a generator change
 would silently turn the holdout into a different test set).
 
-    uv run python -m eventproof.challenge.holdout --write ../benchmark/holdout/holdout_v1.json
+    uv run python -m eventproof.challenge.holdout --write ../benchmark/holdout/holdout_v2.json
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ from eventproof.challenge.runner import DEV_SEEDS  # noqa: F401  re-exported nex
 from eventproof.challenge.scene import SceneSpec
 
 HOLDOUT_SEEDS = range(20_000, 20_040)  # 10000-10039 were touched by a design scan; not used
-HOLDOUT_NAME = "holdout_v1"
+HOLDOUT_NAME = "holdout_v2"  # v1 (8ed7a02) had platform-dependent hashes; same seeds, quantized coords
 DEFAULT_PATH = Path(__file__).resolve().parents[3] / "benchmark" / "holdout" / f"{HOLDOUT_NAME}.json"
 
 

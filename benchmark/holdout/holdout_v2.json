@@ -1,5 +1,5 @@
 {
-  "name": "holdout_v1",
+  "name": "holdout_v2",
   "seed_range": [
     20000,
     20039
@@ -625,7 +625,7 @@
     {
       "family": "occluded_station",
       "seed": 20002,
-      "scene_sha256": "ffe999689134714f70a0b66bd8062b6a62a61268970153144c0976d9af4b5f2b"
+      "scene_sha256": "55f18b46ab1b03fa8c1a81af22883489b1ae6a70151b9184ee69e3ae1f61d025"
     },
     {
       "family": "occluded_station",
@@ -635,7 +635,7 @@
     {
       "family": "occluded_station",
       "seed": 20004,
-      "scene_sha256": "b0759886fcc6a37d1ab3cde2172dec5f4a448415438370eb4ca15beddc462d6a"
+      "scene_sha256": "9727d23a1d317e6f5e787d7edad873eea6bb668d6ee2671ad536af9cd5f49fef"
     },
     {
       "family": "occluded_station",
@@ -645,12 +645,12 @@
     {
       "family": "occluded_station",
       "seed": 20006,
-      "scene_sha256": "025adb3144907bf74f819568baf47a39fb5e3832095b7caf14951ef9d4185d7a"
+      "scene_sha256": "d2a40a2c88645b494af2fe455e78be17384de6d25800b2b8a3c9b62c10f8593f"
     },
     {
       "family": "occluded_station",
       "seed": 20007,
-      "scene_sha256": "40e9948d03392c6d4b90d6e4bec40ef3a11754e7acc94180157f9886626ddc74"
+      "scene_sha256": "af7ecbdfd2e1d5d55dadf584659d092f2f51c2eb9e3b12017fbe20757fa3858c"
     },
     {
       "family": "occluded_station",
@@ -660,7 +660,7 @@
     {
       "family": "occluded_station",
       "seed": 20009,
-      "scene_sha256": "95385fa8f57bfb6fedd993f593d838f0fa4e00f34f0f9893215904149d30ed1e"
+      "scene_sha256": "89a108676c1fe810be770601bfd7cae9e7b2ba17623dac44f12c1c055c4f48d8"
     },
     {
       "family": "occluded_station",
@@ -685,7 +685,7 @@
     {
       "family": "occluded_station",
       "seed": 20014,
-      "scene_sha256": "653715717888f599e935c81be5c6cff652208db76f9e951eecc76d730b5b3170"
+      "scene_sha256": "ad04d844d6f040c329949492273f43b08119ea91ee75718f46b39d63c931c1e0"
     },
     {
       "family": "occluded_station",
@@ -720,12 +720,12 @@
     {
       "family": "occluded_station",
       "seed": 20021,
-      "scene_sha256": "a1a2c1d5387da186b020d768ac590e066a4d19cb5f7c2d1254f57be704a40f5f"
+      "scene_sha256": "ff1cc4312a6fc8f1c049d938c811df11dea690baa447e9d7388afad0396f9acc"
     },
     {
       "family": "occluded_station",
       "seed": 20022,
-      "scene_sha256": "c747a1c2ebfbe4b86f5867707945acb17b14826b6e3498594617a8970af322c8"
+      "scene_sha256": "b6b62b075f2423cb63eea398ffa1be302801042c69584d0d5f2cae2e6e34451d"
     },
     {
       "family": "occluded_station",
@@ -740,12 +740,12 @@
     {
       "family": "occluded_station",
       "seed": 20025,
-      "scene_sha256": "ecac09a0810b7c2b15644df1c9af35aeb7ecc37dc5a6f1132ddb1ebae89d00f0"
+      "scene_sha256": "8f5bf4c8ad0187c1b2dbec6f50144bab29adda76759154f045aa639ac0401018"
     },
     {
       "family": "occluded_station",
       "seed": 20026,
-      "scene_sha256": "e145af7530e91f7d21045ea846eb8962853c8081c6921c9d8e8e34168502150e"
+      "scene_sha256": "5b551ad097738e97514678c78e9b32ce9240dde8f0de94ac289c2f119d0b4192"
     },
     {
       "family": "occluded_station",
@@ -755,7 +755,7 @@
     {
       "family": "occluded_station",
       "seed": 20028,
-      "scene_sha256": "f12246b253c899d36ad3462221a4ebd4e6ea17443353c930e10d6367d3109b49"
+      "scene_sha256": "a523b8883d6e6f13d9b7407820a465b164d64f82fad73a99bbde1caef3fc84eb"
     },
     {
       "family": "occluded_station",
@@ -810,209 +810,209 @@
     {
       "family": "occluded_station",
       "seed": 20039,
-      "scene_sha256": "6cb6cba575dd57583f5414de19d6d4f74f0d3b10ca89ea7fa1668225c1abf6ae"
+      "scene_sha256": "927ef7bd6bfa2ae60d774f49b382331e1cacb45d0785c22f92118ea1eb2c05f5"
     },
     {
       "family": "tailgate",
       "seed": 20000,
-      "scene_sha256": "9fa7f3127e80e5f1abc3720ca7fb355635079eb44c0acc089a9f5284a6ebe9b8"
+      "scene_sha256": "69a888bf2ddba784b51901272bd3c6d9777460aa6235a6134a68aea0a61996ec"
     },
     {
       "family": "tailgate",
       "seed": 20001,
-      "scene_sha256": "bd70951d23cb339f475e70be4f5f694756f3803b95df01fc98dc94900e3912cb"
+      "scene_sha256": "fb077f2a142f1c18032408c5f28939ad479f127fc12dcbc07119655e1d02a8c9"
     },
     {
       "family": "tailgate",
       "seed": 20002,
-      "scene_sha256": "8f32a5ae1feab3164bf614cb9374b1b69e4010666a463df68e3db530805c41ab"
+      "scene_sha256": "c330b90946f0766dc91bb2fa5c20ba89296ee367617b5b6603d62a8833403832"
     },
     {
       "family": "tailgate",
       "seed": 20003,
-      "scene_sha256": "6874fbfd7854a139185a586d6315bca546cd44c2d08a87cd6d819b36be345664"
+      "scene_sha256": "015fe161e411bd5acad0262aeaf2be9d85976e5afbc377dcfec1c3d88db4848b"
     },
     {
       "family": "tailgate",
       "seed": 20004,
-      "scene_sha256": "54065605bb5cc5b6dfa5f0f4a6972138fce1506b9c555877c2cb7355c7584927"
+      "scene_sha256": "3c71b573bda868ca6bc6dc8d2ea7d80197e75fbc2a9a1f21aa0a94c7e8373cd8"
     },
     {
       "family": "tailgate",
       "seed": 20005,
-      "scene_sha256": "f48fb3e071319fc0df34512f4021a7a322592fe22fbd3dc301c85f630dd1cb62"
+      "scene_sha256": "5ce11e7c1022804701f9d1fba2642b428cccee5c50fbb77da36b79de259f7eed"
     },
     {
       "family": "tailgate",
       "seed": 20006,
-      "scene_sha256": "6903289be76da091970e806e01fa1bbe6696d89c037b7c980fe004adacce64b2"
+      "scene_sha256": "530c341ea6718e2c6c22dfcb803141a9f410fa4f1ef05137160b25d16f344ceb"
     },
     {
       "family": "tailgate",
       "seed": 20007,
-      "scene_sha256": "7d500a659dac065d227a0936566a4907726b9ff56cb25a7d975ee68de6de97be"
+      "scene_sha256": "48700574a30c1486efaa126e0a3d36c21029043d4507a863ea62de6e8ed75adc"
     },
     {
       "family": "tailgate",
       "seed": 20008,
-      "scene_sha256": "e257000049095230cac9f36a0eebeebca0f09f16d495dd97bff85041fc5bfc8f"
+      "scene_sha256": "d044b8abbba331e0d17a3083ab3589a6091b4bc68191240367817b15b8ee1b2a"
     },
     {
       "family": "tailgate",
       "seed": 20009,
-      "scene_sha256": "c3a97f05f550a8b4d1c2deef50503cf52173d65e568ef496eb6147e3ffca7282"
+      "scene_sha256": "56947f06ac1c1fee4e6ab8a69750d9bb7ccbe60a4b3b28f912720d4dcfdfb435"
     },
     {
       "family": "tailgate",
       "seed": 20010,
-      "scene_sha256": "a5b1a48992addfd1d238356af20a34d78a2a5d36f8ddccd5cadadad376290f0c"
+      "scene_sha256": "0795626d437c2ce64ae69e7ceed792d9c7d5865f1aa3a92ac917aa9f96db1c4c"
     },
     {
       "family": "tailgate",
       "seed": 20011,
-      "scene_sha256": "ae18c669a4004a7568673ad57eb7bfdc35a96bdf8803ef62b68242c26ae06372"
+      "scene_sha256": "a8bf61c060b3f7e4709b0ced54027e0aafef3ad168249445f3687e3d47dff0eb"
     },
     {
       "family": "tailgate",
       "seed": 20012,
-      "scene_sha256": "8427dadf09f91aa27d33848114fe5615411f27c0294d5f9e069693d9876df90b"
+      "scene_sha256": "43d5f7bf5d7b244e69daa71168e1260efa5c65abafae3dad0d7a94d792bfd4cd"
     },
     {
       "family": "tailgate",
       "seed": 20013,
-      "scene_sha256": "dac8b760f59480649a4c5bd4c8dea41cc9869dcc8fcf06d65cec96fec51fbfda"
+      "scene_sha256": "c9341c41d7cf7fce389f206150d0319cd96ace08848547f7dfecc273c2b4dd58"
     },
     {
       "family": "tailgate",
       "seed": 20014,
-      "scene_sha256": "93524f6681d8d0fa53b2aab47242b79765fce9d244d5747b3ad4744050072c1c"
+      "scene_sha256": "eea5fdef0a28f6d41b8ffa6f6f19e9ebf26a7de8c24a95ca3515ca4618aad0f8"
     },
     {
       "family": "tailgate",
       "seed": 20015,
-      "scene_sha256": "7bba3d91cf35f02054219cdd9e3899d270c52fbb168a7893f94dc61109b92ee9"
+      "scene_sha256": "1ff1c5e492a200568b68f3a72f7983ca9eb9df82382a10f7b56906f08282610f"
     },
     {
       "family": "tailgate",
       "seed": 20016,
-      "scene_sha256": "b7b7fd2e2693ed74edcf797440f2d6aeaacf902d05d47ba5ed3086f21e163ec2"
+      "scene_sha256": "932b2feb1d557593611a2637fafa50b760424f0fb36258315e364089cf21b390"
     },
     {
       "family": "tailgate",
       "seed": 20017,
-      "scene_sha256": "7e937446f3576d79b5e1d844659f05f5b16a5f03b90fe35f9420a98da62745cf"
+      "scene_sha256": "7f5be77a6f786a9c5addfd8591f58ec50e0a9954200f0e6ed506e46b62da6389"
     },
     {
       "family": "tailgate",
       "seed": 20018,
-      "scene_sha256": "d6febcfc461290c980f6aafa6bbcd2b8f208839e03f5677a1e23f2677dd29ab5"
+      "scene_sha256": "1b62eadf67fb50aa448beffaea64498e887a9198d920d4e178e0fd253ee42d74"
     },
     {
       "family": "tailgate",
       "seed": 20019,
-      "scene_sha256": "c54d2574e5a67d707196af2a42c7681b413eefd04e233fd955541a973cc3e4c7"
+      "scene_sha256": "5b8f3be1424e60f5b800eb3d2d7045aae854f6f345fbcc79436ac9bccd30bc3b"
     },
     {
       "family": "tailgate",
       "seed": 20020,
-      "scene_sha256": "278c01f0541b7bba5209d860bfd54cfa3778c5922be7cb985395f7ae3c62bcdc"
+      "scene_sha256": "7f50d8742e102d567fd5fb331f570a5a24e25d0d99b45cbe7b39600afcda1ead"
     },
     {
       "family": "tailgate",
       "seed": 20021,
-      "scene_sha256": "24b513501bdd1f8eb261ed4f69a33148b31ea58133697293e5c09f9d4dc8a3da"
+      "scene_sha256": "bc414f2bc4cf50dacae840b72a14fc358d7c9889940775fc2b271660847d7ce1"
     },
     {
       "family": "tailgate",
       "seed": 20022,
-      "scene_sha256": "da7cbf895daa8fdaf516ca4b53f8cc5e6e0dc2ba7fc9ae0f3296a8b73156b2ac"
+      "scene_sha256": "35ed8ec796525e82ada936060b9f9450ae4630d8361b0f8e1e7bba5c33358c82"
     },
     {
       "family": "tailgate",
       "seed": 20023,
-      "scene_sha256": "50fcd2fdf67a4a7f29590531848c9031df425094cb73c66f3a672c9b9cf6cd1f"
+      "scene_sha256": "8eadba8a7b85ae927f535eb8684d97de871b7b3c47157f0fcd3d46bfddaf546d"
     },
     {
       "family": "tailgate",
       "seed": 20024,
-      "scene_sha256": "a02017a472d59d0a6a2d9f9c9aeb487f0c24e779b978d3d77aa69301442ce93c"
+      "scene_sha256": "9cdadb7b06270343b6b76e2813be8726a33dc83da3680ee6df7d5d043ad15e9f"
     },
     {
       "family": "tailgate",
       "seed": 20025,
-      "scene_sha256": "fb91ec78f5a4d551cf5b930449250312629fd36da3434a85475a0f78c4e71ef6"
+      "scene_sha256": "3630015aecef20b3139fe774e00314d9c181375aa63e7cf2346e698e17d09503"
     },
     {
       "family": "tailgate",
       "seed": 20026,
-      "scene_sha256": "d4ef971d4f40542388ca8463f1388073d7b702bf99eeecf438257830dd3803fe"
+      "scene_sha256": "66dbb6c49d953083faec9db70ab4be76075b5a3618f80a5aa134108cb5bcf5aa"
     },
     {
       "family": "tailgate",
       "seed": 20027,
-      "scene_sha256": "f22b8a7fd2756aa878e6629bc6ff953505a1a488ab73d64f95e800b8c6a72d66"
+      "scene_sha256": "8ee3532709d6d4d013d086eaa529778932fa86332789b8dac51bfda245c91d20"
     },
     {
       "family": "tailgate",
       "seed": 20028,
-      "scene_sha256": "dadf381834688275141dfcfc637f77515c1d659fd26e43d25a322179eebb9722"
+      "scene_sha256": "7f08010694e5a0e58800367b55fe906896580f6d3f7cf42d718cfb1a3d4837cb"
     },
     {
       "family": "tailgate",
       "seed": 20029,
-      "scene_sha256": "e0ede0ad2fe19e042ef1bb3d01d5392bbb9d92edfdca9b51f3e413a0ef15ba19"
+      "scene_sha256": "9482f48f598fa53b16314bab0333ea04011d93310b6d355a8cdc7949caf1e3ee"
     },
     {
       "family": "tailgate",
       "seed": 20030,
-      "scene_sha256": "81aee8fecce15363fb59620ea5b663a857ab146060ddb7222130f9b06b02b63b"
+      "scene_sha256": "713cd2a50f8f916caea779bda4cabdaa7432e1f84c7811d28583657e126c7eb7"
     },
     {
       "family": "tailgate",
       "seed": 20031,
-      "scene_sha256": "54a2b55f26a70cc98b33534a9fa174d32d666e4acba4d4118a8a0aef4d8a42c8"
+      "scene_sha256": "69f31e9fae6c404e60b8bcc5d6a41275752a6fb1165217628fd158f71817d42d"
     },
     {
       "family": "tailgate",
       "seed": 20032,
-      "scene_sha256": "9948d7d4a3c07ee5d10bf359c05d5b48d8fb0445cd3dfff5e40cf73377ea0fd6"
+      "scene_sha256": "0d5610e95062783d6ed10aed24dbe976d878f148df6d266f65b3194a243b38cc"
     },
     {
       "family": "tailgate",
       "seed": 20033,
-      "scene_sha256": "a65177f647da2116cdbf6eb30384946c76058ca6395893341c3ff6856a17ea65"
+      "scene_sha256": "692907cd98cbeb292a7e07871945510002cc95f319abda57b040d2d9b3863800"
     },
     {
       "family": "tailgate",
       "seed": 20034,
-      "scene_sha256": "43e98e53dcd744d625af08e3ce337d96020dda767a047e0fdbcf48e0cf16ec59"
+      "scene_sha256": "9312764671a3d27baba72e5d27e7245e331faf9e27e0b19a64f08165832302bd"
     },
     {
       "family": "tailgate",
       "seed": 20035,
-      "scene_sha256": "b348c857bb95a8c59162ef508e4f58ac5a4c7386edda384ee254fd149d6ef28f"
+      "scene_sha256": "f5ae74b1cb8db4297f7e8cf5aa6e8d2bfad071106498be10107f78fd38d7fd23"
     },
     {
       "family": "tailgate",
       "seed": 20036,
-      "scene_sha256": "e750ddc6eee54f5623e01e40878bfb35296322499f8e5b9a7900657f54d5b61f"
+      "scene_sha256": "9a10ea929ae3cff5ea0ecb573224f7bcc85787ad82f757701df2696e54f56ebb"
     },
     {
       "family": "tailgate",
       "seed": 20037,
-      "scene_sha256": "5cfe8703fae68b27af0d963c105d78b36e0a1955e2e0b4ee092a3c747ab9490a"
+      "scene_sha256": "0b049941ab27157262aaeda50643c240af6facc92737d4b32b093541e63aa6e9"
     },
     {
       "family": "tailgate",
       "seed": 20038,
-      "scene_sha256": "9728b349dba2b988b742ac44430b88fc1c455751bbd5ac754a8a3b667c4ef6e7"
+      "scene_sha256": "1092831333ebac01346478d70814a16b4711a02e64b7f0ae8fa99350e5cc4028"
     },
     {
       "family": "tailgate",
       "seed": 20039,
-      "scene_sha256": "d2b935d90363abc19a999cbd2c628661add3b25206925101ac5ecbcb6c43eaaf"
+      "scene_sha256": "56e582ecb67f76f31bb49e41c0db247f79c6b8eec9b0fb2c65f4b9d014ab8333"
     }
   ],
-  "cases_sha256": "9ee278e5fd1994714d358b7ea7aeb154154228609ee4b3b83b1898e2862ae324",
+  "cases_sha256": "af3fd544abf9a0ac2812e8181e7c99bbb5b561d1faa4870a648ffbf667b5f3c0",
   "note": "Hidden holdout. Never passed to a repair proposer; graded only after a proposal is fixed."
 }

@@ -9,10 +9,10 @@ from __future__ import annotations
 
 import hashlib
 import json
-from typing import Literal
+from typing import Annotated, Literal
 
 import numpy as np
-from pydantic import BaseModel, Field, model_validator
+from pydantic import AfterValidator, BaseModel, Field, model_validator
 
 from eventproof.schemas.rules import Line, Zone
 
@@ -26,10 +26,16 @@ COLORS: dict[str, tuple[int, int, int]] = {
 }
 
 
+# Scene coordinates are quantized to 1e-6. numpy's C code may use fused multiply-add on arm64 but not on
+# x86, so a sampled float can differ in its last bit across machines; quantizing makes scene hashes (and the
+# frozen holdout) platform independent. 1e-6 of a 640 px frame is far below one pixel.
+Coord = Annotated[float, Field(ge=0, le=1), AfterValidator(lambda v: round(v, 6))]
+
+
 class Waypoint(BaseModel):
     frame: int = Field(ge=0)
-    x: float = Field(ge=0, le=1, description="normalized box center")
-    y: float = Field(ge=0, le=1)
+    x: Coord = Field(description="normalized box center")
+    y: Coord
 
 
 class SceneObject(BaseModel):
@@ -61,10 +67,10 @@ class SceneObject(BaseModel):
 
 
 class Occluder(BaseModel):
-    x1: float = Field(ge=0, le=1)
-    y1: float = Field(ge=0, le=1)
-    x2: float = Field(ge=0, le=1)
-    y2: float = Field(ge=0, le=1)
+    x1: Coord
+    y1: Coord
+    x2: Coord
+    y2: Coord
     start_frame: int = Field(default=0, ge=0)
     end_frame: int | None = None
 

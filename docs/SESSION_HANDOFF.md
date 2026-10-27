@@ -13,7 +13,7 @@ Written: 2026-10-27 (end of session 1, local). Overwrite at the end of every ses
 1. G1-04: SAM 3.1 adapter against fixtures (wire format `<Nf>id<|box;...|>`), so the harness switches from mock to SAM the day the key arrives. Installing `meta-sam-parser` needs participant OK.
 2. G4-01 (Muse part) once the key exists: `MuseProposer` implementing `Proposer`, prompt = `RepairContext` JSON, `response_format` = `RulePatch` JSON schema; grade with the same `Grader`.
 3. Perception-error repairs (occluded_station, tailgate) are out of reach for rule patches: candidate = bounded track-stitching filter (ID association), graded on the same holdout. P1, only if time.
-4. Never regenerate `benchmark/holdout/holdout_v1.json` in place; a new holdout gets a new name and seed range.
+4. Never regenerate `benchmark/holdout/holdout_v2.json` in place; a new holdout gets a new name and seed range.
 
 ## Human actions pending
 - C-03: Meta credits / key (requested). Put key in `backend/.env` when received.

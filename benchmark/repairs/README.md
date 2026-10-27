@@ -5,7 +5,7 @@ These files measure the repair + verification harness, not Meta models.
 
 Each file is a `RepairReport` from `uv run python -m eventproof.repair.loop --family <f> --seed auto --out ../benchmark/repairs`:
 counterexample → repair context (dev seeds 0–29 only, checked for holdout leaks) → proposals → independent grading on the
-frozen hidden holdout `benchmark/holdout/holdout_v1.json` (seeds 20000–20039 × 5 families = 200 scenes, committed in 8ed7a02 before any repair code).
+frozen hidden holdout `benchmark/holdout/holdout_v2.json` (seeds 20000–20039 × 5 families = 200 scenes; first frozen as v1 in 8ed7a02 before any repair code, re-frozen as v2 with platform-independent hashes).
 
 Acceptance = patch is safe (bounded ops, schema-valid, rule structure unchanged) AND fixes the counterexample AND 0 holdout
 regressions AND no more false PASS AND holdout accuracy strictly improves.
