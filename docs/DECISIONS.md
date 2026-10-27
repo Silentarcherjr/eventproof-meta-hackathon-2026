@@ -24,3 +24,9 @@
 - Ground-truth intent comes from scripted behaviour (`challenge/truth.py`: box stationary ≥ 1.0 s at the station before crossing the packing line), computed from waypoints — a different code path from the rule engine.
 - Every disagreement is classified: spec_error (rule on perfect tracks ≠ intent), perception_error (perceived tracks flip a rule that is right on perfect tracks), abstained (UNKNOWN). This keeps perception (SAM) and reasoning (Muse/DSL) failures separate, as the plan requires.
 - Until SAM is available, a naive mock tracker (`perception/mock.py`, `source="mock"`) stands in. Its outputs are always labelled and never presented as SAM; it doubles as a baseline later.
+
+## ADR-007 — 2026-10-27 — Counterexample minimization claims
+- Two stages: (1) greedy discrete reduction (drop objects/occluders, trim head/tail, never below 50 frames) that must preserve the *same* failure (outcome + detector verdict); (2) a boundary pair along one physical knob per family (separation, occluder duration, belt speed, stop duration): coarse 20-point grid + up to 8 bisection steps.
+- Results are reported as LOCAL minima within an explicit evaluation budget, never as global minima. Both scenes of a pair are stored and re-evaluated in tests, so the flip is reproducible, not asserted.
+- Decisive frames = first identity events on the failing scene (merge / lost / new id / switch vs ground truth) + the first frame where perceived tracks diverge between the pair; for spec errors (perception fine) the rule's own event frames.
+- Pillow added for overlay text (HPND license; to list in LICENSE_INVENTORY).

@@ -27,3 +27,10 @@
 - Results (mock perception, NOT SAM; 30 seeds/family; `benchmark/reports/`): with DWELL 1.5 s → canonical 30/30 correct; drive_through 11 spec errors (slow belt transit > 1.5 s counts as inspection); brief_stop 3 spec errors (near threshold); occluded_station 11 perception errors (identity loss → false alarm); tailgate 19 perception errors with false PASS (merged detection hides an uninspected box) + 6 abstained. With DWELL 0.5 s spec errors dominate (e.g. canonical 22/30).
 - Tests: 81 passed; ruff clean.
 - CI run 40575797601 (801df32): success → G2-02 DONE_VERIFIED.
+
+## 2026-10-27 · session 1 (cont.) · local macOS · orchestrator — G3-01
+- `challenge/minimize.py` (reduction + boundary pair, CLI with `--seed auto`), `challenge/replay.py` (identity events, perception divergence, decisive PNGs, side-by-side H.264 replay with perceived-track overlays), `render.encode_frames` refactor.
+- Fixed during development: (1) first bisection stopped at an abstention and returned a non-minimal pair (t 0 vs 1) → grid + bisection with fallback bracket; (2) "merged" falsely reported for boxes that merely touch → coverage ≥ 0.6 instead of IoU; (3) decisive frames missed the moment the pair diverges → added perception divergence frame.
+- Results (mock perception): tailgate-0 pair at separation t 0.2861 vs 0.2863 — scenes differ by ≤123 px per frame in 24 frames; failing side merges both boxes into track 0 at f45 (false PASS), passing side splits them at f53. occluded_station-1: occluder 75% vs 90% shorter → identity loss (new id) at f34 → false alarm. drive_through-0 and brief_stop-5: spec-error boundaries on belt speed / stop duration.
+- Evidence committed: `benchmark/counterexamples/tailgate-0/` (2 PNG + replay.json + summary.json, 32 KB). Videos stay in `artifacts/` (untracked).
+- Tests: 97 passed; ruff clean.

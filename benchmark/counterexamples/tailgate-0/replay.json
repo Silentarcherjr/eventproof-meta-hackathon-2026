@@ -1,0 +1,51 @@
+{
+  "identity_events_fail": [
+    {
+      "frame": 45,
+      "kind": "merged",
+      "detail": "track 0 covers true objects 0, 1"
+    },
+    {
+      "frame": 45,
+      "kind": "switch",
+      "detail": "true object 1: track 1 -> 0"
+    }
+  ],
+  "identity_events_pass": [
+    {
+      "frame": 45,
+      "kind": "merged",
+      "detail": "track 0 covers true objects 0, 1"
+    },
+    {
+      "frame": 45,
+      "kind": "switch",
+      "detail": "true object 1: track 1 -> 0"
+    },
+    {
+      "frame": 53,
+      "kind": "new_id",
+      "detail": "true object 1: track 0 -> 2"
+    }
+  ],
+  "perception_divergence_frame": 53,
+  "decisive_frames": [
+    45,
+    53
+  ],
+  "decisive_pngs": [
+    "decisive_f0045.png",
+    "decisive_f0053.png"
+  ],
+  "scene_difference": {
+    "frames_compared": 79,
+    "frames_differing": 24,
+    "first_differing_frame": 53,
+    "max_pixels_differing_in_a_frame": 123
+  },
+  "fail_scene_sha256": "e70fb8fc401cc0ca439e55083fde4e614a95edbc7b92de46771ad810058fe0e2",
+  "pass_scene_sha256": "50d9ce4901a5c3c0acab274b2f7afe745280b7a39e901c5c15bee99e484171c1",
+  "frames_sha256": "39cf3b5d53a9c604ab39cbf6b95aa6a30c43a498511a8ccb81370f5394546100",
+  "side_by_side_mp4": "side_by_side.mp4",
+  "mp4_sha256": "c1d3ff51769a437a8fdf0bf1fb0024fc47e322f8c559bcf37e09b00ea117c1b9"
+}

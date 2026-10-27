@@ -141,10 +141,10 @@ def _ffmpeg() -> str:
     return path
 
 
-def encode_mp4(scene: SceneSpec, out: Path) -> str:
-    """Pipe frames to ffmpeg (H.264 yuv420p, single thread, bitexact). Returns sha256 of raw frames."""
+def encode_frames(frames, width: int, height: int, fps: float, out: Path) -> str:
+    """Pipe HxWx3 uint8 frames to ffmpeg (H.264 yuv420p, single thread, bitexact). Returns sha256 of raw frames."""
     cmd = [_ffmpeg(), "-hide_banner", "-loglevel", "error", "-y",
-           "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{scene.width}x{scene.height}", "-r", str(scene.fps), "-i", "-",
+           "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{width}x{height}", "-r", str(fps), "-i", "-",
            "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p", "-threads", "1",
            "-x264-params", "threads=1:sliced-threads=0", "-map_metadata", "-1", "-fflags", "+bitexact",
            "-flags:v", "+bitexact", "-movflags", "+faststart", str(out)]
@@ -152,8 +152,8 @@ def encode_mp4(scene: SceneSpec, out: Path) -> str:
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     assert proc.stdin is not None
     try:
-        for _, img in render_frames(scene):
-            buf = img.tobytes()
+        for img in frames:
+            buf = np.ascontiguousarray(img).tobytes()
             h.update(buf)
             proc.stdin.write(buf)
     finally:
@@ -161,6 +161,10 @@ def encode_mp4(scene: SceneSpec, out: Path) -> str:
     if proc.wait() != 0:
         raise RuntimeError(f"ffmpeg failed with code {proc.returncode}")
     return h.hexdigest()
+
+
+def encode_mp4(scene: SceneSpec, out: Path) -> str:
+    return encode_frames((img for _, img in render_frames(scene)), scene.width, scene.height, scene.fps, out)
 
 
 def frames_digest(scene: SceneSpec) -> str:
