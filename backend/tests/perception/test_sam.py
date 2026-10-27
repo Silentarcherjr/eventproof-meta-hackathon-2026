@@ -223,3 +223,18 @@ def test_real_sam31_lines_parse():
     assert (r.w, r.h) == (640, 360) and r.mask.encoding == "!" and r.mask.confidence == r.confidence
     ts = to_trackset(frames, VideoInfo(width=640, height=360, fps=15, frame_count=120), "blue box", "real")
     assert ts.frames[0].box.x2 == 61 and ts.frames[0].timestamp_ms == pytest.approx(43 * 1000 / 15)
+
+
+def test_compare_reports_both_perceptions(tmp_path, monkeypatch, keyed):
+    from eventproof.challenge import compare as cmp_mod
+
+    scene = FAMILIES["tailgate"](0)
+    fake = FakeClient(encode_wire(ground_truth(scene)))  # a perfect "SAM" separates the boxes
+    monkeypatch.setattr(sam_mod, "get_client", lambda s: fake)
+    monkeypatch.setattr(sam_mod, "CACHE_DIR", tmp_path)
+    tracker = SamTracker(keyed, cache_dir=tmp_path / "cache", max_live_calls=1)
+    monkeypatch.setattr(cmp_mod, "sam_perceiver", lambda t: sam_perceiver(t, video_dir=tmp_path / "videos"))
+    (row,) = cmp_mod.compare([("tailgate", 0)], tracker)
+    assert row["mock"]["source"] == "mock" and row["mock"]["outcome"] == "perception_error"
+    assert row["sam"]["source"] == "sam-3.1" and row["sam"]["outcome"] == "correct"
+    assert row["sam"]["matched_iou50"] == row["sam"]["gt_visible_boxes"]

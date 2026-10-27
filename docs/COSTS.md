@@ -7,6 +7,7 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 | 2026-10-27 | Meta Model API | G0 | hackathon $150 | NOT_CLAIMED | $0 | - | $150 total; backend guard `META_BUDGET_USD=40` per environment | Spend Limit notification to be set by participant | participant (no credits yet) |
 | 2026-10-27 | Meta Model API | G1-04 | hackathon $150 | CLAIMED per participant; balance UNKNOWN (no dashboard read) | $0 (no live call yet) | - | $150 total; live SAM calls need explicit `--max-live-calls` | - | participant message |
 | 2026-10-27 | Meta Model API | G0-03/G0-04 smoke | hackathon $150 | UNKNOWN (Billing not read) | 2 live calls: 1 SAM (120-frame clip, min 50 billed), 1 Muse (23 in / 504 out tokens) | - | live SAM calls need explicit `--max-live-calls` | - | docs/evidence/2026-10-27_meta_api_smoke.md |
+| 2026-10-27 | Meta Model API | SAM vs mock comparison | hackathon $150 | UNKNOWN (Billing not read) | 10 live SAM calls (96–120 frames each) | - | participant approved max 10 | - | benchmark/reports/2026-10-27_sam_vs_mock.json |
 | 2026-10-27 | AI coding assistant (local session) | G0 bootstrap | participant plan | UNKNOWN | UNKNOWN | - | - | - | no dashboard read |
 | 2026-10-27 | Baseten / Modal / Fireworks | - | partner credits | NOT_REQUESTED | $0 | - | - | - | - |
 

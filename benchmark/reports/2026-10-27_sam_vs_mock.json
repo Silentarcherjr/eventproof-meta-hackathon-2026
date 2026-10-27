@@ -1,0 +1,581 @@
+{
+  "perception": [
+    "mock (NOT SAM)",
+    "sam-3.1 (live Meta API)"
+  ],
+  "live_sam_calls_this_run": 10,
+  "dwell_ms": 1500.0,
+  "cases": [
+    {
+      "family": "tailgate",
+      "seed": 0,
+      "scene_sha256": "3bb3101d508bd3306f856415005d99a0530cf2f28519e967b9bacf84c6974e81",
+      "notes": "offset dx=0.003 dy=0.027",
+      "mock": {
+        "source": "mock",
+        "source_ref": "mock-tracker/1 scene:3bb3101d508bd3306f856415005d99a0530cf2f28519e967b9bacf84c6974e81",
+        "intended": "FAIL",
+        "detector_verdict": "PASS",
+        "outcome": "perception_error",
+        "identity_events": [
+          {
+            "frame": 68,
+            "kind": "merged",
+            "detail": "track 0 covers true objects 0, 1"
+          },
+          {
+            "frame": 68,
+            "kind": "switch",
+            "detail": "true object 1: track 1 -> 0"
+          }
+        ],
+        "gt_visible_boxes": 129,
+        "perceived_boxes": 98,
+        "matched_iou50": 129,
+        "median_iou": 0.913,
+        "track_ids": [
+          0,
+          1
+        ]
+      },
+      "sam": {
+        "source": "sam-3.1",
+        "source_ref": "sam-3.1:resp_6ae133bb86df2bcd43844ead:video=504dd2a4830496f1:prompt='blue box'",
+        "intended": "FAIL",
+        "detector_verdict": "FAIL",
+        "outcome": "correct",
+        "identity_events": [
+          {
+            "frame": 69,
+            "kind": "merged",
+            "detail": "track 0 covers true objects 0, 1"
+          },
+          {
+            "frame": 69,
+            "kind": "merged",
+            "detail": "track 1 covers true objects 0, 1"
+          },
+          {
+            "frame": 72,
+            "kind": "switch",
+            "detail": "true object 0: track 0 -> 1"
+          },
+          {
+            "frame": 73,
+            "kind": "new_id",
+            "detail": "true object 0: track 1 -> 0"
+          }
+        ],
+        "gt_visible_boxes": 129,
+        "perceived_boxes": 129,
+        "matched_iou50": 129,
+        "median_iou": 0.978,
+        "track_ids": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "family": "tailgate",
+      "seed": 2,
+      "scene_sha256": "428aa1a3c830b3034fed1a052336df2ffeae9954f8041d2339555fd1148d75d4",
+      "notes": "offset dx=-0.004 dy=0.057",
+      "mock": {
+        "source": "mock",
+        "source_ref": "mock-tracker/1 scene:428aa1a3c830b3034fed1a052336df2ffeae9954f8041d2339555fd1148d75d4",
+        "intended": "FAIL",
+        "detector_verdict": "PASS",
+        "outcome": "perception_error",
+        "identity_events": [
+          {
+            "frame": 66,
+            "kind": "merged",
+            "detail": "track 0 covers true objects 0, 1"
+          },
+          {
+            "frame": 66,
+            "kind": "switch",
+            "detail": "true object 1: track 1 -> 0"
+          }
+        ],
+        "gt_visible_boxes": 124,
+        "perceived_boxes": 93,
+        "matched_iou50": 124,
+        "median_iou": 0.851,
+        "track_ids": [
+          0,
+          1
+        ]
+      },
+      "sam": {
+        "source": "sam-3.1",
+        "source_ref": "sam-3.1:resp_6ae133c4dd6712493fc04536:video=4dfc9916e5a014b6:prompt='blue box'",
+        "intended": "FAIL",
+        "detector_verdict": "FAIL",
+        "outcome": "correct",
+        "identity_events": [
+          {
+            "frame": 67,
+            "kind": "merged",
+            "detail": "track 0 covers true objects 0, 1"
+          },
+          {
+            "frame": 67,
+            "kind": "merged",
+            "detail": "track 1 covers true objects 0, 1"
+          },
+          {
+            "frame": 70,
+            "kind": "switch",
+            "detail": "true object 0: track 0 -> 1"
+          },
+          {
+            "frame": 71,
+            "kind": "new_id",
+            "detail": "true object 0: track 1 -> 0"
+          }
+        ],
+        "gt_visible_boxes": 124,
+        "perceived_boxes": 124,
+        "matched_iou50": 123,
+        "median_iou": 1.0,
+        "track_ids": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "family": "tailgate",
+      "seed": 3,
+      "scene_sha256": "89c471358c4e86de521d582798a3218d1d678da219107afcd6b86b32f171531a",
+      "notes": "offset dx=-0.021 dy=0.006",
+      "mock": {
+        "source": "mock",
+        "source_ref": "mock-tracker/1 scene:89c471358c4e86de521d582798a3218d1d678da219107afcd6b86b32f171531a",
+        "intended": "FAIL",
+        "detector_verdict": "PASS",
+        "outcome": "perception_error",
+        "identity_events": [
+          {
+            "frame": 71,
+            "kind": "merged",
+            "detail": "track 0 covers true objects 0, 1"
+          },
+          {
+            "frame": 71,
+            "kind": "switch",
+            "detail": "true object 1: track 1 -> 0"
+          }
+        ],
+        "gt_visible_boxes": 127,
+        "perceived_boxes": 98,
+        "matched_iou50": 127,
+        "median_iou": 0.915,
+        "track_ids": [
+          0,
+          1
+        ]
+      },
+      "sam": {
+        "source": "sam-3.1",
+        "source_ref": "sam-3.1:resp_6ae133cc7827ac38aaf04382:video=5f39544bd5571e1d:prompt='blue box'",
+        "intended": "FAIL",
+        "detector_verdict": "FAIL",
+        "outcome": "correct",
+        "identity_events": [
+          {
+            "frame": 72,
+            "kind": "merged",
+            "detail": "track 0 covers true objects 0, 1"
+          },
+          {
+            "frame": 72,
+            "kind": "merged",
+            "detail": "track 1 covers true objects 0, 1"
+          },
+          {
+            "frame": 73,
+            "kind": "switch",
+            "detail": "true object 0: track 0 -> 1"
+          },
+          {
+            "frame": 75,
+            "kind": "new_id",
+            "detail": "true object 0: track 1 -> 0"
+          }
+        ],
+        "gt_visible_boxes": 127,
+        "perceived_boxes": 127,
+        "matched_iou50": 127,
+        "median_iou": 1.0,
+        "track_ids": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "family": "tailgate",
+      "seed": 4,
+      "scene_sha256": "b3cbeb527ac6f0ef5340d85a2bf617cf11a69e5f55cbe18b8555f396242e0c08",
+      "notes": "offset dx=-0.026 dy=0.034",
+      "mock": {
+        "source": "mock",
+        "source_ref": "mock-tracker/1 scene:b3cbeb527ac6f0ef5340d85a2bf617cf11a69e5f55cbe18b8555f396242e0c08",
+        "intended": "FAIL",
+        "detector_verdict": "PASS",
+        "outcome": "perception_error",
+        "identity_events": [
+          {
+            "frame": 68,
+            "kind": "merged",
+            "detail": "track 0 covers true objects 0, 1"
+          },
+          {
+            "frame": 68,
+            "kind": "switch",
+            "detail": "true object 1: track 1 -> 0"
+          }
+        ],
+        "gt_visible_boxes": 126,
+        "perceived_boxes": 96,
+        "matched_iou50": 126,
+        "median_iou": 0.913,
+        "track_ids": [
+          0,
+          1
+        ]
+      },
+      "sam": {
+        "source": "sam-3.1",
+        "source_ref": "sam-3.1:resp_6ae133d3ed316b00bf9d4a97:video=5be2f866bc57cad2:prompt='blue box'",
+        "intended": "FAIL",
+        "detector_verdict": "FAIL",
+        "outcome": "correct",
+        "identity_events": [
+          {
+            "frame": 69,
+            "kind": "merged",
+            "detail": "track 0 covers true objects 0, 1"
+          },
+          {
+            "frame": 69,
+            "kind": "merged",
+            "detail": "track 1 covers true objects 0, 1"
+          },
+          {
+            "frame": 70,
+            "kind": "switch",
+            "detail": "true object 0: track 0 -> 1"
+          },
+          {
+            "frame": 71,
+            "kind": "new_id",
+            "detail": "true object 0: track 1 -> 0"
+          }
+        ],
+        "gt_visible_boxes": 126,
+        "perceived_boxes": 126,
+        "matched_iou50": 126,
+        "median_iou": 1.0,
+        "track_ids": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "family": "tailgate",
+      "seed": 5,
+      "scene_sha256": "b00cc4af8565230abc6d03bb43ea2cf880f294b30bbd2c1f6ede426c1fb44212",
+      "notes": "offset dx=0.016 dy=0.040",
+      "mock": {
+        "source": "mock",
+        "source_ref": "mock-tracker/1 scene:b00cc4af8565230abc6d03bb43ea2cf880f294b30bbd2c1f6ede426c1fb44212",
+        "intended": "FAIL",
+        "detector_verdict": "PASS",
+        "outcome": "perception_error",
+        "identity_events": [
+          {
+            "frame": 60,
+            "kind": "merged",
+            "detail": "track 0 covers true objects 0, 1"
+          },
+          {
+            "frame": 60,
+            "kind": "switch",
+            "detail": "true object 1: track 1 -> 0"
+          }
+        ],
+        "gt_visible_boxes": 127,
+        "perceived_boxes": 95,
+        "matched_iou50": 127,
+        "median_iou": 0.877,
+        "track_ids": [
+          0,
+          1
+        ]
+      },
+      "sam": {
+        "source": "sam-3.1",
+        "source_ref": "sam-3.1:resp_6ae133dbd1274c6062db4325:video=6e2428fe407f128f:prompt='blue box'",
+        "intended": "FAIL",
+        "detector_verdict": "FAIL",
+        "outcome": "correct",
+        "identity_events": [
+          {
+            "frame": 61,
+            "kind": "merged",
+            "detail": "track 0 covers true objects 0, 1"
+          },
+          {
+            "frame": 61,
+            "kind": "merged",
+            "detail": "track 1 covers true objects 0, 1"
+          },
+          {
+            "frame": 62,
+            "kind": "switch",
+            "detail": "true object 0: track 0 -> 1"
+          },
+          {
+            "frame": 63,
+            "kind": "new_id",
+            "detail": "true object 0: track 1 -> 0"
+          }
+        ],
+        "gt_visible_boxes": 127,
+        "perceived_boxes": 126,
+        "matched_iou50": 127,
+        "median_iou": 1.0,
+        "track_ids": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "family": "occluded_station",
+      "seed": 1,
+      "scene_sha256": "26f1cc6163df461aca841320399516ac65ab7bf38d6ee6c080d97f58f584111f",
+      "notes": "occluder frames 49-71 over lane 0.72",
+      "mock": {
+        "source": "mock",
+        "source_ref": "mock-tracker/1 scene:26f1cc6163df461aca841320399516ac65ab7bf38d6ee6c080d97f58f584111f",
+        "intended": "PASS",
+        "detector_verdict": "FAIL",
+        "outcome": "perception_error",
+        "identity_events": [
+          {
+            "frame": 70,
+            "kind": "new_id",
+            "detail": "true object 0: track 0 -> 1"
+          }
+        ],
+        "gt_visible_boxes": 45,
+        "perceived_boxes": 45,
+        "matched_iou50": 45,
+        "median_iou": 0.935,
+        "track_ids": [
+          0,
+          1
+        ]
+      },
+      "sam": {
+        "source": "sam-3.1",
+        "source_ref": "sam-3.1:resp_6ae133e2400416ce179448ba:video=ff9e82624922f39b:prompt='blue box'",
+        "intended": "PASS",
+        "detector_verdict": "UNKNOWN",
+        "outcome": "abstained",
+        "identity_events": [],
+        "gt_visible_boxes": 45,
+        "perceived_boxes": 47,
+        "matched_iou50": 45,
+        "median_iou": 1.0,
+        "track_ids": [
+          0
+        ]
+      }
+    },
+    {
+      "family": "occluded_station",
+      "seed": 2,
+      "scene_sha256": "6caf22ab2e45266983c30c0de8bb5eef10284d64336ffb921f22080daced4ddf",
+      "notes": "occluder frames 15-75 over lane 0.72",
+      "mock": {
+        "source": "mock",
+        "source_ref": "mock-tracker/1 scene:6caf22ab2e45266983c30c0de8bb5eef10284d64336ffb921f22080daced4ddf",
+        "intended": "PASS",
+        "detector_verdict": "FAIL",
+        "outcome": "perception_error",
+        "identity_events": [
+          {
+            "frame": 75,
+            "kind": "new_id",
+            "detail": "true object 0: track 0 -> 1"
+          }
+        ],
+        "gt_visible_boxes": 37,
+        "perceived_boxes": 37,
+        "matched_iou50": 37,
+        "median_iou": 0.955,
+        "track_ids": [
+          0,
+          1
+        ]
+      },
+      "sam": {
+        "source": "sam-3.1",
+        "source_ref": "sam-3.1:resp_6ae133ecde9d5b2669fa44fe:video=d0a8b6897b907fe7:prompt='blue box'",
+        "intended": "PASS",
+        "detector_verdict": "UNKNOWN",
+        "outcome": "abstained",
+        "identity_events": [],
+        "gt_visible_boxes": 37,
+        "perceived_boxes": 41,
+        "matched_iou50": 37,
+        "median_iou": 1.0,
+        "track_ids": [
+          0
+        ]
+      }
+    },
+    {
+      "family": "occluded_station",
+      "seed": 6,
+      "scene_sha256": "b90d46a2851d6932859b8bcad651733ae1e5ed1d54cb77cf8fe9a730ea1de82f",
+      "notes": "occluder frames 14-51 over lane 0.72",
+      "mock": {
+        "source": "mock",
+        "source_ref": "mock-tracker/1 scene:b90d46a2851d6932859b8bcad651733ae1e5ed1d54cb77cf8fe9a730ea1de82f",
+        "intended": "PASS",
+        "detector_verdict": "FAIL",
+        "outcome": "perception_error",
+        "identity_events": [
+          {
+            "frame": 52,
+            "kind": "new_id",
+            "detail": "true object 0: track 0 -> 2"
+          }
+        ],
+        "gt_visible_boxes": 136,
+        "perceived_boxes": 136,
+        "matched_iou50": 136,
+        "median_iou": 0.935,
+        "track_ids": [
+          0,
+          1,
+          2
+        ]
+      },
+      "sam": {
+        "source": "sam-3.1",
+        "source_ref": "sam-3.1:resp_6ae133f372b993eb72534932:video=3f4b491a8a60a265:prompt='blue box'",
+        "intended": "PASS",
+        "detector_verdict": "UNKNOWN",
+        "outcome": "abstained",
+        "identity_events": [],
+        "gt_visible_boxes": 136,
+        "perceived_boxes": 138,
+        "matched_iou50": 136,
+        "median_iou": 1.0,
+        "track_ids": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "family": "occluded_station",
+      "seed": 8,
+      "scene_sha256": "d014e73b0fe2a6a00f1b97b8c2b64fb55226007237a5bddda83132f4d8b72cfe",
+      "notes": "occluder frames 25-116 over lane 0.5",
+      "mock": {
+        "source": "mock",
+        "source_ref": "mock-tracker/1 scene:d014e73b0fe2a6a00f1b97b8c2b64fb55226007237a5bddda83132f4d8b72cfe",
+        "intended": "PASS",
+        "detector_verdict": "FAIL",
+        "outcome": "perception_error",
+        "identity_events": [
+          {
+            "frame": 62,
+            "kind": "new_id",
+            "detail": "true object 0: track 1 -> 2"
+          }
+        ],
+        "gt_visible_boxes": 117,
+        "perceived_boxes": 117,
+        "matched_iou50": 117,
+        "median_iou": 0.935,
+        "track_ids": [
+          0,
+          1,
+          2
+        ]
+      },
+      "sam": {
+        "source": "sam-3.1",
+        "source_ref": "sam-3.1:resp_6ae133fb47e7977ab063483b:video=e7a2688a9da66939:prompt='blue box'",
+        "intended": "PASS",
+        "detector_verdict": "UNKNOWN",
+        "outcome": "abstained",
+        "identity_events": [],
+        "gt_visible_boxes": 117,
+        "perceived_boxes": 120,
+        "matched_iou50": 117,
+        "median_iou": 1.0,
+        "track_ids": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "family": "occluded_station",
+      "seed": 10,
+      "scene_sha256": "2f496f2f22e1064f277c75e97655983476be24b761370722aeb29e75b1ba1505",
+      "notes": "occluder frames 31-105 over lane 0.72",
+      "mock": {
+        "source": "mock",
+        "source_ref": "mock-tracker/1 scene:2f496f2f22e1064f277c75e97655983476be24b761370722aeb29e75b1ba1505",
+        "intended": "PASS",
+        "detector_verdict": "FAIL",
+        "outcome": "perception_error",
+        "identity_events": [
+          {
+            "frame": 69,
+            "kind": "new_id",
+            "detail": "true object 0: track 1 -> 2"
+          }
+        ],
+        "gt_visible_boxes": 119,
+        "perceived_boxes": 119,
+        "matched_iou50": 119,
+        "median_iou": 0.935,
+        "track_ids": [
+          0,
+          1,
+          2
+        ]
+      },
+      "sam": {
+        "source": "sam-3.1",
+        "source_ref": "sam-3.1:resp_6ae13402e7fe0fb841644904:video=8832978ce6be36da:prompt='blue box'",
+        "intended": "PASS",
+        "detector_verdict": "UNKNOWN",
+        "outcome": "abstained",
+        "identity_events": [],
+        "gt_visible_boxes": 119,
+        "perceived_boxes": 123,
+        "matched_iou50": 119,
+        "median_iou": 1.0,
+        "track_ids": [
+          0,
+          1
+        ]
+      }
+    }
+  ]
+}

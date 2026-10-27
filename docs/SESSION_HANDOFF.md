@@ -10,7 +10,7 @@ Written: 2026-10-27 (end of session 1, local). Overwrite at the end of every ses
 - Live Meta: WORKING. Key in `backend/.env` (local only). First SAM + Muse calls OK 2026-10-27 (`docs/evidence/2026-10-27_meta_api_smoke.md`). Raw SAM output cached in `artifacts/sam_cache/`.
 
 ## Next exact task
-1. Challenge Mode on real SAM (needs participant OK for spend; ~1 call per scene, >= 50 frames each): e.g. `runner --perception sam --families tailgate,occluded_station --seeds 0-4 --max-live-calls 10`. Key question for the demo: does SAM separate the tailgating boxes / keep identity under the occluder where the mock tracker fails?
+1. Done: SAM vs mock on 10 mock-failing cases (`benchmark/reports/2026-10-27_sam_vs_mock.json`): SAM fixes tailgate 5/5, abstains on occluded_station 5/5. Next for Challenge on SAM: search for scenes that fool SAM itself (harder families: tighter overlap, same-colour crossings, longer clips), each new case = 1 billed call, needs participant OK.
 2. G1-03: Muse rule (natural language) -> DSL with a depth-bounded json_schema.
 3. G4-01 Muse part: `MuseProposer` returning `RulePatch` JSON, graded by the same `Grader`.
 4. Never regenerate `benchmark/holdout/holdout_v2.json` in place.
