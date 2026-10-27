@@ -1,8 +1,8 @@
 # EventProof — STATUS (generated)
 
-Updated (America/Panama): 2026-10-27 14:49  
+Updated (America/Panama): 2026-10-27 15:01  
 Deadline: 2026-11-04 21:00 America/Panama (internal target 17:00)  
-P0 verified: 3/27 · P1: 0/6 · P2: 0/3
+P0 verified: 4/27 · P1: 0/6 · P2: 0/3
 
 ## In progress
 - none

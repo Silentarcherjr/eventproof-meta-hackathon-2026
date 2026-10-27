@@ -18,3 +18,4 @@
 - Tests: 69 passed. Same seed ⇒ same frames and MP4 sha256 (verified locally, ffmpeg 8.1.1); GT boxes match drawn pixels; oracle verdict matches generator intent on 30 seeds.
 - Finding (real, not staged): with a 0.5 s DWELL threshold, boxes merely driving through the inspection zone (~0.6–0.9 s inside) count as inspected → false PASS. Canonical clean family now uses 1.5 s threshold and 1.2–2.0 s stops; the 0.5 s weakness is kept as a regression test and as a target for Challenge Mode.
 - Sample render: seed 4 / 3 objects → scene 3bd6d51c…, frames f6ead617…, mp4 e749e90b… (local artifact, untracked).
+- Rewritten history force-pushed (with lease) — main 80fd3ab, tag 039c084. CI run 40574193970 (with ffmpeg) success. G2-01 → DONE_VERIFIED; G0-02/G0-05/G1-02 re-verified on the new history.

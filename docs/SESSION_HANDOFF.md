@@ -3,15 +3,16 @@
 Written: 2026-10-27 (end of session 1, local). Overwrite at the end of every session, after push.
 
 ## State
-- Gate G0. Repo `Silentarcherjr/eventproof-meta-hackathon-2026` (private). Tag `hackathon-start-2026-10-27` = ec8e2f9. Commit identity: Anthony Morell <153972162+Silentarcherjr@users.noreply.github.com> (repo-local git config; set it again in fresh cloud clones).
-- Backend: DSL + tri-state evaluator + `/evaluate` API, 21 tests passing locally. CI workflow added (verify it is green on GitHub).
-- Live Meta: BLOCKED until the participant claims credits and provides `MODEL_API_KEY` in `backend/.env` (or cloud secret).
+- Gate G0/G2. Repo `Silentarcherjr/eventproof-meta-hackathon-2026` (private). Tag `hackathon-start-2026-10-27` = 039c084. HEAD green on CI.
+- Commit identity: Anthony Morell <153972162+Silentarcherjr@users.noreply.github.com> (repo-local git config; set it again in fresh cloud clones). No assistant attribution trailers in commits.
+- Done & verified: G0-02 repo, G0-05 CI, G1-02 DSL + tri-state evaluator, G2-01 deterministic renderer (MP4 + oracle ground truth).
+- Live Meta: BLOCKED until the participant receives credits / `MODEL_API_KEY` (requested, not yet granted).
 
 ## Next exact task
-1. (done) CI green; G0-02, G0-05, G1-02 DONE_VERIFIED at ec8e2f9.
-2. G2-01: `backend/eventproof/challenge/renderer.py` — deterministic 2D renderer (OpenCV or Pillow + ffmpeg pipe) that writes MP4 (H.264, ≥50 frames) + `ground_truth` TrackSet (`source="synthetic_ground_truth"`) from a seed. Same seed ⇒ same sha256. This clip also unblocks G0-04 (SAM smoke test).
-3. G1-04: SAM adapter. Ask the participant before installing `meta-sam-parser`; otherwise write a documented fallback parser for the `<Nf>id<|box;…|>` wire format with fixtures.
+1. G2-02 adversarial families in `backend/eventproof/challenge/`: (a) drive-through near the dwell threshold, (b) occluder over the inspection station, (c) two boxes crossing lanes (ID-swap bait), (d) brief entry. Each family = seeded generator + expected label from `oracle_view`.
+2. Labelled mock perception (`source="mock"`): a lossy tracker over ground truth (drops occluded frames, swaps ids when boxes overlap) to develop the Challenge search while SAM is unavailable. Never present as SAM.
+3. G2-03 search loop: run families × seeds, compare detector verdict vs oracle, keep failing cases with seed + hashes.
 
 ## Human actions pending
-- C-03: claim $150 Meta credits (form in guide §5), add card, set Spend Limit alert, then put key in `backend/.env`.
-- C-02: ask in #questions: private repo during build OK? disclose AI coding assistants? license required? video exactly 3:00?
+- C-03: Meta credits / key (requested). Put key in `backend/.env` when received.
+- C-02: post the 4 questions in Discord #questions.

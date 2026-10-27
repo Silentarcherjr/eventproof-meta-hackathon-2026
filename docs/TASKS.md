@@ -17,7 +17,7 @@
 - [ ] **G1-05** (G1, TODO) Video ingestion: ffprobe validation, H.264 re-encode, <=20s — DoD: Rejects bad MIME/oversize; tests
 - [ ] **G1-01** (G1, TODO) Video -> SAM -> rule -> evidence E2E (API) — DoD: One real clip end-to-end with evidence JSON
 - [ ] **G1-06** (G1, TODO) Frontend studio: upload, rule editor, zone editor, overlay timeline — DoD: Playwright smoke: upload -> result visible
-- [ ] **G2-01** (G2, IN_REVIEW) Deterministic Challenge renderer (MP4 + ground_truth.json by seed) — DoD: Same seed -> same sha256; ground truth from independent geometry
+- [x] **G2-01** (G2, DONE_VERIFIED) Deterministic Challenge renderer (MP4 + ground_truth.json by seed) — DoD: Same seed -> same sha256; ground truth from independent geometry
 - [ ] **G2-02** (G2, READY) Mutation classes: ID swap/crossing, occlusion, brief entry, near-threshold timing — DoD: >=3 families implemented with tests
 - [ ] **G2-03** (G2, TODO) Challenge run finds a REAL counterexample against the built detector — DoD: Reproducible failing case with seed + hash
 - [ ] **G3-01** (G3, TODO) Counterexample minimizer (delta debugging) + side-by-side replay — DoD: Minimal local pair shown with decisive frames

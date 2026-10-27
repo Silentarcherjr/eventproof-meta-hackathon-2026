@@ -128,12 +128,12 @@
       ],
       "evidence_paths": [
         "gh repo view: isPrivate=true",
-        "CI re-run pending after history rewrite"
+        "GitHub Actions run 40574193970 success (HEAD 80fd3ab)"
       ],
       "commit_sha": "039c084b66c50c00234e6a1037faa3a5e4ddd9f8",
       "pr_url": null,
       "started_at": "2026-10-27T19:17:28Z",
-      "updated_at": "2026-10-27T19:49:53Z",
+      "updated_at": "2026-10-27T20:01:45Z",
       "blocker": null,
       "next_action": null,
       "cost_note": null
@@ -204,12 +204,12 @@
         "cd backend && uv run pytest"
       ],
       "evidence_paths": [
-        "CI re-run pending after history rewrite"
+        "GitHub Actions run 40574193970 success (HEAD 80fd3ab)"
       ],
       "commit_sha": "039c084b66c50c00234e6a1037faa3a5e4ddd9f8",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:49:53Z",
+      "updated_at": "2026-10-27T20:01:45Z",
       "blocker": null,
       "next_action": "Verify CI green on GitHub",
       "cost_note": null
@@ -231,12 +231,12 @@
       ],
       "evidence_paths": [
         "backend/tests/engine",
-        "CI re-run pending after history rewrite"
+        "GitHub Actions run 40574193970 success (HEAD 80fd3ab)"
       ],
       "commit_sha": "039c084b66c50c00234e6a1037faa3a5e4ddd9f8",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:49:53Z",
+      "updated_at": "2026-10-27T20:01:45Z",
       "blocker": null,
       "next_action": "Merge after CI green",
       "cost_note": null
@@ -359,7 +359,7 @@
       "title": "Deterministic Challenge renderer (MP4 + ground_truth.json by seed)",
       "priority": "P0",
       "gate": "G2",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G1-02"
       ],
@@ -369,14 +369,14 @@
       "test_commands": [],
       "evidence_paths": [
         "backend/tests/challenge/test_render.py",
-        "artifacts/challenge/<scene>/manifest.json (local, untracked)"
+        "GitHub Actions run 40574193970 success (HEAD 80fd3ab)"
       ],
-      "commit_sha": null,
+      "commit_sha": "80fd3ab311c49efb8bab8117505e1a0f832fc35b",
       "pr_url": null,
       "started_at": "2026-10-27T19:49:53Z",
-      "updated_at": "2026-10-27T19:49:53Z",
+      "updated_at": "2026-10-27T20:01:45Z",
       "blocker": null,
-      "next_action": "CI green (with ffmpeg) -> DONE_VERIFIED",
+      "next_action": null,
       "cost_note": null
     },
     {
