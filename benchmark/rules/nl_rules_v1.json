@@ -1,0 +1,20 @@
+{
+  "layout": {
+    "zones": [{"zone": {"id": "inspection", "polygon": [[0.30, 0.10], [0.50, 0.10], [0.50, 0.90], [0.30, 0.90]]},
+               "description": "inspection station on the conveyor"}],
+    "lines": [{"line": {"id": "packing_entry", "a": [0.75, 0.05], "b": [0.75, 0.95]},
+               "description": "entry of the packing area; boxes travel left to right"}]
+  },
+  "rules": [
+    {"id": "R1-dwell", "text": "Every blue box must stay at least 1.5 seconds in the inspection zone before it crosses into packing.",
+     "expect": "supported"},
+    {"id": "R2-stop", "text": "A blue box may only go into packing after it has stopped at the inspection station for at least one second.",
+     "expect": "supported"},
+    {"id": "R3-never-skip", "text": "No blue box should ever reach packing without passing through inspection first.",
+     "expect": "supported"},
+    {"id": "R4-within", "text": "After a blue box has been in the inspection zone for one second, it must reach packing within 6 seconds.",
+     "expect": "supported"},
+    {"id": "R5-helmet", "text": "Every worker near the conveyor must wear a yellow helmet.",
+     "expect": "unsupported"}
+  ]
+}

@@ -1,0 +1,250 @@
+{
+ "note": "REAL muse-spark-1.3 outputs (schema rule-schema/2-nodes), 2026-10-27",
+ "outputs": {
+  "After a blue box has been in the inspection zone for one second, it must reach packing within 6 seconds.": {
+   "request_ids": [
+    "chatcmpl-01a17fc5-d180-7150-babc-187664547e60"
+   ],
+   "raw_output": {
+    "assumptions": [
+     "'Been in the inspection zone for one second' interpreted as DWELL continuously inside >=1000 ms with any motion (max_speed null).",
+     "'Reach packing within 6 seconds' interpreted as CROSSES packing_entry with 6000 ms limit measured from satisfaction of the 1-second dwell to the crossing.",
+     "'Reach packing' direction interpreted as normal left-to-right travel, which per the given mapping is direction to_left.",
+     "Objects that never dwell 1 second in inspection vacuously pass."
+    ],
+    "entity_concept": "blue box",
+    "entity_name": "blue box",
+    "nodes": [
+     {
+      "children": [],
+      "event": {
+       "max_speed": null,
+       "min_ms": 1000,
+       "op": "DWELL",
+       "zone": "inspection"
+      },
+      "first": null,
+      "op": "OCCURS",
+      "then": null,
+      "within_ms": null
+     },
+     {
+      "children": [],
+      "event": null,
+      "first": {
+       "max_speed": null,
+       "min_ms": 1000,
+       "op": "DWELL",
+       "zone": "inspection"
+      },
+      "op": "BEFORE",
+      "then": {
+       "direction": "to_left",
+       "line": "packing_entry",
+       "op": "CROSSES"
+      },
+      "within_ms": 6000
+     },
+     {
+      "children": [
+       0,
+       1
+      ],
+      "event": null,
+      "first": null,
+      "op": "IMPLIES",
+      "then": null,
+      "within_ms": null
+     }
+    ],
+    "normalized_explanation": "Every blue box that dwells continuously in the inspection zone for at least 1 second must cross the packing_entry line in the to_left direction within 6 seconds afterwards.",
+    "root": 2,
+    "rule_id": "blue-box-inspection-to-packing",
+    "supported": true,
+    "unsupported_reason": ""
+   }
+  },
+  "No blue box should ever reach packing without passing through inspection first.": {
+   "request_ids": [
+    "chatcmpl-01a17fc5-9d6b-7440-ba5e-394a49fe5c5b"
+   ],
+   "raw_output": {
+    "assumptions": [
+     "passing through inspection means being inside the inspection zone for at least 1 consecutive frame",
+     "reaching packing means crossing packing_entry in the forward left-to-right travel direction, which is labeled to_left",
+     "crossing packing_entry in the opposite direction does not count as reaching packing",
+     "no maximum time limit between inspection and packing crossing"
+    ],
+    "entity_concept": "blue box",
+    "entity_name": "blue box",
+    "nodes": [
+     {
+      "children": [],
+      "event": {
+       "direction": "to_left",
+       "line": "packing_entry",
+       "op": "CROSSES"
+      },
+      "first": null,
+      "op": "OCCURS",
+      "then": null,
+      "within_ms": null
+     },
+     {
+      "children": [],
+      "event": null,
+      "first": {
+       "min_frames": 1,
+       "op": "IN_ZONE",
+       "zone": "inspection"
+      },
+      "op": "BEFORE",
+      "then": {
+       "direction": "to_left",
+       "line": "packing_entry",
+       "op": "CROSSES"
+      },
+      "within_ms": null
+     },
+     {
+      "children": [
+       0,
+       1
+      ],
+      "event": null,
+      "first": null,
+      "op": "IMPLIES",
+      "then": null,
+      "within_ms": null
+     }
+    ],
+    "normalized_explanation": "Every blue box that crosses packing_entry to the left must have been in the inspection zone before that crossing.",
+    "root": 2,
+    "rule_id": "no-packing-without-inspection",
+    "supported": true,
+    "unsupported_reason": ""
+   }
+  },
+  "Every blue box must stay at least 1.5 seconds in the inspection zone before it crosses into packing.": {
+   "request_ids": [
+    "chatcmpl-01a17fc4-ee68-75f3-97dd-afe01dc99296"
+   ],
+   "raw_output": {
+    "assumptions": [
+     "Crossing into packing is crossing line 'packing_entry' in direction 'to_left' (rightwards/+x), per the stated left-to-right travel mapping.",
+     "'Stay at least 1.5 seconds' is DWELL continuously inside zone 'inspection' for >=1500 ms with any motion allowed (max_speed null), not requiring stopped.",
+     "No maximum gap between dwell and crossing is enforced (within_ms null); only ordering before the first crossing is required.",
+     "Boxes that never cross packing_entry pass vacuously."
+    ],
+    "entity_concept": "blue box",
+    "entity_name": "blue box",
+    "nodes": [
+     {
+      "children": [],
+      "event": {
+       "direction": "to_left",
+       "line": "packing_entry",
+       "op": "CROSSES"
+      },
+      "first": null,
+      "op": "OCCURS",
+      "then": null,
+      "within_ms": null
+     },
+     {
+      "children": [],
+      "event": null,
+      "first": {
+       "max_speed": null,
+       "min_ms": 1500,
+       "op": "DWELL",
+       "zone": "inspection"
+      },
+      "op": "BEFORE",
+      "then": {
+       "direction": "to_left",
+       "line": "packing_entry",
+       "op": "CROSSES"
+      },
+      "within_ms": null
+     },
+     {
+      "children": [
+       0,
+       1
+      ],
+      "event": null,
+      "first": null,
+      "op": "IMPLIES",
+      "then": null,
+      "within_ms": null
+     }
+    ],
+    "normalized_explanation": "Every blue box that crosses packing_entry to_left must have dwelled continuously in the inspection zone for at least 1500 ms before that crossing.",
+    "root": 2,
+    "rule_id": "blue-box-inspection-before-packing",
+    "supported": true,
+    "unsupported_reason": ""
+   }
+  },
+  "A blue box may only go into packing after it has stopped at the inspection station for at least one second.": {
+   "request_ids": [
+    "chatcmpl-01a17fc5-6f41-75a3-a3d0-2f0e788733d6"
+   ],
+   "raw_output": {
+    "assumptions": [
+     "Going into packing is interpreted as crossing packing_entry in direction to_left, since boxes travel left-to-right (+x) which maps to to_left."
+    ],
+    "entity_concept": "blue box",
+    "entity_name": "blue box",
+    "nodes": [
+     {
+      "children": [],
+      "event": {
+       "direction": "to_left",
+       "line": "packing_entry",
+       "op": "CROSSES"
+      },
+      "first": null,
+      "op": "OCCURS",
+      "then": null,
+      "within_ms": null
+     },
+     {
+      "children": [],
+      "event": null,
+      "first": {
+       "max_speed": 0.05,
+       "min_ms": 1000,
+       "op": "DWELL",
+       "zone": "inspection"
+      },
+      "op": "BEFORE",
+      "then": {
+       "direction": "to_left",
+       "line": "packing_entry",
+       "op": "CROSSES"
+      },
+      "within_ms": null
+     },
+     {
+      "children": [
+       0,
+       1
+      ],
+      "event": null,
+      "first": null,
+      "op": "IMPLIES",
+      "then": null,
+      "within_ms": null
+     }
+    ],
+    "normalized_explanation": "Every blue box that crosses packing_entry to the left must have previously stopped in inspection for at least 1000 ms.",
+    "root": 2,
+    "rule_id": "blue-box-inspection-before-packing",
+    "supported": true,
+    "unsupported_reason": ""
+   }
+  }
+ }
+}

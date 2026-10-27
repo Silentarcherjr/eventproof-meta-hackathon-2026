@@ -47,3 +47,9 @@
 - Credits guard: live calls need an explicit allowance (`max_live_calls`, default 0; CLI `--max-live-calls`). Without key or allowance the call raises; there is no fallback to mock.
 - Challenge Mode uploads only rendered pixels to SAM; ground truth never leaves the process.
 - 2026-10-27, first live call: mask tokens carry `;c=<conf>` before `data=`; the parser accepts it (optional) and stores it on `SamMask.confidence`.
+
+## ADR-010 — 2026-10-27 — Muse rule compiler (G1-03)
+- `meta/muse_rules.py`: natural language + layout (zones/lines with descriptions) → `VisualRule`. Geometry never comes from the model; zone/line ids are JSON-schema enums. `to_left`/`to_right` are translated into image directions in the prompt.
+- Expression emitted as a flat node list (children = indices), rebuilt into a tree in code: each node used exactly once, no cycles, no unused nodes, arity checked; then the normal rule schema validates depth, ids and ranges. Reason: Muse expands `$ref`s, so a depth-unrolled recursive grammar cost 194,990 prompt tokens per call (measured); the node list costs ~1,420.
+- `supported=false` path: the model must refuse rules the DSL cannot express (verified live on a helmet rule).
+- Invalid output: one retry with the validation error, then `RuleCompileError`; invalid rules are never cached. Model output is data only.

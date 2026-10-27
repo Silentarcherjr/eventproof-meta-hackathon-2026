@@ -56,3 +56,10 @@
 - Tests: 131 passed.
 - Participant approved up to 10 SAM calls for Challenge Mode. `challenge/compare.py` ran 10 mock-failing scenes through live SAM 3.1 (10 live calls, cached): tailgate 5/5 correct with SAM (mock: 5 false PASS); occluded_station 5/5 UNKNOWN with SAM (mock: 5 false alarms). SAM kept the same id across 20–35 frame full occlusions; the detector abstains because the stop itself was hidden. Report `benchmark/reports/2026-10-27_sam_vs_mock.json`. Tests: 132 passed.
 - Metric bug found in own code: `identity_events` reported "merged" for heavily overlapping boxes even when the detector returned 2 boxes; now requires fewer boxes than visible objects. Report regenerated from cache (0 new calls). Checked per object: SAM fails exactly the uninspected tailgate box and passes the inspected one in 5/5.
+
+## 2026-10-27 · session 1 (cont.) · local macOS · orchestrator — G1-03
+- `meta/muse_rules.py` (schema, prompt, node-list → tree conversion, compiler with retry + cache, benchmark CLI); `benchmark/rules/` (5 NL rules + live report); real outputs as fixture.
+- Live finding: first schema (3 unrolled `$defs` levels) worked but cost 194,990 prompt tokens per call (refs expanded). Redesigned to a flat node list: ~1,420 prompt tokens, same AST.
+- Results (live muse-spark-1.3): R1 canonical compiled to the same AST as the hand-written rule; R2 ("stopped") used DWELL max_speed 0.05; R3 IN_ZONE→CROSSES; R4 within_ms 6000; R5 helmet → supported=false. All first attempt.
+- Muse calls this task: 6 (1 × ~195k + 5 × ~1.4k prompt tokens; 2.1k–3.8k completion tokens each).
+- Tests: 150 passed.

@@ -1,0 +1,436 @@
+{
+  "model": "muse-spark-1.3",
+  "schema_version": "rule-schema/2-nodes",
+  "live_calls_this_run": 4,
+  "dev_scenes": 150,
+  "perception_for_dev_outcomes": "mock (NOT SAM)",
+  "rules": [
+    {
+      "id": "R1-dwell",
+      "text": "Every blue box must stay at least 1.5 seconds in the inspection zone before it crosses into packing.",
+      "expect": "supported",
+      "result": "compiled",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": null,
+              "min_ms": 1500.0,
+              "op": "DWELL",
+              "zone": "inspection"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_left",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_left",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "blue box",
+          "name": "blue box"
+        },
+        "lines": [
+          {
+            "a": [
+              0.75,
+              0.05
+            ],
+            "b": [
+              0.75,
+              0.95
+            ],
+            "id": "packing_entry"
+          }
+        ],
+        "normalized_explanation": "Every blue box that crosses packing_entry to_left must have dwelled continuously in the inspection zone for at least 1500 ms before that crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "blue-box-inspection-before-packing",
+        "version": 1,
+        "zones": [
+          {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.3,
+                0.1
+              ],
+              [
+                0.5,
+                0.1
+              ],
+              [
+                0.5,
+                0.9
+              ],
+              [
+                0.3,
+                0.9
+              ]
+            ]
+          }
+        ]
+      },
+      "rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+      "assumptions": [
+        "Crossing into packing is crossing line 'packing_entry' in direction 'to_left' (rightwards/+x), per the stated left-to-right travel mapping.",
+        "'Stay at least 1.5 seconds' is DWELL continuously inside zone 'inspection' for >=1500 ms with any motion allowed (max_speed null), not requiring stopped.",
+        "No maximum gap between dwell and crossing is enforced (within_ms null); only ordering before the first crossing is required.",
+        "Boxes that never cross packing_entry pass vacuously."
+      ],
+      "attempts": 1,
+      "request_ids": [
+        "chatcmpl-01a17fc4-ee68-75f3-97dd-afe01dc99296"
+      ],
+      "cached": true,
+      "usage": [
+        {
+          "prompt_tokens": 1420,
+          "completion_tokens": 2648
+        }
+      ],
+      "dev_outcomes_mock_perception": {
+        "correct": 99,
+        "spec_error": 14,
+        "perception_error": 30,
+        "abstained": 7
+      }
+    },
+    {
+      "id": "R2-stop",
+      "text": "A blue box may only go into packing after it has stopped at the inspection station for at least one second.",
+      "expect": "supported",
+      "result": "compiled",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "inspection"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_left",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_left",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "blue box",
+          "name": "blue box"
+        },
+        "lines": [
+          {
+            "a": [
+              0.75,
+              0.05
+            ],
+            "b": [
+              0.75,
+              0.95
+            ],
+            "id": "packing_entry"
+          }
+        ],
+        "normalized_explanation": "Every blue box that crosses packing_entry to the left must have previously stopped in inspection for at least 1000 ms.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "blue-box-inspection-before-packing",
+        "version": 1,
+        "zones": [
+          {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.3,
+                0.1
+              ],
+              [
+                0.5,
+                0.1
+              ],
+              [
+                0.5,
+                0.9
+              ],
+              [
+                0.3,
+                0.9
+              ]
+            ]
+          }
+        ]
+      },
+      "rule_hash": "3e82c9799a06d2f829ce0d000cbfba2acb7cd880b7a2907f07019bbb541a0031",
+      "assumptions": [
+        "Going into packing is interpreted as crossing packing_entry in direction to_left, since boxes travel left-to-right (+x) which maps to to_left."
+      ],
+      "attempts": 1,
+      "request_ids": [
+        "chatcmpl-01a17fc5-6f41-75a3-a3d0-2f0e788733d6"
+      ],
+      "cached": false,
+      "usage": [
+        {
+          "prompt_tokens": 1420,
+          "completion_tokens": 2153
+        }
+      ],
+      "dev_outcomes_mock_perception": {
+        "correct": 107,
+        "spec_error": 8,
+        "perception_error": 28,
+        "abstained": 7
+      }
+    },
+    {
+      "id": "R3-never-skip",
+      "text": "No blue box should ever reach packing without passing through inspection first.",
+      "expect": "supported",
+      "result": "compiled",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "min_frames": 1,
+              "op": "IN_ZONE",
+              "zone": "inspection"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_left",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_left",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "blue box",
+          "name": "blue box"
+        },
+        "lines": [
+          {
+            "a": [
+              0.75,
+              0.05
+            ],
+            "b": [
+              0.75,
+              0.95
+            ],
+            "id": "packing_entry"
+          }
+        ],
+        "normalized_explanation": "Every blue box that crosses packing_entry to the left must have been in the inspection zone before that crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "no-packing-without-inspection",
+        "version": 1,
+        "zones": [
+          {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.3,
+                0.1
+              ],
+              [
+                0.5,
+                0.1
+              ],
+              [
+                0.5,
+                0.9
+              ],
+              [
+                0.3,
+                0.9
+              ]
+            ]
+          }
+        ]
+      },
+      "rule_hash": "1dffe3c8bc6e84b1d9618adf8f7bd53ee032e7fcdfd5870f37fb94b3343a854a",
+      "assumptions": [
+        "passing through inspection means being inside the inspection zone for at least 1 consecutive frame",
+        "reaching packing means crossing packing_entry in the forward left-to-right travel direction, which is labeled to_left",
+        "crossing packing_entry in the opposite direction does not count as reaching packing",
+        "no maximum time limit between inspection and packing crossing"
+      ],
+      "attempts": 1,
+      "request_ids": [
+        "chatcmpl-01a17fc5-9d6b-7440-ba5e-394a49fe5c5b"
+      ],
+      "cached": false,
+      "usage": [
+        {
+          "prompt_tokens": 1411,
+          "completion_tokens": 2754
+        }
+      ],
+      "dev_outcomes_mock_perception": {
+        "spec_error": 108,
+        "correct": 39,
+        "perception_error": 3
+      }
+    },
+    {
+      "id": "R4-within",
+      "text": "After a blue box has been in the inspection zone for one second, it must reach packing within 6 seconds.",
+      "expect": "supported",
+      "result": "compiled",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": null,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "inspection"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_left",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "within_ms": 6000.0
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "max_speed": null,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "inspection"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "blue box",
+          "name": "blue box"
+        },
+        "lines": [
+          {
+            "a": [
+              0.75,
+              0.05
+            ],
+            "b": [
+              0.75,
+              0.95
+            ],
+            "id": "packing_entry"
+          }
+        ],
+        "normalized_explanation": "Every blue box that dwells continuously in the inspection zone for at least 1 second must cross the packing_entry line in the to_left direction within 6 seconds afterwards.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "blue-box-inspection-to-packing",
+        "version": 1,
+        "zones": [
+          {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.3,
+                0.1
+              ],
+              [
+                0.5,
+                0.1
+              ],
+              [
+                0.5,
+                0.9
+              ],
+              [
+                0.3,
+                0.9
+              ]
+            ]
+          }
+        ]
+      },
+      "rule_hash": "3200ce7f5f896eae30309ff5af28ba5a4f5b01936290a9d6043b8cd08972fcad",
+      "assumptions": [
+        "'Been in the inspection zone for one second' interpreted as DWELL continuously inside >=1000 ms with any motion (max_speed null).",
+        "'Reach packing within 6 seconds' interpreted as CROSSES packing_entry with 6000 ms limit measured from satisfaction of the 1-second dwell to the crossing.",
+        "'Reach packing' direction interpreted as normal left-to-right travel, which per the given mapping is direction to_left.",
+        "Objects that never dwell 1 second in inspection vacuously pass."
+      ],
+      "attempts": 1,
+      "request_ids": [
+        "chatcmpl-01a17fc5-d180-7150-babc-187664547e60"
+      ],
+      "cached": false,
+      "usage": [
+        {
+          "prompt_tokens": 1421,
+          "completion_tokens": 3755
+        }
+      ],
+      "dev_outcomes_mock_perception": {
+        "spec_error": 101,
+        "correct": 42,
+        "perception_error": 1,
+        "abstained": 6
+      }
+    },
+    {
+      "id": "R5-helmet",
+      "text": "Every worker near the conveyor must wear a yellow helmet.",
+      "expect": "unsupported",
+      "result": "unsupported",
+      "reason": "Rule requires person/worker detection, conveyor proximity, and yellow helmet colour attribute; DSL only supports IN_ZONE/DWELL/CROSSES on inspection zone and packing_entry line with no people, attributes, colours, or counting."
+    }
+  ]
+}
