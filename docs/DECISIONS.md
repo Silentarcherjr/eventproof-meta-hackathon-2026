@@ -46,3 +46,4 @@
 - `SamTracker` caches the raw output by (video sha256, model, prompt, metadata) under `artifacts/sam_cache/` (untracked). Cache hits are real SAM output and are labelled `:cached` in `source_ref`.
 - Credits guard: live calls need an explicit allowance (`max_live_calls`, default 0; CLI `--max-live-calls`). Without key or allowance the call raises; there is no fallback to mock.
 - Challenge Mode uploads only rendered pixels to SAM; ground truth never leaves the process.
+- 2026-10-27, first live call: mask tokens carry `;c=<conf>` before `data=`; the parser accepts it (optional) and stores it on `SamMask.confidence`.

@@ -49,3 +49,8 @@
 - Re-read dev.meta.ai SAM docs (segmenting, reading-segmentation, client-libraries) for the exact wire format.
 - `perception/sam_wire.py` (strict parser), `perception/sam.py` (TrackSet conversion, cached live tracker with live-call allowance, Challenge perceiver). `scripts/check_meta_api.py sam` now parses the real stream strictly. Runner: `--perception sam --max-live-calls N`.
 - Tests: 130 passed (documented-format fixture with skipped frames, sparse ids and hostile mask payloads; 9 malformed-line cases; delta chunking; hypothesis round trip ground truth → wire → TrackSet over all families; fake-client request shape, cache labelling, key never cached; credits guard; SAM perceiver inside Challenge Mode).
+- Participant added `MODEL_API_KEY` to `backend/.env` (verified loaded: length only, never printed).
+- FIRST LIVE CALLS. SAM 3.1 on canonical seed 0 (2 objects, 120 frames): strict parser failed on line 1 — live mask token has `c=` before `data=` (not in docs' example). Fixed from the cached raw output (no second call); 5 real lines committed as fixture. SAM vs ground truth: 110/110 boxes, IoU median 1.000, ≤1 px error, stable ids, verdict correct.
+- Muse Spark structured-output smoke: OK, 4.03 s, 504 completion tokens (479 reasoning).
+- Evidence: `docs/evidence/2026-10-27_meta_api_smoke.md`. 2 live calls total; charge not read from Billing (UNKNOWN).
+- Tests: 131 passed.

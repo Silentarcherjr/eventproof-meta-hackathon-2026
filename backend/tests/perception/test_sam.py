@@ -212,3 +212,14 @@ def test_sam_perceiver_in_challenge_mode_with_perfect_fake_sam(tmp_path, monkeyp
     assert (tmp_path / "videos" / f"{scene.scene_hash()[:16]}.mp4").exists()
     # what was uploaded is the rendered video only; ground truth never leaves the process
     assert all("frames" not in json.dumps(req, default=str) for k, req in fake.requests if k == "stream")
+
+
+def test_real_sam31_lines_parse():
+    """Lines from the first live sam-3.1 response: the mask token carries c= (not in the docs' example)."""
+    frames = parse_output((FIXTURES / "real_sam31_canonical0_2obj.txt").read_text().splitlines())
+    assert [f.frame for f in frames] == [43, 44, 45, 49, 50]
+    assert any(len(f.records) == 2 for f in frames)
+    r = frames[0].records[0]
+    assert (r.w, r.h) == (640, 360) and r.mask.encoding == "!" and r.mask.confidence == r.confidence
+    ts = to_trackset(frames, VideoInfo(width=640, height=360, fps=15, frame_count=120), "blue box", "real")
+    assert ts.frames[0].box.x2 == 61 and ts.frames[0].timestamp_ms == pytest.approx(43 * 1000 / 15)

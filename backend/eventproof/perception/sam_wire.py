@@ -4,7 +4,8 @@ Format (dev.meta.ai/docs/sam/segmenting and /reading-segmentation, read 2026-10-
 - one line per frame that has detections, each sent as one `response.output_text.delta`;
 - a line is `<Nf>` followed by comma-separated records; frames with no detections emit no line, so
   indices skip; never assume the k-th line is frame k;
-- a record is `<object id><|box;x1=..;y1=..;x2=..;y2=..;w=..;h=..[;c=..]|><|mask;x=..;y=..;data=H,W,<enc>payload|>`;
+- a record is `<object id><|box;x1=..;y1=..;x2=..;y2=..;w=..;h=..[;c=..]|><|mask;x=..;y=..[;c=..];data=H,W,<enc>payload|>`
+  (the mask `c=` was seen in the first live sam-3.1 response, 2026-10-27; the docs' example omits it);
 - box corners are source pixels, x2/y2 INCLUSIVE; w/h are the source frame size, repeated on every record;
 - ids are stable within one response, not dense, not guaranteed across entry/exit/full occlusion.
 
@@ -28,7 +29,8 @@ FRAME_RE = re.compile(r"<(\d+)f>")
 RECORD_RE = re.compile(
     r"(?P<oid>\d+)"
     r"<\|box;(?P<box>[^|]*)\|>"
-    r"(?:<\|mask;x=(?P<mx>-?\d+);y=(?P<my>-?\d+);data=(?P<mh>\d+),(?P<mw>\d+),(?P<enc>.)(?P<payload>.*?)\|>"
+    r"(?:<\|mask;x=(?P<mx>-?\d+);y=(?P<my>-?\d+);(?:c=(?P<mc>[0-9.eE+-]+);)?"
+    r"data=(?P<mh>\d+),(?P<mw>\d+),(?P<enc>.)(?P<payload>.*?)\|>"
     r"(?=$|,\d+<\|box;))?"
 )
 BOX_KEYS = ("x1", "y1", "x2", "y2", "w", "h")
@@ -46,6 +48,7 @@ class SamMask(BaseModel):
     height: int
     width: int
     encoding: str = Field(description="'~' lossless, '!' one_bit")
+    confidence: float | None = None
     payload_chars: int
 
 
@@ -108,7 +111,8 @@ def parse_line(line: str, line_no: int = 0) -> SamFrame:
         mask = None
         if r["enc"] is not None:
             mask = SamMask(x=int(r["mx"]), y=int(r["my"]), height=int(r["mh"]), width=int(r["mw"]),
-                           encoding=r["enc"], payload_chars=len(r["payload"]))
+                           encoding=r["enc"], payload_chars=len(r["payload"]),
+                           confidence=float(r["mc"]) if r["mc"] is not None else None)
         records.append(SamRecord(object_id=oid, **_box(r["box"], line_no), mask=mask))
         pos = r.end()
         if pos == len(line):
