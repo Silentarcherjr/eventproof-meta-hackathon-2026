@@ -143,7 +143,7 @@
       "title": "REAL Muse Spark API smoke test (structured output)",
       "priority": "P0",
       "gate": "G0",
-      "state": "BLOCKED",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G0-02",
         "C-03"
@@ -154,13 +154,16 @@
       "test_commands": [
         "cd backend && uv run python ../scripts/check_meta_api.py muse"
       ],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "GitHub Actions run 40602048109 success",
+        "docs/evidence/2026-10-27_meta_api_smoke.md"
+      ],
+      "commit_sha": "107d676",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:17:28Z",
+      "updated_at": "2026-10-27T23:27:02Z",
       "blocker": "No MODEL_API_KEY / credits (C-03)",
-      "next_action": null,
+      "next_action": "-",
       "cost_note": null
     },
     {
@@ -168,7 +171,7 @@
       "title": "REAL SAM 3.1 API smoke test (video tracks)",
       "priority": "P0",
       "gate": "G0",
-      "state": "BLOCKED",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G0-02",
         "C-03"
@@ -179,13 +182,16 @@
       "test_commands": [
         "cd backend && uv run python ../scripts/check_meta_api.py sam"
       ],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "GitHub Actions run 40602048109 success",
+        "docs/evidence/2026-10-27_meta_api_smoke.md"
+      ],
+      "commit_sha": "107d676",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:17:28Z",
+      "updated_at": "2026-10-27T23:27:02Z",
       "blocker": "No MODEL_API_KEY / credits (C-03). Test clip now available from G2-01 renderer.",
-      "next_action": null,
+      "next_action": "-",
       "cost_note": null
     },
     {
@@ -269,7 +275,7 @@
       "title": "SAM 3.1 adapter: video -> normalized TrackFrames (official parser)",
       "priority": "P0",
       "gate": "G1",
-      "state": "IN_PROGRESS",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G0-04"
       ],
@@ -279,14 +285,16 @@
       "test_commands": [],
       "evidence_paths": [
         "GitHub Actions run 40599293442 success (d7af969)",
+        "GitHub Actions run 40602048109 success",
+        "backend/tests/fixtures/sam/real_sam31_canonical0_2obj.txt",
         "backend/tests/perception/test_sam.py"
       ],
-      "commit_sha": null,
+      "commit_sha": "107d676",
       "pr_url": null,
       "started_at": "2026-10-27T23:03:50Z",
-      "updated_at": "2026-10-27T23:03:50Z",
+      "updated_at": "2026-10-27T23:27:02Z",
       "blocker": null,
-      "next_action": "Fixture part done. Live part: MODEL_API_KEY in backend/.env, then check_meta_api.py sam on one canonical clip (1 call), cache by sha256",
+      "next_action": "Challenge Mode on SAM (needs spend OK)",
       "cost_note": null
     },
     {
