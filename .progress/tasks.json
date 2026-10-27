@@ -129,10 +129,10 @@
       "evidence_paths": [
         "gh repo view: isPrivate=true"
       ],
-      "commit_sha": "be4394d488af24f862e158bb4428b8554f36a2cf",
+      "commit_sha": "ec8e2f952d298400daa40353807d945cb5bb7b37",
       "pr_url": null,
       "started_at": "2026-10-27T19:17:28Z",
-      "updated_at": "2026-10-27T19:19:12Z",
+      "updated_at": "2026-10-27T19:44:43Z",
       "blocker": null,
       "next_action": null,
       "cost_note": null
@@ -203,12 +203,12 @@
         "cd backend && uv run pytest"
       ],
       "evidence_paths": [
-        "GitHub Actions run 40567887973 success"
+        "GitHub Actions run 40571762720 (on 1fb61f1, after author rewrite) success"
       ],
-      "commit_sha": "be4394d488af24f862e158bb4428b8554f36a2cf",
+      "commit_sha": "ec8e2f952d298400daa40353807d945cb5bb7b37",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:19:13Z",
+      "updated_at": "2026-10-27T19:44:43Z",
       "blocker": null,
       "next_action": "Verify CI green on GitHub",
       "cost_note": null
@@ -229,13 +229,13 @@
         "cd backend && uv run pytest tests/engine"
       ],
       "evidence_paths": [
-        "GitHub Actions run 40567887973 success",
+        "GitHub Actions run 40571762720 (on 1fb61f1, after author rewrite) success",
         "backend/tests/engine"
       ],
-      "commit_sha": "be4394d488af24f862e158bb4428b8554f36a2cf",
+      "commit_sha": "ec8e2f952d298400daa40353807d945cb5bb7b37",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:19:13Z",
+      "updated_at": "2026-10-27T19:44:43Z",
       "blocker": null,
       "next_action": "Merge after CI green",
       "cost_note": null

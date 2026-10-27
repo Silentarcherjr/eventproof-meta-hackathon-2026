@@ -10,3 +10,4 @@
 - Issues: (1) a hypothesis property test failed on a 1e-12 edge-tolerance case → test now excludes the tolerance band (behaviour intended). (2) Running the unvetted `meta-sam-parser` PyPI package was denied by the local permission guard; SAM parser choice deferred to G1-04 (needs participant OK to install it).
 - Open design note: Muse strict schemas cannot be recursive; G1-03 must send a depth-bounded (non-recursive) schema and convert it to the recursive AST.
 - Pushed be4394d to private repo, tag hackathon-start-2026-10-27. CI run 40567887973: success. G0-02, G0-05, G1-02 → DONE_VERIFIED.
+- Author email rewrite (participant request): both commits re-authored to the GitHub noreply address with original dates preserved (filter-branch), force-pushed by the participant. New SHAs: ec8e2f9 (tag hackathon-start-2026-10-27), 1fb61f1. Old SHAs be4394d/598280d no longer exist. CI run 40571762720 on 1fb61f1: success. Tracker SHAs updated.
