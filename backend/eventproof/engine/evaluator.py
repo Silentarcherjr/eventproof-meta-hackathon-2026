@@ -12,6 +12,7 @@ Semantics (documented in ADR-003):
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from math import hypot
 
 from eventproof.engine.geometry import cross, point_in_polygon, segments_intersect
 from eventproof.schemas.evidence import EventTrace, ObjectVerdict, RuleReport, Tri
@@ -101,6 +102,22 @@ def _bridged(a: Obs, b: Obs, max_gap: int) -> bool:
     return b.frame - a.frame - 1 <= max_gap
 
 
+SPEED_WINDOW_MS = 333.0  # long enough that +-1 px detector jitter does not read as motion
+
+
+def _stillness(t: ObjectTrack, max_speed: float) -> list[bool]:
+    """Per observation: average anchor speed (frame units/s) since the latest observation at least
+    SPEED_WINDOW_MS earlier (or the track start) is <= max_speed. The first observation has no speed."""
+    out, j = [], 0
+    for o in t.obs:
+        while j + 1 < len(t.obs) and o.ts - t.obs[j + 1].ts >= SPEED_WINDOW_MS:
+            j += 1
+        ref = t.obs[j]
+        dt = (o.ts - ref.ts) / 1000.0
+        out.append(dt > 0 and hypot(o.pt[0] - ref.pt[0], o.pt[1] - ref.pt[1]) / dt <= max_speed)
+    return out
+
+
 def eval_event(ev: Event, t: ObjectTrack, rule: VisualRule) -> EventResult:
     key = ev.model_dump_json()
     if key not in t._memo:
@@ -114,8 +131,9 @@ def _eval_event(ev: Event, t: ObjectTrack, rule: VisualRule) -> EventResult:
         poly = next(z.polygon for z in rule.zones if z.id == ev.zone)
         start: Obs | None = None
         prev: Obs | None = None
-        for o in t.obs:
-            inside = point_in_polygon(o.pt, poly)
+        still = _stillness(t, ev.max_speed) if isinstance(ev, Dwell) and ev.max_speed else None
+        for i, o in enumerate(t.obs):
+            inside = point_in_polygon(o.pt, poly) and (still is None or still[i])
             if not inside or (prev is not None and not _bridged(prev, o, max_gap)):
                 start = None
             if inside:
@@ -123,9 +141,12 @@ def _eval_event(ev: Event, t: ObjectTrack, rule: VisualRule) -> EventResult:
                 if isinstance(ev, InZone) and o.frame - start.frame + 1 >= ev.min_frames:
                     return EventResult("TRUE", start.frame, start.ts, f"inside {ev.zone} from frame {start.frame}")
                 if isinstance(ev, Dwell) and o.ts - start.ts + t.frame_ms >= ev.min_ms:
-                    return EventResult("TRUE", o.frame, o.ts, f"dwelled {ev.min_ms:.0f} ms in {ev.zone}")
+                    how = "still " if still is not None else ""
+                    return EventResult("TRUE", o.frame, o.ts, f"dwelled {ev.min_ms:.0f} ms {how}in {ev.zone}")
             prev = o
         need = f"{ev.min_frames} consecutive frames" if isinstance(ev, InZone) else f"{ev.min_ms:.0f} ms"
+        if still is not None:
+            need += " still"
         if t.blind_spots:
             return EventResult("UNKNOWN", reason=f"{need} in {ev.zone} not observed; "
                                                  f"{len(t.blind_spots)} blind spot(s) could hide it")

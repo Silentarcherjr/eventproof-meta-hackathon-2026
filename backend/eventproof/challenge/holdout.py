@@ -21,9 +21,9 @@ from pathlib import Path
 from pydantic import BaseModel
 
 from eventproof.challenge.families import FAMILIES
+from eventproof.challenge.runner import DEV_SEEDS  # noqa: F401  re-exported next to HOLDOUT_SEEDS
 from eventproof.challenge.scene import SceneSpec
 
-DEV_SEEDS = range(0, 30)
 HOLDOUT_SEEDS = range(20_000, 20_040)  # 10000-10039 were touched by a design scan; not used
 HOLDOUT_NAME = "holdout_v1"
 DEFAULT_PATH = Path(__file__).resolve().parents[3] / "benchmark" / "holdout" / f"{HOLDOUT_NAME}.json"

@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import copy
+
 import pytest
 from pydantic import ValidationError
 
 from eventproof.engine.evaluator import evaluate
 from eventproof.schemas.rules import VisualRule
-from tests.conftest import CANONICAL_RULE, lerp, path, trackset
+from tests.conftest import CANONICAL_RULE, W, lerp, path, trackset
 
 # x positions: inspection zone is x in [0.30, 0.50]; packing line at x = 0.75. 10 fps.
 INSPECTED = lerp(0.1, 0.4, 4) + [0.4] * 8 + lerp(0.45, 0.9, 6)  # ~1.2 s in inspection, then packing
@@ -114,3 +116,23 @@ def test_crossing_detected_when_anchor_lands_exactly_on_line(rule):
     cross = next(e for e in report.objects[0].events if e.op == "CROSSES")
     assert cross.status == "TRUE" and cross.frame == 4
     assert report.overall == "FAIL"
+
+
+def _still_rule(max_speed: float | None, min_ms: float = 500):
+    d = copy.deepcopy(CANONICAL_RULE)
+    d["check"]["conclusion"]["first"].update({"min_ms": min_ms, "max_speed": max_speed})
+    return VisualRule.model_validate(d)
+
+
+def test_dwell_max_speed_separates_slow_transit_from_a_stop():
+    slow = lerp(0.1, 0.9, 40)  # 0.2/s: ~1 s inside the 0.2-wide zone without ever stopping
+    stop = lerp(0.1, 0.4, 8) + [0.4] * 8 + lerp(0.4, 0.9, 10)  # 0.8 s standing still at the station
+    for xs, plain, still in ((slow, "PASS", "FAIL"), (stop, "PASS", "PASS")):
+        ts = trackset(path(xs), n=len(xs))
+        assert evaluate(_still_rule(None), ts).overall == plain
+        assert evaluate(_still_rule(0.05), ts).overall == still
+
+
+def test_dwell_max_speed_tolerates_pixel_jitter():
+    xs = lerp(0.1, 0.4, 8) + [0.4 + (i % 2) / W for i in range(8)] + lerp(0.4, 0.9, 10)  # +-1 px while stopped
+    assert evaluate(_still_rule(0.05), trackset(path(xs), n=len(xs))).overall == "PASS"

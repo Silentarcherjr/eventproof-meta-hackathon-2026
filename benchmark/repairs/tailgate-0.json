@@ -1,0 +1,13 @@
+{
+  "family": "tailgate",
+  "seed": 0,
+  "perception": "mock",
+  "proposer": "baseline-deterministic",
+  "detector_before": {
+    "dwell_ms": 1500.0,
+    "max_gap_frames": 3
+  },
+  "context_sha_note": "RepairContext checked by ensure_no_holdout before it reached the proposer",
+  "decisions": [],
+  "note": "Synthetic scenes, small n; results measure the harness and must not be generalized to production."
+}

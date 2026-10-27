@@ -26,7 +26,7 @@
     "detector_verdict": "PASS",
     "outcome": "perception_error",
     "scene_sha256": "e70fb8fc401cc0ca439e55083fde4e614a95edbc7b92de46771ad810058fe0e2",
-    "rule_hash": "57eb9a8005a007a36fc8b4cda99d261e63eb4e3c7a6eb834fa65bfce6948c766"
+    "rule_hash": "1401b0ca82987ee2fd135d73b8f6884d96389ecf3ea1da7c337defb27275e07f"
   },
   "passing": {
     "intended": "FAIL",
@@ -34,7 +34,7 @@
     "detector_verdict": "FAIL",
     "outcome": "correct",
     "scene_sha256": "50d9ce4901a5c3c0acab274b2f7afe745280b7a39e901c5c15bee99e484171c1",
-    "rule_hash": "57eb9a8005a007a36fc8b4cda99d261e63eb4e3c7a6eb834fa65bfce6948c766"
+    "rule_hash": "1401b0ca82987ee2fd135d73b8f6884d96389ecf3ea1da7c337defb27275e07f"
   },
   "reproduce": "cd backend && uv run python -m eventproof.challenge.minimize --family tailgate --seed 0"
 }

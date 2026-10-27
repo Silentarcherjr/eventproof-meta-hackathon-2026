@@ -35,3 +35,10 @@
 - Evidence committed: `benchmark/counterexamples/tailgate-0/` (2 PNG + replay.json + summary.json, 32 KB). Videos stay in `artifacts/` (untracked).
 - Tests: 97 passed; ruff clean.
 - CI run 40579483313 (24f5f40): success → G3-01 and P1-01 DONE_VERIFIED.
+
+## 2026-10-27 · session 1 (cont.) · local macOS · orchestrator — G4-02 / G4-01
+- G4-02: `challenge/holdout.py` + frozen manifest `benchmark/holdout/holdout_v1.json` (seeds 20000–20039 × 5 families = 200 scenes, sha256 f4ef37bb…ad82), committed alone in 8ed7a02 before any repair code. Seeds 10000–10039 were used in a design scan, so they were dropped from the holdout to keep it unseen.
+- G4-01 harness: `repair/patch.py` (bounded RulePatch ops), `repair/proposer.py` (RepairContext + `baseline-deterministic` grid proposer, NOT Muse), `repair/grader.py` (independent holdout grading, accept/reject with reasons), `repair/loop.py` (CLI). Isolation tests: import closure, leak check on context, spy proposer.
+- First result: threshold-only repairs could never separate a slow drive-through from a short stop (rejected for regressions). Root cause: DWELL measured time in zone, intent is "stood still". Added optional `DWELL.max_speed` to the DSL (engine change by the developer, not by the repairer).
+- Results (mock perception, baseline proposer; `benchmark/repairs/`): drive_through-0 → "DWELL ≥ 2.0 s" REJECTED (holdout 144→152/200 but 11 regressions, false alarms 13→24); "DWELL still (≤0.05/s) ≥ 0.8 s" ACCEPTED (144→166/200, 0 regressions, false PASS 40→19). brief_stop-5 → "DWELL ≥ 1.7 s" rejected (1 regression), stillness patch accepted. occluded_station-1 / tailgate-0: no bounded rule patch fixes them (perception errors) → no proposal.
+- Tests: 111 passed; ruff clean.

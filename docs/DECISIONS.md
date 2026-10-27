@@ -30,3 +30,11 @@
 - Results are reported as LOCAL minima within an explicit evaluation budget, never as global minima. Both scenes of a pair are stored and re-evaluated in tests, so the flip is reproducible, not asserted.
 - Decisive frames = first identity events on the failing scene (merge / lost / new id / switch vs ground truth) + the first frame where perceived tracks diverge between the pair; for spec errors (perception fine) the rule's own event frames.
 - Pillow added for overlay text (HPND license; to list in LICENSE_INVENTORY).
+
+## ADR-008 — 2026-10-27 — Frozen holdout and repair acceptance
+- Hidden holdout `holdout_v1`: seeds 20000–20039 × 5 families (200 scenes), manifest with per-scene sha256 committed in 8ed7a02 before any repair code. Seeds 10000–10039 were looked at during a design scan and are therefore excluded. `load_frozen` regenerates every scene and refuses to grade on any hash drift.
+- Isolation: proposers live in `repair/proposer.py`, which cannot import the holdout, grader or loop (static import-closure test); the loop checks every `RepairContext` for holdout seeds/hashes before a proposer sees it; the grader re-evaluates everything itself.
+- Repairs are bounded `RulePatch` ops (DWELL threshold, DWELL max_speed, max_gap_frames, min_confidence), re-validated through the rule schema; zones, lines, entity and AST shape cannot change.
+- Accept only if: safe, fixes the counterexample, 0 holdout regressions, no increase of false PASS, and holdout accuracy strictly improves. Otherwise rejected with reasons ("did not generalize" when accuracy does not improve).
+- DSL extension: `DWELL.max_speed` (optional, frame units/s over ~1/3 s) so a rule can say "still in the zone", which is what the process intent means. Default unchanged; the schema field changes `rule_hash` of existing rules (recorded evidence updated).
+- Until Muse access exists, the proposer is a deterministic grid search labelled `baseline-deterministic`; a Muse proposer must return the same patch JSON.

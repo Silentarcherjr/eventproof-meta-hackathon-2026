@@ -57,6 +57,10 @@ class Dwell(BaseModel):
     op: Literal["DWELL"] = "DWELL"
     zone: str
     min_ms: float = Field(gt=0, le=600_000)
+    max_speed: float | None = Field(
+        default=None, gt=0, le=10,
+        description="if set, only time spent (nearly) still counts: anchor speed in frame units/s, "
+                    "measured over ~1/3 s, must stay <= max_speed")
 
 
 class Crosses(BaseModel):

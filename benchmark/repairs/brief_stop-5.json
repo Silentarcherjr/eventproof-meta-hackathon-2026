@@ -1,0 +1,256 @@
+{
+  "family": "brief_stop",
+  "seed": 5,
+  "perception": "mock",
+  "proposer": "baseline-deterministic",
+  "detector_before": {
+    "dwell_ms": 1500.0,
+    "max_gap_frames": 3
+  },
+  "context_sha_note": "RepairContext checked by ensure_no_holdout before it reached the proposer",
+  "decisions": [
+    {
+      "proposal": {
+        "proposal_id": "baseline-deterministic-0",
+        "proposer": "baseline-deterministic",
+        "patch": {
+          "ops": [
+            {
+              "op": "set_dwell_min_ms",
+              "zone": "inspection",
+              "value": 1700.0
+            }
+          ]
+        },
+        "rationale": "spec_error on brief_stop: DWELL(inspection) >= 1.70 s (smallest change on the grid that fixes the counterexample)",
+        "expected_effect": {
+          "fixes_counterexample": true,
+          "dev_correct_before": 99,
+          "dev_correct_after": 108,
+          "dev_regressions": 0,
+          "dev_cases": 150
+        }
+      },
+      "patch_description": "DWELL(inspection) >= 1.70 s",
+      "previous_rule_hash": "1401b0ca82987ee2fd135d73b8f6884d96389ecf3ea1da7c337defb27275e07f",
+      "patched_rule_hash": "ef81f6ac6c0ec3af2f76b97553947b6170f7a2fbd05cca99fdd9891030201332",
+      "perception": "mock",
+      "safety_checks": {
+        "patch_applies": true,
+        "structure_unchanged": true,
+        "rule_hash_changed": true
+      },
+      "origin_outcomes_after": [
+        "correct",
+        "correct"
+      ],
+      "holdout_name": "holdout_v1",
+      "holdout_manifest_sha256": "f4ef37bba5654f078e15b3726440289d1c52535b8a12f24c2dc9a1bcbf3aad82",
+      "holdout_before": {
+        "n": 200,
+        "correct": 144,
+        "false_pass": 40,
+        "false_alarm": 13,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 36,
+            "spec_error": 4
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "spec_error": 17,
+            "correct": 23
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "holdout_after": {
+        "n": 200,
+        "correct": 153,
+        "false_pass": 30,
+        "false_alarm": 14,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 40
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "correct": 29,
+            "spec_error": 11
+          },
+          "occluded_station": {
+            "correct": 26,
+            "perception_error": 14
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "fixed_cases": [
+        "brief_stop/20005",
+        "brief_stop/20018",
+        "brief_stop/20029",
+        "brief_stop/20036",
+        "drive_through/20000",
+        "drive_through/20006",
+        "drive_through/20013",
+        "drive_through/20017",
+        "drive_through/20018",
+        "drive_through/20028"
+      ],
+      "regressions": [
+        "occluded_station/20021"
+      ],
+      "accepted": false,
+      "reasons": [
+        "1 holdout regression(s)"
+      ]
+    },
+    {
+      "proposal": {
+        "proposal_id": "baseline-deterministic-1",
+        "proposer": "baseline-deterministic",
+        "patch": {
+          "ops": [
+            {
+              "op": "set_dwell_max_speed",
+              "zone": "inspection",
+              "max_speed": 0.05
+            },
+            {
+              "op": "set_dwell_min_ms",
+              "zone": "inspection",
+              "value": 800.0
+            }
+          ]
+        },
+        "rationale": "spec_error on brief_stop: DWELL(inspection) counts only while speed <= 0.05/s; DWELL(inspection) >= 0.80 s (best visible-case score among changes with no visible regressions)",
+        "expected_effect": {
+          "fixes_counterexample": true,
+          "dev_correct_before": 99,
+          "dev_correct_after": 114,
+          "dev_regressions": 0,
+          "dev_cases": 150
+        }
+      },
+      "patch_description": "DWELL(inspection) counts only while speed <= 0.05/s; DWELL(inspection) >= 0.80 s",
+      "previous_rule_hash": "1401b0ca82987ee2fd135d73b8f6884d96389ecf3ea1da7c337defb27275e07f",
+      "patched_rule_hash": "05ca43cad644eb394a1cd7a555a295ba700231e3daf084b8ae2ddfe66c61ab7e",
+      "perception": "mock",
+      "safety_checks": {
+        "patch_applies": true,
+        "structure_unchanged": true,
+        "rule_hash_changed": true
+      },
+      "origin_outcomes_after": [
+        "correct",
+        "correct"
+      ],
+      "holdout_name": "holdout_v1",
+      "holdout_manifest_sha256": "f4ef37bba5654f078e15b3726440289d1c52535b8a12f24c2dc9a1bcbf3aad82",
+      "holdout_before": {
+        "n": 200,
+        "correct": 144,
+        "false_pass": 40,
+        "false_alarm": 13,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 36,
+            "spec_error": 4
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "spec_error": 17,
+            "correct": 23
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "holdout_after": {
+        "n": 200,
+        "correct": 166,
+        "false_pass": 19,
+        "false_alarm": 12,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 40
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "correct": 40
+          },
+          "occluded_station": {
+            "correct": 28,
+            "perception_error": 12
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "fixed_cases": [
+        "brief_stop/20005",
+        "brief_stop/20018",
+        "brief_stop/20029",
+        "brief_stop/20036",
+        "drive_through/20000",
+        "drive_through/20005",
+        "drive_through/20006",
+        "drive_through/20009",
+        "drive_through/20013",
+        "drive_through/20015",
+        "drive_through/20017",
+        "drive_through/20018",
+        "drive_through/20021",
+        "drive_through/20022",
+        "drive_through/20023",
+        "drive_through/20025",
+        "drive_through/20028",
+        "drive_through/20029",
+        "drive_through/20033",
+        "drive_through/20034",
+        "drive_through/20036",
+        "occluded_station/20020"
+      ],
+      "regressions": [],
+      "accepted": true,
+      "reasons": [
+        "verified on unseen cases: 144/200 -> 166/200, 0 regressions"
+      ]
+    }
+  ],
+  "note": "Synthetic scenes, small n; results measure the harness and must not be generalized to production."
+}

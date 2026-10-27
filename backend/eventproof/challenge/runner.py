@@ -30,6 +30,7 @@ from eventproof.schemas.tracks import TrackSet
 
 Outcome = Literal["correct", "spec_error", "perception_error", "abstained"]
 Perceiver = Callable[[SceneSpec, TrackSet], TrackSet]
+DEV_SEEDS = range(0, 30)  # challenge cases: visible to the counterexample search and to repair proposers
 
 
 class CaseResult(BaseModel):
