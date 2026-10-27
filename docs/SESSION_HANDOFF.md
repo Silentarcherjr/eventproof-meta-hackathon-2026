@@ -5,7 +5,7 @@ Written: 2026-10-27 (end of session 1, local). Overwrite at the end of every ses
 ## State
 - Gate G4. Repo `Silentarcherjr/eventproof-meta-hackathon-2026` (private). Tag `hackathon-start-2026-10-27` = 039c084.
 - Commit identity: Anthony Morell <153972162+Silentarcherjr@users.noreply.github.com> (repo-local git config; set it again in fresh cloud clones). No assistant attribution trailers in commits.
-- Done & verified: G0-02, G0-05, G1-02, G2-01, G2-02, G3-01, P1-01, G4-02 (frozen holdout).
+- Done & verified: G0-02, G0-05, G1-02, G2-01, G2-02, G3-01, P1-01, G4-02 (frozen holdout_v2, c0c78de, CI run 40597330836). P0 7/27.
 - G4-01 IN_PROGRESS: full loop works with the `baseline-deterministic` proposer + mock perception (one accepted, one rejected repair per counterexample, `benchmark/repairs/`). Missing: Muse Spark as proposer (same `RulePatch` JSON schema).
 - Live Meta: BLOCKED until the participant receives credits / `MODEL_API_KEY`.
 
