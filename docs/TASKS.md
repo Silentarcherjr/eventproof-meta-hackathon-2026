@@ -4,7 +4,7 @@
 
 - [ ] **C-01** (G0, IN_REVIEW) Rules matrix from Participant Guide (hash stored privately) — DoD: docs/compliance/RULES_VERIFIED.md + COMPLIANCE_MATRIX.md cite guide sections with hash
 - [ ] **C-02** (G0, READY) Ask #questions: repo private during build? AI coding assistant disclosure? license? — DoD: Answers (or NO_CONCLUSIVO) recorded in RULES_VERIFIED.md
-- [ ] **C-03** (G0, BLOCKED) Claim $150 Meta API credits + add card + spend alert — DoD: Billing page shows credits; COSTS.md updated
+- [ ] **C-03** (G0, IN_REVIEW) Claim $150 Meta API credits + add card + spend alert — DoD: Billing page shows credits; COSTS.md updated
 - [ ] **C-04** (G6, TODO) License choice for repo + third-party license inventory/SBOM — DoD: LICENSE file + docs/compliance/LICENSE_INVENTORY.md complete
 - [ ] **G0-01** (G0, IN_REVIEW) Rules matrix from participant guide — DoD: Same as C-01
 - [x] **G0-02** (G0, DONE_VERIFIED) New private repo with safe initial commit + persistent tracker — DoD: gh repo view shows isPrivate=true; first commit contains tracker/handoff files
@@ -13,7 +13,7 @@
 - [x] **G0-05** (G0, DONE_VERIFIED) Backend skeleton + CI (pytest, ruff) green — DoD: GitHub Actions CI green on main
 - [x] **G1-02** (G1, DONE_VERIFIED) Typed DSL (Pydantic) + deterministic tri-state evaluator PASS/FAIL/UNKNOWN — DoD: Unit + property tests for zones, crossings, dwell, BEFORE, UNKNOWN on gaps
 - [ ] **G1-03** (G1, TODO) Muse Spark: natural language rule -> validated DSL — DoD: Live call compiles canonical rule; invalid output rejected by schema
-- [ ] **G1-04** (G1, TODO) SAM 3.1 adapter: video -> normalized TrackFrames (official parser) — DoD: Fixture-backed contract test + one live clip cached by sha256
+- [ ] **G1-04** (G1, IN_PROGRESS) SAM 3.1 adapter: video -> normalized TrackFrames (official parser) — DoD: Fixture-backed contract test + one live clip cached by sha256
 - [ ] **G1-05** (G1, TODO) Video ingestion: ffprobe validation, H.264 re-encode, <=20s — DoD: Rejects bad MIME/oversize; tests
 - [ ] **G1-01** (G1, TODO) Video -> SAM -> rule -> evidence E2E (API) — DoD: One real clip end-to-end with evidence JSON
 - [ ] **G1-06** (G1, TODO) Frontend studio: upload, rule editor, zone editor, overlay timeline — DoD: Playwright smoke: upload -> result visible
