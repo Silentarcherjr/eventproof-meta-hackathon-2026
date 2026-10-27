@@ -1,11 +1,12 @@
 # EventProof — STATUS (generated)
 
-Updated (America/Panama): 2026-10-27 15:01  
+Updated (America/Panama): 2026-10-27 15:11  
 Deadline: 2026-11-04 21:00 America/Panama (internal target 17:00)  
 P0 verified: 4/27 · P1: 0/6 · P2: 0/3
 
 ## In progress
-- none
+- G2-03: Challenge run finds a REAL counterexample against the built detector (challenge)
+- P1-03: >=3 adversarial families and >=2 temporal rules (challenge)
 
 ## Blocked
 - C-03: Participant has not claimed credits yet (form + card)

@@ -104,3 +104,13 @@ def test_report_is_deterministic_and_hash_stable(rule):
 def test_invalid_rules_rejected(patch):
     with pytest.raises(ValidationError):
         VisualRule.model_validate({**CANONICAL_RULE, **patch})
+
+
+def test_crossing_detected_when_anchor_lands_exactly_on_line(rule):
+    """Regression (found by Challenge Mode, drive_through seed 20): an anchor exactly on the line
+    for one or more frames used to hide the crossing entirely."""
+    xs = [0.60, 0.70, 0.75, 0.75, 0.80, 0.90]
+    report = evaluate(rule, trackset(path(xs)))
+    cross = next(e for e in report.objects[0].events if e.op == "CROSSES")
+    assert cross.status == "TRUE" and cross.frame == 4
+    assert report.overall == "FAIL"

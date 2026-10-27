@@ -125,24 +125,31 @@ def _eval_event(ev: Event, t: ObjectTrack, rule: VisualRule) -> EventResult:
                 if isinstance(ev, Dwell) and o.ts - start.ts + t.frame_ms >= ev.min_ms:
                     return EventResult("TRUE", o.frame, o.ts, f"dwelled {ev.min_ms:.0f} ms in {ev.zone}")
             prev = o
+        need = f"{ev.min_frames} consecutive frames" if isinstance(ev, InZone) else f"{ev.min_ms:.0f} ms"
         if t.blind_spots:
-            return EventResult("UNKNOWN", reason=f"not observed; {len(t.blind_spots)} blind spot(s) could hide it")
-        return EventResult("FALSE", reason=f"never observed in {ev.zone}")
+            return EventResult("UNKNOWN", reason=f"{need} in {ev.zone} not observed; "
+                                                 f"{len(t.blind_spots)} blind spot(s) could hide it")
+        return EventResult("FALSE", reason=f"never {need} in {ev.zone}")
 
     assert isinstance(ev, Crosses)
     line = next(ln for ln in rule.lines if ln.id == ev.line)
     # A blind spot at either end of the track hides where the object was, so a crossing is possible.
     possible = any(a < t.first_frame or b > t.last_frame for a, b in t.blind_spots)
-    for a, b in zip(t.obs, t.obs[1:], strict=False):
-        sa, sb = cross(line.a, line.b, a.pt), cross(line.a, line.b, b.pt)
-        if sa * sb >= 0 or not segments_intersect(a.pt, b.pt, line.a, line.b):
+    # Compare each observation with the last one that was strictly on one side, so an anchor that
+    # lands exactly on the line for some frames still registers the crossing (found by Challenge Mode).
+    prev: Obs | None = None
+    prev_side = 0.0
+    for o in t.obs:
+        side = cross(line.a, line.b, o.pt)
+        if side == 0:
             continue
-        direction = "to_right" if sb > 0 else "to_left"
-        if ev.direction not in ("any", direction):
-            continue
-        if _bridged(a, b, max_gap):
-            return EventResult("TRUE", b.frame, b.ts, f"crossed {ev.line} ({direction}) at frame {b.frame}")
-        possible = True
+        if prev is not None and side * prev_side < 0 and segments_intersect(prev.pt, o.pt, line.a, line.b):
+            direction = "to_right" if side > 0 else "to_left"
+            if ev.direction in ("any", direction):
+                if _bridged(prev, o, max_gap):
+                    return EventResult("TRUE", o.frame, o.ts, f"crossed {ev.line} ({direction}) at frame {o.frame}")
+                possible = True
+        prev, prev_side = o, side
     if possible:
         return EventResult("UNKNOWN", reason=f"side of {ev.line} changed inside a blind spot")
     return EventResult("FALSE", reason=f"never crossed {ev.line}")

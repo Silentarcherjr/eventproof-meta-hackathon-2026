@@ -19,3 +19,8 @@
 
 ## ADR-005 — 2026-10-27 — Work local first, cloud sessions resume from GitHub
 - The participant works mostly locally on macOS and alternates with cloud dev sessions. GitHub is the source of truth; every session starts/ends with the protocol in `AGENTS.md`.
+
+## ADR-006 — 2026-10-27 — Error taxonomy and process truth
+- Ground-truth intent comes from scripted behaviour (`challenge/truth.py`: box stationary ≥ 1.0 s at the station before crossing the packing line), computed from waypoints — a different code path from the rule engine.
+- Every disagreement is classified: spec_error (rule on perfect tracks ≠ intent), perception_error (perceived tracks flip a rule that is right on perfect tracks), abstained (UNKNOWN). This keeps perception (SAM) and reasoning (Muse/DSL) failures separate, as the plan requires.
+- Until SAM is available, a naive mock tracker (`perception/mock.py`, `source="mock"`) stands in. Its outputs are always labelled and never presented as SAM; it doubles as a baseline later.

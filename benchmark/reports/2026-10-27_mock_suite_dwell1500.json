@@ -1,0 +1,28 @@
+{
+  "perception": "mock (NOT SAM)",
+  "dwell_ms": 1500.0,
+  "cases": 150,
+  "by_family": {
+    "canonical": {
+      "correct": 30
+    },
+    "drive_through": {
+      "spec_error": 11,
+      "correct": 19
+    },
+    "brief_stop": {
+      "correct": 27,
+      "spec_error": 3
+    },
+    "occluded_station": {
+      "correct": 18,
+      "perception_error": 11,
+      "abstained": 1
+    },
+    "tailgate": {
+      "perception_error": 19,
+      "correct": 5,
+      "abstained": 6
+    }
+  }
+}

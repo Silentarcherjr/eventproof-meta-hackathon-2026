@@ -384,7 +384,7 @@
       "title": "Mutation classes: ID swap/crossing, occlusion, brief entry, near-threshold timing",
       "priority": "P0",
       "gate": "G2",
-      "state": "READY",
+      "state": "IN_REVIEW",
       "dependencies": [
         "G2-01"
       ],
@@ -392,13 +392,16 @@
       "branch": null,
       "definition_of_done": ">=3 families implemented with tests",
       "test_commands": [],
-      "evidence_paths": [],
+      "evidence_paths": [
+        "backend/tests/challenge/test_families.py",
+        "benchmark/reports/2026-10-27_mock_suite_dwell1500.json"
+      ],
       "commit_sha": null,
       "pr_url": null,
-      "started_at": null,
-      "updated_at": "2026-10-27T19:49:53Z",
+      "started_at": "2026-10-27T20:11:21Z",
+      "updated_at": "2026-10-27T20:11:21Z",
       "blocker": null,
-      "next_action": "Families: drive-through near threshold, occlusion at station, crossing/ID swap",
+      "next_action": "CI green -> DONE_VERIFIED",
       "cost_note": null
     },
     {
@@ -406,7 +409,7 @@
       "title": "Challenge run finds a REAL counterexample against the built detector",
       "priority": "P0",
       "gate": "G2",
-      "state": "TODO",
+      "state": "IN_PROGRESS",
       "dependencies": [
         "G2-02",
         "G1-01"
@@ -415,13 +418,15 @@
       "branch": null,
       "definition_of_done": "Reproducible failing case with seed + hash",
       "test_commands": [],
-      "evidence_paths": [],
+      "evidence_paths": [
+        "benchmark/reports/"
+      ],
       "commit_sha": null,
       "pr_url": null,
-      "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "started_at": "2026-10-27T20:11:21Z",
+      "updated_at": "2026-10-27T20:11:21Z",
       "blocker": null,
-      "next_action": null,
+      "next_action": "Harness finds reproducible counterexamples against MOCK perception; rerun with SAM 3.1 when key arrives (needs G1-04)",
       "cost_note": null
     },
     {
@@ -696,7 +701,7 @@
       "title": ">=3 adversarial families and >=2 temporal rules",
       "priority": "P1",
       "gate": "G2",
-      "state": "TODO",
+      "state": "IN_PROGRESS",
       "dependencies": [
         "G2-02"
       ],
@@ -707,10 +712,10 @@
       "evidence_paths": [],
       "commit_sha": null,
       "pr_url": null,
-      "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "started_at": "2026-10-27T20:11:21Z",
+      "updated_at": "2026-10-27T20:11:21Z",
       "blocker": null,
-      "next_action": null,
+      "next_action": "4 families done; add a 2nd temporal rule",
       "cost_note": null
     },
     {
