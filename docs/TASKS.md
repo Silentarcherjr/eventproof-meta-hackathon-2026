@@ -18,7 +18,7 @@
 - [ ] **G1-01** (G1, TODO) Video -> SAM -> rule -> evidence E2E (API) — DoD: One real clip end-to-end with evidence JSON
 - [ ] **G1-06** (G1, TODO) Frontend studio: upload, rule editor, zone editor, overlay timeline — DoD: Playwright smoke: upload -> result visible
 - [x] **G2-01** (G2, DONE_VERIFIED) Deterministic Challenge renderer (MP4 + ground_truth.json by seed) — DoD: Same seed -> same sha256; ground truth from independent geometry
-- [ ] **G2-02** (G2, IN_REVIEW) Mutation classes: ID swap/crossing, occlusion, brief entry, near-threshold timing — DoD: >=3 families implemented with tests
+- [x] **G2-02** (G2, DONE_VERIFIED) Mutation classes: ID swap/crossing, occlusion, brief entry, near-threshold timing — DoD: >=3 families implemented with tests
 - [ ] **G2-03** (G2, IN_PROGRESS) Challenge run finds a REAL counterexample against the built detector — DoD: Reproducible failing case with seed + hash
 - [ ] **G3-01** (G3, TODO) Counterexample minimizer (delta debugging) + side-by-side replay — DoD: Minimal local pair shown with decisive frames
 - [ ] **G3-02** (G3, TODO) Evidence ledger: hashes, model versions, job ids — DoD: Exportable JSON manifest verified by test

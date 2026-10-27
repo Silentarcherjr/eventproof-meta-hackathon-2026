@@ -26,3 +26,4 @@
 - **Real engine bug found by the harness:** an anchor landing exactly on the packing line (cross product 0) hid the crossing (drive_through seed 20, via mock jitter). Fixed CROSSES to compare against the last strictly-sided observation; regression test added. DWELL failure reason text clarified.
 - Results (mock perception, NOT SAM; 30 seeds/family; `benchmark/reports/`): with DWELL 1.5 s → canonical 30/30 correct; drive_through 11 spec errors (slow belt transit > 1.5 s counts as inspection); brief_stop 3 spec errors (near threshold); occluded_station 11 perception errors (identity loss → false alarm); tailgate 19 perception errors with false PASS (merged detection hides an uninspected box) + 6 abstained. With DWELL 0.5 s spec errors dominate (e.g. canonical 22/30).
 - Tests: 81 passed; ruff clean.
+- CI run 40575797601 (801df32): success → G2-02 DONE_VERIFIED.

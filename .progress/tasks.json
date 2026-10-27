@@ -384,7 +384,7 @@
       "title": "Mutation classes: ID swap/crossing, occlusion, brief entry, near-threshold timing",
       "priority": "P0",
       "gate": "G2",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G2-01"
       ],
@@ -393,15 +393,16 @@
       "definition_of_done": ">=3 families implemented with tests",
       "test_commands": [],
       "evidence_paths": [
+        "GitHub Actions run 40575797601 success",
         "backend/tests/challenge/test_families.py",
         "benchmark/reports/2026-10-27_mock_suite_dwell1500.json"
       ],
-      "commit_sha": null,
+      "commit_sha": "801df32",
       "pr_url": null,
       "started_at": "2026-10-27T20:11:21Z",
-      "updated_at": "2026-10-27T20:11:21Z",
+      "updated_at": "2026-10-27T20:12:18Z",
       "blocker": null,
-      "next_action": "CI green -> DONE_VERIFIED",
+      "next_action": "",
       "cost_note": null
     },
     {
