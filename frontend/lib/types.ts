@@ -66,3 +66,34 @@ export interface RepairRun {
   run_id: string; proposer: string; decisions: RepairDecision[]; holdout_note: string;
   trace: { rounds?: { round: number; diagnosis: string; cached: boolean; request_id: string }[] };
 }
+
+export interface CounterStep { frame: number; in_zone: boolean; still: boolean | null; counted_ms: number }
+export interface BeforeAfterSide {
+  rule_hash: string; plain: string; threshold_ms: number | null; verdict: string; intended: string; outcome: string;
+  correct: boolean; series: Record<string, CounterStep[]>;
+}
+export interface FamilyCounts { [outcome: string]: number }
+export interface HoldoutFull extends HoldoutMetrics { by_family: Record<string, FamilyCounts> }
+export interface BeforeAfter {
+  run_id: string; proposer: string; accepted: number; proposals: number; choice: string; perception: string;
+  scene: { family: string; seed: number; scene_sha256: string; fps: number; n_frames: number; width: number; height: number;
+           notes: string; zones: Zone[]; lines: Line[] };
+  boxes: { frame_index: number; object_id: number; box: Box }[];
+  truths: Truth[];
+  before: BeforeAfterSide;
+  after: BeforeAfterSide | null;
+  decision: null | {
+    proposal_id: string; patch_description: string; rationale: string; reasons: string[]; holdout_name: string;
+    holdout_manifest_sha256: string; holdout_before: HoldoutFull; holdout_after: HoldoutFull | null;
+    fixed_cases: string[]; regressions: string[]; previous_rule_hash: string; patched_rule_hash: string | null;
+  };
+}
+export interface FinalSplit { n: number; correct: number; accuracy_ci95: [number, number]; false_pass: number; false_alarm: number; abstained: number }
+export interface FinalReport {
+  final_set: string; manifest_sha256: string; perception: string; code_commit: string;
+  inputs: Record<string, { file: string; sha256: string; proposals: number }>;
+  baselines: Record<string, Record<string, FinalSplit>>;
+  patches: { source: string; proposal_id: string; patch_description: string; grader_accepted: boolean;
+             splits: Record<string, FinalSplit>; fixed: Record<string, number>; regressed: Record<string, number>;
+             sign_test_p: Record<string, number> }[];
+}

@@ -53,6 +53,11 @@ test("challenge -> side by side -> SAM confirm -> Muse repair verified on holdou
   await page.route(`http://api.test/runs/${id}/challenge/files/side_by_side.mp4`,
     (r) => r.fulfill({ path: fx("side_by_side.mp4"), contentType: "video/mp4" }));
   await page.route(`http://api.test/runs/${id}/challenge/sam-confirm`, (r) => r.fulfill({ path: fx("sam_confirm.json") }));
+  await page.route(`http://api.test/runs/${id}/stored/*`, (r) => r.fulfill({ status: 404, json: { detail: "not computed yet" } }));
+  await page.route("http://api.test/final-report", (r) => r.fulfill({ path: fx("final_report.json") }));
+  await page.route(`http://api.test/runs/${id}/before-after`, (r) => r.fulfill({ path: fx("before_after_muse.json") }));
+  await page.route(`http://api.test/runs/${id}/challenge/files/counterexample.mp4`,
+    (r) => r.fulfill({ path: fx("counterexample.mp4"), contentType: "video/mp4" }));
   let proposer = "";
   await page.route(`http://api.test/runs/${id}/repair`, async (r) => {
     proposer = JSON.parse(r.request().postData() ?? "{}").proposer;
@@ -75,13 +80,28 @@ test("challenge -> side by side -> SAM confirm -> Muse repair verified on holdou
 
   await page.getByTestId("repair-muse").click();
   expect(proposer).toBe("muse");
-  await expect(page.getByTestId("repair-headline")).toContainText("Repair verified on unseen cases: 144/200 → 166/200");
+  // the headline is the first accepted proposal in Muse's order (not the best holdout score)
+  await expect(page.getByTestId("repair-headline")).toContainText("Repair verified on unseen cases: 144/200 → 164/200");
+  await expect(page.getByTestId("repair-headline")).toContainText("2 of 8 proposals accepted");
   await expect(page.getByTestId("decision-accepted")).toHaveCount(2);
   await expect(page.getByTestId("decision-rejected").first()).toContainText("holdout regression");
 
-  // editing the rule hides the challenge panel (it belonged to the previous inputs)
+  // before / after: the same failing case judged by both rules, the counter chart, unseen and final results
+  const ba = page.getByTestId("before-after");
+  await expect(page.getByTestId("ba-before")).toContainText("Says PASS — wrong");
+  await expect(page.getByTestId("ba-after")).toContainText("Says FAIL — right");
+  await expect(page.getByTestId("counter-chart")).toBeVisible();
+  await expect(page.getByTestId("ba-story")).toContainText("1.53 s");
+  await expect(page.getByTestId("ba-holdout")).toContainText("144/200");
+  await expect(page.getByTestId("ba-holdout")).toContainText("164/200");
+  await expect(page.getByTestId("ba-final")).toContainText("158/200");
+  await expect(page.getByTestId("ba-final")).toContainText("117/120");
+  await expect(ba).toContainText("2 of 8 accepted");
+
+  // editing the rule hides the challenge panel and the comparison (they belonged to the previous inputs)
   await page.getByTestId("rule-input").fill("No blue box should ever reach packing.");
   await expect(page.getByTestId("challenge-panel")).toHaveCount(0);
+  await expect(page.getByTestId("before-after")).toHaveCount(0);
 });
 
 test("API errors are shown, not swallowed", async ({ page }) => {
@@ -90,4 +110,30 @@ test("API errors are shown, not swallowed", async ({ page }) => {
   await page.getByTestId("video-input").setInputFiles(fx("tailgate-7.mp4"));
   await page.getByTestId("run").click();
   await expect(page.getByTestId("error")).toContainText("allowance");
+});
+
+test("?run= reopens a recorded run with its stored results, without calling any model", async ({ page }) => {
+  const id = evidence.run_id;
+  const posts: string[] = [];
+  page.on("request", (r) => { if (r.method() === "POST") posts.push(r.url()); });
+  await page.route(`http://api.test/runs/${id}`, (r) => r.fulfill({ json: evidence }));
+  await page.route(`http://api.test/runs/${id}/tracks`, (r) => r.fulfill({ path: fx("tracks.json") }));
+  await page.route(`http://api.test/runs/${id}/video`, (r) => r.fulfill({ path: fx("tailgate-7.mp4"), contentType: "video/mp4" }));
+  const stored: Record<string, string> = { challenge: "challenge.json", "sam-confirm": "sam_confirm.json",
+                                           "repair-muse": "repair_muse.json", "before-after-muse": "before_after_muse.json" };
+  await page.route(`http://api.test/runs/${id}/stored/*`, (r) => {
+    const key = r.request().url().split("/").pop()!;
+    return stored[key] ? r.fulfill({ path: fx(stored[key]) }) : r.fulfill({ status: 404, json: { detail: "not computed yet" } });
+  });
+  await page.route("http://api.test/final-report", (r) => r.fulfill({ path: fx("final_report.json") }));
+  await page.route(`http://api.test/runs/${id}/challenge/files/*`, (r) => r.fulfill({ path: fx("side_by_side.mp4"), contentType: "video/mp4" }));
+
+  await page.goto(`/?run=${id}`);
+  await expect(page.getByTestId("overall")).toContainText("FAIL");
+  await expect(page.getByTestId("rule-input")).toHaveValue(evidence.rule.text);
+  await expect(page.getByTestId("counterexample")).toBeVisible();
+  await expect(page.getByTestId("sam-result")).toContainText("real SAM 3.1");
+  await expect(page.getByTestId("repair-headline")).toContainText("2 of 8 proposals accepted");
+  await expect(page.getByTestId("ba-after")).toContainText("Says FAIL — right");
+  expect(posts).toEqual([]);
 });

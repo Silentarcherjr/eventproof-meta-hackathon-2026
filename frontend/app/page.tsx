@@ -1,13 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import BeforeAfterView from "@/components/BeforeAfter";
 import ChallengePanel from "@/components/ChallengePanel";
 import Results from "@/components/Results";
 import Timeline from "@/components/Timeline";
 import VideoStage, { type Tool } from "@/components/VideoStage";
-import { createRun, getTracks, videoUrl } from "@/lib/api";
+import { createRun, getFinalReport, getRun, getTracks, videoUrl } from "@/lib/api";
 import { DEFAULT_LAYOUT, EXAMPLE_RULES } from "@/lib/defaults";
-import type { Evidence, Layout, ObjectVerdict, TrackFrame, TrackSet } from "@/lib/types";
+import type { BeforeAfter, Evidence, FinalReport, Layout, ObjectVerdict, TrackFrame, TrackSet } from "@/lib/types";
 
 export default function Studio() {
   const [file, setFile] = useState<File | null>(null);
@@ -21,12 +22,33 @@ export default function Studio() {
   const [tracks, setTracks] = useState<TrackSet | null>(null);
   const [frame, setFrame] = useState(0);
   const [seek, setSeek] = useState<number | null>(null);
+  const [ba, setBa] = useState<BeforeAfter | null>(null);
+  const [finalReport, setFinalReport] = useState<FinalReport | null>(null);
 
   useEffect(() => () => { if (localUrl) URL.revokeObjectURL(localUrl); }, [localUrl]);
+
+  // ?run=<id> reopens a recorded run (evidence, tracks and any Challenge/Repair results stored with it)
+  useEffect(() => {
+    getFinalReport().then(setFinalReport).catch(() => setFinalReport(null));
+    const id = new URLSearchParams(window.location.search).get("run");
+    if (!id) return;
+    (async () => {
+      try {
+        const e = await getRun(id);
+        setRule(e.rule.text);
+        setLayout(e.rule.layout);
+        setEv(e);
+        setTracks(e.status === "completed" ? await getTracks(e.run_id) : null);
+      } catch (err) {
+        setError(`could not open run ${id}: ${err instanceof Error ? err.message : String(err)}`);
+      }
+    })();
+  }, []);
 
   const pick = (f: File | null) => {
     setFile(f);
     setEv(null);
+    setBa(null);
     setTracks(null);
     setError(null);
     setLocalUrl(f ? URL.createObjectURL(f) : null);
@@ -39,6 +61,7 @@ export default function Studio() {
     setTool("none");
     try {
       const e = await createRun(file, rule, layout);
+      setBa(null);
       setEv(e);
       setTracks(e.status === "completed" ? await getTracks(e.run_id) : null);
     } catch (err) {
@@ -86,7 +109,7 @@ export default function Studio() {
           {ev?.result && info && (
             <Timeline objects={ev.result.objects} frameCount={info.frame_count} fps={info.fps} frame={frame} onSeek={onSeek} />
           )}
-          {ev?.status === "completed" && !stale && <ChallengePanel key={ev.run_id} runId={ev.run_id} />}
+          {ev?.status === "completed" && !stale && <ChallengePanel key={ev.run_id} runId={ev.run_id} onBeforeAfter={setBa} />}
         </section>
 
         <section className="space-y-5">
@@ -148,6 +171,7 @@ export default function Studio() {
           {ev && <Results ev={ev} onSeek={onSeek} />}
         </section>
       </div>
+      {ba && ev?.run_id === ba.run_id && !stale && <div className="mt-6"><BeforeAfterView ba={ba} final={finalReport} /></div>}
     </main>
   );
 }

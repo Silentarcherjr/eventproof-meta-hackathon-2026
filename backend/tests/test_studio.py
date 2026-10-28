@@ -134,3 +134,31 @@ def test_repair_before_challenge_is_refused(run, tmp_path):
     other = copy.deepcopy(ev)
     with pytest.raises(studio.ChallengeUnavailable, match="Challenge Mode first"):
         studio.repair(other, "baseline", runs_dir=tmp_path)
+
+
+def test_before_after_uses_first_accepted_and_engine_counter(run):
+    ev, _, runs = run
+    studio.repair(ev, "baseline", runs_dir=runs)
+    out = studio.before_after(ev, "baseline", runs_dir=runs)
+    assert out["accepted"] == 1 and out["decision"]["proposal_id"] == "baseline-deterministic-1"
+    b, a = out["before"], out["after"]
+    assert (b["verdict"], b["correct"], a["verdict"], a["correct"]) == ("PASS", False, "FAIL", True)
+    assert "moving or not" in b["plain"] and "stands still" in a["plain"]
+    # the chart series is the evaluator's own counter: the old rule reached its threshold, the new one never did
+    assert max(x["counted_ms"] for s in b["series"].values() for x in s) >= b["threshold_ms"]
+    assert max(x["counted_ms"] for s in a["series"].values() for x in s) < a["threshold_ms"]
+    assert (runs / ev.run_id / "challenge" / "counterexample.mp4").exists()
+    assert studio.stored(ev.run_id, "before-after-baseline", runs)["after"]["verdict"] == "FAIL"
+
+
+def test_stored_and_final_report_endpoints(run, monkeypatch):
+    ev, _, runs = run
+    monkeypatch.setattr(pipeline, "RUNS_DIR", runs)
+    monkeypatch.setattr(studio, "RUNS_DIR", runs)
+    c = TestClient(api.app)
+    assert c.get(f"/runs/{ev.run_id}/stored/challenge").json()["counterexample"]["family"] == "drive_through"
+    assert c.get(f"/runs/{ev.run_id}/stored/nope").status_code == 400
+    assert c.get(f"/runs/{ev.run_id}/stored/sam-confirm").status_code in (200, 404)
+    assert c.post(f"/runs/{ev.run_id}/before-after", json={"proposer": "x"}).status_code == 422
+    r = c.get("/final-report")
+    assert r.status_code == 200 and r.json()["final_set"] == "final_v1"

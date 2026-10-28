@@ -1,4 +1,4 @@
-import type { ChallengeReport, Evidence, Layout, RepairRun, SamConfirm, TrackSet } from "./types";
+import type { BeforeAfter, ChallengeReport, Evidence, FinalReport, Layout, RepairRun, SamConfirm, TrackSet } from "./types";
 
 export const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000").replace(/\/$/, "");
 
@@ -44,3 +44,24 @@ export async function runRepair(runId: string, proposer: "muse" | "baseline"): P
 }
 
 export const challengeFileUrl = (runId: string, name: string) => `${run(runId)}/challenge/files/${encodeURIComponent(name)}`;
+
+export async function getRun(runId: string): Promise<Evidence> {
+  return json<Evidence>(await fetch(run(runId)));
+}
+
+export async function beforeAfter(runId: string, proposer: "muse" | "baseline"): Promise<BeforeAfter> {
+  return json<BeforeAfter>(await fetch(`${run(runId)}/before-after`, {
+    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ proposer }),
+  }));
+}
+
+/** A result computed earlier for this run, or null if it was never computed. */
+export async function getStored<T>(runId: string, key: string): Promise<T | null> {
+  const res = await fetch(`${run(runId)}/stored/${key}`);
+  return res.status === 404 ? null : json<T>(res);
+}
+
+export async function getFinalReport(): Promise<FinalReport | null> {
+  const res = await fetch(`${API_URL}/final-report`);
+  return res.ok ? (res.json() as Promise<FinalReport>) : null;
+}

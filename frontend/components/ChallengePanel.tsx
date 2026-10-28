@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { challengeFileUrl, confirmWithSam, runChallenge, runRepair } from "@/lib/api";
-import type { ChallengeReport, RepairDecision, RepairRun, SamConfirm } from "@/lib/types";
+import { useEffect, useState } from "react";
+import { beforeAfter, challengeFileUrl, confirmWithSam, getStored, runChallenge, runRepair } from "@/lib/api";
+import type { BeforeAfter, ChallengeReport, RepairDecision, RepairRun, SamConfirm } from "@/lib/types";
 
 const OUTCOMES = ["correct", "spec_error", "perception_error", "abstained"] as const;
 const OUTCOME_STYLE: Record<string, string> = {
@@ -52,20 +52,49 @@ function Decision({ d }: { d: RepairDecision }) {
   );
 }
 
-export default function ChallengePanel({ runId }: { runId: string }) {
+type Who = "muse" | "baseline";
+
+export default function ChallengePanel({ runId, onBeforeAfter }: { runId: string; onBeforeAfter?: (ba: BeforeAfter | null) => void }) {
   const [ch, setCh] = useState<ChallengeReport | null>(null);
   const [sam, setSam] = useState<SamConfirm | null>(null);
   const [rep, setRep] = useState<Record<string, RepairRun>>({});
   const [busy, setBusy] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
+  // reopening a run shows what was already computed for it (nothing is recomputed, no model is called)
+  useEffect(() => {
+    let live = true;
+    (async () => {
+      const [c, sc, rm, rb, bm, bb] = await Promise.all([
+        getStored<ChallengeReport>(runId, "challenge"), getStored<SamConfirm>(runId, "sam-confirm"),
+        getStored<RepairRun>(runId, "repair-muse"), getStored<RepairRun>(runId, "repair-baseline"),
+        getStored<BeforeAfter>(runId, "before-after-muse"), getStored<BeforeAfter>(runId, "before-after-baseline"),
+      ]).catch(() => [null, null, null, null, null, null] as const);
+      if (!live) return;
+      if (c) setCh(c);
+      if (sc) setSam(sc);
+      setRep({ ...(rm ? { muse: rm } : {}), ...(rb ? { baseline: rb } : {}) });
+      onBeforeAfter?.(bm ?? bb ?? null);
+    })();
+    return () => { live = false; };
+  }, [runId, onBeforeAfter]);
+
+  const repair = (who: Who) => act(who, async () => {
+    const r = await runRepair(runId, who);
+    setRep((p) => ({ ...p, [who]: r }));
+    onBeforeAfter?.(r.decisions.some((d) => d.accepted) ? await beforeAfter(runId, who) : null);
+  });
+
   const act = async (key: string, f: () => Promise<void>) => {
     setBusy(key); setErr(null);
     try { await f(); } catch (e) { setErr(e instanceof Error ? e.message : String(e)); } finally { setBusy(null); }
   };
   const c = ch?.counterexample;
-  const best = Object.values(rep).flatMap((r) => r.decisions).filter((d) => d.accepted)
-    .sort((x, y) => (y.holdout_after?.correct ?? 0) - (x.holdout_after?.correct ?? 0))[0];
+  // the headline repair is the first accepted proposal in the proposer's order (Muse first), never the best holdout score
+  const shown = (["muse", "baseline"] as const).filter((w) => rep[w]);
+  const best = shown.map((w) => rep[w].decisions.find((d) => d.accepted)).find(Boolean);
+  const nAcc = shown.reduce((k, w) => k + rep[w].decisions.filter((d) => d.accepted).length, 0);
+  const nAll = shown.reduce((k, w) => k + rep[w].decisions.length, 0);
 
   return (
     <section className="space-y-4 rounded-xl bg-zinc-900/60 p-4 ring-1 ring-violet-500/30" data-testid="challenge-panel">
@@ -75,7 +104,7 @@ export default function ChallengePanel({ runId }: { runId: string }) {
           <p className="text-xs text-zinc-400">Try to break the rule on synthetic scenes with known truth, then repair it and verify on unseen cases.</p>
         </div>
         <Button primary testid="challenge" busy={busy !== null}
-                onClick={() => act("challenge", async () => { setSam(null); setRep({}); setCh(await runChallenge(runId)); })}>
+                onClick={() => act("challenge", async () => { setSam(null); setRep({}); onBeforeAfter?.(null); setCh(await runChallenge(runId)); })}>
           {busy === "challenge" ? "Searching…" : ch ? "Search again" : "Challenge this rule"}
         </Button>
       </div>
@@ -131,19 +160,15 @@ export default function ChallengePanel({ runId }: { runId: string }) {
 
               <div className="space-y-2 border-t border-zinc-800 pt-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <Button primary testid="repair-muse" busy={busy !== null} onClick={() => act("muse", async () => {
-                    const r = await runRepair(runId, "muse"); setRep((p) => ({ ...p, muse: r }));
-                  })}>{busy === "muse" ? "Muse Spark is proposing…" : "Repair with Muse Spark"}</Button>
-                  <Button testid="repair-baseline" busy={busy !== null} onClick={() => act("baseline", async () => {
-                    const r = await runRepair(runId, "baseline"); setRep((p) => ({ ...p, baseline: r }));
-                  })}>{busy === "baseline" ? "Searching…" : "Baseline (grid search)"}</Button>
+                  <Button primary testid="repair-muse" busy={busy !== null} onClick={() => repair("muse")}>{busy === "muse" ? "Muse Spark is proposing…" : "Repair with Muse Spark"}</Button>
+                  <Button testid="repair-baseline" busy={busy !== null} onClick={() => repair("baseline")}>{busy === "baseline" ? "Searching…" : "Baseline (grid search)"}</Button>
                 </div>
                 {Object.keys(rep).length > 0 && (
                   <div className={`rounded-lg p-3 text-sm font-semibold ring-1 ${best ? "bg-green-500/10 text-green-300 ring-green-500/40" : "bg-amber-500/10 text-amber-200 ring-amber-500/40"}`}
                        data-testid="repair-headline">
                     {best && best.holdout_after
-                      ? `Repair verified on unseen cases: ${best.holdout_before.correct}/${best.holdout_before.n} → ${best.holdout_after.correct}/${best.holdout_after.n}, 0 regressions`
-                      : "Repair did not generalize — no proposal passed the hidden holdout"}
+                      ? `Repair verified on unseen cases: ${best.holdout_before.correct}/${best.holdout_before.n} → ${best.holdout_after.correct}/${best.holdout_after.n}, 0 regressions (${nAcc} of ${nAll} proposals accepted)`
+                      : `Repair did not generalize — none of ${nAll} proposals passed the hidden holdout`}
                   </div>
                 )}
                 {Object.entries(rep).map(([who, r]) => (

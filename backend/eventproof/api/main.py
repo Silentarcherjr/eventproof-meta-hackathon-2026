@@ -157,6 +157,38 @@ def run_repair_endpoint(run_id: str, req: RepairRequest) -> studio.RepairRun:
         raise HTTPException(503, str(e)) from None
 
 
+@app.post("/runs/{run_id}/before-after")
+def before_after_endpoint(run_id: str, req: RepairRequest) -> dict:
+    if req.proposer not in ("muse", "baseline"):
+        raise HTTPException(422, "proposer must be 'muse' or 'baseline'")
+    try:
+        return studio.before_after(_evidence(run_id), req.proposer)
+    except studio.ChallengeUnavailable as e:
+        raise HTTPException(422, str(e)) from None
+
+
+@app.get("/runs/{run_id}/stored/{key}")
+def stored_result(run_id: str, key: str) -> dict:
+    """Reopen a run: a Challenge/Repair result computed earlier (404 if it was never computed)."""
+    if not pipeline.RUN_ID_RE.match(run_id) or key not in studio.STORED:
+        raise HTTPException(400, "invalid run id or key")
+    out = studio.stored(run_id, key)
+    if out is None:
+        raise HTTPException(404, "not computed yet")
+    return out
+
+
+FINAL_REPORT = Path(__file__).resolve().parents[3] / "benchmark" / "final" / "report_final_v1.json"
+
+
+@app.get("/final-report")
+def final_report() -> dict:
+    """The pre-registered final test report (read-only file; the final set itself is not loaded by the API)."""
+    if not FINAL_REPORT.is_file():
+        raise HTTPException(404, "no final report")
+    return json.loads(FINAL_REPORT.read_text())
+
+
 @app.get("/runs/{run_id}/challenge/files/{name}")
 def challenge_file(run_id: str, name: str) -> FileResponse:
     allowed = name in studio.CHALLENGE_FILES or re.fullmatch(r"decisive_f\d{4}\.png", name)

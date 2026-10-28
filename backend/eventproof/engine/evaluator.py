@@ -125,27 +125,51 @@ def eval_event(ev: Event, t: ObjectTrack, rule: VisualRule) -> EventResult:
     return t._memo[key]
 
 
+@dataclass(frozen=True)
+class ZoneStep:
+    obs: Obs
+    in_zone: bool
+    still: bool | None  # None: the event has no speed condition
+    start: Obs | None  # start of the current counted run (None = not counting at this observation)
+    counted_ms: float  # what DWELL has accumulated at this observation
+
+
+def zone_steps(ev: InZone | Dwell, t: ObjectTrack, rule: VisualRule) -> list[ZoneStep]:
+    """The per-observation counter behind IN_ZONE / DWELL. `_eval_event` decides from these steps, and the
+    studio's before/after chart shows the same steps, so the picture and the verdict cannot disagree."""
+    poly = next(z.polygon for z in rule.zones if z.id == ev.zone)
+    still = _stillness(t, ev.max_speed) if isinstance(ev, Dwell) and ev.max_speed else None
+    start: Obs | None = None
+    prev: Obs | None = None
+    out = []
+    for i, o in enumerate(t.obs):
+        in_zone = point_in_polygon(o.pt, poly)
+        inside = in_zone and (still is None or still[i])
+        if not inside or (prev is not None and not _bridged(prev, o, rule.params.max_gap_frames)):
+            start = None
+        if inside:
+            start = start or o
+        out.append(ZoneStep(o, in_zone, None if still is None else still[i], start,
+                            o.ts - start.ts + t.frame_ms if start else 0.0))
+        prev = o
+    return out
+
+
 def _eval_event(ev: Event, t: ObjectTrack, rule: VisualRule) -> EventResult:
     max_gap = rule.params.max_gap_frames
     if isinstance(ev, InZone | Dwell):
-        poly = next(z.polygon for z in rule.zones if z.id == ev.zone)
-        start: Obs | None = None
-        prev: Obs | None = None
-        still = _stillness(t, ev.max_speed) if isinstance(ev, Dwell) and ev.max_speed else None
-        for i, o in enumerate(t.obs):
-            inside = point_in_polygon(o.pt, poly) and (still is None or still[i])
-            if not inside or (prev is not None and not _bridged(prev, o, max_gap)):
-                start = None
-            if inside:
-                start = start or o
-                if isinstance(ev, InZone) and o.frame - start.frame + 1 >= ev.min_frames:
-                    return EventResult("TRUE", start.frame, start.ts, f"inside {ev.zone} from frame {start.frame}")
-                if isinstance(ev, Dwell) and o.ts - start.ts + t.frame_ms >= ev.min_ms:
-                    how = "still " if still is not None else ""
-                    return EventResult("TRUE", o.frame, o.ts, f"dwelled {ev.min_ms:.0f} ms {how}in {ev.zone}")
-            prev = o
+        still = isinstance(ev, Dwell) and ev.max_speed
+        for st in zone_steps(ev, t, rule):
+            o, start = st.obs, st.start
+            if start is None:
+                continue
+            if isinstance(ev, InZone) and o.frame - start.frame + 1 >= ev.min_frames:
+                return EventResult("TRUE", start.frame, start.ts, f"inside {ev.zone} from frame {start.frame}")
+            if isinstance(ev, Dwell) and st.counted_ms >= ev.min_ms:
+                how = "still " if still else ""
+                return EventResult("TRUE", o.frame, o.ts, f"dwelled {ev.min_ms:.0f} ms {how}in {ev.zone}")
         need = f"{ev.min_frames} consecutive frames" if isinstance(ev, InZone) else f"{ev.min_ms:.0f} ms"
-        if still is not None:
+        if still:
             need += " still"
         if t.blind_spots:
             return EventResult("UNKNOWN", reason=f"{need} in {ev.zone} not observed; "
