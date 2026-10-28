@@ -63,3 +63,9 @@
 - Results (live muse-spark-1.3): R1 canonical compiled to the same AST as the hand-written rule; R2 ("stopped") used DWELL max_speed 0.05; R3 IN_ZONE→CROSSES; R4 within_ms 6000; R5 helmet → supported=false. All first attempt.
 - Muse calls this task: 6 (1 × ~195k + 5 × ~1.4k prompt tokens; 2.1k–3.8k completion tokens each).
 - Tests: 150 passed.
+
+## 2026-10-27 · session 1 (cont.) · local macOS · orchestrator — G1-01 / G1-05
+- `video/ingest.py`, `pipeline.py`, API `POST /runs` + `GET /runs/{id}`; dependency `python-multipart` (FastAPI's form parser).
+- Live E2E run `20261028T020157Z-6137d1f3` on a new tailgate clip: 1 live SAM call, Muse rule from cache. Overall FAIL; the violating object is the tailgater (checked against ground truth). Evidence in `docs/evidence/runs/20261028T020157Z-6137d1f3/`.
+- Found in review: evidence stored the video's local path (would leak temp paths via the API) → schema /2 records the file name; raw-file verification added so older evidence still verifies.
+- Tests: 163 passed (ingestion with real ffmpeg-made files: passthrough, mpeg4 + rotation normalized, too long / webm / fake rejected; pipeline incl. tamper detection, unsupported & invalid rules stop before SAM; API incl. 415/422/413/400/404 and 503 without allowance).

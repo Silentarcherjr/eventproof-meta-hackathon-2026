@@ -53,3 +53,8 @@
 - Expression emitted as a flat node list (children = indices), rebuilt into a tree in code: each node used exactly once, no cycles, no unused nodes, arity checked; then the normal rule schema validates depth, ids and ranges. Reason: Muse expands `$ref`s, so a depth-unrolled recursive grammar cost 194,990 prompt tokens per call (measured); the node list costs ~1,420.
 - `supported=false` path: the model must refuse rules the DSL cannot express (verified live on a helmet rule).
 - Invalid output: one retry with the validation error, then `RuleCompileError`; invalid rules are never cached. Model output is data only.
+
+## ADR-011 — 2026-10-27 — End-to-end runs and evidence (G1-01, G1-05)
+- Ingestion (`video/ingest.py`): MP4/MOV, one video stream, ≤ 20 s, ≤ 100 MB, ≤ 3840 px. Already H.264/yuv420p/CFR/unrotated files are used byte-for-byte (hash and SAM cache key unchanged); others are re-encoded (codec, pixel format, VFR → CFR, rotation applied to pixels, odd sizes).
+- Pipeline (`pipeline.py`): ingest → Muse compile → SAM (prompt = compiled entity concept) → evaluate. Unsupported/invalid rules stop before any SAM call. Evidence JSON per run under `artifacts/runs/<run_id>/` with input hashes, compiled rule + assumptions, model request/response ids, live vs cached flags, tracks hash, verdicts; sealed with `evidence_sha256` over canonical JSON, verifiable from the raw file (`verify_evidence_file`). No local paths, no key.
+- API: `POST /runs` (multipart video + rule_text + layout JSON), `GET /runs/{id}` (id pattern-checked). Live SAM calls from the API need `EVENTPROOF_MAX_LIVE_SAM_CALLS` (default 0 → 503 instead of spending).
