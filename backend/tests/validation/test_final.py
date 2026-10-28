@@ -42,3 +42,35 @@ def test_tampered_manifest_is_refused(tmp_path):
                                     "eventproof.meta.muse_repair", "eventproof.studio", "eventproof.api.main"])
 def test_selection_code_cannot_reach_the_final_set(module):
     assert not any(m.startswith("eventproof.validation") for m in _eventproof_imports(module))
+
+
+def test_stats_helpers():
+    from eventproof.validation.evaluate import sign_test, wilson
+
+    lo, hi = wilson(166, 200)
+    assert 0.77 < lo < 0.83 < hi < 0.88
+    assert wilson(0, 0) == (0.0, 1.0)
+    assert sign_test(0, 0) == 1.0 and sign_test(10, 0) == round(2 / 1024, 6) and sign_test(3, 3) == 1.0
+
+
+def test_evaluator_on_a_mini_manifest_of_dev_scenes(tmp_path):
+    """Exercise the evaluator end to end without touching final_v1: a manifest of DEV seeds."""
+    from eventproof.validation import evaluate as ev
+    from eventproof.validation.final import FinalCase, generator
+
+    cases = [FinalCase(split=sp, family=f, seed=s, scene_sha256=generator(sp, f)(s).scene_hash())
+             for sp, f in (("in_distribution", "drive_through"), ("shift", "stop_and_go")) for s in range(3)]
+    splits = {"in_distribution": ["drive_through"], "shift": ["stop_and_go"]}
+    m = FinalManifest(name="mini", seed_range=(0, 2), splits=splits,
+                      cases=cases, cases_sha256=_cases_hash(cases))
+    p = tmp_path / "mini.json"
+    p.write_text(m.model_dump_json())
+    rep = ev.evaluate(p)
+    assert set(rep["inputs"]) == {s[0] for s in ev.SOURCES}
+    n_props = sum(i["proposals"] for i in rep["inputs"].values())
+    assert len(rep["patches"]) == n_props and n_props >= 10
+    for r in rep["patches"]:
+        for sp, s in r["splits"].items():
+            base = rep["baselines"][r["source"]][sp]["correct"]
+            assert s["correct"] - base == r["fixed"][sp] - r["regressed"][sp]
+            assert s["n"] == 3
