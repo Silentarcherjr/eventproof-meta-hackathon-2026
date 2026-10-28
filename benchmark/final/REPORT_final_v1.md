@@ -15,12 +15,12 @@ Perception: mock tracker (NOT SAM 3.1), so the remaining errors are partly the m
 |---|---|---|---|---|
 | Muse | still ≤ 0.05/s ≥ 0.70 s | **accepted** 144→166 | **158** (17 / 0, p<0.001) | **118** (9 / 0, p=0.004) |
 | Muse | still ≤ 0.08/s ≥ 0.80 s | **accepted** 144→164 | **158** (17 / 0, p<0.001) | **117** (8 / 0, p=0.008) |
-| Muse | still ≤ 0.05/s (1.5 s kept) | rejected 144→156 | 145 (38 / 34) | 99 (11 / 21) |
-| Muse | still ≤ 0.10/s (1.5 s kept) | rejected 144→145 | 135 (21 / 27) | 110 (11 / 10) |
-| Muse | still, ≥ 1.10 s | rejected 144→161 | 152 (17 / 6) | 120 (11 / 0) |
-| Muse | still, ≥ 1.00 s | rejected 144→159 | 150 (17 / 8) | 120 (11 / 0) |
-| Muse | still, ≥ 1.20 s | rejected 144→155 | 149 (18 / 10) | 115 (11 / 5) |
-| Muse | still, ≥ 1.00 s (other speed) | rejected 144→164 | 156 (17 / 2) | 118 (9 / 0) |
+| Muse | still ≤ 0.05/s (min 1.5 s kept) | rejected 144→156 | 145 (38 / 34) | 99 (11 / 21) |
+| Muse | still ≤ 0.10/s (min 1.5 s kept) | rejected 144→145 | 135 (21 / 27) | 110 (11 / 10) |
+| Muse | still ≤ 0.08/s ≥ 1.10 s | rejected 144→161 | 152 (17 / 6) | 120 (11 / 0) |
+| Muse | still ≤ 0.05/s ≥ 1.00 s | rejected 144→159 | 150 (17 / 8) | 120 (11 / 0) |
+| Muse | still ≤ 0.07/s ≥ 1.20 s | rejected 144→155 | 149 (18 / 10) | 115 (11 / 5) |
+| Muse | still ≤ 0.10/s ≥ 1.00 s | rejected 144→164 | 156 (17 / 2) | 118 (9 / 0) |
 | Baseline | DWELL ≥ 2.0 s | rejected 144→152 | 150 (16 / 7) | 116 (7 / 0) |
 | Baseline | still ≤ 0.05/s ≥ 0.80 s | **accepted** 144→166 | **158** (17 / 0, p<0.001) | **120** (11 / 0, p<0.001) |
 | Baseline | DWELL ≥ 1.7 s | rejected 144→153 | 149 (9 / 1) | 114 (5 / 0) |
