@@ -306,7 +306,7 @@
       "title": "Video ingestion: ffprobe validation, H.264 re-encode, <=20s",
       "priority": "P0",
       "gate": "G1",
-      "state": "TODO",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G0-05"
       ],
@@ -314,13 +314,16 @@
       "branch": null,
       "definition_of_done": "Rejects bad MIME/oversize; tests",
       "test_commands": [],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "GitHub Actions run 40618714010 success",
+        "backend/tests/test_pipeline.py"
+      ],
+      "commit_sha": "69a8890",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "updated_at": "2026-10-28T02:05:18Z",
       "blocker": null,
-      "next_action": null,
+      "next_action": "-",
       "cost_note": null
     },
     {
@@ -328,7 +331,7 @@
       "title": "Video -> SAM -> rule -> evidence E2E (API)",
       "priority": "P0",
       "gate": "G1",
-      "state": "TODO",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G1-03",
         "G1-04",
@@ -338,13 +341,17 @@
       "branch": null,
       "definition_of_done": "One real clip end-to-end with evidence JSON",
       "test_commands": [],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "GitHub Actions run 40618714010 success",
+        "docs/evidence/2026-10-27_e2e_run.md",
+        "docs/evidence/runs/20261028T020157Z-6137d1f3/evidence.json"
+      ],
+      "commit_sha": "69a8890",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "updated_at": "2026-10-28T02:05:18Z",
       "blocker": null,
-      "next_action": null,
+      "next_action": "Repeat on a self-recorded real-world clip (G6-02)",
       "cost_note": null
     },
     {
@@ -476,7 +483,7 @@
       "title": "Evidence ledger: hashes, model versions, job ids",
       "priority": "P0",
       "gate": "G3",
-      "state": "TODO",
+      "state": "IN_PROGRESS",
       "dependencies": [
         "G1-01"
       ],
@@ -484,13 +491,15 @@
       "branch": null,
       "definition_of_done": "Exportable JSON manifest verified by test",
       "test_commands": [],
-      "evidence_paths": [],
+      "evidence_paths": [
+        "backend/eventproof/pipeline.py (sealed evidence, verify_evidence_file)"
+      ],
       "commit_sha": null,
       "pr_url": null,
-      "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "started_at": "2026-10-28T02:05:18Z",
+      "updated_at": "2026-10-28T02:05:18Z",
       "blocker": null,
-      "next_action": null,
+      "next_action": "Export manifest across runs + challenge/repair artifacts",
       "cost_note": null
     },
     {
