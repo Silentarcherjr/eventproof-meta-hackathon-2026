@@ -16,7 +16,7 @@
 - [x] **G1-04** (G1, DONE_VERIFIED) SAM 3.1 adapter: video -> normalized TrackFrames (official parser) — DoD: Fixture-backed contract test + one live clip cached by sha256
 - [x] **G1-05** (G1, DONE_VERIFIED) Video ingestion: ffprobe validation, H.264 re-encode, <=20s — DoD: Rejects bad MIME/oversize; tests
 - [x] **G1-01** (G1, DONE_VERIFIED) Video -> SAM -> rule -> evidence E2E (API) — DoD: One real clip end-to-end with evidence JSON
-- [ ] **G1-06** (G1, TODO) Frontend studio: upload, rule editor, zone editor, overlay timeline — DoD: Playwright smoke: upload -> result visible
+- [x] **G1-06** (G1, DONE_VERIFIED) Frontend studio: upload, rule editor, zone editor, overlay timeline — DoD: Playwright smoke: upload -> result visible
 - [x] **G2-01** (G2, DONE_VERIFIED) Deterministic Challenge renderer (MP4 + ground_truth.json by seed) — DoD: Same seed -> same sha256; ground truth from independent geometry
 - [x] **G2-02** (G2, DONE_VERIFIED) Mutation classes: ID swap/crossing, occlusion, brief entry, near-threshold timing — DoD: >=3 families implemented with tests
 - [ ] **G2-03** (G2, IN_PROGRESS) Challenge run finds a REAL counterexample against the built detector — DoD: Reproducible failing case with seed + hash

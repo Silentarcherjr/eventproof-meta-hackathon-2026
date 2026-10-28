@@ -359,7 +359,7 @@
       "title": "Frontend studio: upload, rule editor, zone editor, overlay timeline",
       "priority": "P0",
       "gate": "G1",
-      "state": "TODO",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G1-02"
       ],
@@ -367,13 +367,16 @@
       "branch": null,
       "definition_of_done": "Playwright smoke: upload -> result visible",
       "test_commands": [],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "GitHub Actions run 40620125624 success (frontend job: Playwright smoke)",
+        "frontend/e2e/smoke.spec.ts"
+      ],
+      "commit_sha": "608f707",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "updated_at": "2026-10-28T02:19:57Z",
       "blocker": null,
-      "next_action": null,
+      "next_action": "Surface Challenge/Repair in the studio",
       "cost_note": null
     },
     {
