@@ -1,0 +1,41 @@
+# Public showcase on one server: Caddy (HTTPS) -> studio -> backend. Use with the base file:
+#   EVENTPROOF_DOMAIN=demo.example.com docker compose -f compose.yaml -f deploy/compose.showcase.yaml up -d --build
+# The backend runs WITHOUT a Meta key and with both live-call allowances at 0: it can only serve the recorded
+# runs and model outputs copied into ./showcase-data (see deploy/export_showcase.sh). Nothing a visitor does
+# can spend Meta credits. Uploads are refused.
+services:
+  backend:
+    environment:
+      MODEL_API_KEY: ""                       # even if a backend/.env exists on the server
+      EVENTPROOF_MODE: showcase
+      EVENTPROOF_MAX_LIVE_SAM_CALLS: "0"
+      EVENTPROOF_MAX_LIVE_MUSE_CALLS: "0"
+      EVENTPROOF_TRUST_PROXY: "1"             # client IP from Caddy's X-Forwarded-For (rate limit per visitor)
+      EVENTPROOF_RATE_LIMIT: "20/600"
+      EVENTPROOF_DEMO_RUNS: ${EVENTPROOF_DEMO_RUNS:-20261028T023754Z-a922b5bb}
+    volumes: !override
+      - ./showcase-data:/app/artifacts
+    ports: !reset []
+    restart: unless-stopped
+
+  studio:
+    ports: !reset []
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2.10.2-alpine@sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d
+    environment:
+      EVENTPROOF_DOMAIN: ${EVENTPROOF_DOMAIN:?set EVENTPROOF_DOMAIN to the public host name}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+    depends_on:
+      studio:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  caddy_data:

@@ -68,6 +68,9 @@ def _isolate_from_real_state(tmp_path, monkeypatch):
         monkeypatch.setattr(mod, "CACHE_DIR", tmp_path / f"cache-{mod.__name__.rsplit('.', 1)[-1]}")
     for mod in (pipeline, studio):
         monkeypatch.setattr(mod, "RUNS_DIR", tmp_path / "runs")
+    from eventproof.api import main as api
+
+    monkeypatch.setattr(api, "_hits", {})  # the per-IP rate limit is process state; each test starts fresh
 
     def _no_live(*a, **k):
         raise AssertionError("test tried to reach the live Meta API")

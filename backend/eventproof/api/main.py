@@ -1,7 +1,13 @@
 """HTTP API: health, deterministic evaluation over supplied tracks, and end-to-end runs.
 
-Live SAM calls from the API need an explicit per-process allowance: EVENTPROOF_MAX_LIVE_SAM_CALLS
-(default 0 = cached results only), so an exposed server cannot spend credits unattended.
+Credit and abuse guards (all per server process, read at start-up):
+- EVENTPROOF_MAX_LIVE_SAM_CALLS / EVENTPROOF_MAX_LIVE_MUSE_CALLS: live (billed) Meta calls allowed; default 0 =
+  cached results only. Each Muse request (rule compile attempt, repair round) and each SAM video counts as one.
+- EVENTPROOF_MODE=showcase: no uploads and both allowances forced to 0, so only cached model outputs are served;
+  recorded runs can be opened, challenged and repaired (Muse from its cache, baseline is free). Default "local".
+- EVENTPROOF_RATE_LIMIT="<n>/<seconds>" per client IP for POST requests (default 30/600), and one heavy job at a
+  time (others get 429). EVENTPROOF_TRUST_PROXY=1 takes the client IP from X-Forwarded-For (set it only behind
+  your own proxy).
 """
 
 from __future__ import annotations
@@ -10,17 +16,20 @@ import json
 import os
 import re
 import tempfile
+import threading
+import time
+from collections import deque
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, ValidationError
 
 from eventproof import pipeline, studio
 from eventproof.engine.evaluator import evaluate
-from eventproof.meta.client import MetaApiUnavailable, MetaSettings
+from eventproof.meta.client import LiveBudget, MetaApiUnavailable, MetaSettings
 from eventproof.meta.muse_rules import Layout, MuseRuleCompiler
 from eventproof.perception.sam import LiveCallLimit, SamTracker
 from eventproof.schemas.evidence import RuleReport
@@ -33,10 +42,59 @@ app.add_middleware(CORSMiddleware, allow_methods=["GET", "POST"], allow_headers=
                    allow_origins=os.environ.get("EVENTPROOF_CORS_ORIGINS", "http://localhost:3000").split(","))
 
 
+MODE = os.environ.get("EVENTPROOF_MODE", "local")
+DEMO_RUNS = [r for r in os.environ.get("EVENTPROOF_DEMO_RUNS", "").split(",") if pipeline.RUN_ID_RE.match(r)]
+_muse_allowed = int(os.environ.get("EVENTPROOF_MAX_LIVE_MUSE_CALLS", "0"))
+MUSE_BUDGET = LiveBudget("muse-spark", 0 if MODE == "showcase" else _muse_allowed)
+_n, _, _w = os.environ.get("EVENTPROOF_RATE_LIMIT", "30/600").partition("/")
+RATE_N, RATE_WINDOW = int(_n), float(_w or 600)
+TRUST_PROXY = os.environ.get("EVENTPROOF_TRUST_PROXY") == "1"
+_hits: dict[str, deque] = {}
+_hits_lock = threading.Lock()
+_heavy = threading.Semaphore(1)
+HEAVY = re.compile(r"^/runs(/[^/]+/(challenge|challenge/sam-confirm|repair|before-after))?$")
+
+
+def _client_ip(request: Request) -> str:
+    fwd = request.headers.get("x-forwarded-for") if TRUST_PROXY else None
+    return (fwd.split(",")[0].strip() if fwd else None) or (request.client.host if request.client else "?")
+
+
+@app.middleware("http")
+async def guards(request: Request, call_next):
+    if request.method != "POST":
+        return await call_next(request)
+    ip, now = _client_ip(request), time.monotonic()
+    with _hits_lock:
+        q = _hits.setdefault(ip, deque())
+        while q and now - q[0] > RATE_WINDOW:
+            q.popleft()
+        if len(q) >= RATE_N:
+            return JSONResponse({"detail": f"rate limit: {RATE_N} requests per {RATE_WINDOW:.0f} s"}, status_code=429)
+        q.append(now)
+    if not HEAVY.match(request.url.path):
+        return await call_next(request)
+    if not _heavy.acquire(blocking=False):
+        return JSONResponse({"detail": "another job is running; try again in a moment"}, status_code=429)
+    try:
+        return await call_next(request)
+    finally:
+        _heavy.release()
+
+
+def _no_live_in_showcase(what: str) -> None:
+    if MODE == "showcase":
+        raise HTTPException(403, f"{what} is off in showcase mode (this server serves recorded runs only)")
+
+
 @app.get("/health")
 def health() -> dict:
     s = MetaSettings.from_env()
-    return {"status": "ok", "meta_api_key_configured": bool(s.api_key), "muse_model": s.muse_model, "sam_model": s.sam_model}
+    t = get_tracker()
+    return {"status": "ok", "mode": MODE, "meta_api_key_configured": bool(s.api_key), "muse_model": s.muse_model,
+            "sam_model": s.sam_model, "live_calls_remaining": {"muse": MUSE_BUDGET.remaining,
+                                                               "sam": max(0, t.max_live_calls - t.live_calls)},
+            "rate_limit": f"{RATE_N}/{RATE_WINDOW:.0f}s", "demo_runs": DEMO_RUNS}
 
 
 class EvaluateRequest(BaseModel):
@@ -56,14 +114,15 @@ _compiler: MuseRuleCompiler | None = None
 def get_tracker() -> SamTracker:
     global _tracker
     if _tracker is None:
-        _tracker = SamTracker(max_live_calls=int(os.environ.get("EVENTPROOF_MAX_LIVE_SAM_CALLS", "0")))
+        allowed = 0 if MODE == "showcase" else int(os.environ.get("EVENTPROOF_MAX_LIVE_SAM_CALLS", "0"))
+        _tracker = SamTracker(max_live_calls=allowed)
     return _tracker
 
 
 def get_compiler() -> MuseRuleCompiler:
     global _compiler
     if _compiler is None:
-        _compiler = MuseRuleCompiler()
+        _compiler = MuseRuleCompiler(budget=MUSE_BUDGET)
     return _compiler
 
 
@@ -71,6 +130,7 @@ def get_compiler() -> MuseRuleCompiler:
 def create_run(video: Annotated[UploadFile, File()],
                rule_text: Annotated[str, Form(min_length=3, max_length=2000)],
                layout: Annotated[str, Form()]) -> pipeline.Evidence:
+    _no_live_in_showcase("uploading a new video")
     try:
         lay = Layout.model_validate(json.loads(layout))
     except (json.JSONDecodeError, ValidationError) as e:
@@ -150,10 +210,10 @@ def run_repair_endpoint(run_id: str, req: RepairRequest) -> studio.RepairRun:
     if req.proposer not in ("muse", "baseline"):
         raise HTTPException(422, "proposer must be 'muse' or 'baseline'")
     try:
-        return studio.repair(_evidence(run_id), req.proposer)
+        return studio.repair(_evidence(run_id), req.proposer, muse_budget=MUSE_BUDGET)
     except studio.ChallengeUnavailable as e:
         raise HTTPException(422, str(e)) from None
-    except MetaApiUnavailable as e:
+    except (MetaApiUnavailable, LiveCallLimit) as e:
         raise HTTPException(503, str(e)) from None
 
 
@@ -176,6 +236,15 @@ def stored_result(run_id: str, key: str) -> dict:
     if out is None:
         raise HTTPException(404, "not computed yet")
     return out
+
+
+@app.get("/runs/{run_id}/ledger")
+def run_ledger(run_id: str) -> dict:
+    """Build (or rebuild) the run's evidence ledger: every file hash, model/request ids, holdout manifests."""
+    from eventproof import ledger
+
+    _run_file(run_id, "evidence.json")  # validates the id and that the run exists
+    return ledger.write(run_id)
 
 
 FINAL_REPORT = Path(__file__).resolve().parents[3] / "benchmark" / "final" / "report_final_v1.json"

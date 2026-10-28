@@ -65,3 +65,12 @@ export async function getFinalReport(): Promise<FinalReport | null> {
   const res = await fetch(`${API_URL}/final-report`);
   return res.ok ? (res.json() as Promise<FinalReport>) : null;
 }
+
+export interface Health {
+  status: string; mode: "local" | "showcase"; meta_api_key_configured: boolean;
+  live_calls_remaining: { muse: number; sam: number }; rate_limit: string; demo_runs: string[];
+}
+
+export async function getHealth(): Promise<Health | null> {
+  try { const r = await fetch(`${API_URL}/health`); return r.ok ? (r.json() as Promise<Health>) : null; } catch { return null; }
+}

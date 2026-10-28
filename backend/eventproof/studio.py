@@ -133,14 +133,14 @@ def confirm_with_sam(ev: Evidence, tracker: SamTracker, runs_dir: Path | None = 
 
 
 def repair(ev: Evidence, proposer_name: str, runs_dir: Path | None = None, muse_settings=None,
-           muse_cache: Path | None = None) -> RepairRun:
+           muse_cache: Path | None = None, muse_budget=None) -> RepairRun:
     cx = load_counterexample(ev.run_id, runs_dir)
     det = DetectorConfig(rule=_rule(ev))
     if proposer_name == "muse":
         from eventproof.meta.muse_repair import MuseProposer
 
         kw = {"cache_dir": muse_cache} if muse_cache else {}
-        proposer = MuseProposer(muse_settings, rule_text=ev.rule.text, **kw)
+        proposer = MuseProposer(muse_settings, rule_text=ev.rule.text, budget=muse_budget, **kw)
     elif proposer_name == "baseline":
         proposer = BaselineProposer()
     else:

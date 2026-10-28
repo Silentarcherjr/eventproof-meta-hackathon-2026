@@ -1,0 +1,16 @@
+# HTTPS is automatic for a public host name (Let's Encrypt). For a local test use EVENTPROOF_DOMAIN=:80 (plain HTTP).
+{$EVENTPROOF_DOMAIN} {
+	encode zstd gzip
+	request_body {
+		max_size 1MB  # showcase: no uploads
+	}
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy no-referrer
+		X-Frame-Options DENY
+		-Server
+	}
+	# Optional: share the URL only with judges by adding a password (caddy hash-password):
+	# basic_auth { judge <bcrypt-hash> }
+	reverse_proxy studio:3000
+}

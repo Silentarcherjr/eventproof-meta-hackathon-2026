@@ -1,8 +1,8 @@
 # EventProof: `docker compose up --build`, then open http://localhost:3000
 #
 # Without a key the studio and API come up and say so (uploads answer 503). With MODEL_API_KEY in backend/.env,
-# Muse Spark compiles new rules live. Live SAM 3.1 calls stay at 0 unless you allow some per process:
-#   EVENTPROOF_MAX_LIVE_SAM_CALLS=3 docker compose up
+# live Meta calls are still 0 unless you allow some per server process (cached results are always free):
+#   EVENTPROOF_MAX_LIVE_MUSE_CALLS=6 EVENTPROOF_MAX_LIVE_SAM_CALLS=3 docker compose up
 # Runs and model caches persist in the named volume `artifacts`. To reuse the caches of a local (non-Docker)
 # backend instead, bind the repo folder: EVENTPROOF_ARTIFACTS=./artifacts docker compose up
 name: eventproof
@@ -17,6 +17,7 @@ services:
         required: false
     environment:
       EVENTPROOF_MAX_LIVE_SAM_CALLS: ${EVENTPROOF_MAX_LIVE_SAM_CALLS:-0}
+      EVENTPROOF_MAX_LIVE_MUSE_CALLS: ${EVENTPROOF_MAX_LIVE_MUSE_CALLS:-0}
       EVENTPROOF_CORS_ORIGINS: http://localhost:3000
     volumes:
       - ${EVENTPROOF_ARTIFACTS:-artifacts}:/app/artifacts

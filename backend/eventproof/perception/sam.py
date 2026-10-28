@@ -16,7 +16,7 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
-from eventproof.meta.client import MetaSettings, get_client
+from eventproof.meta.client import LiveCallLimit, MetaSettings, get_client  # noqa: F401  re-exported
 from eventproof.perception.sam_wire import SamFrame, SamParseError, parse_output
 from eventproof.schemas.tracks import Box, TrackFrame, TrackSet, VideoInfo
 
@@ -61,10 +61,6 @@ class SamResult:
     def source_ref(self) -> str:
         return (f"{self.model}:{self.response_id}:video={self.video_sha256[:16]}:prompt={self.prompt!r}"
                 + (":cached" if self.cached else ""))
-
-
-class LiveCallLimit(RuntimeError):
-    """Raised before uploading when a run would exceed its explicit live-call allowance (credits guard)."""
 
 
 class SamTracker:

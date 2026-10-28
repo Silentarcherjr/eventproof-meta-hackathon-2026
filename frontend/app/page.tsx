@@ -6,7 +6,7 @@ import ChallengePanel from "@/components/ChallengePanel";
 import Results from "@/components/Results";
 import Timeline from "@/components/Timeline";
 import VideoStage, { type Tool } from "@/components/VideoStage";
-import { createRun, getFinalReport, getRun, getTracks, videoUrl } from "@/lib/api";
+import { createRun, getFinalReport, getHealth, getRun, getTracks, type Health, videoUrl } from "@/lib/api";
 import { DEFAULT_LAYOUT, EXAMPLE_RULES } from "@/lib/defaults";
 import type { BeforeAfter, Evidence, FinalReport, Layout, ObjectVerdict, TrackFrame, TrackSet } from "@/lib/types";
 
@@ -24,15 +24,20 @@ export default function Studio() {
   const [seek, setSeek] = useState<number | null>(null);
   const [ba, setBa] = useState<BeforeAfter | null>(null);
   const [finalReport, setFinalReport] = useState<FinalReport | null>(null);
+  const [health, setHealth] = useState<Health | null>(null);
+  const showcase = health?.mode === "showcase";
 
   useEffect(() => () => { if (localUrl) URL.revokeObjectURL(localUrl); }, [localUrl]);
 
   // ?run=<id> reopens a recorded run (evidence, tracks and any Challenge/Repair results stored with it)
   useEffect(() => {
     getFinalReport().then(setFinalReport).catch(() => setFinalReport(null));
-    const id = new URLSearchParams(window.location.search).get("run");
-    if (!id) return;
     (async () => {
+      const h = await getHealth();
+      setHealth(h);
+      // a showcase server opens its first recorded run when no run is asked for
+      const id = new URLSearchParams(window.location.search).get("run") ?? (h?.mode === "showcase" ? h.demo_runs[0] : null);
+      if (!id) return;
       try {
         const e = await getRun(id);
         setRule(e.rule.text);
@@ -101,6 +106,15 @@ export default function Studio() {
           <p className="text-sm text-zinc-400">Describe a visual rule in plain language. Muse Spark turns it into a checkable rule, SAM 3.1 tracks the objects, and every verdict comes with its frames.</p>
         </div>
       </header>
+      {showcase && (
+        <div className="mb-4 rounded-lg bg-sky-500/10 p-3 text-sm text-sky-200 ring-1 ring-sky-500/40" data-testid="showcase-banner">
+          Showcase server: it replays recorded runs (real Muse Spark and SAM 3.1 outputs, served from their cache) and makes no
+          live model calls, so uploads are off. Challenge Mode and the baseline repair run live; they are free and deterministic.
+          {health && health.demo_runs.length > 1 && (
+            <span> Recorded runs: {health.demo_runs.map((r) => <a key={r} href={`/?run=${r}`} className="mx-1 underline">{r.slice(-8)}</a>)}</span>
+          )}
+        </div>
+      )}
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         <section className="space-y-4">
@@ -115,7 +129,7 @@ export default function Studio() {
         <section className="space-y-5">
           <div className="space-y-2 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800">
             <label className="block text-xs font-semibold uppercase tracking-wide text-zinc-400" htmlFor="video">1 · Video (MP4/MOV, ≤ 20 s)</label>
-            <input id="video" data-testid="video-input" type="file" accept="video/mp4,video/quicktime,.mp4,.mov"
+            <input id="video" data-testid="video-input" type="file" accept="video/mp4,video/quicktime,.mp4,.mov" disabled={showcase}
                    onChange={(e) => pick(e.target.files?.[0] ?? null)}
                    className="block w-full text-sm text-zinc-300 file:mr-3 file:rounded file:border-0 file:bg-zinc-700 file:px-3 file:py-1.5 file:text-zinc-100" />
           </div>

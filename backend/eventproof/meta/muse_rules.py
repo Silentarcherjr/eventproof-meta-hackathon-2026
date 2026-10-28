@@ -22,7 +22,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field, ValidationError
 
 from eventproof.engine.geometry import cross
-from eventproof.meta.client import MetaSettings, get_client
+from eventproof.meta.client import LiveBudget, MetaSettings, get_client
 from eventproof.schemas.rules import Line, VisualRule, Zone
 
 SCHEMA_VERSION = "rule-schema/2-nodes"
@@ -225,9 +225,11 @@ def to_visual_rule(out: dict, layout: Layout) -> VisualRule:
 
 
 class MuseRuleCompiler:
-    def __init__(self, settings: MetaSettings | None = None, cache_dir: Path | None = None, max_attempts: int = 2):
+    def __init__(self, settings: MetaSettings | None = None, cache_dir: Path | None = None, max_attempts: int = 2,
+                 budget: LiveBudget | None = None):
         self.settings = settings or MetaSettings.from_env()
         self.cache_dir, self.max_attempts = cache_dir or CACHE_DIR, max_attempts
+        self.budget = budget  # None: no cap (CLI/bench runs by the participant); the API always passes one
         self.live_calls = 0
 
     def _key(self, text: str, layout: Layout) -> str:
@@ -237,6 +239,8 @@ class MuseRuleCompiler:
 
     def _call(self, messages: list[dict], schema: dict) -> tuple[dict, str, dict]:
         client = get_client(self.settings)  # raises MetaApiUnavailable without a key
+        if self.budget:
+            self.budget.take("rule compile")
         resp = client.chat.completions.create(
             model=self.settings.muse_model, messages=messages,
             response_format={"type": "json_schema",

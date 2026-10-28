@@ -37,3 +37,7 @@ artifacts/
 
 # small synthetic clip (own work) used by the Playwright smoke test
 !frontend/e2e/fixtures/*.mp4
+
+# showcase server data (deploy/export_showcase.sh)
+showcase-data/
+showcase-data.tgz

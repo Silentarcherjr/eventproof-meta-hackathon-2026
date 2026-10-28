@@ -11,7 +11,9 @@ client = TestClient(app)
 def test_health_never_leaks_key():
     body = client.get("/health").json()
     assert body["status"] == "ok"
-    assert set(body) == {"status", "meta_api_key_configured", "muse_model", "sam_model"}
+    assert set(body) == {"status", "mode", "meta_api_key_configured", "muse_model", "sam_model", "live_calls_remaining",
+                         "rate_limit", "demo_runs"}
+    assert "sk-" not in str(body) and body["live_calls_remaining"] == {"muse": 0, "sam": 0}
 
 
 def test_evaluate_endpoint_returns_violation():

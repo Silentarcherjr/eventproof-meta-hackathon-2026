@@ -24,7 +24,7 @@ from pydantic import ValidationError
 
 from eventproof.challenge.families import FAMILIES
 from eventproof.challenge.runner import Perceiver, mock_perceiver, run_case
-from eventproof.meta.client import MetaSettings, get_client
+from eventproof.meta.client import LiveBudget, MetaSettings, get_client
 from eventproof.meta.muse_rules import _nullable, _obj, _op
 from eventproof.repair.patch import RulePatch
 from eventproof.repair.proposer import Proposal, RepairContext
@@ -82,8 +82,9 @@ def user_prompt(ctx: RepairContext, rule_text: str | None) -> str:
 
 class MuseProposer:
     def __init__(self, settings: MetaSettings | None = None, rule_text: str | None = None, cache_dir: Path | None = None,
-                 perceiver: Perceiver = mock_perceiver, max_rounds: int = MAX_ROUNDS):
+                 perceiver: Perceiver = mock_perceiver, max_rounds: int = MAX_ROUNDS, budget: LiveBudget | None = None):
         self.settings = settings or MetaSettings.from_env()
+        self.budget = budget
         self.name = self.settings.muse_model
         self.rule_text, self.perceiver, self.max_rounds = rule_text, perceiver, max_rounds
         self.cache_dir = cache_dir or CACHE_DIR
@@ -97,6 +98,8 @@ class MuseProposer:
             c = json.loads(cpath.read_text())
             return c["output"], c["request_id"], c["usage"], True
         client = get_client(self.settings)
+        if self.budget:
+            self.budget.take("repair proposal")
         resp = client.chat.completions.create(
             model=self.settings.muse_model, messages=messages,
             response_format={"type": "json_schema",
