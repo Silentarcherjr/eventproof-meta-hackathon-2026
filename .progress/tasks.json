@@ -489,7 +489,7 @@
       "title": "Evidence ledger: hashes, model versions, job ids",
       "priority": "P0",
       "gate": "G3",
-      "state": "IN_PROGRESS",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G1-01"
       ],
@@ -498,14 +498,17 @@
       "definition_of_done": "Exportable JSON manifest verified by test",
       "test_commands": [],
       "evidence_paths": [
-        "backend/eventproof/pipeline.py (sealed evidence, verify_evidence_file)"
+        "GitHub Actions run 40717424645 success",
+        "backend/eventproof/ledger.py",
+        "backend/tests/test_ledger.py",
+        "docs/evidence/runs/20261028T023754Z-a922b5bb/ledger.json"
       ],
-      "commit_sha": null,
+      "commit_sha": "f46798d",
       "pr_url": null,
       "started_at": "2026-10-28T02:05:18Z",
-      "updated_at": "2026-10-28T02:05:18Z",
+      "updated_at": "2026-10-28T15:38:33Z",
       "blocker": null,
-      "next_action": "Export manifest across runs + challenge/repair artifacts",
+      "next_action": null,
       "cost_note": null
     },
     {
@@ -570,7 +573,7 @@
       "title": "Before/after metrics UI with hashes (no precomputed fakes)",
       "priority": "P0",
       "gate": "G5",
-      "state": "TODO",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G4-01",
         "G1-06"
@@ -579,14 +582,19 @@
       "branch": null,
       "definition_of_done": "Non-technical viewer understands in 60s (self-test)",
       "test_commands": [],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "GitHub Actions run 40715483875 success",
+        "frontend/components/BeforeAfter.tsx",
+        "frontend/e2e/smoke.spec.ts (before/after + reopen tests)",
+        "backend/tests/test_studio.py"
+      ],
+      "commit_sha": "02841c4",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "updated_at": "2026-10-28T15:38:33Z",
       "blocker": null,
       "next_action": null,
-      "cost_note": null
+      "cost_note": "0 Meta calls (recorded run, cached)"
     },
     {
       "id": "G5-02",
@@ -630,9 +638,9 @@
       "commit_sha": null,
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-28T14:42:31Z",
-      "blocker": "Human decision: hosting option + mode (Showcase vs capped live) and spend; see docs/DEPLOY_PROPOSAL.md",
-      "next_action": "After the decision: cap Muse calls in the API, rate limit, demo-runs list, deploy/ folder, deploy, healthcheck evidence",
+      "updated_at": "2026-10-28T15:38:33Z",
+      "blocker": "Human decision: host + spend (docs/DEPLOY_PROPOSAL.md). Showcase deploy prepared and verified locally (deploy/README.md).",
+      "next_action": "After approval: deploy/README.md steps 1-7; evidence = public /api/health (mode showcase, key false)",
       "cost_note": null
     },
     {
@@ -640,7 +648,7 @@
       "title": "2-3 real self-recorded box videos, hand-labelled",
       "priority": "P1",
       "gate": "G6",
-      "state": "TODO",
+      "state": "READY",
       "dependencies": [
         "G1-01"
       ],
@@ -648,13 +656,17 @@
       "branch": null,
       "definition_of_done": "docs/DATASETS.md provenance + results reported separately",
       "test_commands": [],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "GitHub Actions run 40717424645 success",
+        "backend/eventproof/validation/real_video.py",
+        "backend/tests/validation/test_real_video.py"
+      ],
+      "commit_sha": "296433c",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "updated_at": "2026-10-28T15:38:33Z",
       "blocker": null,
-      "next_action": null,
+      "next_action": "Participant records 2-3 clips per docs/REAL_VIDEO_PROTOCOL.md, labels blind, `check --freeze`; then run with an approved allowance (~1 Muse + 1 SAM call per clip)",
       "cost_note": null
     },
     {
@@ -676,9 +688,9 @@
       "commit_sha": null,
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "updated_at": "2026-10-28T15:38:33Z",
       "blocker": null,
-      "next_action": null,
+      "next_action": "Script draft docs/DEMO_SCRIPT.md (all numbers sourced); participant records the video; repo public only after approval + audit",
       "cost_note": null
     },
     {
@@ -800,7 +812,7 @@
       "title": "Verifiable evidence export (sha256 + model version)",
       "priority": "P1",
       "gate": "G5",
-      "state": "TODO",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G3-02"
       ],
@@ -808,11 +820,15 @@
       "branch": null,
       "definition_of_done": "Tests",
       "test_commands": [],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "GitHub Actions run 40717424645 success",
+        "GET /runs/{id}/ledger",
+        "backend/tests/test_ledger.py (tamper detection)"
+      ],
+      "commit_sha": "f46798d",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "updated_at": "2026-10-28T15:38:33Z",
       "blocker": null,
       "next_action": null,
       "cost_note": null
@@ -882,6 +898,37 @@
       "blocker": null,
       "next_action": null,
       "cost_note": null
+    },
+    {
+      "id": "P1-06",
+      "title": "Pre-registered final test set (report-only, distribution shift) + regression tests on every published number",
+      "priority": "P1",
+      "gate": "G4",
+      "state": "DONE_VERIFIED",
+      "dependencies": [
+        "G4-01",
+        "G4-02"
+      ],
+      "owner": "agentic-eval",
+      "branch": null,
+      "definition_of_done": "Frozen + pre-registered before evaluation; evaluated once; report committed; CI recomputes it",
+      "test_commands": [
+        "cd backend && uv run pytest tests/validation tests/regression"
+      ],
+      "evidence_paths": [
+        "GitHub Actions run 40713748651 success",
+        "GitHub Actions run 40717424645 success",
+        "benchmark/final/PREREGISTRATION.md (56001c5, before evaluation)",
+        "benchmark/final/REPORT_final_v1.md",
+        "backend/tests/regression/test_benchmarks.py"
+      ],
+      "commit_sha": "1764a16",
+      "pr_url": null,
+      "started_at": "2026-10-28T15:38:33Z",
+      "updated_at": "2026-10-28T15:38:33Z",
+      "blocker": null,
+      "next_action": null,
+      "cost_note": "0 Meta calls (mock perception; SAM subset optional, needs approval)"
     }
   ]
 }

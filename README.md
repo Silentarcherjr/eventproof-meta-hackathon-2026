@@ -16,12 +16,18 @@ Give EventProof a short video and a rule in plain language ("every package must 
 - **SAM 3.1** (`sam-3.1`): text-prompted video segmentation + stable track IDs.
 The deterministic engine never executes model-generated code.
 
+## Evidence
+- Final independent test (pre-registered, evaluated once): `benchmark/final/REPORT_final_v1.md`
+- Recorded demo run with its evidence ledger: `docs/evidence/runs/20261028T023754Z-a922b5bb/`
+- Real-video validation protocol: `docs/REAL_VIDEO_PROTOCOL.md` · Showcase deploy runbook: `deploy/README.md`
+
 ## Run it (Docker)
 ```
 docker compose up --build        # studio: http://localhost:3000, API: http://localhost:8000/health
 ```
 Without a key everything starts and uploads answer 503. Put `MODEL_API_KEY` in `backend/.env` (see `.env.example`)
-for live Muse Spark; live SAM 3.1 calls stay at 0 unless allowed: `EVENTPROOF_MAX_LIVE_SAM_CALLS=3 docker compose up`.
+and allow live calls explicitly (default 0, cached results are free):
+`EVENTPROOF_MAX_LIVE_MUSE_CALLS=6 EVENTPROOF_MAX_LIVE_SAM_CALLS=3 docker compose up`. Reopen a recorded run with `/?run=<run_id>`.
 Images are pinned by digest and dependencies come from `uv.lock` / `package-lock.json`.
 
 ## Quickstart (backend, without Docker)

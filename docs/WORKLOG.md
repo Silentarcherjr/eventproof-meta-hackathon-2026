@@ -89,3 +89,16 @@
 - Found: ESLint was linting the local `.next-e2e` build output (ignored now; CI never had that folder).
 - Deploy: options and prices researched (`docs/DEPLOY_PROPOSAL.md`); nothing deployed, waiting on the human decision. Meta calls this task: 0.
 - Tests: backend 171 passed, ruff clean; frontend lint, tsc, Playwright 3 passed.
+
+## 2026-10-28 · session 1 (cont.) · local macOS · orchestrator + 1 subagent — final test, before/after, guards, ledger, real-video flow
+- final_v1: frozen + pre-registered (56001c5), evaluator (fb46a25, tested on dev seeds only), single evaluation (1764a16):
+  H1–H3 hold; accepted repairs 141→158/200 (0 regressions) and 109→117/118/120 of 120 on shift families. Found and reported:
+  Muse's patches leave 2–3 stop_and_go errors that the baseline patch fixes.
+- G5-01 before/after view (02841c4): verdict cards, counterexample video with overlay, engine counter chart, holdout + final_v1
+  cards, hashes; `?run=` reopens recorded runs; headline no longer ranks by holdout score. Browser-checked at 1440 px; 2 overlay
+  bugs fixed (overlay height, grid stretch).
+- Guards + deploy/ + ledger + regression tests (f46798d). Showcase stack verified locally behind Caddy: no key, 403 on upload,
+  Muse repair and SAM confirm served from cache, 429 after 20 POSTs, forged X-Forwarded-For ignored.
+- Real-video flow by a subagent in a worktree (296433c), reviewed and merged (11fb83d).
+- Demo script draft `docs/DEMO_SCRIPT.md` with a claims→source table. Docs de-contradicted (PROGRESS, COSTS, DEPLOY_PROPOSAL, HANDOFF).
+- Tests: backend 221, Playwright 4; CI 40717424645 green. Meta calls: 0.

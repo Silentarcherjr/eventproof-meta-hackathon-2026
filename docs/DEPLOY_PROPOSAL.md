@@ -1,6 +1,7 @@
 # Deploy proposal (G6-01) — 2026-10-28
 
 Status: **proposal, nothing deployed.** Hosting choice and spend are a human decision (AGENTS.md).
+Update 2026-10-28: the guards below are implemented and the Showcase stack is verified locally — see `deploy/README.md`.
 
 ## What has to run
 The two containers from `compose.yaml` (G5-02): `backend` (FastAPI + ffmpeg, image 1.16 GB) and `studio` (Next.js
@@ -9,8 +10,8 @@ stack: idle 63 MB + 38 MB RAM; backend peak 266 MB during Challenge + baseline R
 a persistent disk (a few MB per run).
 
 ## The real cost risk is Meta credits, not hosting
-Today an exposed backend with `MODEL_API_KEY` set lets any visitor trigger **Muse Spark** calls (rule compile,
-3-round repair) without a cap; live SAM is capped per process (`EVENTPROOF_MAX_LIVE_SAM_CALLS`, default 0).
+Implemented: process-wide allowances for both models (`EVENTPROOF_MAX_LIVE_MUSE_CALLS`, `EVENTPROOF_MAX_LIVE_SAM_CALLS`,
+default 0), `EVENTPROOF_MODE=showcase` (no uploads, allowances forced to 0), per-IP rate limit, one heavy job at a time.
 Before any public URL, one of these modes must be chosen:
 
 | Mode | What a visitor can do | Meta credits at risk |
@@ -19,9 +20,8 @@ Before any public URL, one of these modes must be chosen:
 | **Capped live** (key on the server) | All of the above + new uploads/rules: Muse compiles live, SAM live up to a cap | bounded by new caps: per-process Muse and SAM call limits, per-IP rate limit, one heavy job at a time |
 | Judges-only live | Capped live behind a shared password given in the submission | as capped live, but only judges |
 
-Work needed for either live mode (not done yet): `EVENTPROOF_MAX_LIVE_MUSE_CALLS` cap in the API, per-IP rate
-limit, a "demo runs" list in the studio. Showcase needs only the demo-runs list plus copying the cached runs to
-the server.
+Showcase is ready (`deploy/compose.showcase.yaml`, `deploy/export_showcase.sh`). A live mode only needs the participant to
+choose the allowances and set the Meta spend alert first.
 
 ## Hosting options (prices read 2026-10-28 from the providers' pages; excl. VAT)
 
@@ -43,8 +43,8 @@ in CI, the 2 GB gives headroom for re-encoding, and Showcase mode guarantees zer
 ## What you would do vs. what I would do
 - You: create the hosting account and payment method, create the server (or an API token for it), decide the
   mode, and set the spend alert in the Meta dashboard (C-03).
-- I: the caps / rate limit / demo-runs work, a `deploy/` folder (Caddyfile, compose override, setup script),
-  the deploy over SSH once you give access, and the healthcheck evidence for G6-01.
+- I (done): caps, rate limit, showcase mode, `deploy/` (Caddyfile, override, export script, runbook).
+- I (after approval): the deploy over SSH once you give access, and the healthcheck evidence for G6-01.
 
 Sources: digitalocean.com/pricing/droplets, hetzner.com/cloud/regular-performance, docs.fly.io/about/pricing,
 render.com/docs/free; Render Starter/disk prices from secondary sources (official table did not load) — confirm before choosing C.

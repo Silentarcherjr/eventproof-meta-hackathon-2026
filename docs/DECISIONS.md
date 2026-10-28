@@ -77,3 +77,17 @@
 - The studio proxies `/api/*` to the backend (Next rewrites, build-time `API_PROXY_TARGET`, proxy timeout 300 s), so a deployment exposes one origin and the backend needs no public port. Outside Docker nothing changes (`NEXT_PUBLIC_API_URL` default stays `http://localhost:8000`).
 - Runs/caches live in a named volume; `EVENTPROOF_ARTIFACTS=./artifacts` binds the repo folder to reuse local caches. A bind mount by default would break on Linux hosts (root-owned folder vs. non-root container user).
 - Live SAM stays at 0 by default in compose. Hosting is not chosen: `docs/DEPLOY_PROPOSAL.md` lists options and prices and flags that Muse calls from the API are not capped yet, which must be fixed (or the server run without a key) before any public URL.
+
+## ADR-015 — 2026-10-28 — Third data tier, before/after view, guards, ledger
+- final_v1 (report-only): 5 Challenge families at new seeds 40000–40039 + 3 shift families that exist only there. Frozen and
+  pre-registered (56001c5) before the evaluator existed; evaluator tested on dev seeds only (fb46a25); run once (1764a16). It
+  evaluates every recorded proposal (accepted and rejected), so it also measures whether the grader's choice transfers.
+  `eventproof.validation` cannot be imported by grader/proposers/studio/API (test); the API serves only the report file.
+- Studio headline and before/after use the FIRST accepted proposal in the proposer's order, never the best holdout score
+  (ranking by holdout would reintroduce selection on it).
+- The before/after chart plots `engine.evaluator.zone_steps`, the same counter `_eval_event` decides from (refactor, no
+  behaviour change: all published numbers re-checked by tests/regression).
+- Guards: `LiveBudget` shared per process for Muse (compile attempts, repair rounds); SAM keeps its per-process allowance;
+  showcase mode forces both to 0 and refuses uploads; per-IP rate limit; one heavy job at a time.
+- Evidence ledger per run (`eventproof/ledger.py`): file hashes, model/request ids live vs cached, holdout manifests, seal check.
+- Real-video validation (separate worktree, merged 296433c): blind labels frozen by a manifest before any model run.

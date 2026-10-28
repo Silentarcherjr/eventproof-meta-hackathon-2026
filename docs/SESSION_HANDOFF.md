@@ -1,25 +1,32 @@
 # Session handoff
 
-Written: 2026-10-28 (session 1 cont., local). Overwrite at the end of every session, after push.
+Written: 2026-10-28 ~10:45 Panama (session 1 cont., local). Overwrite at the end of every session, after push.
 
 ## State
-- Gate G4. Repo `Silentarcherjr/eventproof-meta-hackathon-2026` (private). Tag `hackathon-start-2026-10-27` = 039c084.
-- Commit identity: Anthony Morell <153972162+Silentarcherjr@users.noreply.github.com> (repo-local git config; set it again in fresh cloud clones). No assistant attribution trailers in commits.
-- Done & verified: G2-03, G4-01 (a15ece1, CI 40623377551), G1-06 (608f707, CI 40620125624), G1-01, G1-05 (69a8890, CI 40618714010), G1-03 (ac056a1, CI 40604985293), G0-03, G0-04, G1-04 (107d676, CI 40602048109), G0-02, G0-05, G1-02, G2-01, G2-02, G3-01, P1-01, G4-02 (frozen holdout_v2, c0c78de, CI run 40597330836). P0 16/27.
-- G4-01 DONE: Muse Spark proposes RulePatch repairs (3 rounds, visible dev feedback only); 2 of 8 accepted on holdout_v2 (144→166, 144→164), 6 rejected. Baseline proposer kept for comparison.
-- Live Meta: WORKING. Key in `backend/.env` (local only). First SAM + Muse calls OK 2026-10-27 (`docs/evidence/2026-10-27_meta_api_smoke.md`). Raw SAM output cached in `artifacts/sam_cache/`.
+- Repo `Silentarcherjr/eventproof-meta-hackathon-2026` (private). HEAD 11fb83d + docs commit; CI run 40717424645 green
+  (backend 221 tests, frontend lint/tsc/4 Playwright, docker, tracker). P0 19/27, P1 3/7.
+- Commit identity: Anthony Morell <153972162+Silentarcherjr@users.noreply.github.com>. No assistant attribution in commits or files.
+- Product loop complete and verified: Build (Muse Spark → DSL, SAM 3.1 → tracks) → Break (Challenge Mode, SAM confirm) →
+  Repair (Muse Spark, graded on hidden holdout_v2) → Before/after view → final_v1 independent test → evidence ledger.
+- Demo run: `20261028T023754Z-a922b5bb` (open with `/?run=<id>`; committed copy in docs/evidence/runs/, full copy with video in
+  artifacts/runs/ — gitignored; `deploy/export_showcase.sh` packages it).
+- Three data tiers: dev seeds 0–29 (search + proposers), holdout_v2 20000–20039 (grader accept/reject), final_v1 40000–40039 +
+  3 shift families (report-only, pre-registered, evaluated once). Never regenerate a frozen manifest in place.
+- Live Meta calls need allowances everywhere: API env `EVENTPROOF_MAX_LIVE_MUSE_CALLS` / `EVENTPROOF_MAX_LIVE_SAM_CALLS`
+  (default 0), CLI flags `--max-live-calls`, real-video `--max-live-*-calls`. Key only in `backend/.env` (local).
 
-## Next exact task
-1. G6-01: waiting on the human's hosting/mode choice (`docs/DEPLOY_PROPOSAL.md`). Before any public URL: cap Muse calls in the API (`EVENTPROOF_MAX_LIVE_MUSE_CALLS`), per-IP rate limit, demo-runs list (Showcase mode), then `deploy/` (Caddyfile, override, setup script).
-2. G5-01: before/after metrics view polish (non-technical 60-second read); P1-04 baselines/ablations table from real runs.
-3. G6-02 (participant): 2–3 self-recorded phone clips of boxes passing a marked zone, for a real-world run.
-4. G7-01: 3-minute demo script around Build → Break (counterexample) → SAM confirm → Muse repair → holdout verification.
-5. Never regenerate `benchmark/holdout/holdout_v2.json` in place.
-Known nit: a run that aborts on a Meta error (e.g. 503 no key) leaves a run folder with only video.mp4 (no evidence.json).
+## Next exact task (no human decision needed)
+1. P1-04: baselines/ablations table (template rule, Muse rule, Muse repair, baseline repair) from committed reports only.
+2. P1-02: studio interaction polish (object select, synced scrub between timeline and before/after chart).
+3. Keep PROGRESS/TASKS/HANDOFF/COSTS in sync after every change (`python scripts/progress.py render`).
 
-Run: `docker compose up --build` (studio :3000, API :8000; `EVENTPROOF_ARTIFACTS=./artifacts` to reuse local caches). Without Docker: backend `cd backend && EVENTPROOF_MAX_LIVE_SAM_CALLS=2 uv run uvicorn eventproof.api.main:app`; studio `cd frontend && npm run dev`.
+## Waiting on the participant
+- G6-02: record 2–3 clips per `docs/REAL_VIDEO_PROTOCOL.md`, label blind, `check --freeze`; approve ~1 Muse + 1 SAM call per clip.
+- G7-01: record the 3-minute video from `docs/DEMO_SCRIPT.md` (every number sourced); add section 5b only with real-clip results.
+- G6-01: approve a host (options/prices in `docs/DEPLOY_PROPOSAL.md`; runbook `deploy/README.md`). No infrastructure without approval.
+- C-03 spend alert + read Billing; C-02 Discord questions; C-04 license; repo visibility (only after approval + audit).
 
-## Human actions pending
-- C-03: set a spend alert in the Meta Billing page and read the actual charge of the 2 smoke calls (for COSTS.md).
-- C-02: post the 4 questions in Discord #questions.
-- C-04: choose a license.
+## Run
+`docker compose up --build` (studio :3000, API :8000; `EVENTPROOF_ARTIFACTS=./artifacts` reuses local caches).
+Without Docker: `cd backend && EVENTPROOF_MAX_LIVE_SAM_CALLS=0 EVENTPROOF_MAX_LIVE_MUSE_CALLS=0 uv run uvicorn eventproof.api.main:app`;
+`cd frontend && npm run dev`. Known nit: a run aborted by a Meta error leaves a run folder with only video.mp4.
