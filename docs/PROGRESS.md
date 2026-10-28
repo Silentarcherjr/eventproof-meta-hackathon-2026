@@ -2,7 +2,7 @@
 Last updated (America/Panama): 2026-10-28 09:42
 Branch / HEAD: main / (see `git log -1`)
 Current gate: G5 (compose verified); G6 deploy waiting on hosting decision
-Last green release: 24f5f40 (CI run 40579483313); start tag hackathon-start-2026-10-27 = 039c084
+Last green release: ba982f7 (CI run 40708228281); start tag hackathon-start-2026-10-27 = 039c084
 Hackathon deadline: 2026-11-04 21:00 America/Panama
 Submission state: NOT_STARTED
 Meta real API: WORKING   SAM real API: WORKING (live calls capped)
