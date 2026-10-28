@@ -58,3 +58,9 @@
 - Ingestion (`video/ingest.py`): MP4/MOV, one video stream, ≤ 20 s, ≤ 100 MB, ≤ 3840 px. Already H.264/yuv420p/CFR/unrotated files are used byte-for-byte (hash and SAM cache key unchanged); others are re-encoded (codec, pixel format, VFR → CFR, rotation applied to pixels, odd sizes).
 - Pipeline (`pipeline.py`): ingest → Muse compile → SAM (prompt = compiled entity concept) → evaluate. Unsupported/invalid rules stop before any SAM call. Evidence JSON per run under `artifacts/runs/<run_id>/` with input hashes, compiled rule + assumptions, model request/response ids, live vs cached flags, tracks hash, verdicts; sealed with `evidence_sha256` over canonical JSON, verifiable from the raw file (`verify_evidence_file`). No local paths, no key.
 - API: `POST /runs` (multipart video + rule_text + layout JSON), `GET /runs/{id}` (id pattern-checked). Live SAM calls from the API need `EVENTPROOF_MAX_LIVE_SAM_CALLS` (default 0 → 503 instead of spending).
+
+## ADR-012 — 2026-10-27 — Studio frontend (G1-06)
+- Next.js 15 (App Router) + TypeScript + Tailwind 4 in `frontend/`, single page: upload, zone/line editor drawn over the video (normalized coordinates, same as the DSL), rule text, run, then verdicts, Muse's assumptions, compiled DSL, provenance, track overlay synced to the video (frame = floor(t·fps), the backend's convention) and a per-object timeline whose event markers seek to the decisive frame.
+- Results are flagged "stale" as soon as the rule or layout is edited after a run, so a verdict is never shown next to inputs it was not computed from.
+- Backend: each run keeps `video.mp4` (exact bytes SAM saw); `GET /runs/{id}/tracks` and `/video`; CORS origins via `EVENTPROOF_CORS_ORIGINS` (default http://localhost:3000).
+- CI: Playwright smoke with the API mocked from a recorded real run (no Meta calls in CI). npm `overrides.postcss` pins the patched PostCSS (Next 15 bundles a vulnerable one; `npm audit`: 0).

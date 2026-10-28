@@ -69,3 +69,8 @@
 - Live E2E run `20261028T020157Z-6137d1f3` on a new tailgate clip: 1 live SAM call, Muse rule from cache. Overall FAIL; the violating object is the tailgater (checked against ground truth). Evidence in `docs/evidence/runs/20261028T020157Z-6137d1f3/`.
 - Found in review: evidence stored the video's local path (would leak temp paths via the API) → schema /2 records the file name; raw-file verification added so older evidence still verifies.
 - Tests: 163 passed (ingestion with real ffmpeg-made files: passthrough, mpeg4 + rotation normalized, too long / webm / fake rejected; pipeline incl. tamper detection, unsupported & invalid rules stop before SAM; API incl. 415/422/413/400/404 and 503 without allowance).
+
+## 2026-10-27 · session 1 (cont.) · local macOS · orchestrator — G1-06
+- `frontend/` studio (Next.js 15, TS, Tailwind): upload, zone/line editor, rule examples, results (verdicts, decisive-frame buttons, Muse assumptions, DSL, provenance), synced track overlay, timeline. Backend: run keeps video; `/runs/{id}/tracks`, `/runs/{id}/video`; CORS.
+- Verified in the browser against the real backend (cached Muse + SAM, 0 new calls): FAIL, object #1 VIOLATION; clicking the f88 marker shows both boxes at the packing line. Fixed during review: overlapping labels; results kept showing after edits → stale banner; default favicon (third-party logo) removed.
+- Playwright: 2 tests pass (upload → verdict/overlay/timeline/stale; API error shown). Backend: 163 passed. `npm audit`: 0 after postcss override.

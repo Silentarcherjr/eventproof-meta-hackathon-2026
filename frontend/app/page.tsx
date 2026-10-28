@@ -1,0 +1,151 @@
+"use client";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+import Results from "@/components/Results";
+import Timeline from "@/components/Timeline";
+import VideoStage, { type Tool } from "@/components/VideoStage";
+import { createRun, getTracks, videoUrl } from "@/lib/api";
+import { DEFAULT_LAYOUT, EXAMPLE_RULES } from "@/lib/defaults";
+import type { Evidence, Layout, ObjectVerdict, TrackFrame, TrackSet } from "@/lib/types";
+
+export default function Studio() {
+  const [file, setFile] = useState<File | null>(null);
+  const [localUrl, setLocalUrl] = useState<string | null>(null);
+  const [layout, setLayout] = useState<Layout>(DEFAULT_LAYOUT);
+  const [rule, setRule] = useState(EXAMPLE_RULES[0]);
+  const [tool, setTool] = useState<Tool>("none");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [ev, setEv] = useState<Evidence | null>(null);
+  const [tracks, setTracks] = useState<TrackSet | null>(null);
+  const [frame, setFrame] = useState(0);
+  const [seek, setSeek] = useState<number | null>(null);
+
+  useEffect(() => () => { if (localUrl) URL.revokeObjectURL(localUrl); }, [localUrl]);
+
+  const pick = (f: File | null) => {
+    setFile(f);
+    setEv(null);
+    setTracks(null);
+    setError(null);
+    setLocalUrl(f ? URL.createObjectURL(f) : null);
+  };
+
+  const run = async () => {
+    if (!file) return;
+    setBusy(true);
+    setError(null);
+    setTool("none");
+    try {
+      const e = await createRun(file, rule, layout);
+      setEv(e);
+      setTracks(e.status === "completed" ? await getTracks(e.run_id) : null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const tracksByFrame = useMemo(() => {
+    const m = new Map<number, TrackFrame[]>();
+    tracks?.frames.forEach((f) => m.set(f.frame_index, [...(m.get(f.frame_index) ?? []), f]));
+    return m;
+  }, [tracks]);
+  const verdicts = useMemo(() => new Map<number, ObjectVerdict>((ev?.result?.objects ?? []).map((o) => [o.object_id, o])), [ev]);
+  const onSeek = useCallback((f: number) => setSeek(f + Math.random() * 1e-6), []); // re-trigger on same frame
+  const info = ev?.video.info;
+  // the shown verdict belongs to the inputs of that run; say so as soon as the user edits them
+  const stale = !!ev && (ev.rule.text !== rule || JSON.stringify(ev.rule.layout) !== JSON.stringify(layout));
+
+  const setZone = (k: "id" | "description", v: string) => {
+    const zones = [...layout.zones];
+    zones[0] = k === "id" ? { ...zones[0], zone: { ...zones[0].zone, id: v } } : { ...zones[0], description: v };
+    setLayout({ ...layout, zones });
+  };
+  const setLine = (k: "id" | "description", v: string) => {
+    const lines = [...layout.lines];
+    lines[0] = k === "id" ? { ...lines[0], line: { ...lines[0].line, id: v } } : { ...lines[0], description: v };
+    setLayout({ ...layout, lines });
+  };
+
+  return (
+    <main className="mx-auto max-w-7xl px-4 py-6 lg:px-8">
+      <header className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">EventProof Studio</h1>
+          <p className="text-sm text-zinc-400">Describe a visual rule in plain language. Muse Spark turns it into a checkable rule, SAM 3.1 tracks the objects, and every verdict comes with its frames.</p>
+        </div>
+      </header>
+
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+        <section className="space-y-4">
+          <VideoStage src={ev ? videoUrl(ev.run_id) : localUrl} layout={layout} onLayoutChange={setLayout} tool={tool}
+                      tracksByFrame={tracksByFrame} info={info} verdicts={verdicts} onFrame={setFrame} seekFrame={seek} />
+          {ev?.result && info && (
+            <Timeline objects={ev.result.objects} frameCount={info.frame_count} fps={info.fps} frame={frame} onSeek={onSeek} />
+          )}
+        </section>
+
+        <section className="space-y-5">
+          <div className="space-y-2 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800">
+            <label className="block text-xs font-semibold uppercase tracking-wide text-zinc-400" htmlFor="video">1 · Video (MP4/MOV, ≤ 20 s)</label>
+            <input id="video" data-testid="video-input" type="file" accept="video/mp4,video/quicktime,.mp4,.mov"
+                   onChange={(e) => pick(e.target.files?.[0] ?? null)}
+                   className="block w-full text-sm text-zinc-300 file:mr-3 file:rounded file:border-0 file:bg-zinc-700 file:px-3 file:py-1.5 file:text-zinc-100" />
+          </div>
+
+          <div className="space-y-2 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold uppercase tracking-wide text-zinc-400">2 · Zone and line</span>
+              <div className="flex gap-1 text-xs">
+                {(["none", "zone", "line"] as Tool[]).map((t) => (
+                  <button key={t} onClick={() => setTool(t)} data-testid={`tool-${t}`}
+                          className={`rounded px-2 py-1 ${tool === t ? "bg-sky-600 text-white" : "bg-zinc-800 text-zinc-300"}`}>
+                    {t === "none" ? "view" : `draw ${t}`}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="grid grid-cols-[auto_1fr] items-center gap-2 text-sm">
+              <span className="text-yellow-400">zone</span>
+              <div className="flex gap-2">
+                <input className="w-32 rounded bg-zinc-800 px-2 py-1 font-mono" value={layout.zones[0].zone.id} onChange={(e) => setZone("id", e.target.value)} />
+                <input className="flex-1 rounded bg-zinc-800 px-2 py-1" value={layout.zones[0].description} onChange={(e) => setZone("description", e.target.value)} />
+              </div>
+              <span className="text-sky-400">line</span>
+              <div className="flex gap-2">
+                <input className="w-32 rounded bg-zinc-800 px-2 py-1 font-mono" value={layout.lines[0].line.id} onChange={(e) => setLine("id", e.target.value)} />
+                <input className="flex-1 rounded bg-zinc-800 px-2 py-1" value={layout.lines[0].description} onChange={(e) => setLine("description", e.target.value)} />
+              </div>
+            </div>
+            <p className="text-xs text-zinc-500">Drag on the video to redraw. Ids must be lowercase (a–z, 0–9, _).</p>
+          </div>
+
+          <div className="space-y-2 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800">
+            <label className="block text-xs font-semibold uppercase tracking-wide text-zinc-400" htmlFor="rule">3 · Rule</label>
+            <textarea id="rule" data-testid="rule-input" rows={3} value={rule} onChange={(e) => setRule(e.target.value)}
+                      className="w-full rounded bg-zinc-800 p-2 text-sm" />
+            <div className="flex flex-wrap gap-1">
+              {EXAMPLE_RULES.map((r, i) => (
+                <button key={r} onClick={() => setRule(r)} className="rounded bg-zinc-800 px-2 py-0.5 text-xs text-zinc-400 hover:text-zinc-200">example {i + 1}</button>
+              ))}
+            </div>
+          </div>
+
+          <button onClick={run} disabled={!file || busy || rule.trim().length < 3} data-testid="run"
+                  className="w-full rounded-lg bg-sky-600 py-2.5 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40">
+            {busy ? "Running Muse Spark + SAM 3.1…" : "Check the rule"}
+          </button>
+          {error && <div className="rounded bg-red-500/10 p-3 text-sm text-red-300 ring-1 ring-red-500/40" data-testid="error">{error}</div>}
+          {stale && (
+            <div className="rounded bg-amber-500/10 p-3 text-sm text-amber-200 ring-1 ring-amber-500/40" data-testid="stale">
+              Rule or layout changed since this run — the results below are for the previous inputs. Run again to check.
+            </div>
+          )}
+          {ev && <Results ev={ev} onSeek={onSeek} />}
+        </section>
+      </div>
+    </main>
+  );
+}

@@ -98,7 +98,9 @@ def test_end_to_end_evidence(tmp_path, monkeypatch, clip):
     assert ev.perception.prompt == "blue box" and ev.perception.cached is False
     assert ev.video.sha256 == ev.video.original_sha256 and not ev.video.reencoded
     d = tmp_path / "runs" / ev.run_id
-    assert {p.name for p in d.iterdir()} >= {"evidence.json", "rule.json", "tracks.json"}
+    assert {p.name for p in d.iterdir()} == {"evidence.json", "rule.json", "tracks.json", "video.mp4"}
+    from eventproof.video.ingest import sha256_file
+    assert sha256_file(d / "video.mp4") == ev.video.sha256
     on_disk = pipeline.load(ev.run_id, tmp_path / "runs")
     assert on_disk.verify() and on_disk == ev
     assert "test-key-not-real" not in (d / "evidence.json").read_text()
@@ -160,6 +162,11 @@ def test_api_run_and_fetch(client, clip):
     assert body["status"] == "completed" and body["result"]["overall"] == "FAIL"
     again = client.get(f"/runs/{body['run_id']}")
     assert again.status_code == 200 and again.json() == body
+    tracks = client.get(f"/runs/{body['run_id']}/tracks")
+    assert tracks.status_code == 200 and tracks.json()["source"] == "sam-3.1"
+    vid = client.get(f"/runs/{body['run_id']}/video")
+    assert vid.status_code == 200 and vid.headers["content-type"] == "video/mp4" and vid.content[4:8] == b"ftyp"
+    assert client.get(f"/runs/{body['run_id']}/rule.json").status_code == 404
 
 
 def test_api_rejections(client, clip, tmp_path):
@@ -187,7 +194,8 @@ def test_evidence_files_are_json(tmp_path, monkeypatch, clip):
     ev = pipeline.run(path, RULE, LAYOUT, MuseRuleCompiler(SETTINGS, cache_dir=tmp_path / "mc"),
                       SamTracker(SETTINGS, cache_dir=tmp_path / "sc", max_live_calls=1), runs_dir=tmp_path / "runs")
     for f in ev.files.values():
-        json.loads((tmp_path / "runs" / ev.run_id / f).read_text())
+        if f.endswith(".json"):
+            json.loads((tmp_path / "runs" / ev.run_id / f).read_text())
 
 
 def test_api_rejects_oversize_upload(client, clip, monkeypatch):

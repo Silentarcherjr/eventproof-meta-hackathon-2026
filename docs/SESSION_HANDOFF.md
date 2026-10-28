@@ -11,7 +11,7 @@ Written: 2026-10-27 (end of session 1, local). Overwrite at the end of every ses
 
 ## Next exact task
 1. Done: SAM vs mock on 10 mock-failing cases (`benchmark/reports/2026-10-27_sam_vs_mock.json`): SAM fixes tailgate 5/5, abstains on occluded_station 5/5. Next for Challenge on SAM: search for scenes that fool SAM itself (harder families: tighter overlap, same-colour crossings, longer clips), each new case = 1 billed call, needs participant OK.
-2. G1-06: frontend studio (upload, rule text, zone/line editor, overlay timeline) on top of `POST /runs`. A self-recorded phone video (G6-02, participant) would make the demo real-world.
+2. Studio done (G1-06). Run locally: backend `cd backend && EVENTPROOF_MAX_LIVE_SAM_CALLS=5 uv run uvicorn eventproof.api.main:app`, studio `cd frontend && npm run dev`. Next: Challenge/Repair surfaced in the studio (P1-02 / G5), and a self-recorded phone video (G6-02, participant).
 3. G4-01 Muse part: `MuseProposer` returning `RulePatch` JSON, graded by the same `Grader`.
 4. Never regenerate `benchmark/holdout/holdout_v2.json` in place.
 

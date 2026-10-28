@@ -13,6 +13,8 @@ from pathlib import Path
 from typing import Annotated
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, ValidationError
 
 from eventproof import pipeline
@@ -26,6 +28,8 @@ from eventproof.schemas.tracks import TrackSet
 from eventproof.video.ingest import MAX_BYTES, VideoRejected
 
 app = FastAPI(title="EventProof", version="0.1.0")
+app.add_middleware(CORSMiddleware, allow_methods=["GET", "POST"], allow_headers=["*"],
+                   allow_origins=os.environ.get("EVENTPROOF_CORS_ORIGINS", "http://localhost:3000").split(","))
 
 
 @app.get("/health")
@@ -90,11 +94,25 @@ def create_run(video: Annotated[UploadFile, File()],
             raise HTTPException(503, str(e)) from None
 
 
-@app.get("/runs/{run_id}", response_model=pipeline.Evidence)
-def get_run(run_id: str) -> pipeline.Evidence:
+def _run_file(run_id: str, name: str) -> Path:
     try:
-        return pipeline.load(run_id)
+        return pipeline.run_file(run_id, name)
     except ValueError:
         raise HTTPException(400, "invalid run id") from None
     except FileNotFoundError:
-        raise HTTPException(404, "run not found") from None
+        raise HTTPException(404, "not found") from None
+
+
+@app.get("/runs/{run_id}", response_model=pipeline.Evidence)
+def get_run(run_id: str) -> pipeline.Evidence:
+    return pipeline.Evidence.model_validate_json(_run_file(run_id, "evidence.json").read_text())
+
+
+@app.get("/runs/{run_id}/tracks", response_model=TrackSet)
+def get_tracks(run_id: str) -> TrackSet:
+    return TrackSet.model_validate_json(_run_file(run_id, "tracks.json").read_text())
+
+
+@app.get("/runs/{run_id}/video")
+def get_video(run_id: str) -> FileResponse:
+    return FileResponse(_run_file(run_id, "video.mp4"), media_type="video/mp4")

@@ -15,6 +15,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import shutil
 import uuid
 from datetime import UTC, datetime
 from pathlib import Path
@@ -125,7 +126,10 @@ def run(video: Path, rule_text: str, layout: Layout, compiler: MuseRuleCompiler,
     run_id = run_id or new_run_id()
     out = (runs_dir or RUNS_DIR) / run_id
     out.mkdir(parents=True, exist_ok=False)
-    vid = ingest(video, out / "video")  # VideoRejected propagates: nothing to record yet
+    vid = ingest(video, out / "work")  # VideoRejected propagates: nothing to record yet
+    kept = out / "video.mp4"  # the exact bytes SAM saw, so the studio can replay them with the overlay
+    shutil.copyfile(vid.path, kept)
+    vid = vid.model_copy(update={"path": kept})
     rule_stage = RuleStage(text=rule_text, text_sha256=_sha(rule_text), layout=layout, model=compiler.settings.muse_model)
     ev = Evidence(run_id=run_id, created_at=datetime.now(UTC).isoformat(timespec="seconds"),
                   eventproof_version=__version__, status="completed", video=VideoRecord.of(vid, filename or video.name),
@@ -165,12 +169,22 @@ def run(video: Path, rule_text: str, layout: Layout, compiler: MuseRuleCompiler,
 
 def _write(ev: Evidence, out: Path) -> Evidence:
     ev.files["evidence"] = "evidence.json"
+    ev.files["video"] = "video.mp4"
+    shutil.rmtree(out / "work", ignore_errors=True)
     ev.seal()
     (out / "evidence.json").write_text(ev.model_dump_json(indent=2) + "\n")
     return ev
 
 
+def run_file(run_id: str, name: str, runs_dir: Path | None = None) -> Path:
+    """Path of a known file of a run; the id is pattern-checked and names are a fixed set (no traversal)."""
+    if not RUN_ID_RE.match(run_id) or name not in ("evidence.json", "rule.json", "tracks.json", "video.mp4"):
+        raise ValueError("invalid run id or file")
+    p = (runs_dir or RUNS_DIR) / run_id / name
+    if not p.is_file():
+        raise FileNotFoundError(name)
+    return p
+
+
 def load(run_id: str, runs_dir: Path | None = None) -> Evidence:
-    if not RUN_ID_RE.match(run_id):
-        raise ValueError("invalid run id")
-    return Evidence.model_validate_json(((runs_dir or RUNS_DIR) / run_id / "evidence.json").read_text())
+    return Evidence.model_validate_json(run_file(run_id, "evidence.json", runs_dir).read_text())

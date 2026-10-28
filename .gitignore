@@ -34,3 +34,6 @@ artifacts/
 .DS_Store
 .idea/
 .vscode/
+
+# small synthetic clip (own work) used by the Playwright smoke test
+!frontend/e2e/fixtures/*.mp4
