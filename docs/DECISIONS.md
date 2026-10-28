@@ -64,3 +64,10 @@
 - Results are flagged "stale" as soon as the rule or layout is edited after a run, so a verdict is never shown next to inputs it was not computed from.
 - Backend: each run keeps `video.mp4` (exact bytes SAM saw); `GET /runs/{id}/tracks` and `/video`; CORS origins via `EVENTPROOF_CORS_ORIGINS` (default http://localhost:3000).
 - CI: Playwright smoke with the API mocked from a recorded real run (no Meta calls in CI). npm `overrides.postcss` pins the patched PostCSS (Next 15 bundles a vulnerable one; `npm audit`: 0).
+
+## ADR-013 — 2026-10-27 — Challenge + Repair for any compiled rule; Muse as repairer
+- `bind_rule` maps any rule onto the synthetic conveyor world by zone/line id (entity concept → scene label); rules referencing other ids are refused for Challenge (422), not silently remapped.
+- Studio Challenge prefers spec errors (perception-independent) and, among them, the clearest case (violating object with the least time standing still). Perception errors from the mock are still listed in the suite table.
+- `confirm_with_sam`: the pair's failing scene is re-scored with live SAM (1 call, needs the API allowance).
+- `MuseProposer` (meta/muse_repair.py): strict-JSON RulePatch proposals; up to 3 rounds; between rounds Muse gets only VISIBLE dev results (regression counts + up to 5 examples of what a reviewer saw). Every proposal of every round is graded; none is selected by holdout score. The prompt never contains holdout seeds/hashes (test).
+- Test isolation: autouse fixture redirects all caches/runs to tmp and blocks live Meta clients; it was added after a test wrote fake Muse outputs into the real cache (entries removed).

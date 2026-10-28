@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import ChallengePanel from "@/components/ChallengePanel";
 import Results from "@/components/Results";
 import Timeline from "@/components/Timeline";
 import VideoStage, { type Tool } from "@/components/VideoStage";
@@ -85,6 +86,7 @@ export default function Studio() {
           {ev?.result && info && (
             <Timeline objects={ev.result.objects} frameCount={info.frame_count} fps={info.fps} frame={frame} onSeek={onSeek} />
           )}
+          {ev?.status === "completed" && !stale && <ChallengePanel key={ev.run_id} runId={ev.run_id} />}
         </section>
 
         <section className="space-y-5">

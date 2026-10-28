@@ -46,6 +46,12 @@ def build_context(cx: Counterexample, detector: DetectorConfig, perceiver: Perce
     if cx.pair:
         evidence.append(f"boundary pair on {cx.pair.knob}: fails at t={cx.pair.t_fail:.4f}, "
                         f"passes at t={cx.pair.t_pass:.4f}")
+    # what a human reviewer of the failing clip would report (per object), not the process specification itself
+    evidence += [f"object {t.object_id}: stood still at the inspection station for {t.station_stop_ms:.0f} ms; "
+                 f"crosses into packing: {t.crosses_packing_frame is not None}; labelled {t.intended}"
+                 for t in cx.original.truths]
+    if origin[0].notes:
+        evidence.append(f"scene notes: {origin[0].notes}")
     return RepairContext(detector=detector, perception=cx.perception, counterexample=CaseSummary.of(cx.original),
                          origin_scenes=origin, evidence=evidence, dev_seeds=list(DEV_SEEDS),
                          dev_results=[CaseSummary.of(r) for r in dev])
@@ -63,12 +69,14 @@ def ensure_no_holdout(ctx: RepairContext, manifest: HoldoutManifest) -> None:
 
 
 def run_repair(family: str, seed: int, dwell_ms: float = 1500.0, proposer: Proposer | None = None,
-               perceiver: Perceiver = mock_perceiver, holdout: Path = DEFAULT_PATH) -> RepairReport:
-    detector = DetectorConfig(dwell_ms=dwell_ms)
+               perceiver: Perceiver = mock_perceiver, holdout: Path = DEFAULT_PATH,
+               detector: DetectorConfig | None = None, cx: Counterexample | None = None,
+               grader: Grader | None = None) -> RepairReport:
+    detector = detector or DetectorConfig(dwell_ms=dwell_ms)
     proposer = proposer or BaselineProposer(perceiver)
-    cx = minimize(family, seed, dwell_ms, perceiver)
+    cx = cx or minimize(family, seed, dwell_ms, perceiver, rule=detector.rule)
     ctx = build_context(cx, detector, perceiver)
-    grader = Grader(detector, perceiver, holdout)  # loads + verifies the frozen holdout; proposer never gets it
+    grader = grader or Grader(detector, perceiver, holdout)  # verifies the frozen holdout; proposer never gets it
     ensure_no_holdout(ctx, grader.manifest)
     proposals = proposer.propose(ctx)
     decisions = [grader.grade(p, ctx.origin_scenes) for p in proposals]

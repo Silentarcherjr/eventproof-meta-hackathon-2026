@@ -1,0 +1,262 @@
+{
+  "schema_version": "eventproof-evidence/2",
+  "run_id": "20261028T023754Z-a922b5bb",
+  "created_at": "2026-10-28T02:37:54+00:00",
+  "eventproof_version": "0.1.0",
+  "status": "completed",
+  "video": {
+    "filename": "tailgate-7.mp4",
+    "sha256": "8a2ed1d0bd4fb416174914ba8a05323f7931d0d95e805c5a8fe94f764722a6c4",
+    "original_sha256": "8a2ed1d0bd4fb416174914ba8a05323f7931d0d95e805c5a8fe94f764722a6c4",
+    "info": {
+      "width": 640,
+      "height": 360,
+      "fps": 15.0,
+      "frame_count": 102
+    },
+    "duration_s": 6.8,
+    "codec": "h264",
+    "reencoded": false,
+    "reencode_reasons": []
+  },
+  "rule": {
+    "text": "Every blue box must stay at least 1.5 seconds in the inspection zone before it crosses into packing.",
+    "text_sha256": "67102aa001fc144e799a8cda73d130e0a57a74f697785576f34a8f27132031a3",
+    "layout": {
+      "zones": [
+        {
+          "zone": {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.3,
+                0.1
+              ],
+              [
+                0.5,
+                0.1
+              ],
+              [
+                0.5,
+                0.9
+              ],
+              [
+                0.3,
+                0.9
+              ]
+            ]
+          },
+          "description": "inspection station on the conveyor"
+        }
+      ],
+      "lines": [
+        {
+          "line": {
+            "id": "packing_entry",
+            "a": [
+              0.75,
+              0.05
+            ],
+            "b": [
+              0.75,
+              0.95
+            ]
+          },
+          "description": "entry of the packing area; boxes travel left to right"
+        }
+      ]
+    },
+    "model": "muse-spark-1.3",
+    "request_ids": [
+      "chatcmpl-01a17fc4-ee68-75f3-97dd-afe01dc99296"
+    ],
+    "cached": true,
+    "attempts": 1,
+    "usage": [
+      {
+        "completion_tokens": 2648,
+        "prompt_tokens": 1420,
+        "total_tokens": 4068,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2336,
+          "rejected_prediction_tokens": null,
+          "text_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cache_write_tokens": null,
+          "cached_tokens": 0,
+          "image_tokens": null,
+          "text_tokens": null
+        }
+      }
+    ],
+    "compiled_rule": {
+      "check": {
+        "conclusion": {
+          "first": {
+            "max_speed": null,
+            "min_ms": 1500.0,
+            "op": "DWELL",
+            "zone": "inspection"
+          },
+          "op": "BEFORE",
+          "then": {
+            "direction": "to_left",
+            "line": "packing_entry",
+            "op": "CROSSES"
+          },
+          "within_ms": null
+        },
+        "op": "IMPLIES",
+        "premise": {
+          "event": {
+            "direction": "to_left",
+            "line": "packing_entry",
+            "op": "CROSSES"
+          },
+          "op": "OCCURS"
+        }
+      },
+      "entity": {
+        "concept": "blue box",
+        "name": "blue box"
+      },
+      "lines": [
+        {
+          "a": [
+            0.75,
+            0.05
+          ],
+          "b": [
+            0.75,
+            0.95
+          ],
+          "id": "packing_entry"
+        }
+      ],
+      "normalized_explanation": "Every blue box that crosses packing_entry to_left must have dwelled continuously in the inspection zone for at least 1500 ms before that crossing.",
+      "params": {
+        "anchor": "center",
+        "max_gap_frames": 3,
+        "min_confidence": 0.0
+      },
+      "rule_id": "blue-box-inspection-before-packing",
+      "version": 1,
+      "zones": [
+        {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.3,
+              0.1
+            ],
+            [
+              0.5,
+              0.1
+            ],
+            [
+              0.5,
+              0.9
+            ],
+            [
+              0.3,
+              0.9
+            ]
+          ]
+        }
+      ]
+    },
+    "rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+    "assumptions": [
+      "Crossing into packing is crossing line 'packing_entry' in direction 'to_left' (rightwards/+x), per the stated left-to-right travel mapping.",
+      "'Stay at least 1.5 seconds' is DWELL continuously inside zone 'inspection' for >=1500 ms with any motion allowed (max_speed null), not requiring stopped.",
+      "No maximum gap between dwell and crossing is enforced (within_ms null); only ordering before the first crossing is required.",
+      "Boxes that never cross packing_entry pass vacuously."
+    ],
+    "error": null
+  },
+  "perception": {
+    "model": "sam-3.1",
+    "prompt": "blue box",
+    "source_ref": "sam-3.1:resp_6ae1579972c203e08f434b8e:video=8a2ed1d0bd4fb416:prompt='blue box':cached",
+    "cached": true,
+    "tracks_sha256": "2f2b2d81d68b72de1a288bc5899c5eb98a74dd3d1692ede466adeb9f4e1c9d0f",
+    "frames_with_detections": 71,
+    "boxes": 124,
+    "track_ids": [
+      0,
+      1
+    ],
+    "error": null
+  },
+  "result": {
+    "rule_id": "blue-box-inspection-before-packing",
+    "rule_version": 1,
+    "rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+    "track_source": "sam-3.1",
+    "track_source_ref": "sam-3.1:resp_6ae1579972c203e08f434b8e:video=8a2ed1d0bd4fb416:prompt='blue box':cached",
+    "overall": "FAIL",
+    "objects": [
+      {
+        "object_id": 0,
+        "verdict": "PASS",
+        "first_frame": 27,
+        "last_frame": 97,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 89,
+            "timestamp_ms": 5933.333333333333,
+            "reason": "crossed packing_entry (to_left) at frame 89"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "TRUE",
+            "frame": 62,
+            "timestamp_ms": 4133.333333333333,
+            "reason": "dwelled 1500 ms in inspection"
+          }
+        ],
+        "explanation": "object 0: PASS — CROSSES packing_entry: crossed packing_entry (to_left) at frame 89; DWELL inspection: dwelled 1500 ms in inspection"
+      },
+      {
+        "object_id": 1,
+        "verdict": "VIOLATION",
+        "first_frame": 45,
+        "last_frame": 97,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 88,
+            "timestamp_ms": 5866.666666666667,
+            "reason": "crossed packing_entry (to_left) at frame 88"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms in inspection"
+          }
+        ],
+        "explanation": "object 1: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_left) at frame 88; DWELL inspection: never 1500 ms in inspection"
+      }
+    ]
+  },
+  "files": {
+    "rule": "rule.json",
+    "tracks": "tracks.json",
+    "evidence": "evidence.json",
+    "video": "video.mp4"
+  },
+  "evidence_sha256": "b95ee48dbdf0c20b6901b38f3c8e474ed1fc44c9b8d93aac963b43f119a659b6"
+}

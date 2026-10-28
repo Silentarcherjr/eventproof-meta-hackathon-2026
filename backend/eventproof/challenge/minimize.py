@@ -19,11 +19,12 @@ import json
 from collections.abc import Callable
 from pathlib import Path
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from eventproof.challenge.families import FAMILIES
-from eventproof.challenge.runner import CaseResult, Perceiver, inspection_rule, mock_perceiver, run_case
+from eventproof.challenge.runner import CaseResult, Perceiver, bind_rule, inspection_rule, mock_perceiver, run_case
 from eventproof.challenge.scene import SceneSpec, Waypoint
+from eventproof.schemas.rules import VisualRule
 
 MIN_FRAMES = 50  # SAM bills at least 50 frames; never produce shorter clips
 
@@ -37,14 +38,20 @@ def same_failure(a: CaseResult, b: CaseResult) -> bool:
 
 
 class Evaluator:
-    """Runs a case for a scene with a fixed rule threshold; counts evaluations (search budget)."""
+    """Runs a case for a scene with a fixed detector; counts evaluations (search budget).
 
-    def __init__(self, dwell_ms: float, perceiver: Perceiver):
-        self.dwell_ms, self.perceiver, self.calls = dwell_ms, perceiver, 0
+    The detector is either the hand-written inspection template (`dwell_ms`) or any `rule` (e.g. compiled by
+    Muse), bound to each scene's geometry."""
+
+    def __init__(self, dwell_ms: float, perceiver: Perceiver, rule: VisualRule | None = None):
+        self.dwell_ms, self.perceiver, self.rule, self.calls = dwell_ms, perceiver, rule, 0
+
+    def rule_for(self, scene: SceneSpec) -> VisualRule:
+        return bind_rule(self.rule, scene) if self.rule else inspection_rule(scene, self.dwell_ms)
 
     def __call__(self, scene: SceneSpec) -> CaseResult:
         self.calls += 1
-        return run_case(scene, inspection_rule(scene, self.dwell_ms), self.perceiver)
+        return run_case(scene, self.rule_for(scene), self.perceiver)
 
 
 # ---- 1. discrete reduction ----------------------------------------------------------------------
@@ -225,6 +232,7 @@ class Counterexample(BaseModel):
     family: str
     seed: int
     dwell_ms: float
+    rule: VisualRule | None = Field(default=None, description="detector rule if not the dwell_ms template")
     perception: str
     original: CaseResult
     reduction: Reduction
@@ -236,16 +244,16 @@ class Counterexample(BaseModel):
 
 
 def minimize(family: str, seed: int, dwell_ms: float = 1500.0, perceiver: Perceiver = mock_perceiver,
-             budget: int = 60) -> Counterexample:
+             budget: int = 60, rule: VisualRule | None = None) -> Counterexample:
     scene = FAMILIES[family](seed)
-    ev = Evaluator(dwell_ms, perceiver)
+    ev = Evaluator(dwell_ms, perceiver, rule)
     original = ev(scene)
     reduced_scene, reduced, red = reduce_scene(scene, ev, budget=budget // 2)
     pair = None
     if family in KNOBS:
         name, knob = KNOBS[family]
         pair = boundary_pair(reduced_scene, name, knob, ev, reduced)
-    return Counterexample(family=family, seed=seed, dwell_ms=dwell_ms, perception=original.perception_source,
+    return Counterexample(family=family, seed=seed, dwell_ms=dwell_ms, rule=rule, perception=original.perception_source,
                           original=original, reduction=red, reduced=reduced, reduced_scene=reduced_scene,
                           pair=pair, evaluations=ev.calls)
 

@@ -1,0 +1,76 @@
+{
+  "rule_id": "blue-box-inspection-before-packing",
+  "version": 1,
+  "entity": {
+    "name": "blue box",
+    "concept": "blue box"
+  },
+  "zones": [
+    {
+      "id": "inspection",
+      "polygon": [
+        [
+          0.3,
+          0.1
+        ],
+        [
+          0.5,
+          0.1
+        ],
+        [
+          0.5,
+          0.9
+        ],
+        [
+          0.3,
+          0.9
+        ]
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "id": "packing_entry",
+      "a": [
+        0.75,
+        0.05
+      ],
+      "b": [
+        0.75,
+        0.95
+      ]
+    }
+  ],
+  "check": {
+    "op": "IMPLIES",
+    "premise": {
+      "op": "OCCURS",
+      "event": {
+        "op": "CROSSES",
+        "line": "packing_entry",
+        "direction": "to_left"
+      }
+    },
+    "conclusion": {
+      "op": "BEFORE",
+      "first": {
+        "op": "DWELL",
+        "zone": "inspection",
+        "min_ms": 1500.0,
+        "max_speed": null
+      },
+      "then": {
+        "op": "CROSSES",
+        "line": "packing_entry",
+        "direction": "to_left"
+      },
+      "within_ms": null
+    }
+  },
+  "params": {
+    "anchor": "center",
+    "max_gap_frames": 3,
+    "min_confidence": 0.0
+  },
+  "normalized_explanation": "Every blue box that crosses packing_entry to_left must have dwelled continuously in the inspection zone for at least 1500 ms before that crossing."
+}

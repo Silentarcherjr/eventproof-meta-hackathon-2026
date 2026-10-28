@@ -65,6 +65,23 @@ def inspection_rule(scene: SceneSpec, dwell_ms: float = 1500.0, max_gap_frames: 
     })
 
 
+class WorldMismatch(ValueError):
+    pass
+
+
+def bind_rule(rule: VisualRule, scene: SceneSpec) -> VisualRule:
+    """Put any rule (e.g. compiled by Muse) into a synthetic scene: zone/line geometry is taken from the scene,
+    matched by id, and the entity concept becomes the scene's object label. Logic and thresholds are kept."""
+    zones, lines = {z.id: z for z in scene.zones}, {ln.id: ln for ln in scene.lines}
+    missing = [z.id for z in rule.zones if z.id not in zones] + [ln.id for ln in rule.lines if ln.id not in lines]
+    if missing:
+        raise WorldMismatch(f"rule references {missing}; the synthetic world has zones {sorted(zones)} "
+                            f"and lines {sorted(lines)}")
+    label = scene.objects[0].label if scene.objects else rule.entity.concept
+    return rule.model_copy(update={"zones": [zones[z.id] for z in rule.zones], "lines": [lines[ln.id] for ln in rule.lines],
+                                   "entity": rule.entity.model_copy(update={"concept": label})})
+
+
 def mock_perceiver(scene: SceneSpec, gt: TrackSet) -> TrackSet:
     return mock.perceive(gt, seed=scene.seed)
 

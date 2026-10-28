@@ -11,6 +11,6 @@ export default defineConfig({
     url: "http://localhost:3100",
     timeout: 180_000,
     reuseExistingServer: false,
-    env: { NEXT_PUBLIC_API_URL: "http://api.test" },
+    env: { NEXT_PUBLIC_API_URL: "http://api.test", NEXT_DIST_DIR: ".next-e2e" },
   },
 });

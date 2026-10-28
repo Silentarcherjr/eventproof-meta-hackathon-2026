@@ -39,3 +39,30 @@ export interface Evidence {
   result: RuleReport | null;
   evidence_sha256: string;
 }
+
+export interface Truth { object_id: number; label: string; station_stop_ms: number; crosses_packing_frame: number | null; intended: string }
+export interface ChallengeReport {
+  run_id: string; rule_hash: string; world: string; perception: string;
+  suite: Record<string, Record<string, number>>; suite_cases: number; failures: number; files: string[];
+  counterexample: null | {
+    family: string; seed: number; outcome: string; detector_verdict: string; intended: string; oracle_verdict: string;
+    truths: Truth[]; notes: string; reduction: string[]; evaluations: number;
+    knob?: string; t_fail?: number; t_pass?: number; pass_verdict?: string; decisive_frames?: number[];
+    scene_difference?: { frames_compared: number; frames_differing: number; max_pixels_differing_in_a_frame: number };
+  };
+}
+export interface SamConfirm {
+  scene_sha256: string; mock_outcome: string; still_fails_with_sam: boolean; live_sam_calls: number;
+  sam: { perception_source: string; detector_verdict: string; intended: string; oracle_verdict: string; outcome: string };
+}
+export interface HoldoutMetrics { n: number; correct: number; false_pass: number; false_alarm: number; abstained: number }
+export interface RepairDecision {
+  proposal: { proposal_id: string; proposer: string; rationale: string;
+              expected_effect: { round?: number; dev_screen?: { dev_regressions: number; dev_fixed: number; dev_cases: number }; model_claim?: string } };
+  patch_description: string; accepted: boolean; reasons: string[]; regressions: string[]; fixed_cases: string[];
+  holdout_name: string; holdout_before: HoldoutMetrics; holdout_after: HoldoutMetrics | null; origin_outcomes_after: string[];
+}
+export interface RepairRun {
+  run_id: string; proposer: string; decisions: RepairDecision[]; holdout_note: string;
+  trace: { rounds?: { round: number; diagnosis: string; cached: boolean; request_id: string }[] };
+}

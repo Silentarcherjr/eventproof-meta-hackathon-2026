@@ -182,6 +182,7 @@ def test_tracker_request_shape_and_cache(tmp_path, monkeypatch, keyed):
 
 
 def test_no_key_and_no_cache_is_blocked_not_mocked(tmp_path, monkeypatch):
+    monkeypatch.setattr(sam_mod, "get_client", meta_client.get_client)  # the real one: raises without a key
     monkeypatch.setattr(meta_client.os, "environ", {})
     video = tmp_path / "v.mp4"
     video.write_bytes(b"x")

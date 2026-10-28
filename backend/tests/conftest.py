@@ -55,3 +55,22 @@ def trackset(*frames: list[TrackFrame], n: int = 100) -> TrackSet:
 
 def lerp(a: float, b: float, n: int) -> list[float]:
     return [a + (b - a) * i / (n - 1) for i in range(n)]
+
+
+@pytest.fixture(autouse=True)
+def _isolate_from_real_state(tmp_path, monkeypatch):
+    """Tests never write to the real caches/runs and never reach the live Meta API unless a test injects a fake."""
+    from eventproof import pipeline, studio
+    from eventproof.meta import muse_repair, muse_rules
+    from eventproof.perception import sam
+
+    for mod in (muse_rules, muse_repair, sam):
+        monkeypatch.setattr(mod, "CACHE_DIR", tmp_path / f"cache-{mod.__name__.rsplit('.', 1)[-1]}")
+    for mod in (pipeline, studio):
+        monkeypatch.setattr(mod, "RUNS_DIR", tmp_path / "runs")
+
+    def _no_live(*a, **k):
+        raise AssertionError("test tried to reach the live Meta API")
+
+    for mod in (muse_rules, muse_repair, sam):
+        monkeypatch.setattr(mod, "get_client", _no_live)

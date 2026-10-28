@@ -1,4 +1,4 @@
-import type { Evidence, Layout, TrackSet } from "./types";
+import type { ChallengeReport, Evidence, Layout, RepairRun, SamConfirm, TrackSet } from "./types";
 
 export const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000").replace(/\/$/, "");
 
@@ -27,3 +27,20 @@ export async function getTracks(runId: string): Promise<TrackSet> {
 }
 
 export const videoUrl = (runId: string) => `${API_URL}/runs/${encodeURIComponent(runId)}/video`;
+
+const run = (id: string) => `${API_URL}/runs/${encodeURIComponent(id)}`;
+
+export async function runChallenge(runId: string): Promise<ChallengeReport> {
+  return json<ChallengeReport>(await fetch(`${run(runId)}/challenge`, { method: "POST" }));
+}
+
+export async function confirmWithSam(runId: string): Promise<SamConfirm> {
+  return json<SamConfirm>(await fetch(`${run(runId)}/challenge/sam-confirm`, { method: "POST" }));
+}
+
+export async function runRepair(runId: string, proposer: "muse" | "baseline"): Promise<RepairRun> {
+  return json<RepairRun>(await fetch(`${run(runId)}/repair`, {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ proposer }) }));
+}
+
+export const challengeFileUrl = (runId: string, name: string) => `${run(runId)}/challenge/files/${encodeURIComponent(name)}`;

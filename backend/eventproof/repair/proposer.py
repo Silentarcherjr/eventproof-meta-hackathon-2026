@@ -18,9 +18,10 @@ from typing import Literal, Protocol
 from pydantic import BaseModel, Field
 
 from eventproof.challenge.families import FAMILIES
-from eventproof.challenge.runner import CaseResult, Perceiver, inspection_rule, mock_perceiver, run_case
+from eventproof.challenge.runner import CaseResult, Perceiver, bind_rule, inspection_rule, mock_perceiver, run_case
 from eventproof.challenge.scene import SceneSpec
 from eventproof.repair.patch import RulePatch, SetDwell, SetDwellStill, SetMaxGap, apply_patch
+from eventproof.schemas.rules import Dwell, VisualRule, iter_events
 
 
 class CaseSummary(BaseModel):
@@ -38,14 +39,26 @@ class CaseSummary(BaseModel):
 
 
 class DetectorConfig(BaseModel):
-    """The detector under repair: the inspection rule template with its two tunable thresholds."""
+    """The detector under repair: either the hand-written inspection template (dwell_ms, max_gap_frames) or any
+    rule (e.g. compiled by Muse from the user's text), bound to each synthetic scene's geometry."""
 
-    dwell_ms: float
+    dwell_ms: float = 1500.0
     max_gap_frames: int = 3
+    rule: VisualRule | None = None
 
-    def rule_for(self, scene: SceneSpec, patch: RulePatch | None = None):
-        rule = inspection_rule(scene, self.dwell_ms, self.max_gap_frames)
+    def rule_for(self, scene: SceneSpec, patch: RulePatch | None = None) -> VisualRule:
+        rule = bind_rule(self.rule, scene) if self.rule else inspection_rule(scene, self.dwell_ms, self.max_gap_frames)
         return apply_patch(rule, patch) if patch else rule
+
+    def dwell(self) -> tuple[str, float] | None:
+        """(zone, min_ms) of the rule's first DWELL, the knob threshold repairs act on; None if it has none."""
+        if not self.rule:
+            return "inspection", self.dwell_ms
+        ev = next((e for e in iter_events(self.rule.check) if isinstance(e, Dwell)), None)
+        return (ev.zone, ev.min_ms) if ev else None
+
+    def gap(self) -> int:
+        return self.rule.params.max_gap_frames if self.rule else self.max_gap_frames
 
 
 class RepairContext(BaseModel):
@@ -86,17 +99,20 @@ class BaselineProposer:
     def candidates(self, ctx: RepairContext) -> list[RulePatch]:
         cx = ctx.counterexample
         if cx.outcome == "spec_error":
-            d0 = ctx.detector.dwell_ms
+            dw = ctx.detector.dwell()
+            if dw is None:
+                return []  # no DWELL threshold to tune; only a model proposer can restructure such a rule
+            zone, d0 = dw
             # rule too lenient (false PASS) -> demand longer dwell; too strict (false alarm) -> shorter
             factors = (1.1, 1.2, 1.33, 1.5, 2.0) if cx.detector_verdict == "PASS" else (0.9, 0.8, 0.67, 0.5)
-            grid = [RulePatch(ops=[SetDwell(zone="inspection", value=round(d0 * f, -2))]) for f in factors]
+            grid = [RulePatch(ops=[SetDwell(zone=zone, value=round(d0 * f, -2))]) for f in factors]
             # structural option after the threshold-only ones: time in the zone is not a stop, so count
             # only time spent still, then re-tune the threshold for "still" time
-            still = SetDwellStill(zone="inspection", max_speed=0.05)
-            grid += [RulePatch(ops=[still, SetDwell(zone="inspection", value=v)]) for v in (d0, 1000.0, 800.0, 600.0)]
+            still = SetDwellStill(zone=zone, max_speed=0.05)
+            grid += [RulePatch(ops=[still, SetDwell(zone=zone, value=v)]) for v in dict.fromkeys((d0, 1000.0, 800.0, 600.0))]
             return grid
         # perception errors / abstentions: bridge longer tracking gaps
-        return [RulePatch(ops=[SetMaxGap(value=v)]) for v in (6, 10, 15, 25) if v > ctx.detector.max_gap_frames]
+        return [RulePatch(ops=[SetMaxGap(value=v)]) for v in (6, 10, 15, 25) if v > ctx.detector.gap()]
 
     def _run(self, ctx: RepairContext, scene: SceneSpec, patch: RulePatch | None) -> CaseResult:
         return run_case(scene, ctx.detector.rule_for(scene, patch), self.perceiver)

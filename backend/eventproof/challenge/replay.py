@@ -189,8 +189,10 @@ def export_pair(cx: Counterexample, out_dir: Path, video: bool = True) -> dict:
 
 
 def _rule_event_frames(cx: Counterexample, scene: SceneSpec) -> list[int]:
-    from eventproof.challenge.runner import inspection_rule, mock_perceiver
+    from eventproof.challenge.minimize import Evaluator
+    from eventproof.challenge.runner import mock_perceiver
     from eventproof.engine.evaluator import evaluate
 
-    rep = evaluate(inspection_rule(scene, cx.dwell_ms), mock_perceiver(scene, ground_truth(scene)))
+    rule = Evaluator(cx.dwell_ms, mock_perceiver, cx.rule).rule_for(scene)
+    rep = evaluate(rule, mock_perceiver(scene, ground_truth(scene)))
     return [e.frame for o in rep.objects for e in o.events if e.status == "TRUE" and e.frame is not None]

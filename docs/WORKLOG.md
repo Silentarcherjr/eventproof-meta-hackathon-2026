@@ -74,3 +74,11 @@
 - `frontend/` studio (Next.js 15, TS, Tailwind): upload, zone/line editor, rule examples, results (verdicts, decisive-frame buttons, Muse assumptions, DSL, provenance), synced track overlay, timeline. Backend: run keeps video; `/runs/{id}/tracks`, `/runs/{id}/video`; CORS.
 - Verified in the browser against the real backend (cached Muse + SAM, 0 new calls): FAIL, object #1 VIOLATION; clicking the f88 marker shows both boxes at the packing line. Fixed during review: overlapping labels; results kept showing after edits → stale banner; default favicon (third-party logo) removed.
 - Playwright: 2 tests pass (upload → verdict/overlay/timeline/stale; API error shown). Backend: 163 passed. `npm audit`: 0 after postcss override.
+
+## 2026-10-27 · session 1 (cont.) · local macOS · orchestrator — Challenge + Repair in the studio (G2-03, G4-01)
+- Backend: challenge/repair generalized to any compiled rule (`bind_rule`, `DetectorConfig(rule=...)`), `eventproof/studio.py`, API `POST /runs/{id}/challenge`, `/challenge/sam-confirm`, `/repair`, `GET /runs/{id}/challenge/files/{name}`; `MuseProposer` with dev-feedback rounds.
+- Live Muse repair development on drive_through-0: round 1 right diagnosis but too strict (21 dev regressions); with count-only feedback round 2 blamed perception; with concrete visible examples round 2 → 4 regressions, round 3 → 0; 2 of 8 proposals accepted on the holdout (144→166, 144→164). About 6 Muse calls.
+- Studio: Challenge panel (suite table, counterexample in plain words, side-by-side replay, SAM confirm, Muse/baseline repair, holdout headline). Verified in the browser on run `20261028T023754Z-a922b5bb` with 1 live SAM call (spec error reproduced with real SAM). Evidence `docs/evidence/2026-10-27_studio_challenge_repair.md`.
+- Bugs found: a test wrote fake Muse outputs to the real cache (fixed + autouse isolation fixture); Playwright `next build` clobbered the dev server's `.next` (separate `NEXT_DIST_DIR`).
+- Process slip: a docs-writing shell command used an unquoted heredoc containing backticks, so the shell executed the quoted server commands (backend failed on the busy port; a frontend dev server started on :3001 and was killed). No files changed by it; docs then written from a script file.
+- Tests: backend 171 passed; Playwright 3 passed.

@@ -1,0 +1,1292 @@
+{
+  "run_id": "20261028T023754Z-a922b5bb",
+  "proposer": "muse-spark-1.3",
+  "decisions": [
+    {
+      "proposal": {
+        "proposal_id": "muse-spark-1.3-r1-0",
+        "proposer": "muse-spark-1.3",
+        "patch": {
+          "ops": [
+            {
+              "op": "set_dwell_max_speed",
+              "zone": "inspection",
+              "max_speed": 0.05
+            }
+          ]
+        },
+        "rationale": "'stay' requires being nearly still. Adding max_speed ~stopped requires 1.5s continuous nearly-stationary time in inspection before crossing, not just transit time.",
+        "expected_effect": {
+          "model_claim": "Counterexample: still-time 0ms <1500ms so DWELL false, BEFORE false, rule FAILs as labelled. In general slow drive_throughs with transit>1.5s flip PASS->FAIL; canonical >=1.5s stopped stays PASS; brief_stop stays FAIL.",
+          "model_confidence": 0.9,
+          "round": 1,
+          "request_id": "chatcmpl-01a18054-6d93-72d1-8818-515d3c4a257e",
+          "cached": true,
+          "dev_screen": {
+            "fixes_counterexample": true,
+            "dev_regressions": 21,
+            "dev_fixed": 37,
+            "dev_cases": 150,
+            "regression_examples": [
+              "brief_stop: object 0 stood still 1267 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1600 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1600 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)"
+            ]
+          }
+        }
+      },
+      "patch_description": "DWELL(inspection) counts only while speed <= 0.05/s",
+      "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+      "patched_rule_hash": "eb29fbc5b6280375680e9a127824f26e4dfbcb67c22e96084adc68a1da6b36ad",
+      "perception": "mock",
+      "safety_checks": {
+        "patch_applies": true,
+        "structure_unchanged": true,
+        "rule_hash_changed": true
+      },
+      "origin_outcomes_after": [
+        "correct",
+        "correct"
+      ],
+      "holdout_name": "holdout_v2",
+      "holdout_manifest_sha256": "bc76a6b52faf290f71c9a4d106059a2e95cb394703041b72cca78ea49c33fe32",
+      "holdout_before": {
+        "n": 200,
+        "correct": 144,
+        "false_pass": 40,
+        "false_alarm": 13,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 36,
+            "spec_error": 4
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "spec_error": 17,
+            "correct": 23
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "holdout_after": {
+        "n": 200,
+        "correct": 156,
+        "false_pass": 4,
+        "false_alarm": 39,
+        "abstained": 1,
+        "by_family": {
+          "brief_stop": {
+            "correct": 27,
+            "spec_error": 13
+          },
+          "canonical": {
+            "correct": 32,
+            "perception_error": 1,
+            "spec_error": 7
+          },
+          "drive_through": {
+            "correct": 40
+          },
+          "occluded_station": {
+            "correct": 22,
+            "spec_error": 14,
+            "perception_error": 4
+          },
+          "tailgate": {
+            "correct": 35,
+            "perception_error": 4,
+            "abstained": 1
+          }
+        }
+      },
+      "fixed_cases": [
+        "brief_stop/20005",
+        "brief_stop/20018",
+        "brief_stop/20029",
+        "brief_stop/20036",
+        "drive_through/20000",
+        "drive_through/20005",
+        "drive_through/20006",
+        "drive_through/20009",
+        "drive_through/20013",
+        "drive_through/20015",
+        "drive_through/20017",
+        "drive_through/20018",
+        "drive_through/20021",
+        "drive_through/20022",
+        "drive_through/20023",
+        "drive_through/20025",
+        "drive_through/20028",
+        "drive_through/20029",
+        "drive_through/20033",
+        "drive_through/20034",
+        "drive_through/20036",
+        "tailgate/20007",
+        "tailgate/20012",
+        "tailgate/20013",
+        "tailgate/20014",
+        "tailgate/20015",
+        "tailgate/20016",
+        "tailgate/20019",
+        "tailgate/20022",
+        "tailgate/20023",
+        "tailgate/20026",
+        "tailgate/20027",
+        "tailgate/20028",
+        "tailgate/20029",
+        "tailgate/20030",
+        "tailgate/20033",
+        "tailgate/20035",
+        "tailgate/20036"
+      ],
+      "regressions": [
+        "brief_stop/20001",
+        "brief_stop/20003",
+        "brief_stop/20004",
+        "brief_stop/20006",
+        "brief_stop/20015",
+        "brief_stop/20016",
+        "brief_stop/20019",
+        "brief_stop/20021",
+        "brief_stop/20024",
+        "brief_stop/20027",
+        "brief_stop/20037",
+        "brief_stop/20038",
+        "brief_stop/20039",
+        "canonical/20004",
+        "canonical/20009",
+        "canonical/20015",
+        "canonical/20022",
+        "canonical/20024",
+        "canonical/20025",
+        "canonical/20027",
+        "canonical/20032",
+        "occluded_station/20002",
+        "occluded_station/20013",
+        "occluded_station/20021",
+        "occluded_station/20025",
+        "occluded_station/20033"
+      ],
+      "accepted": false,
+      "reasons": [
+        "26 holdout regression(s)"
+      ]
+    },
+    {
+      "proposal": {
+        "proposal_id": "muse-spark-1.3-r1-1",
+        "proposer": "muse-spark-1.3",
+        "patch": {
+          "ops": [
+            {
+              "op": "set_dwell_max_speed",
+              "zone": "inspection",
+              "max_speed": 0.1
+            }
+          ]
+        },
+        "rationale": "Looser stopped threshold to capture intent while tolerating tracking jitter; still requires stillness, rejecting moving transit.",
+        "expected_effect": {
+          "model_claim": "Same as above but more tolerant to center jitter during a true stop; drive-through at belt speed still rejected while stationary dwell still counted.",
+          "model_confidence": 0.75,
+          "round": 1,
+          "request_id": "chatcmpl-01a18054-6d93-72d1-8818-515d3c4a257e",
+          "cached": true,
+          "dev_screen": {
+            "fixes_counterexample": true,
+            "dev_regressions": 20,
+            "dev_fixed": 18,
+            "dev_cases": 150,
+            "regression_examples": [
+              "brief_stop: object 0 stood still 1267 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1600 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1600 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)"
+            ]
+          }
+        }
+      },
+      "patch_description": "DWELL(inspection) counts only while speed <= 0.10/s",
+      "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+      "patched_rule_hash": "93f1cfe983488033b6fcc81aa8fd31ece5447b817a24c48af65c9b07a9db44a7",
+      "perception": "mock",
+      "safety_checks": {
+        "patch_applies": true,
+        "structure_unchanged": true,
+        "rule_hash_changed": true
+      },
+      "origin_outcomes_after": [
+        "correct",
+        "correct"
+      ],
+      "holdout_name": "holdout_v2",
+      "holdout_manifest_sha256": "bc76a6b52faf290f71c9a4d106059a2e95cb394703041b72cca78ea49c33fe32",
+      "holdout_before": {
+        "n": 200,
+        "correct": 144,
+        "false_pass": 40,
+        "false_alarm": 13,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 36,
+            "spec_error": 4
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "spec_error": 17,
+            "correct": 23
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "holdout_after": {
+        "n": 200,
+        "correct": 145,
+        "false_pass": 17,
+        "false_alarm": 35,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 29,
+            "spec_error": 11
+          },
+          "canonical": {
+            "correct": 34,
+            "spec_error": 6
+          },
+          "drive_through": {
+            "correct": 40
+          },
+          "occluded_station": {
+            "correct": 22,
+            "spec_error": 14,
+            "perception_error": 4
+          },
+          "tailgate": {
+            "correct": 20,
+            "perception_error": 17,
+            "abstained": 3
+          }
+        }
+      },
+      "fixed_cases": [
+        "brief_stop/20005",
+        "brief_stop/20018",
+        "brief_stop/20029",
+        "brief_stop/20036",
+        "drive_through/20000",
+        "drive_through/20005",
+        "drive_through/20006",
+        "drive_through/20009",
+        "drive_through/20013",
+        "drive_through/20015",
+        "drive_through/20017",
+        "drive_through/20018",
+        "drive_through/20021",
+        "drive_through/20022",
+        "drive_through/20023",
+        "drive_through/20025",
+        "drive_through/20028",
+        "drive_through/20029",
+        "drive_through/20033",
+        "drive_through/20034",
+        "drive_through/20036",
+        "tailgate/20016",
+        "tailgate/20019"
+      ],
+      "regressions": [
+        "brief_stop/20001",
+        "brief_stop/20004",
+        "brief_stop/20006",
+        "brief_stop/20016",
+        "brief_stop/20019",
+        "brief_stop/20021",
+        "brief_stop/20024",
+        "brief_stop/20027",
+        "brief_stop/20037",
+        "brief_stop/20038",
+        "brief_stop/20039",
+        "canonical/20009",
+        "canonical/20015",
+        "canonical/20022",
+        "canonical/20025",
+        "canonical/20027",
+        "canonical/20032",
+        "occluded_station/20002",
+        "occluded_station/20013",
+        "occluded_station/20021",
+        "occluded_station/20025",
+        "occluded_station/20033"
+      ],
+      "accepted": false,
+      "reasons": [
+        "22 holdout regression(s)"
+      ]
+    },
+    {
+      "proposal": {
+        "proposal_id": "muse-spark-1.3-r2-0",
+        "proposer": "muse-spark-1.3",
+        "patch": {
+          "ops": [
+            {
+              "op": "set_dwell_min_ms",
+              "zone": "inspection",
+              "value": 1100.0
+            },
+            {
+              "op": "set_dwell_max_speed",
+              "zone": "inspection",
+              "max_speed": 0.08
+            }
+          ]
+        },
+        "rationale": "'stay' means nearly still, not transit. 0.08 rejects belt-speed transit ~0.118 but tolerates jitter, and 1100ms keeps 1.5s intent with tolerance for fragmented still measurement.",
+        "expected_effect": {
+          "model_claim": "Counterexample: 0ms still <1100ms -> FAIL fixed. Drive-through with transit>1500 but speed~0.118>0.08 stays FAIL. Brief_stop with 1200-1600ms still now PASS, removing regressions.",
+          "model_confidence": 0.7,
+          "round": 2,
+          "request_id": "chatcmpl-01a18056-236d-7088-a2ba-2495d6f89afe",
+          "cached": true,
+          "dev_screen": {
+            "fixes_counterexample": true,
+            "dev_regressions": 4,
+            "dev_fixed": 14,
+            "dev_cases": 150,
+            "regression_examples": [
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1067 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)"
+            ]
+          }
+        }
+      },
+      "patch_description": "DWELL(inspection) >= 1.10 s; DWELL(inspection) counts only while speed <= 0.08/s",
+      "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+      "patched_rule_hash": "18ab8486e404081bd5be1798f885295d7c298235c2b769211d559c914d329cb2",
+      "perception": "mock",
+      "safety_checks": {
+        "patch_applies": true,
+        "structure_unchanged": true,
+        "rule_hash_changed": true
+      },
+      "origin_outcomes_after": [
+        "correct",
+        "correct"
+      ],
+      "holdout_name": "holdout_v2",
+      "holdout_manifest_sha256": "bc76a6b52faf290f71c9a4d106059a2e95cb394703041b72cca78ea49c33fe32",
+      "holdout_before": {
+        "n": 200,
+        "correct": 144,
+        "false_pass": 40,
+        "false_alarm": 13,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 36,
+            "spec_error": 4
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "spec_error": 17,
+            "correct": 23
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "holdout_after": {
+        "n": 200,
+        "correct": 161,
+        "false_pass": 19,
+        "false_alarm": 17,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 36,
+            "spec_error": 4
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "correct": 40
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "fixed_cases": [
+        "brief_stop/20005",
+        "brief_stop/20018",
+        "brief_stop/20029",
+        "brief_stop/20036",
+        "drive_through/20000",
+        "drive_through/20005",
+        "drive_through/20006",
+        "drive_through/20009",
+        "drive_through/20013",
+        "drive_through/20015",
+        "drive_through/20017",
+        "drive_through/20018",
+        "drive_through/20021",
+        "drive_through/20022",
+        "drive_through/20023",
+        "drive_through/20025",
+        "drive_through/20028",
+        "drive_through/20029",
+        "drive_through/20033",
+        "drive_through/20034",
+        "drive_through/20036"
+      ],
+      "regressions": [
+        "brief_stop/20004",
+        "brief_stop/20019",
+        "brief_stop/20021",
+        "brief_stop/20024"
+      ],
+      "accepted": false,
+      "reasons": [
+        "4 holdout regression(s)"
+      ]
+    },
+    {
+      "proposal": {
+        "proposal_id": "muse-spark-1.3-r2-1",
+        "proposer": "muse-spark-1.3",
+        "patch": {
+          "ops": [
+            {
+              "op": "set_dwell_min_ms",
+              "zone": "inspection",
+              "value": 1000.0
+            },
+            {
+              "op": "set_dwell_max_speed",
+              "zone": "inspection",
+              "max_speed": 0.05
+            }
+          ]
+        },
+        "rationale": "Strict stopped definition with lower dwell threshold to separate 0ms drive-through from 1200ms+ brief stops while preserving stay intent.",
+        "expected_effect": {
+          "model_claim": "Counterexample FAIL (0<1000). Brief_stop 1200+ PASS with margin for fragmentation. Canonical long stops stay PASS.",
+          "model_confidence": 0.6,
+          "round": 2,
+          "request_id": "chatcmpl-01a18056-236d-7088-a2ba-2495d6f89afe",
+          "cached": true,
+          "dev_screen": {
+            "fixes_counterexample": true,
+            "dev_regressions": 6,
+            "dev_fixed": 14,
+            "dev_cases": 150,
+            "regression_examples": [
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1067 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "canonical: object 0 stood still 1267 ms, labelled PASS; patched rule says FAIL (was correct)"
+            ]
+          }
+        }
+      },
+      "patch_description": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.05/s",
+      "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+      "patched_rule_hash": "07e87d3df25b7e3e480151388702bc1648facc0342176b28c776bd2f33091538",
+      "perception": "mock",
+      "safety_checks": {
+        "patch_applies": true,
+        "structure_unchanged": true,
+        "rule_hash_changed": true
+      },
+      "origin_outcomes_after": [
+        "correct",
+        "correct"
+      ],
+      "holdout_name": "holdout_v2",
+      "holdout_manifest_sha256": "bc76a6b52faf290f71c9a4d106059a2e95cb394703041b72cca78ea49c33fe32",
+      "holdout_before": {
+        "n": 200,
+        "correct": 144,
+        "false_pass": 40,
+        "false_alarm": 13,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 36,
+            "spec_error": 4
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "spec_error": 17,
+            "correct": 23
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "holdout_after": {
+        "n": 200,
+        "correct": 159,
+        "false_pass": 19,
+        "false_alarm": 19,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 35,
+            "spec_error": 5
+          },
+          "canonical": {
+            "correct": 39,
+            "spec_error": 1
+          },
+          "drive_through": {
+            "correct": 40
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "fixed_cases": [
+        "brief_stop/20005",
+        "brief_stop/20018",
+        "brief_stop/20029",
+        "brief_stop/20036",
+        "drive_through/20000",
+        "drive_through/20005",
+        "drive_through/20006",
+        "drive_through/20009",
+        "drive_through/20013",
+        "drive_through/20015",
+        "drive_through/20017",
+        "drive_through/20018",
+        "drive_through/20021",
+        "drive_through/20022",
+        "drive_through/20023",
+        "drive_through/20025",
+        "drive_through/20028",
+        "drive_through/20029",
+        "drive_through/20033",
+        "drive_through/20034",
+        "drive_through/20036"
+      ],
+      "regressions": [
+        "brief_stop/20004",
+        "brief_stop/20016",
+        "brief_stop/20019",
+        "brief_stop/20021",
+        "brief_stop/20024",
+        "canonical/20027"
+      ],
+      "accepted": false,
+      "reasons": [
+        "6 holdout regression(s)"
+      ]
+    },
+    {
+      "proposal": {
+        "proposal_id": "muse-spark-1.3-r2-2",
+        "proposer": "muse-spark-1.3",
+        "patch": {
+          "ops": [
+            {
+              "op": "set_dwell_min_ms",
+              "zone": "inspection",
+              "value": 1200.0
+            },
+            {
+              "op": "set_dwell_max_speed",
+              "zone": "inspection",
+              "max_speed": 0.07
+            }
+          ]
+        },
+        "rationale": "Minimal reduction from 1500ms that still includes 1200ms labelled PASS examples, with 0.07 still below drive-through speed to require true stop.",
+        "expected_effect": {
+          "model_claim": "Counterexample FAIL. Brief_stop borderline 1200ms PASS if continuous; more conservative toward 1.5s text but less margin for jitter than P1/P2.",
+          "model_confidence": 0.5,
+          "round": 2,
+          "request_id": "chatcmpl-01a18056-236d-7088-a2ba-2495d6f89afe",
+          "cached": true,
+          "dev_screen": {
+            "fixes_counterexample": true,
+            "dev_regressions": 9,
+            "dev_fixed": 14,
+            "dev_cases": 150,
+            "regression_examples": [
+              "brief_stop: object 0 stood still 1267 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1067 ms, labelled PASS; patched rule says FAIL (was correct)",
+              "brief_stop: object 0 stood still 1200 ms, labelled PASS; patched rule says FAIL (was correct)"
+            ]
+          }
+        }
+      },
+      "patch_description": "DWELL(inspection) >= 1.20 s; DWELL(inspection) counts only while speed <= 0.07/s",
+      "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+      "patched_rule_hash": "a5bc1502ff07b73c6ddaff6d86d0dca7e52970e01123e60c1f0ae26e0d6531ca",
+      "perception": "mock",
+      "safety_checks": {
+        "patch_applies": true,
+        "structure_unchanged": true,
+        "rule_hash_changed": true
+      },
+      "origin_outcomes_after": [
+        "correct",
+        "correct"
+      ],
+      "holdout_name": "holdout_v2",
+      "holdout_manifest_sha256": "bc76a6b52faf290f71c9a4d106059a2e95cb394703041b72cca78ea49c33fe32",
+      "holdout_before": {
+        "n": 200,
+        "correct": 144,
+        "false_pass": 40,
+        "false_alarm": 13,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 36,
+            "spec_error": 4
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "spec_error": 17,
+            "correct": 23
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "holdout_after": {
+        "n": 200,
+        "correct": 155,
+        "false_pass": 19,
+        "false_alarm": 23,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 34,
+            "spec_error": 6
+          },
+          "canonical": {
+            "correct": 38,
+            "spec_error": 2
+          },
+          "drive_through": {
+            "correct": 40
+          },
+          "occluded_station": {
+            "correct": 25,
+            "perception_error": 13,
+            "spec_error": 2
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "fixed_cases": [
+        "brief_stop/20005",
+        "brief_stop/20018",
+        "brief_stop/20029",
+        "brief_stop/20036",
+        "drive_through/20000",
+        "drive_through/20005",
+        "drive_through/20006",
+        "drive_through/20009",
+        "drive_through/20013",
+        "drive_through/20015",
+        "drive_through/20017",
+        "drive_through/20018",
+        "drive_through/20021",
+        "drive_through/20022",
+        "drive_through/20023",
+        "drive_through/20025",
+        "drive_through/20028",
+        "drive_through/20029",
+        "drive_through/20033",
+        "drive_through/20034",
+        "drive_through/20036"
+      ],
+      "regressions": [
+        "brief_stop/20004",
+        "brief_stop/20016",
+        "brief_stop/20019",
+        "brief_stop/20021",
+        "brief_stop/20024",
+        "brief_stop/20037",
+        "canonical/20025",
+        "canonical/20027",
+        "occluded_station/20021",
+        "occluded_station/20025"
+      ],
+      "accepted": false,
+      "reasons": [
+        "10 holdout regression(s)"
+      ]
+    },
+    {
+      "proposal": {
+        "proposal_id": "muse-spark-1.3-r3-0",
+        "proposer": "muse-spark-1.3",
+        "patch": {
+          "ops": [
+            {
+              "op": "set_dwell_min_ms",
+              "zone": "inspection",
+              "value": 800.0
+            },
+            {
+              "op": "set_dwell_max_speed",
+              "zone": "inspection",
+              "max_speed": 0.08
+            }
+          ]
+        },
+        "rationale": "'stay' means nearly still, not transit. 0.08 is below belt 0.1178-0.1180 to reject drive-through but above strict stopped to tolerate jitter, and 800ms preserves 1.5s intent with tolerance for speed-window loss and split stops while staying far above 0.",
+        "expected_effect": {
+          "model_claim": "Counterexample: 0ms still <800ms -> FAIL fixed. Drive-through at belt speed ~0.118 >0.08 not counted -> FAIL. Brief_stop with 1067-1600ms still can accumulate ~800ms continuous despite windowing/fragmentation -> PASS, removing 4 regressions.",
+          "model_confidence": 0.65,
+          "round": 3,
+          "request_id": "chatcmpl-01a18056-ff2b-71f7-98cd-f8fe0947757d",
+          "cached": true,
+          "dev_screen": {
+            "fixes_counterexample": true,
+            "dev_regressions": 0,
+            "dev_fixed": 15,
+            "dev_cases": 150,
+            "regression_examples": []
+          }
+        }
+      },
+      "patch_description": "DWELL(inspection) >= 0.80 s; DWELL(inspection) counts only while speed <= 0.08/s",
+      "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+      "patched_rule_hash": "e43ab2e1522d235a9b7c815988adf6abb8165bc9dd2ed26a62de347a92d1564c",
+      "perception": "mock",
+      "safety_checks": {
+        "patch_applies": true,
+        "structure_unchanged": true,
+        "rule_hash_changed": true
+      },
+      "origin_outcomes_after": [
+        "correct",
+        "correct"
+      ],
+      "holdout_name": "holdout_v2",
+      "holdout_manifest_sha256": "bc76a6b52faf290f71c9a4d106059a2e95cb394703041b72cca78ea49c33fe32",
+      "holdout_before": {
+        "n": 200,
+        "correct": 144,
+        "false_pass": 40,
+        "false_alarm": 13,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 36,
+            "spec_error": 4
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "spec_error": 17,
+            "correct": 23
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "holdout_after": {
+        "n": 200,
+        "correct": 164,
+        "false_pass": 21,
+        "false_alarm": 12,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 38,
+            "spec_error": 2
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "correct": 40
+          },
+          "occluded_station": {
+            "correct": 28,
+            "perception_error": 12
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "fixed_cases": [
+        "brief_stop/20018",
+        "brief_stop/20029",
+        "drive_through/20000",
+        "drive_through/20005",
+        "drive_through/20006",
+        "drive_through/20009",
+        "drive_through/20013",
+        "drive_through/20015",
+        "drive_through/20017",
+        "drive_through/20018",
+        "drive_through/20021",
+        "drive_through/20022",
+        "drive_through/20023",
+        "drive_through/20025",
+        "drive_through/20028",
+        "drive_through/20029",
+        "drive_through/20033",
+        "drive_through/20034",
+        "drive_through/20036",
+        "occluded_station/20020"
+      ],
+      "regressions": [],
+      "accepted": true,
+      "reasons": [
+        "verified on unseen cases: 144/200 -> 164/200, 0 regressions"
+      ]
+    },
+    {
+      "proposal": {
+        "proposal_id": "muse-spark-1.3-r3-1",
+        "proposer": "muse-spark-1.3",
+        "patch": {
+          "ops": [
+            {
+              "op": "set_dwell_min_ms",
+              "zone": "inspection",
+              "value": 700.0
+            },
+            {
+              "op": "set_dwell_max_speed",
+              "zone": "inspection",
+              "max_speed": 0.05
+            }
+          ]
+        },
+        "rationale": "Strict stopped definition with lower dwell to compensate windowing loss: requires true stop, separates 0ms drive-through from 1000ms+ brief stops.",
+        "expected_effect": {
+          "model_claim": "Counterexample FAIL (0<700). 1067ms+ still PASS with more margin for fragmentation; strict 0.05 more robust to slow drive-throughs counted as stopped.",
+          "model_confidence": 0.55,
+          "round": 3,
+          "request_id": "chatcmpl-01a18056-ff2b-71f7-98cd-f8fe0947757d",
+          "cached": true,
+          "dev_screen": {
+            "fixes_counterexample": true,
+            "dev_regressions": 0,
+            "dev_fixed": 15,
+            "dev_cases": 150,
+            "regression_examples": []
+          }
+        }
+      },
+      "patch_description": "DWELL(inspection) >= 0.70 s; DWELL(inspection) counts only while speed <= 0.05/s",
+      "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+      "patched_rule_hash": "b97e956caab235e5fed9d623bc2723ccae762aa10e50cf95db61f6566ebaa548",
+      "perception": "mock",
+      "safety_checks": {
+        "patch_applies": true,
+        "structure_unchanged": true,
+        "rule_hash_changed": true
+      },
+      "origin_outcomes_after": [
+        "correct",
+        "correct"
+      ],
+      "holdout_name": "holdout_v2",
+      "holdout_manifest_sha256": "bc76a6b52faf290f71c9a4d106059a2e95cb394703041b72cca78ea49c33fe32",
+      "holdout_before": {
+        "n": 200,
+        "correct": 144,
+        "false_pass": 40,
+        "false_alarm": 13,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 36,
+            "spec_error": 4
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "spec_error": 17,
+            "correct": 23
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "holdout_after": {
+        "n": 200,
+        "correct": 166,
+        "false_pass": 19,
+        "false_alarm": 12,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 40
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "correct": 40
+          },
+          "occluded_station": {
+            "correct": 28,
+            "perception_error": 12
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "fixed_cases": [
+        "brief_stop/20005",
+        "brief_stop/20018",
+        "brief_stop/20029",
+        "brief_stop/20036",
+        "drive_through/20000",
+        "drive_through/20005",
+        "drive_through/20006",
+        "drive_through/20009",
+        "drive_through/20013",
+        "drive_through/20015",
+        "drive_through/20017",
+        "drive_through/20018",
+        "drive_through/20021",
+        "drive_through/20022",
+        "drive_through/20023",
+        "drive_through/20025",
+        "drive_through/20028",
+        "drive_through/20029",
+        "drive_through/20033",
+        "drive_through/20034",
+        "drive_through/20036",
+        "occluded_station/20020"
+      ],
+      "regressions": [],
+      "accepted": true,
+      "reasons": [
+        "verified on unseen cases: 144/200 -> 166/200, 0 regressions"
+      ]
+    },
+    {
+      "proposal": {
+        "proposal_id": "muse-spark-1.3-r3-2",
+        "proposer": "muse-spark-1.3",
+        "patch": {
+          "ops": [
+            {
+              "op": "set_dwell_min_ms",
+              "zone": "inspection",
+              "value": 1000.0
+            },
+            {
+              "op": "set_dwell_max_speed",
+              "zone": "inspection",
+              "max_speed": 0.1
+            }
+          ]
+        },
+        "rationale": "Max permissible stillness just below belt speed to maximize jitter tolerance while still rejecting belt transit, with 1000ms as compromise between 1.5s text and observed 1067ms PASS labels.",
+        "expected_effect": {
+          "model_claim": "Counterexample FAIL. 1200ms+ still PASS if jitter <0.10; retains higher 1000ms closer to 1.5s text.",
+          "model_confidence": 0.5,
+          "round": 3,
+          "request_id": "chatcmpl-01a18056-ff2b-71f7-98cd-f8fe0947757d",
+          "cached": true,
+          "dev_screen": {
+            "fixes_counterexample": true,
+            "dev_regressions": 1,
+            "dev_fixed": 14,
+            "dev_cases": 150,
+            "regression_examples": [
+              "brief_stop: object 0 stood still 1067 ms, labelled PASS; patched rule says FAIL (was correct)"
+            ]
+          }
+        }
+      },
+      "patch_description": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.10/s",
+      "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+      "patched_rule_hash": "d9f1dff9a891fa067124924e9fec3135f5e9dccee1f28aceab6449c7c17a7300",
+      "perception": "mock",
+      "safety_checks": {
+        "patch_applies": true,
+        "structure_unchanged": true,
+        "rule_hash_changed": true
+      },
+      "origin_outcomes_after": [
+        "correct",
+        "correct"
+      ],
+      "holdout_name": "holdout_v2",
+      "holdout_manifest_sha256": "bc76a6b52faf290f71c9a4d106059a2e95cb394703041b72cca78ea49c33fe32",
+      "holdout_before": {
+        "n": 200,
+        "correct": 144,
+        "false_pass": 40,
+        "false_alarm": 13,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 36,
+            "spec_error": 4
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "spec_error": 17,
+            "correct": 23
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "holdout_after": {
+        "n": 200,
+        "correct": 164,
+        "false_pass": 19,
+        "false_alarm": 14,
+        "abstained": 3,
+        "by_family": {
+          "brief_stop": {
+            "correct": 39,
+            "spec_error": 1
+          },
+          "canonical": {
+            "correct": 40
+          },
+          "drive_through": {
+            "correct": 40
+          },
+          "occluded_station": {
+            "correct": 27,
+            "perception_error": 13
+          },
+          "tailgate": {
+            "correct": 18,
+            "perception_error": 19,
+            "abstained": 3
+          }
+        }
+      },
+      "fixed_cases": [
+        "brief_stop/20005",
+        "brief_stop/20018",
+        "brief_stop/20029",
+        "brief_stop/20036",
+        "drive_through/20000",
+        "drive_through/20005",
+        "drive_through/20006",
+        "drive_through/20009",
+        "drive_through/20013",
+        "drive_through/20015",
+        "drive_through/20017",
+        "drive_through/20018",
+        "drive_through/20021",
+        "drive_through/20022",
+        "drive_through/20023",
+        "drive_through/20025",
+        "drive_through/20028",
+        "drive_through/20029",
+        "drive_through/20033",
+        "drive_through/20034",
+        "drive_through/20036"
+      ],
+      "regressions": [
+        "brief_stop/20019"
+      ],
+      "accepted": false,
+      "reasons": [
+        "1 holdout regression(s)"
+      ]
+    }
+  ],
+  "trace": {
+    "rounds": [
+      {
+        "round": 1,
+        "diagnosis": "spec_error: DWELL(inspection, 1500ms) has max_speed=null so any time inside the zone counts. Counterexample has 0ms still but 1.835s transit >1.5s, so dwell is satisfied and rule PASSes while truth is FAIL. Rule text 'stay at least 1.5 seconds' means stopped/stationary time, not pass-through time.",
+        "request_id": "chatcmpl-01a18054-6d93-72d1-8818-515d3c4a257e",
+        "cached": true,
+        "usage": {
+          "completion_tokens": 2370,
+          "prompt_tokens": 1058,
+          "total_tokens": 3428,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 2035,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1009,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        },
+        "invalid_proposals": []
+      },
+      {
+        "round": 2,
+        "diagnosis": "spec_error: DWELL without max_speed counts any presence (1.835s transit) as stay, so drive-through passes. Intent of 'stay' needs near-stopped time. Strict 0.05/0.10 +1500ms over-rejects brief_stop labelled PASS with 1200-1600ms strict-still due to jitter/creep fragmentation, so need stillness below belt speed ~0.118 with slightly reduced min_ms for tolerance.",
+        "request_id": "chatcmpl-01a18056-236d-7088-a2ba-2495d6f89afe",
+        "cached": true,
+        "usage": {
+          "completion_tokens": 8142,
+          "prompt_tokens": 1769,
+          "total_tokens": 9911,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 7599,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1393,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        },
+        "invalid_proposals": []
+      },
+      {
+        "round": 3,
+        "diagnosis": "spec_error: DWELL without max_speed counts any presence as stay. Counterexample has 0ms still but 1.835s transit >1.5s so PASSes while truth is FAIL. 'stay' needs near-stopped time below belt speed ~0.118. Prior strict-speed +1500/1100ms patches fragment on jitter/1-3s windowing so 1067-1267ms still labelled PASS fail to accumulate continuous dwell.",
+        "request_id": "chatcmpl-01a18056-ff2b-71f7-98cd-f8fe0947757d",
+        "cached": true,
+        "usage": {
+          "completion_tokens": 8444,
+          "prompt_tokens": 2872,
+          "total_tokens": 11316,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 7854,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1649,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        },
+        "invalid_proposals": []
+      }
+    ],
+    "diagnosis": "spec_error: DWELL(inspection, 1500ms) has max_speed=null so any time inside the zone counts. Counterexample has 0ms still but 1.835s transit >1.5s, so dwell is satisfied and rule PASSes while truth is FAIL. Rule text 'stay at least 1.5 seconds' means stopped/stationary time, not pass-through time."
+  },
+  "holdout_note": "Graded on the frozen hidden holdout (200 synthetic scenes, mock perception). The proposer never saw it; every proposal is graded, none is picked by its holdout score."
+}

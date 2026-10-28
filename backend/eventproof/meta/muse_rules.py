@@ -225,9 +225,9 @@ def to_visual_rule(out: dict, layout: Layout) -> VisualRule:
 
 
 class MuseRuleCompiler:
-    def __init__(self, settings: MetaSettings | None = None, cache_dir: Path = CACHE_DIR, max_attempts: int = 2):
+    def __init__(self, settings: MetaSettings | None = None, cache_dir: Path | None = None, max_attempts: int = 2):
         self.settings = settings or MetaSettings.from_env()
-        self.cache_dir, self.max_attempts = cache_dir, max_attempts
+        self.cache_dir, self.max_attempts = cache_dir or CACHE_DIR, max_attempts
         self.live_calls = 0
 
     def _key(self, text: str, layout: Layout) -> str:

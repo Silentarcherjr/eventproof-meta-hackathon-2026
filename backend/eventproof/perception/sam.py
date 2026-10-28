@@ -68,9 +68,9 @@ class LiveCallLimit(RuntimeError):
 
 
 class SamTracker:
-    def __init__(self, settings: MetaSettings | None = None, cache_dir: Path = CACHE_DIR, max_live_calls: int = 0):
+    def __init__(self, settings: MetaSettings | None = None, cache_dir: Path | None = None, max_live_calls: int = 0):
         self.settings = settings or MetaSettings.from_env()
-        self.cache_dir = cache_dir
+        self.cache_dir = cache_dir or CACHE_DIR
         self.max_live_calls = max_live_calls  # 0 = cache only; every live call must be allowed explicitly
         self.live_calls = 0
 
@@ -117,15 +117,17 @@ class SamTracker:
         return to_trackset(parse_output(res.deltas), info, prompt, res.source_ref)
 
 
-def sam_perceiver(tracker: SamTracker, video_dir: Path = CACHE_DIR / "videos"):
+def sam_perceiver(tracker: SamTracker, video_dir: Path | None = None):
     """Challenge Mode perceiver backed by live (or cached) SAM 3.1. Ground truth is NOT given to SAM;
     only the rendered pixels are uploaded."""
     from eventproof.challenge.render import encode_mp4
     from eventproof.challenge.scene import SceneSpec
 
+    vdir = video_dir or CACHE_DIR / "videos"
+
     def perceive(scene: SceneSpec, gt: TrackSet) -> TrackSet:
-        video_dir.mkdir(parents=True, exist_ok=True)
-        mp4 = video_dir / f"{scene.scene_hash()[:16]}.mp4"
+        vdir.mkdir(parents=True, exist_ok=True)
+        mp4 = vdir / f"{scene.scene_hash()[:16]}.mp4"
         if not mp4.exists():
             encode_mp4(scene, mp4)
         concept = scene.objects[0].label if scene.objects else "box"
