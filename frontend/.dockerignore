@@ -1,0 +1,10 @@
+.env*
+*.pem
+node_modules
+.next
+.next-e2e
+test-results
+playwright-report
+e2e
+*.tsbuildinfo
+Dockerfile

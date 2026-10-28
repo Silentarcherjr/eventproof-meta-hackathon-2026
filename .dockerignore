@@ -1,0 +1,14 @@
+# backend image build context = repo root; only backend/ and benchmark/holdout/ are copied
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+.git
+artifacts
+frontend
+docs
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+**/.hypothesis

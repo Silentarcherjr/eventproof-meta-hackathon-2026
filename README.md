@@ -16,7 +16,15 @@ Give EventProof a short video and a rule in plain language ("every package must 
 - **SAM 3.1** (`sam-3.1`): text-prompted video segmentation + stable track IDs.
 The deterministic engine never executes model-generated code.
 
-## Quickstart (backend)
+## Run it (Docker)
+```
+docker compose up --build        # studio: http://localhost:3000, API: http://localhost:8000/health
+```
+Without a key everything starts and uploads answer 503. Put `MODEL_API_KEY` in `backend/.env` (see `.env.example`)
+for live Muse Spark; live SAM 3.1 calls stay at 0 unless allowed: `EVENTPROOF_MAX_LIVE_SAM_CALLS=3 docker compose up`.
+Images are pinned by digest and dependencies come from `uv.lock` / `package-lock.json`.
+
+## Quickstart (backend, without Docker)
 ```
 cd backend
 uv sync
