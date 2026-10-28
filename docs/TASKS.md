@@ -36,7 +36,7 @@
 - [x] **P1-01** (G3, DONE_VERIFIED) Minimization on >=2 operators — DoD: Tests
 - [ ] **P1-02** (G5, TODO) Premium interaction: zone drawing, object select, synced scrub, mask overlay — DoD: Playwright
 - [ ] **P1-03** (G2, IN_PROGRESS) >=3 adversarial families and >=2 temporal rules — DoD: Tests
-- [ ] **P1-04** (G6, TODO) Baselines/ablations table (manual DSL, Muse w/o Challenge, full) — DoD: benchmark/report.md from real runs
+- [x] **P1-04** (G6, DONE_VERIFIED) Baselines/ablations table (manual DSL, Muse w/o Challenge, full) — DoD: benchmark/report.md from real runs
 - [x] **P1-05** (G5, DONE_VERIFIED) Verifiable evidence export (sha256 + model version) — DoD: Tests
 - [x] **P1-06** (G4, DONE_VERIFIED) Pre-registered final test set (report-only, distribution shift) + regression tests on every published number — DoD: Frozen + pre-registered before evaluation; evaluated once; report committed; CI recomputes it
 

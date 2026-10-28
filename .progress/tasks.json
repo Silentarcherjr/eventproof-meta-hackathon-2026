@@ -790,7 +790,7 @@
       "title": "Baselines/ablations table (manual DSL, Muse w/o Challenge, full)",
       "priority": "P1",
       "gate": "G6",
-      "state": "TODO",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G4-01"
       ],
@@ -798,11 +798,15 @@
       "branch": null,
       "definition_of_done": "benchmark/report.md from real runs",
       "test_commands": [],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "GitHub Actions run 40717424645 success",
+        "backend/tests/regression/test_benchmarks.py (recomputes every number)",
+        "benchmark/REPORT.md"
+      ],
+      "commit_sha": "b9ea518",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "updated_at": "2026-10-28T15:40:11Z",
       "blocker": null,
       "next_action": null,
       "cost_note": null

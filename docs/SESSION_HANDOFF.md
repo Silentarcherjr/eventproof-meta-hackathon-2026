@@ -16,7 +16,7 @@ Written: 2026-10-28 ~10:45 Panama (session 1 cont., local). Overwrite at the end
   (default 0), CLI flags `--max-live-calls`, real-video `--max-live-*-calls`. Key only in `backend/.env` (local).
 
 ## Next exact task (no human decision needed)
-1. P1-04: baselines/ablations table (template rule, Muse rule, Muse repair, baseline repair) from committed reports only.
+1. P1-04 done (benchmark/REPORT.md). Next: SAM 3.1 on a small final_v1 subset ONLY if the participant approves the calls.
 2. P1-02: studio interaction polish (object select, synced scrub between timeline and before/after chart).
 3. Keep PROGRESS/TASKS/HANDOFF/COSTS in sync after every change (`python scripts/progress.py render`).
 
