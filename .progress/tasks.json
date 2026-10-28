@@ -593,7 +593,7 @@
       "title": "README, Docker compose, reproducible build",
       "priority": "P0",
       "gate": "G5",
-      "state": "TODO",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G1-01"
       ],
@@ -601,11 +601,14 @@
       "branch": null,
       "definition_of_done": "Fresh clone -> docker compose up works",
       "test_commands": [],
-      "evidence_paths": [],
-      "commit_sha": null,
+      "evidence_paths": [
+        "GitHub Actions run 40708228281 success (docker job: compose build + healthchecks)",
+        "docs/evidence/2026-10-28_docker_compose.md"
+      ],
+      "commit_sha": "ba982f7",
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
+      "updated_at": "2026-10-28T14:42:31Z",
       "blocker": null,
       "next_action": null,
       "cost_note": null
@@ -615,7 +618,7 @@
       "title": "Deploy live demo (backend w/ ffmpeg + frontend)",
       "priority": "P0",
       "gate": "G6",
-      "state": "TODO",
+      "state": "BLOCKED",
       "dependencies": [
         "G5-02"
       ],
@@ -627,9 +630,9 @@
       "commit_sha": null,
       "pr_url": null,
       "started_at": null,
-      "updated_at": "2026-10-27T19:11:00Z",
-      "blocker": null,
-      "next_action": null,
+      "updated_at": "2026-10-28T14:42:31Z",
+      "blocker": "Human decision: hosting option + mode (Showcase vs capped live) and spend; see docs/DEPLOY_PROPOSAL.md",
+      "next_action": "After the decision: cap Muse calls in the API, rate limit, demo-runs list, deploy/ folder, deploy, healthcheck evidence",
       "cost_note": null
     },
     {

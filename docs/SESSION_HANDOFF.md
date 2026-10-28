@@ -1,6 +1,6 @@
 # Session handoff
 
-Written: 2026-10-27 (end of session 1, local). Overwrite at the end of every session, after push.
+Written: 2026-10-28 (session 1 cont., local). Overwrite at the end of every session, after push.
 
 ## State
 - Gate G4. Repo `Silentarcherjr/eventproof-meta-hackathon-2026` (private). Tag `hackathon-start-2026-10-27` = 039c084.
@@ -10,13 +10,14 @@ Written: 2026-10-27 (end of session 1, local). Overwrite at the end of every ses
 - Live Meta: WORKING. Key in `backend/.env` (local only). First SAM + Muse calls OK 2026-10-27 (`docs/evidence/2026-10-27_meta_api_smoke.md`). Raw SAM output cached in `artifacts/sam_cache/`.
 
 ## Next exact task
-1. G5-02 + G6-01: Dockerfile/compose (backend with ffmpeg + frontend) and a deployed demo URL (human decides hosting/spend).
+1. G6-01: waiting on the human's hosting/mode choice (`docs/DEPLOY_PROPOSAL.md`). Before any public URL: cap Muse calls in the API (`EVENTPROOF_MAX_LIVE_MUSE_CALLS`), per-IP rate limit, demo-runs list (Showcase mode), then `deploy/` (Caddyfile, override, setup script).
 2. G5-01: before/after metrics view polish (non-technical 60-second read); P1-04 baselines/ablations table from real runs.
 3. G6-02 (participant): 2–3 self-recorded phone clips of boxes passing a marked zone, for a real-world run.
 4. G7-01: 3-minute demo script around Build → Break (counterexample) → SAM confirm → Muse repair → holdout verification.
 5. Never regenerate `benchmark/holdout/holdout_v2.json` in place.
+Known nit: a run that aborts on a Meta error (e.g. 503 no key) leaves a run folder with only video.mp4 (no evidence.json).
 
-Run locally: backend `cd backend && EVENTPROOF_MAX_LIVE_SAM_CALLS=2 uv run uvicorn eventproof.api.main:app`; studio `cd frontend && npm run dev`.
+Run: `docker compose up --build` (studio :3000, API :8000; `EVENTPROOF_ARTIFACTS=./artifacts` to reuse local caches). Without Docker: backend `cd backend && EVENTPROOF_MAX_LIVE_SAM_CALLS=2 uv run uvicorn eventproof.api.main:app`; studio `cd frontend && npm run dev`.
 
 ## Human actions pending
 - C-03: set a spend alert in the Meta Billing page and read the actual charge of the 2 smoke calls (for COSTS.md).

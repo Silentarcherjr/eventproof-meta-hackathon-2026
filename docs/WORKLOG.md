@@ -82,3 +82,10 @@
 - Bugs found: a test wrote fake Muse outputs to the real cache (fixed + autouse isolation fixture); Playwright `next build` clobbered the dev server's `.next` (separate `NEXT_DIST_DIR`).
 - Process slip: a docs-writing shell command used an unquoted heredoc containing backticks, so the shell executed the quoted server commands (backend failed on the busy port; a frontend dev server started on :3001 and was killed). No files changed by it; docs then written from a script file.
 - Tests: backend 171 passed; Playwright 3 passed.
+
+## 2026-10-28 · session 1 (cont.) · local macOS · infra — Docker compose (G5-02), deploy proposal (G6-01)
+- Added `backend/Dockerfile`, `frontend/Dockerfile`, `compose.yaml`, `.dockerignore`s; studio proxies `/api/*` to the backend; README "Run it (Docker)"; CI `docker` job.
+- Verified: fresh `git clone` → `docker compose up --build --wait` healthy (~70 s), key-less upload 503, bad file 415. Full flow through the containers on cached inputs with the key forced empty and 0 live SAM calls: run, Challenge, baseline repair (166/200), SAM confirm from cache — identical to local results. Evidence `docs/evidence/2026-10-28_docker_compose.md`.
+- Found: ESLint was linting the local `.next-e2e` build output (ignored now; CI never had that folder).
+- Deploy: options and prices researched (`docs/DEPLOY_PROPOSAL.md`); nothing deployed, waiting on the human decision. Meta calls this task: 0.
+- Tests: backend 171 passed, ruff clean; frontend lint, tsc, Playwright 3 passed.

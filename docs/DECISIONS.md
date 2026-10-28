@@ -71,3 +71,9 @@
 - `confirm_with_sam`: the pair's failing scene is re-scored with live SAM (1 call, needs the API allowance).
 - `MuseProposer` (meta/muse_repair.py): strict-JSON RulePatch proposals; up to 3 rounds; between rounds Muse gets only VISIBLE dev results (regression counts + up to 5 examples of what a reviewer saw). Every proposal of every round is graded; none is selected by holdout score. The prompt never contains holdout seeds/hashes (test).
 - Test isolation: autouse fixture redirects all caches/runs to tmp and blocks live Meta clients; it was added after a test wrote fake Muse outputs into the real cache (entries removed).
+
+## ADR-014 — 2026-10-28 — Container stack (G5-02) and deploy proposal (G6-01)
+- `compose.yaml` at the repo root: `backend` (python:3.12-slim + ffmpeg, uv --frozen) and `studio` (Next.js standalone). Base images pinned by digest; both run as non-root with healthchecks.
+- The studio proxies `/api/*` to the backend (Next rewrites, build-time `API_PROXY_TARGET`, proxy timeout 300 s), so a deployment exposes one origin and the backend needs no public port. Outside Docker nothing changes (`NEXT_PUBLIC_API_URL` default stays `http://localhost:8000`).
+- Runs/caches live in a named volume; `EVENTPROOF_ARTIFACTS=./artifacts` binds the repo folder to reuse local caches. A bind mount by default would break on Linux hosts (root-owned folder vs. non-root container user).
+- Live SAM stays at 0 by default in compose. Hosting is not chosen: `docs/DEPLOY_PROPOSAL.md` lists options and prices and flags that Muse calls from the API are not capped yet, which must be fixed (or the server run without a key) before any public URL.
