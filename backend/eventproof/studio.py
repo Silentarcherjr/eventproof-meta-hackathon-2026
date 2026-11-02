@@ -64,7 +64,12 @@ def _dir(run_id: str, runs_dir: Path | None) -> Path:
 def _rule(ev: Evidence) -> VisualRule:
     if ev.status != "completed" or not ev.rule.compiled_rule:
         raise ChallengeUnavailable("the run has no compiled rule")
-    return VisualRule.model_validate(ev.rule.compiled_rule)
+    rule = VisualRule.model_validate(ev.rule.compiled_rule)
+    if rule.context_concepts():
+        raise ChallengeUnavailable(f"this rule relates to another object type ({', '.join(rule.context_concepts())}); "
+                                   "the synthetic world does not generate those yet, so Challenge Mode and repair are "
+                                   "not available for it (field checks and the certificate still are)")
+    return rule
 
 
 def _priority(r: CaseResult) -> tuple:

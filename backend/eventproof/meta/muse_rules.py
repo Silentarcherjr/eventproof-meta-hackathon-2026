@@ -26,6 +26,7 @@ from eventproof.meta.client import LiveBudget, MetaSettings, get_client
 from eventproof.schemas.rules import Line, VisualRule, Zone
 
 SCHEMA_VERSION = "rule-schema/2-nodes"
+SCHEMA_VERSION_WITH = "rule-schema/3-with"  # adds WITH (relations to a second tracked concept); used on escalation
 CACHE_DIR = Path(__file__).resolve().parents[3] / "artifacts" / "muse_cache"
 
 
@@ -81,7 +82,7 @@ def _nullable(schema: dict) -> dict:
     return {"anyOf": [schema, {"type": "null"}]}
 
 
-def build_schema(layout: Layout) -> dict:
+def build_schema(layout: Layout, with_events: bool = False) -> dict:
     """Constant-size schema: the expression is a flat list of nodes whose children are indices into the
     list. Muse expands `$ref`s, so a recursive grammar unrolled by depth costs exponentially many prompt
     tokens (~195k for 3 levels, measured 2026-10-27); a node list stays small at any depth."""
@@ -95,7 +96,13 @@ def build_schema(layout: Layout) -> dict:
               "max_speed": _nullable({"type": "number", "description": "0.05 = only while stopped; null = any motion"})}),
         _obj({"op": _op("CROSSES"), "line": {"type": "string", "enum": line_ids},
               "direction": {"type": "string", "enum": ["any", "to_left", "to_right"]}}),
-    ]}
+    ] + ([_obj({"op": _op("WITH"),
+                "concept": {"type": "string",
+                            "description": "short visual noun phrase of the OTHER object, e.g. 'hard hat'"},
+                "relation": {"type": "string", "enum": ["near", "on_top"]},
+                "max_dist": {"type": "number", "description": "near only: max center distance, fraction of frame width"},
+                "min_ms": {"type": "number", "description": "the relation must hold continuously this long (ms)"}})]
+         if with_events else [])}
     node = _obj({
         "op": {"type": "string", "enum": ["OCCURS", "BEFORE", "NOT", "AND", "OR", "IMPLIES"]},
         "children": {"type": "array", "items": {"type": "integer"},
@@ -147,6 +154,15 @@ Times are milliseconds. Use only the zone/line ids listed. Never invent geometry
 If the rule needs anything else (other attributes, counting, people, colours of other objects, speed limits...)
 set supported=false, explain in unsupported_reason, and still fill the other fields minimally.
 List every interpretation choice in assumptions."""
+
+
+SYSTEM_WITH = SYSTEM.replace(
+    "If the rule needs anything else (other attributes, counting, people, colours of other objects, speed limits...)",
+    "Event WITH(concept, relation, max_dist, min_ms) relates the object to an object of ANOTHER visual concept tracked "
+    "separately: 'near' = centers within max_dist (fraction of frame width), 'on_top' = the other object sits over the top "
+    "of this object's box (e.g. a hard hat on a person); it must hold continuously for min_ms. Use it for rules about "
+    "wearing or carrying something visible, or keeping distance from another kind of object.\n"
+    "If the rule needs anything else (counting, colours, speed limits, identity...)")
 
 
 def user_prompt(text: str, layout: Layout) -> str:
@@ -226,14 +242,15 @@ def to_visual_rule(out: dict, layout: Layout) -> VisualRule:
 
 class MuseRuleCompiler:
     def __init__(self, settings: MetaSettings | None = None, cache_dir: Path | None = None, max_attempts: int = 2,
-                 budget: LiveBudget | None = None):
+                 budget: LiveBudget | None = None, allow_with: bool = True):
         self.settings = settings or MetaSettings.from_env()
         self.cache_dir, self.max_attempts = cache_dir or CACHE_DIR, max_attempts
         self.budget = budget  # None: no cap (CLI/bench runs by the participant); the API always passes one
+        self.allow_with = allow_with  # escalate to the WITH schema when the base schema cannot express the rule
         self.live_calls = 0
 
-    def _key(self, text: str, layout: Layout) -> str:
-        blob = json.dumps([text.strip(), layout.model_dump(mode="json"), self.settings.muse_model, SCHEMA_VERSION],
+    def _key(self, text: str, layout: Layout, version: str = SCHEMA_VERSION) -> str:
+        blob = json.dumps([text.strip(), layout.model_dump(mode="json"), self.settings.muse_model, version],
                           sort_keys=True)
         return hashlib.sha256(blob.encode()).hexdigest()
 
@@ -254,14 +271,29 @@ class MuseRuleCompiler:
         return parsed, resp.id, resp.usage.model_dump() if resp.usage else {}
 
     def compile(self, text: str, layout: Layout) -> CompiledRule:
-        cpath = self.cache_dir / f"{self._key(text, layout)}.json"
+        """Base schema first (keeps every recorded compile valid); if the model says the rule is not expressible
+        there and `allow_with`, one escalation to the schema with WITH events."""
+        try:
+            return self._compile(text, layout, SCHEMA_VERSION)
+        except UnsupportedRule:
+            if not self.allow_with:
+                raise
+            return self._compile(text, layout, SCHEMA_VERSION_WITH)
+
+    def _compile(self, text: str, layout: Layout, version: str) -> CompiledRule:
+        cpath = self.cache_dir / f"{self._key(text, layout, version)}.json"
         if cpath.exists():
             c = json.loads(cpath.read_text())
             return CompiledRule(rule=to_visual_rule(c["raw_output"], layout), assumptions=c["raw_output"]["assumptions"],
                                 model=c["model"], request_ids=c["request_ids"], attempts=c["attempts"], cached=True,
                                 usage=c["usage"], raw_output=c["raw_output"])
-        schema = build_schema(layout)
-        messages = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": user_prompt(text, layout)}]
+        refusal = self.cache_dir / f"{self._key(text, layout, version)}.unsupported.json"
+        if refusal.exists():  # a recorded "not expressible" answer is also replayed (it decides the escalation)
+            raise UnsupportedRule(json.loads(refusal.read_text())["reason"])
+        with_events = version == SCHEMA_VERSION_WITH
+        schema = build_schema(layout, with_events)
+        messages = [{"role": "system", "content": SYSTEM_WITH if with_events else SYSTEM},
+                    {"role": "user", "content": user_prompt(text, layout)}]
         ids, usage, t0 = [], [], time.monotonic()
         for attempt in range(1, self.max_attempts + 1):
             out, rid, u = self._call(messages, schema)
@@ -269,7 +301,10 @@ class MuseRuleCompiler:
             usage.append(u)
             try:
                 rule = to_visual_rule(out, layout)
-            except UnsupportedRule:
+            except UnsupportedRule as e:
+                self.cache_dir.mkdir(parents=True, exist_ok=True)
+                refusal.write_text(json.dumps({"reason": str(e), "request_ids": ids, "model": self.settings.muse_model,
+                                               "text": text, "schema": version}, indent=2))
                 raise
             except (ValidationError, RuleCompileError) as e:
                 errors = ("; ".join(f"{'.'.join(map(str, er['loc']))}: {er['msg']}" for er in e.errors()[:5])
@@ -281,6 +316,7 @@ class MuseRuleCompiler:
                 continue
             self.cache_dir.mkdir(parents=True, exist_ok=True)
             cpath.write_text(json.dumps({"raw_output": out, "model": self.settings.muse_model, "request_ids": ids,
+                                         "schema": version,
                                          "attempts": attempt, "usage": usage, "text": text,
                                          "latency_s": round(time.monotonic() - t0, 2)}, indent=2))
             return CompiledRule(rule=rule, assumptions=out.get("assumptions", []), model=self.settings.muse_model,

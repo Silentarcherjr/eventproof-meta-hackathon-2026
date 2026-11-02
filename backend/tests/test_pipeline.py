@@ -118,7 +118,8 @@ def test_end_to_end_evidence(tmp_path, monkeypatch, clip):
 
 def test_unsupported_rule_stops_before_sam(tmp_path, monkeypatch, clip):
     scene, path = clip
-    _, sam = _fakes(monkeypatch, scene, [{**GOOD, "supported": False, "unsupported_reason": "needs helmets"}])
+    no = {**GOOD, "supported": False, "unsupported_reason": "needs helmets"}
+    _, sam = _fakes(monkeypatch, scene, [no, no])  # base schema, then the WITH escalation: both decline
     ev = pipeline.run(path, "wear helmets", LAYOUT, MuseRuleCompiler(SETTINGS, cache_dir=tmp_path / "mc"),
                       SamTracker(SETTINGS, cache_dir=tmp_path / "sc", max_live_calls=1), runs_dir=tmp_path / "runs")
     assert ev.status == "rule_unsupported" and "helmets" in ev.rule.error and ev.perception is None
@@ -202,3 +203,71 @@ def test_api_rejects_oversize_upload(client, clip, monkeypatch):
     _, path = clip
     monkeypatch.setattr(api, "MAX_BYTES", 1000)
     assert _post(client, path).status_code == 413
+
+
+def test_two_concept_rule_escalates_tracks_both_concepts_and_judges(tmp_path, monkeypatch):
+    """'Every blue box must carry a red tag' is not expressible in the base schema; the compiler escalates to WITH, the
+    pipeline asks SAM for the second concept, and the engine judges the relation per object."""
+    from types import SimpleNamespace
+
+    from tests.test_muse_rules import node
+
+    scene = FAMILIES["canonical"](3)
+    clip = tmp_path / "clip.mp4"
+    encode_mp4(scene, clip)
+    gt = ground_truth(scene)
+    no = {**GOOD, "supported": False, "unsupported_reason": "needs a second object type"}
+    with_tag = {**GOOD, "nodes": [node("OCCURS", event={"op": "WITH", "concept": "red tag", "relation": "on_top",
+                                                         "max_dist": 0.1, "min_ms": 200})], "root": 0}
+    muse = FakeMuse([no, with_tag])
+    monkeypatch.setattr(mr, "get_client", lambda s: muse)
+    box_lines = encode_wire(gt)
+    first = sorted({f.frame_index for f in gt.frames if f.object_id == 0 and not f.occluded})
+    by = {f.frame_index: f for f in gt.frames if f.object_id == 0 and not f.occluded}
+    tag_lines = []
+    for fi in first:  # a small tag sitting on top of box 0 only
+        b = by[fi].box
+        cx, top = int((b.x1 + b.x2) / 2), int(b.y1)
+        wh = f"w={gt.video.width};h={gt.video.height}"
+        tag_lines.append(f"<{fi}f>5<|box;x1={cx - 3};y1={top};x2={cx + 3};y2={top + 4};{wh};c=0.9|>")
+
+    class TwoPrompts:
+        def __init__(self):
+            self.prompts = []
+            self.files = SimpleNamespace(create=lambda file, purpose: SimpleNamespace(id="file-x"))
+            self.responses = SimpleNamespace(stream=self._stream)
+
+        def _stream(self, **kw):
+            prompt = kw["input"][0]["content"][0]["text"]
+            self.prompts.append(prompt)
+            lines = tag_lines if prompt == "red tag" else box_lines
+
+            class _S:
+                def __enter__(self):
+                    return self
+
+                def __exit__(self, *a):
+                    return False
+
+                def __iter__(self):
+                    for ln in lines:
+                        yield SimpleNamespace(type="response.output_text.delta", delta=ln)
+
+                def get_final_response(self):
+                    return SimpleNamespace(id=f"resp-{prompt}")
+
+            return _S()
+
+    sam = TwoPrompts()
+    monkeypatch.setattr(sam_mod, "get_client", lambda s: sam)
+    ev = pipeline.run(clip, "Every blue box must carry a red tag on top.", LAYOUT,
+                      MuseRuleCompiler(SETTINGS, cache_dir=tmp_path / "mc"),
+                      SamTracker(SETTINGS, cache_dir=tmp_path / "sc", max_live_calls=2), runs_dir=tmp_path / "runs")
+    assert ev.status == "completed" and len(muse.calls) == 2  # base schema declined, WITH schema compiled
+    schemas = [json.dumps(c["response_format"]) for c in muse.calls]
+    assert "WITH" in schemas[1] and "WITH" not in schemas[0]
+    assert sam.prompts == ["blue box", "red tag"]
+    assert ev.perception.context[0]["prompt"] == "red tag" and ev.perception.context[0]["track_ids"] == [1005]
+    v = {o.object_id: o.verdict for o in ev.result.objects}
+    assert v[0] == "PASS" and all(x == "VIOLATION" for k, x in v.items() if k != 0)
+    assert 1005 not in v  # the tag is context, not judged

@@ -69,7 +69,19 @@ class Crosses(BaseModel):
     direction: Literal["any", "to_left", "to_right"] = "any"
 
 
-Event = Annotated[InZone | Dwell | Crosses, Field(discriminator="op")]
+class With(BaseModel):
+    """A relation to an object of ANOTHER tracked concept, held continuously for >= min_ms (frame-by-frame, same frame):
+    'near' = anchor-to-anchor distance <= max_dist (frame units); 'on_top' = the other object's center lies over the
+    object's box, in its top part (e.g. a hard hat on a person)."""
+
+    op: Literal["WITH"] = "WITH"
+    concept: str = Field(min_length=1, max_length=60, description="SAM text prompt of the other object, e.g. 'forklift'")
+    relation: Literal["near", "on_top"] = "near"
+    max_dist: float = Field(default=0.1, gt=0, le=1.5)
+    min_ms: float = Field(default=0.0, ge=0, le=600_000)
+
+
+Event = Annotated[InZone | Dwell | Crosses | With, Field(discriminator="op")]
 
 
 # ---- Expressions: tri-state logic over events ---------------------------------------------------
@@ -148,6 +160,10 @@ class VisualRule(BaseModel):
         if expr_depth(self.check) > MAX_DEPTH:
             raise ValueError(f"rule deeper than {MAX_DEPTH}")
         return self
+
+    def context_concepts(self) -> list[str]:
+        """Concepts other than the entity that the rule refers to (each needs its own tracks)."""
+        return sorted({e.concept for e in iter_events(self.check) if isinstance(e, With)} - {self.entity.concept})
 
     def canonical_json(self) -> str:
         return json.dumps(self.model_dump(mode="json"), sort_keys=True, separators=(",", ":"))

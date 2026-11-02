@@ -29,6 +29,7 @@ from eventproof.schemas.rules import (
     Occurs,
     Or,
     VisualRule,
+    With,
 )
 from eventproof.schemas.tracks import TrackFrame, TrackSet
 
@@ -57,6 +58,8 @@ class ObjectTrack:
     first_frame: int
     last_frame: int
     _memo: dict[str, EventResult] = field(default_factory=dict)
+    boxes: dict[int, tuple[float, float, float, float]] = field(default_factory=dict)  # frame -> normalised box
+    others: dict[str, dict[int, list[tuple[float, float, float, float]]]] = field(default_factory=dict)  # WITH only
 
     def blind_before(self, frame: int) -> bool:
         return any(nxt <= frame for _, nxt in self.blind_spots)
@@ -85,6 +88,8 @@ def build_tracks(rule: VisualRule, tracks: TrackSet) -> list[ObjectTrack]:
         prev = by_obj.setdefault(f.object_id, {}).get(f.frame_index)
         if prev is None or (f.confidence or 0) > (prev.confidence or 0):
             by_obj[f.object_id][f.frame_index] = f
+    others = _context_boxes(rule, tracks)
+    norm = lambda f: (f.box.x1 / w, f.box.y1 / h, f.box.x2 / w, f.box.y2 / h)  # noqa: E731
     out = []
     for oid in sorted(span):
         frames = by_obj.get(oid, {})
@@ -94,8 +99,57 @@ def build_tracks(rule: VisualRule, tracks: TrackSet) -> list[ObjectTrack]:
         # (occluded / low-confidence) frames at either end also create blind spots.
         edges = [first - 1, *(o.frame for o in obs), last + 1]
         blind = [(a, b) for a, b in zip(edges, edges[1:], strict=False) if b - a - 1 > p.max_gap_frames]
-        out.append(ObjectTrack(oid, obs, blind, 1000.0 / tracks.video.fps, first, last))
+        out.append(ObjectTrack(oid, obs, blind, 1000.0 / tracks.video.fps, first, last,
+                               boxes={i: norm(frames[i]) for i in frames} if others else {}, others=others))
     return out
+
+
+def _context_boxes(rule: VisualRule, tracks: TrackSet) -> dict[str, dict[int, list[tuple[float, float, float, float]]]]:
+    """Per other concept named by a WITH event: normalised boxes per frame (any object of that concept)."""
+    concepts = set(rule.context_concepts())
+    if not concepts:
+        return {}
+    w, h, p = tracks.video.width, tracks.video.height, rule.params
+    out: dict[str, dict[int, list]] = {c: {} for c in concepts}
+    for f in tracks.frames:
+        if f.label in concepts and not f.occluded and (f.confidence is None or f.confidence >= p.min_confidence):
+            out[f.label].setdefault(f.frame_index, []).append((f.box.x1 / w, f.box.y1 / h, f.box.x2 / w, f.box.y2 / h))
+    return out
+
+
+ON_TOP_ABOVE, ON_TOP_DEPTH = 0.15, 0.35  # head region: from 15 % of the box height above it to 35 % into it
+
+
+def _relation(ev: With, own: tuple, other: tuple) -> bool:
+    ox, oy = (other[0] + other[2]) / 2, (other[1] + other[3]) / 2
+    if ev.relation == "on_top":
+        bh = own[3] - own[1]
+        return own[0] <= ox <= own[2] and own[1] - ON_TOP_ABOVE * bh <= oy <= own[1] + ON_TOP_DEPTH * bh
+    cx, cy = (own[0] + own[2]) / 2, (own[1] + own[3]) / 2
+    return hypot(ox - cx, oy - cy) <= ev.max_dist
+
+
+def _eval_with(ev: With, t: ObjectTrack, max_gap: int) -> EventResult:
+    """TRUE at the first run of observations where the relation holds continuously (gaps <= max_gap bridged) >= min_ms."""
+    boxes = t.others.get(ev.concept, {})
+    start: Obs | None = None
+    prev: Obs | None = None
+    for o in t.obs:
+        own = t.boxes.get(o.frame)
+        hold = own is not None and any(_relation(ev, own, b) for b in boxes.get(o.frame, ()))
+        if not hold or (prev is not None and not _bridged(prev, o, max_gap)):
+            start = None
+        if hold:
+            start = start or o
+            if o.ts - start.ts + t.frame_ms >= max(ev.min_ms, t.frame_ms):
+                return EventResult("TRUE", start.frame, start.ts,
+                                   f"{ev.relation} a {ev.concept} for {ev.min_ms:.0f} ms from frame {start.frame}")
+        prev = o
+    if t.blind_spots:
+        return EventResult("UNKNOWN", reason=f"not {ev.relation} a {ev.concept} while seen; "
+                                             f"{len(t.blind_spots)} blind spot(s) could hide it")
+    return EventResult("FALSE", reason=f"never {ev.relation} a {ev.concept}"
+                                       + (f" for {ev.min_ms:.0f} ms" if ev.min_ms else ""))
 
 
 def _bridged(a: Obs, b: Obs, max_gap: int) -> bool:
@@ -157,6 +211,8 @@ def zone_steps(ev: InZone | Dwell, t: ObjectTrack, rule: VisualRule) -> list[Zon
 
 def _eval_event(ev: Event, t: ObjectTrack, rule: VisualRule) -> EventResult:
     max_gap = rule.params.max_gap_frames
+    if isinstance(ev, With):
+        return _eval_with(ev, t, max_gap)
     if isinstance(ev, InZone | Dwell):
         still = isinstance(ev, Dwell) and ev.max_speed
         for st in zone_steps(ev, t, rule):
@@ -233,6 +289,8 @@ def eval_expr(expr: Expr, t: ObjectTrack, rule: VisualRule, traces: list[EventTr
 
 
 def _target(ev: Event) -> str:
+    if isinstance(ev, With):
+        return f"{ev.concept} ({ev.relation})"
     return ev.line if isinstance(ev, Crosses) else ev.zone
 
 

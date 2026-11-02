@@ -79,6 +79,7 @@ class PerceptionStage(BaseModel):
     boxes: int = 0
     track_ids: list[int] = []
     error: str | None = None
+    context: list[dict] = []  # other concepts a WITH event refers to: one SAM request each (prompt, source_ref, cached)
 
 
 class Evidence(BaseModel):
@@ -121,6 +122,9 @@ def _sha(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
 
 
+CONTEXT_ID_OFFSET = 1000
+
+
 def run(video: Path, rule_text: str, layout: Layout, compiler: MuseRuleCompiler, tracker: SamTracker,
         runs_dir: Path | None = None, run_id: str | None = None, filename: str | None = None) -> Evidence:
     run_id = run_id or new_run_id()
@@ -157,12 +161,24 @@ def run(video: Path, rule_text: str, layout: Layout, compiler: MuseRuleCompiler,
     except SamParseError as e:
         ev.status, perc.error = "perception_failed", f"SAM output could not be parsed: {e}"
         return _write(ev, out)
+    try:
+        for k, concept in enumerate(rule.context_concepts(), start=1):  # a second tracked concept (WITH events)
+            cres = tracker.track(vid.path, concept)
+            ctx = to_trackset(parse_output(cres.deltas), vid.info, concept, cres.source_ref)
+            offset = CONTEXT_ID_OFFSET * k  # keep object ids of different concepts apart
+            tracks.frames += [f.model_copy(update={"object_id": f.object_id + offset}) for f in ctx.frames]
+            perc.context.append({"prompt": concept, "source_ref": cres.source_ref, "cached": cres.cached,
+                                 "boxes": len(ctx.frames), "track_ids": sorted({f.object_id + offset for f in ctx.frames})})
+    except SamParseError as e:
+        ev.status, perc.error = "perception_failed", f"SAM output for a context concept could not be parsed: {e}"
+        return _write(ev, out)
     tracks_json = tracks.model_dump_json()
     (out / "tracks.json").write_text(tracks_json)
     ev.files["tracks"] = "tracks.json"
     perc.source_ref, perc.cached, perc.tracks_sha256 = tracks.source_ref, res.cached, _sha(tracks_json)
     perc.frames_with_detections = len({f.frame_index for f in tracks.frames})
-    perc.boxes, perc.track_ids = len(tracks.frames), sorted({f.object_id for f in tracks.frames})
+    own = [f for f in tracks.frames if f.label == rule.entity.concept]
+    perc.boxes, perc.track_ids = len(own), sorted({f.object_id for f in own})
     ev.result = evaluate(rule, tracks)
     return _write(ev, out)
 
