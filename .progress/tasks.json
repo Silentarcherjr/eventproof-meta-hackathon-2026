@@ -70,7 +70,7 @@
       "title": "License choice for repo + third-party license inventory/SBOM",
       "priority": "P0",
       "gate": "G6",
-      "state": "TODO",
+      "state": "IN_REVIEW",
       "dependencies": [
         "C-02"
       ],
@@ -78,13 +78,15 @@
       "branch": null,
       "definition_of_done": "LICENSE file + docs/compliance/LICENSE_INVENTORY.md complete",
       "test_commands": [],
-      "evidence_paths": [],
+      "evidence_paths": [
+        "LICENSE"
+      ],
       "commit_sha": null,
       "pr_url": null,
       "started_at": null,
       "updated_at": "2026-10-27T19:11:00Z",
       "blocker": null,
-      "next_action": null,
+      "next_action": "participant chose MIT (2026-11-02, \"por ahora\"); confirm no rule requires another license before submission",
       "cost_note": null
     },
     {

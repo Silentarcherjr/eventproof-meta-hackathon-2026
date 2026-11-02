@@ -115,4 +115,5 @@ uploads, rate-limited) in [`deploy/`](deploy/).
 Solo developer (Indie Developer track), built during the hackathon window (Oct 27 – Nov 4, 2026). See `docs/NEW_WORK.md`.
 
 ## License
-To be added before submission — see `docs/compliance/LICENSE_INVENTORY.md`.
+MIT ([`LICENSE`](LICENSE)) for the code in this repository. Third-party components and media keep their own licenses
+(`docs/compliance/LICENSE_INVENTORY.md`); the Pexels clips are not redistributed, only referenced by URL and sha256.

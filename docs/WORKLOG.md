@@ -150,3 +150,4 @@
 - Studio "Two readings" panel + API `/runs/{id}/ambiguity` (854f8c6): both readings with assumptions, disagreement count, the
   minimal pair rendered as two clips with scene facts (stood still / inside the zone), the user picks the meaning. Live
   readings take from the Muse allowance; the readings cache ships in the backend image. CI 41397438034 green.
+- C-04: MIT license added at the participant's choice (2026-11-02, provisional until the rules are checked).

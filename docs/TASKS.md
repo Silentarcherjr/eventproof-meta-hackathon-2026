@@ -5,7 +5,7 @@
 - [ ] **C-01** (G0, IN_REVIEW) Rules matrix from Participant Guide (hash stored privately) — DoD: docs/compliance/RULES_VERIFIED.md + COMPLIANCE_MATRIX.md cite guide sections with hash
 - [ ] **C-02** (G0, READY) Ask #questions: repo private during build? AI coding assistant disclosure? license? — DoD: Answers (or NO_CONCLUSIVO) recorded in RULES_VERIFIED.md
 - [ ] **C-03** (G0, IN_REVIEW) Claim $150 Meta API credits + add card + spend alert — DoD: Billing page shows credits; COSTS.md updated
-- [ ] **C-04** (G6, TODO) License choice for repo + third-party license inventory/SBOM — DoD: LICENSE file + docs/compliance/LICENSE_INVENTORY.md complete
+- [ ] **C-04** (G6, IN_REVIEW) License choice for repo + third-party license inventory/SBOM — DoD: LICENSE file + docs/compliance/LICENSE_INVENTORY.md complete
 - [ ] **G0-01** (G0, IN_REVIEW) Rules matrix from participant guide — DoD: Same as C-01
 - [x] **G0-02** (G0, DONE_VERIFIED) New private repo with safe initial commit + persistent tracker — DoD: gh repo view shows isPrivate=true; first commit contains tracker/handoff files
 - [x] **G0-03** (G0, DONE_VERIFIED) REAL Muse Spark API smoke test (structured output) — DoD: scripts/check_meta_api.py muse exits 0 against live API; sanitized evidence in docs/evidence/
