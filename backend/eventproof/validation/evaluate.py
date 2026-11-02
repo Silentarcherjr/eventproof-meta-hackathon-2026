@@ -16,6 +16,7 @@ import json
 import math
 import subprocess
 from collections import Counter
+from collections.abc import Callable
 from pathlib import Path
 
 from pydantic import BaseModel
@@ -110,10 +111,14 @@ def _run(det: DetectorConfig, cases: list[tuple[FinalCase, object]], patch: Rule
     return out
 
 
-def evaluate(manifest_path: Path = DEFAULT_PATH, perceiver: Perceiver = mock_perceiver) -> dict:
+def evaluate(manifest_path: Path = DEFAULT_PATH, perceiver: Perceiver = mock_perceiver,
+             subset: Callable[[FinalCase], bool] | None = None, perception: str = "mock (NOT SAM)") -> dict:
     manifest, cases = load_frozen(manifest_path)
+    cases = [x for x in cases if subset is None or subset(x[0])]
     report: dict = {"final_set": manifest.name, "manifest_sha256": manifest_sha256(manifest_path),
-                    "perception": "mock (NOT SAM)", "inputs": {}, "baselines": {}, "patches": []}
+                    "perception": perception, "inputs": {}, "baselines": {}, "patches": []}
+    if subset is not None:
+        report["n_cases"] = len(cases)
     for label, rel, kind in SOURCES:
         path = ROOT / rel
         data = json.loads(path.read_text())
