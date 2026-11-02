@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { askBothModels, challengeFileUrl, getStored } from "@/lib/api";
+import { askBothModels, certificateUrl, challengeFileUrl, getStored } from "@/lib/api";
 import type { Ambiguity } from "@/lib/types";
 
 const MODEL_NAME: Record<string, string> = { "muse-spark-1.3": "Muse Spark", "muse-wonder-1.0": "Muse Wonder" };
@@ -109,7 +109,8 @@ export default function AmbiguityPanel({ runId, defaultText }: { runId: string; 
                 ))}
               </div>
               {choice !== null && (
-                <p className="text-sm text-teal-200" data-testid="ambiguity-choice">Your rule: {res.readings[choice].plain} ({names[choice]}&apos;s reading).</p>
+                <p className="text-sm text-teal-200" data-testid="ambiguity-choice">Your rule: {res.readings[choice].plain} ({names[choice]}&apos;s reading).{" "}
+                  <a className="underline" target="_blank" rel="noreferrer" href={certificateUrl(runId, SIDE[choice])}>Certificate with this reading</a></p>
               )}
             </div>
           )}

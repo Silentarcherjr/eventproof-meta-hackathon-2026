@@ -12,3 +12,9 @@ docs
 **/.pytest_cache
 **/.ruff_cache
 **/.hypothesis
+
+# real-footage videos and raw downloads stay out of the image (only labels and reports are copied)
+benchmark/real/**/raw
+benchmark/real/**/videos
+**/*.mp4
+!demo/showcase/**/*.mp4

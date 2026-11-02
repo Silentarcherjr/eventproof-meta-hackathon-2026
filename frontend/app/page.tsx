@@ -7,7 +7,7 @@ import ChallengePanel from "@/components/ChallengePanel";
 import Results from "@/components/Results";
 import Timeline from "@/components/Timeline";
 import VideoStage, { type Tool } from "@/components/VideoStage";
-import { createRun, getFinalReport, getHealth, getRun, getTracks, type Health, videoUrl } from "@/lib/api";
+import { certificateUrl, createRun, getFinalReport, getHealth, getRun, getTracks, type Health, videoUrl } from "@/lib/api";
 import { DEFAULT_LAYOUT, EXAMPLE_RULES } from "@/lib/defaults";
 import type { BeforeAfter, Evidence, FinalReport, Layout, ObjectVerdict, TrackFrame, TrackSet } from "@/lib/types";
 
@@ -183,6 +183,12 @@ export default function Studio() {
             <div className="rounded bg-amber-500/10 p-3 text-sm text-amber-200 ring-1 ring-amber-500/40" data-testid="stale">
               Rule or layout changed since this run — the results below are for the previous inputs. Run again to check.
             </div>
+          )}
+          {ev?.status === "completed" && !stale && (
+            <a href={certificateUrl(ev.run_id)} target="_blank" rel="noreferrer" data-testid="certificate-link"
+               className="block w-full rounded-lg bg-zinc-100 py-2 text-center text-sm font-semibold text-zinc-900 hover:bg-white">
+              Rule certificate (one page, printable)
+            </a>
           )}
           {ev && <Results ev={ev} onSeek={onSeek} />}
         </section>

@@ -24,7 +24,7 @@ from typing import Annotated
 
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from pydantic import BaseModel, ValidationError
 
 from eventproof import pipeline, studio
@@ -252,6 +252,16 @@ def stored_result(run_id: str, key: str) -> dict:
     if out is None:
         raise HTTPException(404, "not computed yet")
     return out
+
+
+@app.get("/runs/{run_id}/certificate")
+def run_certificate(run_id: str, chosen: str | None = None, format: str = "html"):  # noqa: A002
+    """One-page rule certificate built from this run's recorded results (no model call). ?format=json for the data."""
+    from eventproof import certificate
+
+    _run_file(run_id, "evidence.json")  # validates the id and that the run exists
+    cert = certificate.build(run_id, chosen=chosen)
+    return cert if format == "json" else HTMLResponse(certificate.render_html(cert))
 
 
 @app.get("/runs/{run_id}/ledger")

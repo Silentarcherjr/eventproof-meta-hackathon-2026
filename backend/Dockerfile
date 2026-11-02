@@ -18,6 +18,7 @@ RUN uv sync --frozen --no-dev
 COPY benchmark/holdout /app/benchmark/holdout
 COPY benchmark/final/report_final_v1.json /app/benchmark/final/report_final_v1.json
 COPY benchmark/ambiguity/cache /app/benchmark/ambiguity/cache
+COPY benchmark/real /app/benchmark/real
 
 # runs and model caches live in /app/artifacts (a volume); the code paths resolve to it from the package location
 RUN useradd --uid 10001 --create-home eventproof && mkdir -p /app/artifacts && chown eventproof /app/artifacts

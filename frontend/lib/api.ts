@@ -80,3 +80,6 @@ export async function askBothModels(runId: string, text: string): Promise<Ambigu
     method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text }),
   }));
 }
+
+export const certificateUrl = (runId: string, chosen?: "A" | "B") =>
+  `${run(runId)}/certificate${chosen ? `?chosen=${chosen}` : ""}`;
