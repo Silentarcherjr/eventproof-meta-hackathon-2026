@@ -1,0 +1,65 @@
+{
+  "raw_output": {
+    "assumptions": [
+      "Cars travel from the bottom of the image toward the top toward the intersection/crosswalk.",
+      "The stop line is the southern edge of the pedestrian crosswalk.",
+      "The line is placed just south of the zebra stripes and north of the BUS road marking.",
+      "The line is drawn straight across the full width of the traffic lanes that approach the crosswalk.",
+      "The waiting zone is the lane area immediately south of the stop line on the approach side.",
+      "The top edge of the zone coincides with/touches the stop line.",
+      "The zone extends south far enough to contain queuing cars including the BUS lane."
+    ],
+    "line_a": [
+      0.24,
+      0.53
+    ],
+    "line_b": [
+      0.97,
+      0.53
+    ],
+    "line_description": "stop line at the edge of the crosswalk",
+    "travel_direction": "from bottom to top of the image, moving upward across the line",
+    "zone_description": "waiting area in the lanes immediately before the stop line where cars queue",
+    "zone_polygon": [
+      [
+        0.24,
+        0.53
+      ],
+      [
+        0.97,
+        0.53
+      ],
+      [
+        0.9,
+        0.99
+      ],
+      [
+        0.1,
+        0.99
+      ]
+    ]
+  },
+  "request_id": "chatcmpl-01a19b6e-cded-77dc-ae51-f5eb022c5ab9",
+  "model": "muse-spark-1.3",
+  "text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+  "usage": {
+    "completion_tokens": 6361,
+    "prompt_tokens": 550,
+    "total_tokens": 6911,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 6097,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 0,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  },
+  "latency_s": 32.72
+}
