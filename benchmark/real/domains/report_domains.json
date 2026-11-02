@@ -1,0 +1,307 @@
+{
+  "schema_version": "eventproof-real-report/1",
+  "title": "EventProof real-video validation (n=3 clips)",
+  "data": "real-world",
+  "n_clips": 3,
+  "disclaimer": "Real-world videos (the participant's own recordings or licensed public footage; source in each label's notes), labelled by hand and frozen before any model ran. Reported separately from the synthetic results; never used to tune rules, thresholds, repairs or the grader.",
+  "created_at": "2026-11-02T08:58:52+00:00",
+  "eventproof_version": "0.1.0",
+  "code_commit": "268a48c98687a1f72d8ee16bf261b32888f771cb",
+  "labels_manifest_sha256": "d8aca66e436b30df674943fcf73c950136569624f25e4a78a7154be36eb9cf8f",
+  "matching": "crossing objects paired in crossing order; others in first-frame order; leftovers reported",
+  "repair": {
+    "source": "docs/evidence/runs/20261028T023754Z-a922b5bb/challenge/repair_muse.json",
+    "source_sha256": "8031f8f43d3b6a1913ae84e84c7e6d2938c24c038dda94e328e37b61bc978a10",
+    "run_id": "20261028T023754Z-a922b5bb",
+    "proposer": "muse-spark-1.3",
+    "proposal_id": "muse-spark-1.3-r3-0",
+    "patch": {
+      "ops": [
+        {
+          "op": "set_dwell_min_ms",
+          "zone": "inspection",
+          "value": 800.0
+        },
+        {
+          "op": "set_dwell_max_speed",
+          "zone": "inspection",
+          "max_speed": 0.08
+        }
+      ]
+    },
+    "description": "DWELL(inspection) >= 0.80 s; DWELL(inspection) counts only while speed <= 0.08/s",
+    "choice": "first accepted proposal in the proposer's order"
+  },
+  "allowances": {
+    "muse": 2,
+    "sam": 3
+  },
+  "live_calls": {
+    "muse": 2,
+    "sam": 3
+  },
+  "summary": {
+    "clips": 3,
+    "before": {
+      "evaluated": 3,
+      "overall_agree": 3,
+      "objects_agree": 7,
+      "objects_labeled": 8
+    },
+    "after": {
+      "evaluated": 0,
+      "overall_agree": 0,
+      "objects_agree": 0,
+      "objects_labeled": 8
+    },
+    "missed": 1,
+    "extra": 1
+  },
+  "clips": [
+    {
+      "label_file": "bike_oneway_a.json",
+      "label_sha256": "48d8115418d9fc6520503bca485dad7b57b0a692bad6b693b042ab7f8a67a17f",
+      "clip": "bike_oneway_a.mp4",
+      "clip_sha256": "17837fba177ab8cd798450c5e35dc0015ddf6ad2e0abc59d32aab506b2c20f47",
+      "run_id": "20261102T085747Z-1bd13f4d",
+      "status": "completed",
+      "evidence_sha256": "76113b438318fe80f71a357f2644e4b8a825b9d6255e08b9a1c606b276e0ac82",
+      "ingested_sha256": "17837fba177ab8cd798450c5e35dc0015ddf6ad2e0abc59d32aab506b2c20f47",
+      "reencoded": false,
+      "muse": "live",
+      "sam": "live",
+      "rule_hash": "18769cd9d7a176a1f57f367049f7879485903efe6032a789d0041c8bd4a88025",
+      "concept": "cyclist",
+      "expected_overall": "PASS",
+      "n_labeled": 1,
+      "n_perceived": 1,
+      "before": {
+        "overall": "PASS",
+        "agrees_overall": true,
+        "rule_hash": "18769cd9d7a176a1f57f367049f7879485903efe6032a789d0041c8bd4a88025",
+        "objects_agree": 1,
+        "objects": {
+          "0": "PASS"
+        },
+        "error": null
+      },
+      "after": {
+        "overall": null,
+        "agrees_overall": false,
+        "error": "repair patch does not apply to this clip's rule: rule has no DWELL on zone 'inspection'"
+      },
+      "objects": {
+        "labeled": [
+          {
+            "label_index": 0,
+            "description": "cyclist in white and black, rides left to right, passes the midpoint ~1.2 s",
+            "crosses_packing": true,
+            "stood_still_s": 0.0,
+            "intended": "PASS",
+            "matched_object_id": 0,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 15,
+            "before": "PASS",
+            "after": null,
+            "agree_before": true,
+            "agree_after": false
+          }
+        ],
+        "missed": [],
+        "extra": []
+      }
+    },
+    {
+      "label_file": "bike_oneway_b.json",
+      "label_sha256": "3623418a183b814165c9a196d82b46338989209ce484b798e47e3ffdd8a1d613",
+      "clip": "bike_oneway_b.mp4",
+      "clip_sha256": "f636d9c91f413bc8b574807bde4c2343229507ccf0025d61362d1c398d92fab0",
+      "run_id": "20261102T085809Z-25c1fa9c",
+      "status": "completed",
+      "evidence_sha256": "cb113ad908e9d49992c59633e9a5bcc7b3adb4f180ff8dee266790372124a1fb",
+      "ingested_sha256": "f636d9c91f413bc8b574807bde4c2343229507ccf0025d61362d1c398d92fab0",
+      "reencoded": false,
+      "muse": "cached",
+      "sam": "live",
+      "rule_hash": "18769cd9d7a176a1f57f367049f7879485903efe6032a789d0041c8bd4a88025",
+      "concept": "cyclist",
+      "expected_overall": "FAIL",
+      "n_labeled": 1,
+      "n_perceived": 1,
+      "before": {
+        "overall": "FAIL",
+        "agrees_overall": true,
+        "rule_hash": "18769cd9d7a176a1f57f367049f7879485903efe6032a789d0041c8bd4a88025",
+        "objects_agree": 1,
+        "objects": {
+          "0": "VIOLATION"
+        },
+        "error": null
+      },
+      "after": {
+        "overall": null,
+        "agrees_overall": false,
+        "error": "repair patch does not apply to this clip's rule: rule has no DWELL on zone 'inspection'"
+      },
+      "objects": {
+        "labeled": [
+          {
+            "label_index": 0,
+            "description": "cyclist in orange, rides right to left, passes the midpoint ~15.7 s",
+            "crosses_packing": true,
+            "stood_still_s": 0.0,
+            "intended": "VIOLATION",
+            "matched_object_id": 0,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 160,
+            "before": "VIOLATION",
+            "after": null,
+            "agree_before": true,
+            "agree_after": false
+          }
+        ],
+        "missed": [],
+        "extra": []
+      }
+    },
+    {
+      "label_file": "crosswalk_oneway.json",
+      "label_sha256": "cb4bef573b5fdfa8af345d6ad5e60b955bb36fe2bbe40044c550d34f8ef8353c",
+      "clip": "crosswalk_oneway.mp4",
+      "clip_sha256": "e8e0c41a0ef0560adb49e24ce9c8a15759299f5c08b820819fd147f51f61be62",
+      "run_id": "20261102T085824Z-5b93d1da",
+      "status": "completed",
+      "evidence_sha256": "1d751df0555a57a892fbff8f80c98d535a472153071754217dd3732db443a008",
+      "ingested_sha256": "e8e0c41a0ef0560adb49e24ce9c8a15759299f5c08b820819fd147f51f61be62",
+      "reencoded": false,
+      "muse": "live",
+      "sam": "live",
+      "rule_hash": "565d370019e5ae4ee4cdb74e7c94efa2a97d72195d8e2851bef8c4abfd87d9c6",
+      "concept": "person",
+      "expected_overall": "FAIL",
+      "n_labeled": 6,
+      "n_perceived": 6,
+      "before": {
+        "overall": "FAIL",
+        "agrees_overall": true,
+        "rule_hash": "565d370019e5ae4ee4cdb74e7c94efa2a97d72195d8e2851bef8c4abfd87d9c6",
+        "objects_agree": 5,
+        "objects": {
+          "0": "VIOLATION",
+          "1": "VIOLATION",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS"
+        },
+        "error": null
+      },
+      "after": {
+        "overall": null,
+        "agrees_overall": false,
+        "error": "repair patch does not apply to this clip's rule: rule has no DWELL on zone 'inspection'"
+      },
+      "objects": {
+        "labeled": [
+          {
+            "label_index": 0,
+            "description": "man in dark clothes, walks right to left, crosses the middle ~3.1 s",
+            "crosses_packing": true,
+            "stood_still_s": 0.0,
+            "intended": "VIOLATION",
+            "matched_object_id": 1,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 36,
+            "before": "VIOLATION",
+            "after": null,
+            "agree_before": true,
+            "agree_after": false
+          },
+          {
+            "label_index": 1,
+            "description": "second man, walks right to left behind him, crosses ~4.2 s",
+            "crosses_packing": true,
+            "stood_still_s": 0.0,
+            "intended": "VIOLATION",
+            "matched_object_id": 0,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 43,
+            "before": "VIOLATION",
+            "after": null,
+            "agree_before": true,
+            "agree_after": false
+          },
+          {
+            "label_index": 2,
+            "description": "cyclist, rides left to right, crosses ~7.8 s",
+            "crosses_packing": true,
+            "stood_still_s": 0.0,
+            "intended": "PASS",
+            "matched_object_id": 2,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 80,
+            "before": "PASS",
+            "after": null,
+            "agree_before": true,
+            "agree_after": false
+          },
+          {
+            "label_index": 3,
+            "description": "second cyclist, rides left to right, crosses ~8.4 s",
+            "crosses_packing": true,
+            "stood_still_s": 0.0,
+            "intended": "PASS",
+            "matched_object_id": 3,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 86,
+            "before": "PASS",
+            "after": null,
+            "agree_before": true,
+            "agree_after": false
+          },
+          {
+            "label_index": 4,
+            "description": "woman, walks left to right, crosses ~10.0 s",
+            "crosses_packing": true,
+            "stood_still_s": 0.0,
+            "intended": "PASS",
+            "matched_object_id": 4,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 101,
+            "before": "PASS",
+            "after": null,
+            "agree_before": true,
+            "agree_after": false
+          },
+          {
+            "label_index": 5,
+            "description": "person at the top-left corner ~5-9 s, leaves without crossing the middle",
+            "crosses_packing": false,
+            "stood_still_s": 0.0,
+            "intended": "PASS",
+            "matched_object_id": null,
+            "perceived_crossing": null,
+            "perceived_cross_frame": null,
+            "before": null,
+            "after": null,
+            "agree_before": false,
+            "agree_after": false
+          }
+        ],
+        "missed": [
+          5
+        ],
+        "extra": [
+          {
+            "object_id": 5,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 101,
+            "first_frame": 87,
+            "before": "PASS",
+            "after": null
+          }
+        ]
+      }
+    }
+  ]
+}

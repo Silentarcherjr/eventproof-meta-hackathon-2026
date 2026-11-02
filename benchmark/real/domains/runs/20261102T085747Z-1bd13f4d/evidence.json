@@ -1,0 +1,212 @@
+{
+  "schema_version": "eventproof-evidence/2",
+  "run_id": "20261102T085747Z-1bd13f4d",
+  "created_at": "2026-11-02T08:57:47+00:00",
+  "eventproof_version": "0.1.0",
+  "status": "completed",
+  "video": {
+    "filename": "bike_oneway_a.mp4",
+    "sha256": "17837fba177ab8cd798450c5e35dc0015ddf6ad2e0abc59d32aab506b2c20f47",
+    "original_sha256": "17837fba177ab8cd798450c5e35dc0015ddf6ad2e0abc59d32aab506b2c20f47",
+    "info": {
+      "width": 640,
+      "height": 360,
+      "fps": 10.0,
+      "frame_count": 190
+    },
+    "duration_s": 19.0,
+    "codec": "h264",
+    "reencoded": false,
+    "reencode_reasons": []
+  },
+  "rule": {
+    "text": "Cyclists may ride past the midpoint of the bike lane only from left to right.",
+    "text_sha256": "099be981332369ae68c903a9d96dc0b6b625ada56927db30c27ad980ec229b83",
+    "layout": {
+      "zones": [
+        {
+          "zone": {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.0,
+                0.55
+              ],
+              [
+                1.0,
+                0.55
+              ],
+              [
+                1.0,
+                0.85
+              ],
+              [
+                0.0,
+                0.85
+              ]
+            ]
+          },
+          "description": "the bike lane along the bridge (lower part of the image)"
+        }
+      ],
+      "lines": [
+        {
+          "line": {
+            "id": "packing_entry",
+            "a": [
+              0.5,
+              0.5
+            ],
+            "b": [
+              0.5,
+              0.9
+            ]
+          },
+          "description": "midpoint of the bridge across the bike lane; cyclists ride horizontally"
+        }
+      ]
+    },
+    "model": "muse-spark-1.3",
+    "request_ids": [
+      "chatcmpl-01a19b7a-c535-705a-8070-0a3a09e4a917"
+    ],
+    "cached": false,
+    "attempts": 1,
+    "usage": [
+      {
+        "completion_tokens": 2023,
+        "prompt_tokens": 1424,
+        "total_tokens": 3447,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1817,
+          "rejected_prediction_tokens": null,
+          "text_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cache_write_tokens": null,
+          "cached_tokens": 0,
+          "image_tokens": null,
+          "text_tokens": null
+        }
+      }
+    ],
+    "compiled_rule": {
+      "check": {
+        "arg": {
+          "event": {
+            "direction": "to_right",
+            "line": "packing_entry",
+            "op": "CROSSES"
+          },
+          "op": "OCCURS"
+        },
+        "op": "NOT"
+      },
+      "entity": {
+        "concept": "cyclist",
+        "name": "cyclist"
+      },
+      "lines": [
+        {
+          "a": [
+            0.5,
+            0.5
+          ],
+          "b": [
+            0.5,
+            0.9
+          ],
+          "id": "packing_entry"
+        }
+      ],
+      "normalized_explanation": "Every cyclist never crosses packing_entry in the to_right direction.",
+      "params": {
+        "anchor": "center",
+        "max_gap_frames": 3,
+        "min_confidence": 0.0
+      },
+      "rule_id": "cyclists-left-to-right-only",
+      "version": 1,
+      "zones": [
+        {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.0,
+              0.55
+            ],
+            [
+              1.0,
+              0.55
+            ],
+            [
+              1.0,
+              0.85
+            ],
+            [
+              0.0,
+              0.85
+            ]
+          ]
+        }
+      ]
+    },
+    "rule_hash": "18769cd9d7a176a1f57f367049f7879485903efe6032a789d0041c8bd4a88025",
+    "assumptions": [
+      "'from left to right' is interpreted as moving rightwards (+x) in image coordinates.",
+      "Per the line definition, moving rightwards (+x) across packing_entry is labeled to_left, so the allowed direction is to_left and the prohibited direction is to_right.",
+      "Any crossing of packing_entry in the prohibited to_right direction is a violation, regardless of inspection-zone presence."
+    ],
+    "error": null
+  },
+  "perception": {
+    "model": "sam-3.1",
+    "prompt": "cyclist",
+    "source_ref": "sam-3.1:resp_6ae8509ab948722820ea406f:video=17837fba177ab8cd:prompt='cyclist'",
+    "cached": false,
+    "tracks_sha256": "fbf158cbfd864141b61ad6cde3d5873d74adc7b91feeaf9fd54c8ef98547a4ec",
+    "frames_with_detections": 18,
+    "boxes": 18,
+    "track_ids": [
+      0
+    ],
+    "error": null
+  },
+  "result": {
+    "rule_id": "cyclists-left-to-right-only",
+    "rule_version": 1,
+    "rule_hash": "18769cd9d7a176a1f57f367049f7879485903efe6032a789d0041c8bd4a88025",
+    "track_source": "sam-3.1",
+    "track_source_ref": "sam-3.1:resp_6ae8509ab948722820ea406f:video=17837fba177ab8cd:prompt='cyclist'",
+    "overall": "PASS",
+    "objects": [
+      {
+        "object_id": 0,
+        "verdict": "PASS",
+        "first_frame": 6,
+        "last_frame": 23,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          }
+        ],
+        "explanation": "object 0: PASS — CROSSES packing_entry: never crossed packing_entry"
+      }
+    ]
+  },
+  "files": {
+    "rule": "rule.json",
+    "tracks": "tracks.json",
+    "evidence": "evidence.json",
+    "video": "video.mp4"
+  },
+  "evidence_sha256": "76113b438318fe80f71a357f2644e4b8a825b9d6255e08b9a1c606b276e0ac82"
+}

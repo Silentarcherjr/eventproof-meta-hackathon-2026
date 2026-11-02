@@ -1,0 +1,61 @@
+{
+  "rule_id": "cross-middle-only-left-to-right",
+  "version": 1,
+  "entity": {
+    "name": "everyone",
+    "concept": "person"
+  },
+  "zones": [
+    {
+      "id": "inspection",
+      "polygon": [
+        [
+          0.05,
+          0.2
+        ],
+        [
+          0.85,
+          0.2
+        ],
+        [
+          0.85,
+          0.9
+        ],
+        [
+          0.05,
+          0.9
+        ]
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "id": "packing_entry",
+      "a": [
+        0.45,
+        0.15
+      ],
+      "b": [
+        0.45,
+        0.95
+      ]
+    }
+  ],
+  "check": {
+    "op": "NOT",
+    "arg": {
+      "op": "OCCURS",
+      "event": {
+        "op": "CROSSES",
+        "line": "packing_entry",
+        "direction": "to_right"
+      }
+    }
+  },
+  "params": {
+    "anchor": "center",
+    "max_gap_frames": 3,
+    "min_confidence": 0.0
+  },
+  "normalized_explanation": "No tracked person ever crosses the packing_entry line in the to_right direction, so any crossing must be from left to right."
+}
