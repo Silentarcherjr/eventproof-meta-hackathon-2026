@@ -102,3 +102,12 @@
 - Real-video flow by a subagent in a worktree (296433c), reviewed and merged (11fb83d).
 - Demo script draft `docs/DEMO_SCRIPT.md` with a claims→source table. Docs de-contradicted (PROGRESS, COSTS, DEPLOY_PROPOSAL, HANDOFF).
 - Tests: backend 221, Playwright 4; CI 40717424645 green. Meta calls: 0.
+## 2026-11-01 · session 1 (cont.) · local macOS · orchestrator — README
+- Credits read by the participant: $149.26 of $150 left ($0.74 spent in total). COSTS.md updated.
+
+
+
+
+
+
+
