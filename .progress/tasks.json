@@ -993,6 +993,34 @@
       "blocker": null,
       "next_action": null,
       "cost_note": "9 live SAM calls (v1: 1 x 203 frames; v2: 8 x 50-frame windows)"
+    },
+    {
+      "id": "P1-09",
+      "title": "Real traffic footage (Pexels Novi Sad): full loop Muse rule -> SAM 3.1 -> verdicts, before/after repair",
+      "priority": "P1",
+      "gate": "G6",
+      "state": "IN_REVIEW",
+      "dependencies": [
+        "P1-08"
+      ],
+      "owner": "agentic-eval",
+      "branch": null,
+      "definition_of_done": "Labels frozen + pre-registered before calls; result reported as is; CI recomputes verdicts from committed tracks",
+      "test_commands": [
+        "cd backend && uv run pytest tests/validation/test_novisad.py"
+      ],
+      "evidence_paths": [
+        "benchmark/real/novisad/PREREGISTRATION.md (45bde5e, before calls)",
+        "benchmark/real/novisad/FINDINGS.md",
+        "benchmark/real/novisad/report_novisad.json"
+      ],
+      "commit_sha": null,
+      "pr_url": null,
+      "started_at": "2026-11-02T04:10:54Z",
+      "updated_at": "2026-11-02T04:10:54Z",
+      "blocker": null,
+      "next_action": "CI green -> DONE_VERIFIED",
+      "cost_note": "1 Muse compile + 2 SAM calls (387 frames)"
     }
   ]
 }

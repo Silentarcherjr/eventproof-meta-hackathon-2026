@@ -6,7 +6,8 @@
   Muse Spark ≈ 13 (1 smoke, 6 rule compiles incl. one of 194,990 prompt tokens, ~6 repair rounds). Everything since is cached.
 - 2026-11-01: **80 live SAM 3.1 calls** (final_v1 SAM pass, P1-07; 8,087 frames; participant approved up to $5).
   Upper bound ≈ $4.3 (from $0.74 for the 26 earlier calls); exact charge UNKNOWN until the Billing page is read again.
-  SAM 3.1 total so far: 102 live calls (+1 Pexels v1, 203 frames; +8 Pexels v2 windows, ≤ 400 billed frames).
+  SAM 3.1 total so far: 104 live calls (+1 Pexels v1, 203 frames; +8 Pexels v2 windows, ≤ 400 billed frames; +2 Novi Sad clips, 387 frames).
+  Muse Spark: +1 live compile (Novi Sad rule), 2026-11-01.
 - 2026-10-28 work (before/after view, final_v1, ledger, showcase deploy, real-video flow): **0 live calls**.
 - Hosting: $0 (nothing deployed). AI coding assistant: UNKNOWN (no dashboard read).
 
@@ -15,6 +16,7 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 
 | fecha (Panamá) | plataforma | sesión/tarea | tipo de crédito | saldo confirmado | consumo confirmado | estimado | límite acordado | alerta | fuente |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-01 | Meta Model API | Novi Sad real traffic loop (P1-09) | hackathon $150 | UNKNOWN | 2 live SAM calls (190 + 197 frames) + 1 live Muse compile | ≤ $0.21 SAM (bound) + 1 Muse compile | participant approved | - | benchmark/real/novisad/report_novisad.json |
 | 2026-11-01 | Meta Model API | Pexels check v2 (P1-08) | hackathon $150 | UNKNOWN | 8 live SAM calls (50-frame windows) | ≤ $0.21 (bound) | participant approved | - | benchmark/real/pexels/report_pexels_v2.json |
 | 2026-11-01 | Meta Model API | Pexels real-footage check (P1-08) | hackathon $150 | UNKNOWN | 1 live SAM call (203 frames) | ≤ $0.11 (bound) | participant approved | - | benchmark/real/pexels/report_pexels.json |
 | 2026-11-01 | Meta Model API | final_v1 SAM pass (P1-07) | hackathon $150 | UNKNOWN (Billing not re-read) | 80 live SAM calls (8,087 frames, 2 trial + 78) | ≤ $4.3 (bound) | participant approved ≤ $5 | - | benchmark/final/sam_v1/tracking.json |

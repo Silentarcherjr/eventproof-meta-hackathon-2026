@@ -40,6 +40,7 @@ before a rule goes live, it shows where the rule is wrong, why, and whether a fi
 | Repair | Muse Spark, 3 rounds, 8 patches. **2 accepted, 6 rejected** (1–26 holdout regressions each). Round 1 was too strict and rejected; the accepted patch counts time only while the box stands still (≤ 0.08 of the frame per second, ≥ 0.80 s). |
 | Hidden holdout (200 scenes) | **144 → 164 correct**, dangerous false PASS 40 → 21, **0 regressions**. |
 | Final test (pre-registered, 320 scenes, evaluated once) | Same scene types: **141 → 158 / 200**. Three scene types never seen before: **109 → 117 / 120**. 0 regressions. Accepted patches gained +17 on average vs. +7.3 for rejected ones: the grader's choices transfer. |
+| **Real traffic footage, full loop** (Pexels drone view, 2 clips, 6 labelled cars; pre-registered) | Muse Spark read "wait" as "stopped": **8/8 objects right, incl. a real rolling stop**. The repair accepted on synthetic data: 7/8 — it passes that rolling stop (its 0.08/s stillness threshold is too loose for a real crawl). [findings](benchmark/real/novisad/FINDINGS.md) |
 | Real footage (Pexels, 8 labelled parcel crossings, perception only) | Single SAM 3.1 request: 2/8 (object cap). Cropped + 5 s windows: **8/8**, 0 false, median 0.2 s. |
 | Same final test with **real SAM 3.1 tracks** (80 scenes, pre-registered, 80 live calls) | **71 → 76 / 80**, false PASS **5 → 0**, 0 regressions; the only errors left are 4 abstentions behind an occluder. SAM gets 10/10 tailgating scenes right where the mock tracker gets 2/10. |
 
@@ -66,6 +67,8 @@ ledger (file hashes, model request ids, live vs. cached outputs) that anyone can
   frame and later parcels get no track ([v1](benchmark/real/pexels/REPORT_pexels.md)). Cropped to the belt and tracked in
   overlapping 5 s windows: **8 of 8**, 0 false, median 0.2 s from the label ([v2](benchmark/real/pexels/REPORT_pexels_v2.md)).
   Both pre-registered; the crop is a per-scene setup step.
+- Real traffic footage is n = 2 clips / 6 labelled cars, labelled by hand from frame sheets: it shows a synthetic-tuned
+  threshold failing on a real slow roll, it does not measure accuracy.
 - On one never-seen scene type (slow belt with a stop) Muse's patches leave 2–3 errors that a deterministic grid search
   fixes. Reported, not tuned away.
 - Real phone-video validation has a blind-labelling protocol ([`docs/REAL_VIDEO_PROTOCOL.md`](docs/REAL_VIDEO_PROTOCOL.md)); results will be reported separately.

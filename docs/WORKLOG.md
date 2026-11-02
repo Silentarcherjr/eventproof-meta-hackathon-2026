@@ -127,3 +127,10 @@
   clutter), no new tracks for parcels arriving later. Reported as is; mitigations (crop, windowed tracking) not run.
 - v2 (approved): crop to belt + 8 overlapping 50-frame windows + IoU stitching, pre-registered (3fa782f) before the calls.
   8 live SAM calls: **8/8 crossings, 0 false, median |dt| 0.2 s, 8 distinct ids**. v1 kept as the first result.
+## 2026-11-01 · session 1 (cont.) · local macOS · orchestrator — P1-09 real traffic footage, full loop
+- No usable stop-sign footage on Pexels; chose a top-down drone view of a signalised crossing in Novi Sad (15411757).
+  Camera checked fixed (landmarks at 0/50/100 %). Cropped to one approach, 2 clips of <= 20 s (ingest limit).
+- Labels (2 clips, 6 cars: 2 rolling through incl. a slow-roll van, 2 stopping 4-5.5 s, 2 waiting all clip) + manifest +
+  pre-registration pushed (45bde5e) before any call. 1 Muse + 2 SAM live calls.
+- Result: Muse compiled "wait" as stopped (max_speed 0.05): 8/8 objects right. Synthetic-accepted repair r3-0 (<= 0.08/s,
+  0.8 s): 7/8, passes the slow-roll van (crawl 0.04-0.09/s). Reported as is; post-hoc label notes in FINDINGS.md.

@@ -19,7 +19,7 @@ Hierarchy: Official Rules > #announcements > Participant Guide > public page > p
 | 3 | "Repositories must be public." | §4 | Public before submission (ADR-001) |
 | 4 | Max 4 per team; solo allowed | §4 | One human |
 | 5 | Demo must "only highlight the specific features, code, and functionality that you built during the Hackathon" | §4 | `docs/NEW_WORK.md`, git history from 2026-10-27 |
-| 6 | Banned: no rights to code/data/assets; anti-projects incl. "Simple Image Analyzers" | §4 | Synthetic/self-recorded footage, plus one Pexels-licensed clip (free use/modification; not redistributed, see LICENSE_INVENTORY); product is build→break→repair→verify, not image analysis |
+| 6 | Banned: no rights to code/data/assets; anti-projects incl. "Simple Image Analyzers" | §4 | Synthetic/self-recorded footage, plus two Pexels-licensed clips (free use/modification; not redistributed, see LICENSE_INVENTORY); product is build→break→repair→verify, not image analysis |
 | 7 | $150 credits, claim individually by Nov 4 21:00 ET; card required | §5 | Task C-03 (human) |
 | 8 | Submit by "November 4 at 9:00 PM EST" via CV platform; three minute demo video | §7 | Internal target Nov 4 17:00 Panamá |
 | 9 | Judging: Stage 1 pass/fail; Stage 2 Impact 30 / Meta tooling 25 / Technical 20 / Demo 25; Stage 3 top 5 per track | §8 | Demo + Meta usage are 50% of score |

@@ -20,6 +20,7 @@ Project license: PENDING (task C-04; participant decision).
 | Playwright | 1.56.1 | Apache-2.0 | e2e smoke tests (dev only) |
 | pytest, hypothesis, ruff, httpx, eslint, typescript | dev | MIT / MPL-2.0 (hypothesis) / Apache-2.0 | dev only |
 | Pexels video 5903898 "Packages Moving on a Conveyor Belt" (not redistributed; URL + sha256 in benchmark/real/pexels/labels.json) | - | Pexels License | real-footage perception check |
+| Pexels video 15411757 "High Angle View of a Busy Intersection in Novi Sad, Serbia" (not redistributed; URL + sha256 in benchmark/real/novisad/PREREGISTRATION.md) | - | Pexels License | real traffic loop |
 | (full transitive list to be regenerated from `uv tree` / `npm ls` before going public) | | | |
 
 Meta Model API is used under Meta's API terms (not redistributed). Model names: Muse Spark, SAM 3.1. Attribution text: "Built using Meta Model API, Muse Spark and SAM 3.1." No Meta logos/trademarks used to imply endorsement.
