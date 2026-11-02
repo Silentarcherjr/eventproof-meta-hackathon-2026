@@ -1,0 +1,3001 @@
+{
+  "preregistration": "benchmark/final/PREREGISTRATION_SAM_v1.md",
+  "tracking_sha256": "0d6cc6e76e64a46596306242848c5d19ceb4dcf629dce422d92420e82daaade4",
+  "subset": {
+    "seeds": [
+      40000,
+      40009
+    ],
+    "scenes": 80,
+    "tracked_ok": 80,
+    "excluded": {}
+  },
+  "sam_responses": [
+    "resp_6ae7f75ef44cd5947c744202",
+    "resp_6ae7f766054f18c83b5e4983",
+    "resp_6ae7f77a9f61f9747c254bda",
+    "resp_6ae7f782c3fc012a54464259",
+    "resp_6ae7f78896518469ee944a5b",
+    "resp_6ae7f78f87bf4f799f5744a0",
+    "resp_6ae7f796768552a3409446d0",
+    "resp_6ae7f79ca6569feafd644a53",
+    "resp_6ae7f7a31d4a4002b8654b21",
+    "resp_6ae7f7ab560724a05fd344ca",
+    "resp_6ae7f7b1043374ca817e46a4",
+    "resp_6ae7f7b9ad5e873dc78a451d",
+    "resp_6ae7f7c28464c31467284475",
+    "resp_6ae7f7c9cc761d2e5ad04c89",
+    "resp_6ae7f7d2f13533e34715414b",
+    "resp_6ae7f7da8d9d645fd5644d23",
+    "resp_6ae7f7e2cb3a3b1dcb754012",
+    "resp_6ae7f7ecda5cd81e631c4db6",
+    "resp_6ae7f7f33aec1708e9d5483e",
+    "resp_6ae7f7fc24c381adf2eb4633",
+    "resp_6ae7f803062b33fa0ce54311",
+    "resp_6ae7f80a4824ee19b6274c33",
+    "resp_6ae7f81058c70536d3f84ee7",
+    "resp_6ae7f8179f9003221c7f4b5d",
+    "resp_6ae7f81d840fbb8fad0541b9",
+    "resp_6ae7f822b54daae2627c4db6",
+    "resp_6ae7f82b4a70c79b9a13462a",
+    "resp_6ae7f83342f5e7340dcd4afa",
+    "resp_6ae7f83ba17222302f904a13",
+    "resp_6ae7f842fbf93f4c52684ef4",
+    "resp_6ae7f84a6ee0a25d61fd43ba",
+    "resp_6ae7f85208f642e47b184915",
+    "resp_6ae7f85a72aaf23ceb4143ac",
+    "resp_6ae7f8636326397767324ade",
+    "resp_6ae7f86c542f23b197cb4468",
+    "resp_6ae7f874dc61fe217edc4f88",
+    "resp_6ae7f87ae393c9bf86e94695",
+    "resp_6ae7f881b45746091cf949a7",
+    "resp_6ae7f88aaabd9e9519a04d1f",
+    "resp_6ae7f892738ff03a0c7d4a3c",
+    "resp_6ae7f89933b6cb8077db42f9",
+    "resp_6ae7f8a06b89be9ba1104d0f",
+    "resp_6ae7f8a71935b83fd91f40c9",
+    "resp_6ae7f8ae4c99e495d0234876",
+    "resp_6ae7f8b5c1e8aced0b954475",
+    "resp_6ae7f8bb1296b1e8f19e4ffb",
+    "resp_6ae7f8c2ec3b89e4a35a47b3",
+    "resp_6ae7f8cab23de09fc7f54a62",
+    "resp_6ae7f8d294accc77bcd34d28",
+    "resp_6ae7f8d936e44db0eba241b6",
+    "resp_6ae7f8e0fb62260d23c6475e",
+    "resp_6ae7f8e622377dff15ed4870",
+    "resp_6ae7f8ee0de8519ead1c4ce2",
+    "resp_6ae7f8f40dce07c2c12a476f",
+    "resp_6ae7f8ffcc20226addc6404c",
+    "resp_6ae7f90469fb900948994e6a",
+    "resp_6ae7f90a0de6937a406a46e4",
+    "resp_6ae7f916c5b6d362f1bf4ea8",
+    "resp_6ae7f91b822fefe101cd4660",
+    "resp_6ae7f9227407bf2ee7c14518",
+    "resp_6ae7f9288d92e354396847e1",
+    "resp_6ae7f931ee2cc6a3b9f84336",
+    "resp_6ae7f9391e6b6403fb514c42",
+    "resp_6ae7f940f6b7b2915d014908",
+    "resp_6ae7f948c2c7d0db1a9041ac",
+    "resp_6ae7f951f853b6c433614551",
+    "resp_6ae7f95862a8a18511804fb9",
+    "resp_6ae7f95ffe7e55aa67774069",
+    "resp_6ae7f967148156d9a263458d",
+    "resp_6ae7f97000690e28d1ce462d",
+    "resp_6ae7f979bdc39efc6cc84df2",
+    "resp_6ae7f981b5522eb2125f4850",
+    "resp_6ae7f9873ab71c60d4f7497f",
+    "resp_6ae7f98d9a5aa19a88d942b8",
+    "resp_6ae7f994e448e05de30040f3",
+    "resp_6ae7f99ce76587943d374368",
+    "resp_6ae7f9a2d68ed9709eab40ca",
+    "resp_6ae7f9a9c71ef17681574858",
+    "resp_6ae7f9b07ef64e4bb93c43a6",
+    "resp_6ae7f9b698205df19dde4edf"
+  ],
+  "perception_agreement": {
+    "rule": "studio run rule (Muse Spark), unpatched",
+    "n": 80,
+    "same_verdict": 68,
+    "sam_right_mock_wrong": 8,
+    "mock_right_sam_wrong": 1,
+    "both_wrong": 8,
+    "scenes_with_sam_identity_events": 9,
+    "rows": [
+      {
+        "case": "in_distribution/brief_stop/40000",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/brief_stop/40001",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/brief_stop/40002",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/brief_stop/40003",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/brief_stop/40004",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/brief_stop/40005",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/brief_stop/40006",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/brief_stop/40007",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/brief_stop/40008",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/brief_stop/40009",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/canonical/40000",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/canonical/40001",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/canonical/40002",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/canonical/40003",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/canonical/40004",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/canonical/40005",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/canonical/40006",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/canonical/40007",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/canonical/40008",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/canonical/40009",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/drive_through/40000",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/drive_through/40001",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/drive_through/40002",
+        "truth": "FAIL",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/drive_through/40003",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/drive_through/40004",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/drive_through/40005",
+        "truth": "FAIL",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/drive_through/40006",
+        "truth": "FAIL",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/drive_through/40007",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/drive_through/40008",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/drive_through/40009",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/occluded_station/40000",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/occluded_station/40001",
+        "truth": "PASS",
+        "mock": "FAIL",
+        "sam": "UNKNOWN",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/occluded_station/40002",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/occluded_station/40003",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/occluded_station/40004",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/occluded_station/40005",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "UNKNOWN",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/occluded_station/40006",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": [
+          "new_id"
+        ]
+      },
+      {
+        "case": "in_distribution/occluded_station/40007",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/occluded_station/40008",
+        "truth": "PASS",
+        "mock": "FAIL",
+        "sam": "UNKNOWN",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/occluded_station/40009",
+        "truth": "PASS",
+        "mock": "FAIL",
+        "sam": "UNKNOWN",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/tailgate/40000",
+        "truth": "FAIL",
+        "mock": "UNKNOWN",
+        "sam": "FAIL",
+        "sam_identity_events": [
+          "switch",
+          "new_id"
+        ]
+      },
+      {
+        "case": "in_distribution/tailgate/40001",
+        "truth": "FAIL",
+        "mock": "UNKNOWN",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/tailgate/40002",
+        "truth": "FAIL",
+        "mock": "UNKNOWN",
+        "sam": "FAIL",
+        "sam_identity_events": [
+          "switch",
+          "new_id"
+        ]
+      },
+      {
+        "case": "in_distribution/tailgate/40003",
+        "truth": "FAIL",
+        "mock": "PASS",
+        "sam": "FAIL",
+        "sam_identity_events": [
+          "merged",
+          "switch"
+        ]
+      },
+      {
+        "case": "in_distribution/tailgate/40004",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": [
+          "switch",
+          "new_id"
+        ]
+      },
+      {
+        "case": "in_distribution/tailgate/40005",
+        "truth": "FAIL",
+        "mock": "PASS",
+        "sam": "FAIL",
+        "sam_identity_events": [
+          "switch",
+          "new_id"
+        ]
+      },
+      {
+        "case": "in_distribution/tailgate/40006",
+        "truth": "FAIL",
+        "mock": "PASS",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/tailgate/40007",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "in_distribution/tailgate/40008",
+        "truth": "FAIL",
+        "mock": "PASS",
+        "sam": "FAIL",
+        "sam_identity_events": [
+          "switch",
+          "new_id"
+        ]
+      },
+      {
+        "case": "in_distribution/tailgate/40009",
+        "truth": "FAIL",
+        "mock": "UNKNOWN",
+        "sam": "FAIL",
+        "sam_identity_events": [
+          "switch",
+          "new_id"
+        ]
+      },
+      {
+        "case": "shift/fps_shift/40000",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/fps_shift/40001",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/fps_shift/40002",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/fps_shift/40003",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/fps_shift/40004",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/fps_shift/40005",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/fps_shift/40006",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/fps_shift/40007",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/fps_shift/40008",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": [
+          "new_id"
+        ]
+      },
+      {
+        "case": "shift/fps_shift/40009",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/stop_and_go/40000",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/stop_and_go/40001",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/stop_and_go/40002",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/stop_and_go/40003",
+        "truth": "FAIL",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/stop_and_go/40004",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/stop_and_go/40005",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/stop_and_go/40006",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/stop_and_go/40007",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/stop_and_go/40008",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/stop_and_go/40009",
+        "truth": "PASS",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/two_stops/40000",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/two_stops/40001",
+        "truth": "FAIL",
+        "mock": "PASS",
+        "sam": "PASS",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/two_stops/40002",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/two_stops/40003",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/two_stops/40004",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/two_stops/40005",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/two_stops/40006",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/two_stops/40007",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/two_stops/40008",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      },
+      {
+        "case": "shift/two_stops/40009",
+        "truth": "FAIL",
+        "mock": "FAIL",
+        "sam": "FAIL",
+        "sam_identity_events": []
+      }
+    ]
+  },
+  "sam": {
+    "final_set": "final_v1",
+    "manifest_sha256": "3f955049b39526ade1129e5574fd3dfa33a0302349a0d5d9849d6110065cad28",
+    "perception": "sam-3.1 (live Meta API, raw outputs cached in benchmark/final/sam_v1/sam_cache)",
+    "inputs": {
+      "muse-studio-run": {
+        "file": "docs/evidence/runs/20261028T023754Z-a922b5bb/challenge/repair_muse.json",
+        "sha256": "8031f8f43d3b6a1913ae84e84c7e6d2938c24c038dda94e328e37b61bc978a10",
+        "proposals": 8
+      },
+      "baseline-drive_through-0": {
+        "file": "benchmark/repairs/drive_through-0.json",
+        "sha256": "d8e572bab9a19de1a896117f7962a58b3159c258cea3516f2cd6b35f060d7378",
+        "proposals": 2
+      },
+      "baseline-brief_stop-5": {
+        "file": "benchmark/repairs/brief_stop-5.json",
+        "sha256": "792c5106eec07b105abc921a6c1ab8fe0843d3ff387513bf09f7e3719a8effd4",
+        "proposals": 2
+      }
+    },
+    "baselines": {
+      "muse-studio-run": {
+        "in_distribution": {
+          "n": 50,
+          "correct": 43,
+          "accuracy_ci95": [
+            0.7381,
+            0.9305
+          ],
+          "false_pass": 3,
+          "false_alarm": 0,
+          "abstained": 4,
+          "by_family": {
+            "brief_stop": {
+              "correct": 10
+            },
+            "canonical": {
+              "correct": 10
+            },
+            "drive_through": {
+              "correct": 7,
+              "spec_error": 3
+            },
+            "occluded_station": {
+              "correct": 6,
+              "abstained": 4
+            },
+            "tailgate": {
+              "correct": 10
+            }
+          }
+        },
+        "shift": {
+          "n": 30,
+          "correct": 28,
+          "accuracy_ci95": [
+            0.7868,
+            0.9815
+          ],
+          "false_pass": 2,
+          "false_alarm": 0,
+          "abstained": 0,
+          "by_family": {
+            "fps_shift": {
+              "correct": 10
+            },
+            "stop_and_go": {
+              "correct": 9,
+              "spec_error": 1
+            },
+            "two_stops": {
+              "correct": 9,
+              "spec_error": 1
+            }
+          }
+        }
+      },
+      "baseline-drive_through-0": {
+        "in_distribution": {
+          "n": 50,
+          "correct": 43,
+          "accuracy_ci95": [
+            0.7381,
+            0.9305
+          ],
+          "false_pass": 3,
+          "false_alarm": 0,
+          "abstained": 4,
+          "by_family": {
+            "brief_stop": {
+              "correct": 10
+            },
+            "canonical": {
+              "correct": 10
+            },
+            "drive_through": {
+              "correct": 7,
+              "spec_error": 3
+            },
+            "occluded_station": {
+              "correct": 6,
+              "abstained": 4
+            },
+            "tailgate": {
+              "correct": 10
+            }
+          }
+        },
+        "shift": {
+          "n": 30,
+          "correct": 28,
+          "accuracy_ci95": [
+            0.7868,
+            0.9815
+          ],
+          "false_pass": 2,
+          "false_alarm": 0,
+          "abstained": 0,
+          "by_family": {
+            "fps_shift": {
+              "correct": 10
+            },
+            "stop_and_go": {
+              "correct": 9,
+              "spec_error": 1
+            },
+            "two_stops": {
+              "correct": 9,
+              "spec_error": 1
+            }
+          }
+        }
+      },
+      "baseline-brief_stop-5": {
+        "in_distribution": {
+          "n": 50,
+          "correct": 43,
+          "accuracy_ci95": [
+            0.7381,
+            0.9305
+          ],
+          "false_pass": 3,
+          "false_alarm": 0,
+          "abstained": 4,
+          "by_family": {
+            "brief_stop": {
+              "correct": 10
+            },
+            "canonical": {
+              "correct": 10
+            },
+            "drive_through": {
+              "correct": 7,
+              "spec_error": 3
+            },
+            "occluded_station": {
+              "correct": 6,
+              "abstained": 4
+            },
+            "tailgate": {
+              "correct": 10
+            }
+          }
+        },
+        "shift": {
+          "n": 30,
+          "correct": 28,
+          "accuracy_ci95": [
+            0.7868,
+            0.9815
+          ],
+          "false_pass": 2,
+          "false_alarm": 0,
+          "abstained": 0,
+          "by_family": {
+            "fps_shift": {
+              "correct": 10
+            },
+            "stop_and_go": {
+              "correct": 9,
+              "spec_error": 1
+            },
+            "two_stops": {
+              "correct": 9,
+              "spec_error": 1
+            }
+          }
+        }
+      }
+    },
+    "patches": [
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r1-0",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) counts only while speed <= 0.05/s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 156/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 39,
+            "accuracy_ci95": [
+              0.6476,
+              0.8725
+            ],
+            "false_pass": 0,
+            "false_alarm": 7,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "spec_error": 4,
+                "correct": 6
+              },
+              "canonical": {
+                "spec_error": 2,
+                "correct": 8
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 5,
+                "abstained": 4,
+                "spec_error": 1
+              },
+              "tailgate": {
+                "correct": 10
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 24,
+            "accuracy_ci95": [
+              0.6269,
+              0.9049
+            ],
+            "false_pass": 0,
+            "false_alarm": 6,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 8,
+                "spec_error": 2
+              },
+              "stop_and_go": {
+                "correct": 6,
+                "spec_error": 4
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 7,
+          "shift": 6
+        },
+        "sign_test_p": {
+          "in_distribution": 0.34375,
+          "shift": 0.289062
+        },
+        "regressed_cases": [
+          "in_distribution/brief_stop/40000",
+          "in_distribution/brief_stop/40001",
+          "in_distribution/brief_stop/40002",
+          "in_distribution/brief_stop/40009",
+          "in_distribution/canonical/40000",
+          "in_distribution/canonical/40008",
+          "in_distribution/occluded_station/40002",
+          "shift/fps_shift/40003",
+          "shift/fps_shift/40009",
+          "shift/stop_and_go/40001",
+          "shift/stop_and_go/40004",
+          "shift/stop_and_go/40006",
+          "shift/stop_and_go/40008"
+        ]
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r1-1",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) counts only while speed <= 0.10/s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 145/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 40,
+            "accuracy_ci95": [
+              0.6696,
+              0.8876
+            ],
+            "false_pass": 0,
+            "false_alarm": 6,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "spec_error": 4,
+                "correct": 6
+              },
+              "canonical": {
+                "correct": 9,
+                "spec_error": 1
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 5,
+                "abstained": 4,
+                "spec_error": 1
+              },
+              "tailgate": {
+                "correct": 10
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 28,
+            "accuracy_ci95": [
+              0.7868,
+              0.9815
+            ],
+            "false_pass": 0,
+            "false_alarm": 2,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 9,
+                "spec_error": 1
+              },
+              "stop_and_go": {
+                "correct": 9,
+                "spec_error": 1
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 6,
+          "shift": 2
+        },
+        "sign_test_p": {
+          "in_distribution": 0.507812,
+          "shift": 1.0
+        },
+        "regressed_cases": [
+          "in_distribution/brief_stop/40000",
+          "in_distribution/brief_stop/40001",
+          "in_distribution/brief_stop/40002",
+          "in_distribution/brief_stop/40009",
+          "in_distribution/canonical/40008",
+          "in_distribution/occluded_station/40002",
+          "shift/fps_shift/40003",
+          "shift/stop_and_go/40008"
+        ]
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r2-0",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) >= 1.10 s; DWELL(inspection) counts only while speed <= 0.08/s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 161/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 45,
+            "accuracy_ci95": [
+              0.7864,
+              0.9565
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 5,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 5,
+                "abstained": 5
+              },
+              "tailgate": {
+                "correct": 10
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 1,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 0.625,
+          "shift": 0.5
+        },
+        "regressed_cases": [
+          "in_distribution/occluded_station/40002"
+        ]
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r2-1",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.05/s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 159/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 43,
+            "accuracy_ci95": [
+              0.7381,
+              0.9305
+            ],
+            "false_pass": 0,
+            "false_alarm": 2,
+            "abstained": 5,
+            "by_family": {
+              "brief_stop": {
+                "correct": 8,
+                "spec_error": 2
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 5,
+                "abstained": 5
+              },
+              "tailgate": {
+                "correct": 10
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 3,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 1.0,
+          "shift": 0.5
+        },
+        "regressed_cases": [
+          "in_distribution/brief_stop/40001",
+          "in_distribution/brief_stop/40009",
+          "in_distribution/occluded_station/40002"
+        ]
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r2-2",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) >= 1.20 s; DWELL(inspection) counts only while speed <= 0.07/s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 155/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 42,
+            "accuracy_ci95": [
+              0.7149,
+              0.9166
+            ],
+            "false_pass": 0,
+            "false_alarm": 3,
+            "abstained": 5,
+            "by_family": {
+              "brief_stop": {
+                "correct": 7,
+                "spec_error": 3
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 5,
+                "abstained": 5
+              },
+              "tailgate": {
+                "correct": 10
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 29,
+            "accuracy_ci95": [
+              0.8333,
+              0.9941
+            ],
+            "false_pass": 0,
+            "false_alarm": 1,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 9,
+                "spec_error": 1
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 4,
+          "shift": 1
+        },
+        "sign_test_p": {
+          "in_distribution": 1.0,
+          "shift": 1.0
+        },
+        "regressed_cases": [
+          "in_distribution/brief_stop/40001",
+          "in_distribution/brief_stop/40002",
+          "in_distribution/brief_stop/40009",
+          "in_distribution/occluded_station/40002",
+          "shift/fps_shift/40003"
+        ]
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r3-0",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) >= 0.80 s; DWELL(inspection) counts only while speed <= 0.08/s",
+        "grader_accepted": true,
+        "holdout_v2": "144/200 -> 164/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 46,
+            "accuracy_ci95": [
+              0.8116,
+              0.9685
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 6,
+                "abstained": 4
+              },
+              "tailgate": {
+                "correct": 10
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 0,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 0.25,
+          "shift": 0.5
+        },
+        "regressed_cases": []
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r3-1",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) >= 0.70 s; DWELL(inspection) counts only while speed <= 0.05/s",
+        "grader_accepted": true,
+        "holdout_v2": "144/200 -> 166/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 46,
+            "accuracy_ci95": [
+              0.8116,
+              0.9685
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 6,
+                "abstained": 4
+              },
+              "tailgate": {
+                "correct": 10
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 29,
+            "accuracy_ci95": [
+              0.8333,
+              0.9941
+            ],
+            "false_pass": 1,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 9,
+                "spec_error": 1
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 1
+        },
+        "regressed": {
+          "in_distribution": 0,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 0.25,
+          "shift": 1.0
+        },
+        "regressed_cases": []
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r3-2",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.10/s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 164/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 45,
+            "accuracy_ci95": [
+              0.7864,
+              0.9565
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 5,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 5,
+                "abstained": 5
+              },
+              "tailgate": {
+                "correct": 10
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 1,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 0.625,
+          "shift": 0.5
+        },
+        "regressed_cases": [
+          "in_distribution/occluded_station/40002"
+        ]
+      },
+      {
+        "source": "baseline-drive_through-0",
+        "proposal_id": "baseline-deterministic-0",
+        "proposer": "baseline-deterministic",
+        "patch_description": "DWELL(inspection) >= 2.00 s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 152/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 44,
+            "accuracy_ci95": [
+              0.762,
+              0.9438
+            ],
+            "false_pass": 0,
+            "false_alarm": 1,
+            "abstained": 5,
+            "by_family": {
+              "brief_stop": {
+                "correct": 9,
+                "spec_error": 1
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 5,
+                "abstained": 5
+              },
+              "tailgate": {
+                "correct": 10
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 2,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 1.0,
+          "shift": 0.5
+        },
+        "regressed_cases": [
+          "in_distribution/brief_stop/40002",
+          "in_distribution/occluded_station/40002"
+        ]
+      },
+      {
+        "source": "baseline-drive_through-0",
+        "proposal_id": "baseline-deterministic-1",
+        "proposer": "baseline-deterministic",
+        "patch_description": "DWELL(inspection) counts only while speed <= 0.05/s; DWELL(inspection) >= 0.80 s",
+        "grader_accepted": true,
+        "holdout_v2": "144/200 -> 166/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 46,
+            "accuracy_ci95": [
+              0.8116,
+              0.9685
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 6,
+                "abstained": 4
+              },
+              "tailgate": {
+                "correct": 10
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 0,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 0.25,
+          "shift": 0.5
+        },
+        "regressed_cases": []
+      },
+      {
+        "source": "baseline-brief_stop-5",
+        "proposal_id": "baseline-deterministic-0",
+        "proposer": "baseline-deterministic",
+        "patch_description": "DWELL(inspection) >= 1.70 s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 153/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 43,
+            "accuracy_ci95": [
+              0.7381,
+              0.9305
+            ],
+            "false_pass": 2,
+            "false_alarm": 0,
+            "abstained": 5,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 8,
+                "spec_error": 2
+              },
+              "occluded_station": {
+                "correct": 5,
+                "abstained": 5
+              },
+              "tailgate": {
+                "correct": 10
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 1,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 1,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 1.0,
+          "shift": 0.5
+        },
+        "regressed_cases": [
+          "in_distribution/occluded_station/40002"
+        ]
+      },
+      {
+        "source": "baseline-brief_stop-5",
+        "proposal_id": "baseline-deterministic-1",
+        "proposer": "baseline-deterministic",
+        "patch_description": "DWELL(inspection) counts only while speed <= 0.05/s; DWELL(inspection) >= 0.80 s",
+        "grader_accepted": true,
+        "holdout_v2": "144/200 -> 166/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 46,
+            "accuracy_ci95": [
+              0.8116,
+              0.9685
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 6,
+                "abstained": 4
+              },
+              "tailgate": {
+                "correct": 10
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 0,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 0.25,
+          "shift": 0.5
+        },
+        "regressed_cases": []
+      }
+    ],
+    "n_cases": 80
+  },
+  "mock_same_scenes": {
+    "final_set": "final_v1",
+    "manifest_sha256": "3f955049b39526ade1129e5574fd3dfa33a0302349a0d5d9849d6110065cad28",
+    "perception": "mock (NOT SAM)",
+    "inputs": {
+      "muse-studio-run": {
+        "file": "docs/evidence/runs/20261028T023754Z-a922b5bb/challenge/repair_muse.json",
+        "sha256": "8031f8f43d3b6a1913ae84e84c7e6d2938c24c038dda94e328e37b61bc978a10",
+        "proposals": 8
+      },
+      "baseline-drive_through-0": {
+        "file": "benchmark/repairs/drive_through-0.json",
+        "sha256": "d8e572bab9a19de1a896117f7962a58b3159c258cea3516f2cd6b35f060d7378",
+        "proposals": 2
+      },
+      "baseline-brief_stop-5": {
+        "file": "benchmark/repairs/brief_stop-5.json",
+        "sha256": "792c5106eec07b105abc921a6c1ab8fe0843d3ff387513bf09f7e3719a8effd4",
+        "proposals": 2
+      }
+    },
+    "baselines": {
+      "muse-studio-run": {
+        "in_distribution": {
+          "n": 50,
+          "correct": 36,
+          "accuracy_ci95": [
+            0.5833,
+            0.8253
+          ],
+          "false_pass": 7,
+          "false_alarm": 3,
+          "abstained": 4,
+          "by_family": {
+            "brief_stop": {
+              "correct": 10
+            },
+            "canonical": {
+              "correct": 10
+            },
+            "drive_through": {
+              "correct": 7,
+              "spec_error": 3
+            },
+            "occluded_station": {
+              "correct": 7,
+              "perception_error": 3
+            },
+            "tailgate": {
+              "abstained": 4,
+              "perception_error": 4,
+              "correct": 2
+            }
+          }
+        },
+        "shift": {
+          "n": 30,
+          "correct": 28,
+          "accuracy_ci95": [
+            0.7868,
+            0.9815
+          ],
+          "false_pass": 2,
+          "false_alarm": 0,
+          "abstained": 0,
+          "by_family": {
+            "fps_shift": {
+              "correct": 10
+            },
+            "stop_and_go": {
+              "correct": 9,
+              "spec_error": 1
+            },
+            "two_stops": {
+              "correct": 9,
+              "spec_error": 1
+            }
+          }
+        }
+      },
+      "baseline-drive_through-0": {
+        "in_distribution": {
+          "n": 50,
+          "correct": 36,
+          "accuracy_ci95": [
+            0.5833,
+            0.8253
+          ],
+          "false_pass": 7,
+          "false_alarm": 3,
+          "abstained": 4,
+          "by_family": {
+            "brief_stop": {
+              "correct": 10
+            },
+            "canonical": {
+              "correct": 10
+            },
+            "drive_through": {
+              "correct": 7,
+              "spec_error": 3
+            },
+            "occluded_station": {
+              "correct": 7,
+              "perception_error": 3
+            },
+            "tailgate": {
+              "abstained": 4,
+              "perception_error": 4,
+              "correct": 2
+            }
+          }
+        },
+        "shift": {
+          "n": 30,
+          "correct": 28,
+          "accuracy_ci95": [
+            0.7868,
+            0.9815
+          ],
+          "false_pass": 2,
+          "false_alarm": 0,
+          "abstained": 0,
+          "by_family": {
+            "fps_shift": {
+              "correct": 10
+            },
+            "stop_and_go": {
+              "correct": 9,
+              "spec_error": 1
+            },
+            "two_stops": {
+              "correct": 9,
+              "spec_error": 1
+            }
+          }
+        }
+      },
+      "baseline-brief_stop-5": {
+        "in_distribution": {
+          "n": 50,
+          "correct": 36,
+          "accuracy_ci95": [
+            0.5833,
+            0.8253
+          ],
+          "false_pass": 7,
+          "false_alarm": 3,
+          "abstained": 4,
+          "by_family": {
+            "brief_stop": {
+              "correct": 10
+            },
+            "canonical": {
+              "correct": 10
+            },
+            "drive_through": {
+              "correct": 7,
+              "spec_error": 3
+            },
+            "occluded_station": {
+              "correct": 7,
+              "perception_error": 3
+            },
+            "tailgate": {
+              "abstained": 4,
+              "perception_error": 4,
+              "correct": 2
+            }
+          }
+        },
+        "shift": {
+          "n": 30,
+          "correct": 28,
+          "accuracy_ci95": [
+            0.7868,
+            0.9815
+          ],
+          "false_pass": 2,
+          "false_alarm": 0,
+          "abstained": 0,
+          "by_family": {
+            "fps_shift": {
+              "correct": 10
+            },
+            "stop_and_go": {
+              "correct": 9,
+              "spec_error": 1
+            },
+            "two_stops": {
+              "correct": 9,
+              "spec_error": 1
+            }
+          }
+        }
+      }
+    },
+    "patches": [
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r1-0",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) counts only while speed <= 0.05/s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 156/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 36,
+            "accuracy_ci95": [
+              0.5833,
+              0.8253
+            ],
+            "false_pass": 0,
+            "false_alarm": 10,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "spec_error": 4,
+                "correct": 6
+              },
+              "canonical": {
+                "spec_error": 2,
+                "correct": 8
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 6,
+                "spec_error": 4
+              },
+              "tailgate": {
+                "abstained": 4,
+                "correct": 6
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 24,
+            "accuracy_ci95": [
+              0.6269,
+              0.9049
+            ],
+            "false_pass": 0,
+            "false_alarm": 6,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 8,
+                "spec_error": 2
+              },
+              "stop_and_go": {
+                "correct": 6,
+                "spec_error": 4
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 7,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 7,
+          "shift": 6
+        },
+        "sign_test_p": {
+          "in_distribution": 1.0,
+          "shift": 0.289062
+        },
+        "regressed_cases": [
+          "in_distribution/brief_stop/40000",
+          "in_distribution/brief_stop/40001",
+          "in_distribution/brief_stop/40002",
+          "in_distribution/brief_stop/40009",
+          "in_distribution/canonical/40000",
+          "in_distribution/canonical/40008",
+          "in_distribution/occluded_station/40002",
+          "shift/fps_shift/40003",
+          "shift/fps_shift/40009",
+          "shift/stop_and_go/40001",
+          "shift/stop_and_go/40004",
+          "shift/stop_and_go/40006",
+          "shift/stop_and_go/40008"
+        ]
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r1-1",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) counts only while speed <= 0.10/s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 145/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 32,
+            "accuracy_ci95": [
+              0.5014,
+              0.7586
+            ],
+            "false_pass": 4,
+            "false_alarm": 10,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "spec_error": 4,
+                "correct": 6
+              },
+              "canonical": {
+                "perception_error": 1,
+                "correct": 8,
+                "spec_error": 1
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 6,
+                "perception_error": 1,
+                "spec_error": 3
+              },
+              "tailgate": {
+                "abstained": 4,
+                "perception_error": 4,
+                "correct": 2
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 28,
+            "accuracy_ci95": [
+              0.7868,
+              0.9815
+            ],
+            "false_pass": 0,
+            "false_alarm": 2,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 9,
+                "spec_error": 1
+              },
+              "stop_and_go": {
+                "correct": 9,
+                "spec_error": 1
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 7,
+          "shift": 2
+        },
+        "sign_test_p": {
+          "in_distribution": 0.34375,
+          "shift": 1.0
+        },
+        "regressed_cases": [
+          "in_distribution/brief_stop/40000",
+          "in_distribution/brief_stop/40001",
+          "in_distribution/brief_stop/40002",
+          "in_distribution/brief_stop/40009",
+          "in_distribution/canonical/40000",
+          "in_distribution/canonical/40008",
+          "in_distribution/occluded_station/40002",
+          "shift/fps_shift/40003",
+          "shift/stop_and_go/40008"
+        ]
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r2-0",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) >= 1.10 s; DWELL(inspection) counts only while speed <= 0.08/s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 161/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 39,
+            "accuracy_ci95": [
+              0.6476,
+              0.8725
+            ],
+            "false_pass": 4,
+            "false_alarm": 3,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 7,
+                "perception_error": 3
+              },
+              "tailgate": {
+                "abstained": 4,
+                "perception_error": 4,
+                "correct": 2
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 0,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 0.25,
+          "shift": 0.5
+        },
+        "regressed_cases": []
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r2-1",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.05/s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 159/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 37,
+            "accuracy_ci95": [
+              0.6045,
+              0.8413
+            ],
+            "false_pass": 4,
+            "false_alarm": 5,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 8,
+                "spec_error": 2
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 7,
+                "perception_error": 3
+              },
+              "tailgate": {
+                "abstained": 4,
+                "perception_error": 4,
+                "correct": 2
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 2,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 1.0,
+          "shift": 0.5
+        },
+        "regressed_cases": [
+          "in_distribution/brief_stop/40001",
+          "in_distribution/brief_stop/40009"
+        ]
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r2-2",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) >= 1.20 s; DWELL(inspection) counts only while speed <= 0.07/s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 155/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 35,
+            "accuracy_ci95": [
+              0.5625,
+              0.809
+            ],
+            "false_pass": 4,
+            "false_alarm": 7,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 7,
+                "spec_error": 3
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 6,
+                "perception_error": 2,
+                "spec_error": 2
+              },
+              "tailgate": {
+                "abstained": 4,
+                "perception_error": 4,
+                "correct": 2
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 29,
+            "accuracy_ci95": [
+              0.8333,
+              0.9941
+            ],
+            "false_pass": 0,
+            "false_alarm": 1,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 9,
+                "spec_error": 1
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 4,
+          "shift": 1
+        },
+        "sign_test_p": {
+          "in_distribution": 1.0,
+          "shift": 1.0
+        },
+        "regressed_cases": [
+          "in_distribution/brief_stop/40001",
+          "in_distribution/brief_stop/40002",
+          "in_distribution/brief_stop/40009",
+          "in_distribution/occluded_station/40002",
+          "shift/fps_shift/40003"
+        ]
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r3-0",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) >= 0.80 s; DWELL(inspection) counts only while speed <= 0.08/s",
+        "grader_accepted": true,
+        "holdout_v2": "144/200 -> 164/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 39,
+            "accuracy_ci95": [
+              0.6476,
+              0.8725
+            ],
+            "false_pass": 4,
+            "false_alarm": 3,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 7,
+                "perception_error": 3
+              },
+              "tailgate": {
+                "abstained": 4,
+                "perception_error": 4,
+                "correct": 2
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 0,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 0.25,
+          "shift": 0.5
+        },
+        "regressed_cases": []
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r3-1",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) >= 0.70 s; DWELL(inspection) counts only while speed <= 0.05/s",
+        "grader_accepted": true,
+        "holdout_v2": "144/200 -> 166/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 39,
+            "accuracy_ci95": [
+              0.6476,
+              0.8725
+            ],
+            "false_pass": 4,
+            "false_alarm": 3,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 7,
+                "perception_error": 3
+              },
+              "tailgate": {
+                "abstained": 4,
+                "perception_error": 4,
+                "correct": 2
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 0,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 0.25,
+          "shift": 0.5
+        },
+        "regressed_cases": []
+      },
+      {
+        "source": "muse-studio-run",
+        "proposal_id": "muse-spark-1.3-r3-2",
+        "proposer": "muse-spark-1.3",
+        "patch_description": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.10/s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 164/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 39,
+            "accuracy_ci95": [
+              0.6476,
+              0.8725
+            ],
+            "false_pass": 4,
+            "false_alarm": 3,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 7,
+                "perception_error": 3
+              },
+              "tailgate": {
+                "abstained": 4,
+                "perception_error": 4,
+                "correct": 2
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 0,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 0.25,
+          "shift": 0.5
+        },
+        "regressed_cases": []
+      },
+      {
+        "source": "baseline-drive_through-0",
+        "proposal_id": "baseline-deterministic-0",
+        "proposer": "baseline-deterministic",
+        "patch_description": "DWELL(inspection) >= 2.00 s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 152/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 36,
+            "accuracy_ci95": [
+              0.5833,
+              0.8253
+            ],
+            "false_pass": 5,
+            "false_alarm": 5,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 9,
+                "spec_error": 1
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 9,
+                "perception_error": 1
+              },
+              "occluded_station": {
+                "correct": 6,
+                "perception_error": 2,
+                "spec_error": 2
+              },
+              "tailgate": {
+                "abstained": 4,
+                "perception_error": 4,
+                "correct": 2
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 2,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 2,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 1.0,
+          "shift": 0.5
+        },
+        "regressed_cases": [
+          "in_distribution/brief_stop/40002",
+          "in_distribution/occluded_station/40002"
+        ]
+      },
+      {
+        "source": "baseline-drive_through-0",
+        "proposal_id": "baseline-deterministic-1",
+        "proposer": "baseline-deterministic",
+        "patch_description": "DWELL(inspection) counts only while speed <= 0.05/s; DWELL(inspection) >= 0.80 s",
+        "grader_accepted": true,
+        "holdout_v2": "144/200 -> 166/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 39,
+            "accuracy_ci95": [
+              0.6476,
+              0.8725
+            ],
+            "false_pass": 4,
+            "false_alarm": 3,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 7,
+                "perception_error": 3
+              },
+              "tailgate": {
+                "abstained": 4,
+                "perception_error": 4,
+                "correct": 2
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 0,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 0.25,
+          "shift": 0.5
+        },
+        "regressed_cases": []
+      },
+      {
+        "source": "baseline-brief_stop-5",
+        "proposal_id": "baseline-deterministic-0",
+        "proposer": "baseline-deterministic",
+        "patch_description": "DWELL(inspection) >= 1.70 s",
+        "grader_accepted": false,
+        "holdout_v2": "144/200 -> 153/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 36,
+            "accuracy_ci95": [
+              0.5833,
+              0.8253
+            ],
+            "false_pass": 6,
+            "false_alarm": 4,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 8,
+                "spec_error": 2
+              },
+              "occluded_station": {
+                "correct": 6,
+                "perception_error": 4
+              },
+              "tailgate": {
+                "abstained": 4,
+                "perception_error": 4,
+                "correct": 2
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 1,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 1,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 1.0,
+          "shift": 0.5
+        },
+        "regressed_cases": [
+          "in_distribution/occluded_station/40002"
+        ]
+      },
+      {
+        "source": "baseline-brief_stop-5",
+        "proposal_id": "baseline-deterministic-1",
+        "proposer": "baseline-deterministic",
+        "patch_description": "DWELL(inspection) counts only while speed <= 0.05/s; DWELL(inspection) >= 0.80 s",
+        "grader_accepted": true,
+        "holdout_v2": "144/200 -> 166/200",
+        "splits": {
+          "in_distribution": {
+            "n": 50,
+            "correct": 39,
+            "accuracy_ci95": [
+              0.6476,
+              0.8725
+            ],
+            "false_pass": 4,
+            "false_alarm": 3,
+            "abstained": 4,
+            "by_family": {
+              "brief_stop": {
+                "correct": 10
+              },
+              "canonical": {
+                "correct": 10
+              },
+              "drive_through": {
+                "correct": 10
+              },
+              "occluded_station": {
+                "correct": 7,
+                "perception_error": 3
+              },
+              "tailgate": {
+                "abstained": 4,
+                "perception_error": 4,
+                "correct": 2
+              }
+            }
+          },
+          "shift": {
+            "n": 30,
+            "correct": 30,
+            "accuracy_ci95": [
+              0.8865,
+              1.0
+            ],
+            "false_pass": 0,
+            "false_alarm": 0,
+            "abstained": 0,
+            "by_family": {
+              "fps_shift": {
+                "correct": 10
+              },
+              "stop_and_go": {
+                "correct": 10
+              },
+              "two_stops": {
+                "correct": 10
+              }
+            }
+          }
+        },
+        "fixed": {
+          "in_distribution": 3,
+          "shift": 2
+        },
+        "regressed": {
+          "in_distribution": 0,
+          "shift": 0
+        },
+        "sign_test_p": {
+          "in_distribution": 0.25,
+          "shift": 0.5
+        },
+        "regressed_cases": []
+      }
+    ],
+    "n_cases": 80
+  },
+  "code_commit": "3c32c7b58f1bdf9628b7a988631345136555c65c"
+}

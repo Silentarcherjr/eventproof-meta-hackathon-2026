@@ -103,3 +103,12 @@ def test_report_refuses_until_every_subset_scene_is_tracked(small, tmp_path):
     log_path.write_text(json.dumps({"scenes": {}}))
     with pytest.raises(SystemExit, match="not tracked yet"):
         sam_pass.report(tracking_path=log_path)
+
+
+def test_committed_sam_report_is_reproducible_from_the_committed_cache(monkeypatch):
+    """The published SAM numbers are recomputed from committed raw SAM outputs: 0 API calls, no video encoding."""
+    monkeypatch.setattr(sam_mod, "get_client", lambda s: pytest.fail("must not call the API"))
+    monkeypatch.setattr(sam_pass, "encode_mp4", lambda *a: pytest.fail("must not re-encode videos"))
+    committed = json.loads((sam_pass.OUT_DIR / "report_sam_v1.json").read_text())
+    committed.pop("code_commit")
+    assert json.loads(json.dumps(sam_pass.report())) == committed

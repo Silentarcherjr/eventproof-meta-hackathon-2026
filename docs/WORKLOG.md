@@ -111,3 +111,11 @@
 
 
 
+## 2026-11-01 · session 1 (cont.) · local macOS · orchestrator — P1-07 live SAM 3.1 pass on final_v1
+- Participant approved up to $5. Subset fixed by seed index (40000–40009 × 8 families = 80 scenes) and pre-registered in
+  `benchmark/final/PREREGISTRATION_SAM_v1.md`, committed and pushed (3c32c7b) before the first call.
+- `validation/sam_pass.py`: resumable tracking with a hard live-call cap, report computed from the cache only (0 calls),
+  refuses to overwrite. 2 trial calls, then 78: 80/80 ok, 0 parse errors, ~7 s each. Raw outputs committed (1.4 MB).
+- Result: Muse-run rule 71 → 76 / 80 with SAM tracks after the accepted patch, false PASS 5 → 0, 0 regressions; remaining
+  errors are 4 abstentions (occlusion). Mock vs SAM: 68/80 same verdict; SAM 10/10 on tailgate vs mock 2/10.
+- CI test recomputes the published SAM report from committed raw outputs (no API, no video re-encode).

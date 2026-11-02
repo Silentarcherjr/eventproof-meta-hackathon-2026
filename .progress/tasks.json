@@ -932,7 +932,35 @@
       "updated_at": "2026-10-28T15:38:33Z",
       "blocker": null,
       "next_action": null,
-      "cost_note": "0 Meta calls (mock perception; SAM subset optional, needs approval)"
+      "cost_note": "0 Meta calls (mock perception); optional SAM subset done in P1-07"
+    },
+    {
+      "id": "P1-07",
+      "title": "Live SAM 3.1 pass on a pre-registered final_v1 subset (80 scenes), reported separately",
+      "priority": "P1",
+      "gate": "G4",
+      "state": "IN_REVIEW",
+      "dependencies": [
+        "P1-06"
+      ],
+      "owner": "agentic-eval",
+      "branch": null,
+      "definition_of_done": "Pre-registered before any call; cost within the approved $5; raw outputs committed; CI recomputes the report with 0 calls",
+      "test_commands": [
+        "cd backend && uv run pytest tests/validation/test_sam_pass.py"
+      ],
+      "evidence_paths": [
+        "benchmark/final/PREREGISTRATION_SAM_v1.md (3c32c7b, before any call)",
+        "benchmark/final/sam_v1/REPORT_sam_v1.md",
+        "benchmark/final/sam_v1/report_sam_v1.json"
+      ],
+      "commit_sha": null,
+      "pr_url": null,
+      "started_at": "2026-11-02T02:49:21Z",
+      "updated_at": "2026-11-02T02:49:21Z",
+      "blocker": null,
+      "next_action": "CI green on the report commit -> DONE_VERIFIED; participant reads Billing for the exact charge",
+      "cost_note": "80 live SAM 3.1 calls, 8,087 frames, approved up to $5; bound <= $4.3; exact charge UNKNOWN until Billing is read"
     }
   ]
 }

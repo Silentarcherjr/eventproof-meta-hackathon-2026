@@ -1,9 +1,12 @@
 # Costs and credits
 
-## Current summary (2026-10-28)
+## Current summary (2026-11-01)
 - Meta Model API: $150 hackathon credits. **Balance $149.26 → spent $0.74** (read by the participant from the Billing page, 2026-11-01).
 - Live calls made so far (from the rows below): SAM 3.1 = 13 (1 smoke, 10 SAM-vs-mock, 1 E2E, 1 studio confirm);
   Muse Spark ≈ 13 (1 smoke, 6 rule compiles incl. one of 194,990 prompt tokens, ~6 repair rounds). Everything since is cached.
+- 2026-11-01: **80 live SAM 3.1 calls** (final_v1 SAM pass, P1-07; 8,087 frames; participant approved up to $5).
+  Upper bound ≈ $4.3 (from $0.74 for the 26 earlier calls); exact charge UNKNOWN until the Billing page is read again.
+  SAM 3.1 total so far: 93 live calls.
 - 2026-10-28 work (before/after view, final_v1, ledger, showcase deploy, real-video flow): **0 live calls**.
 - Hosting: $0 (nothing deployed). AI coding assistant: UNKNOWN (no dashboard read).
 
@@ -12,6 +15,7 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 
 | fecha (Panamá) | plataforma | sesión/tarea | tipo de crédito | saldo confirmado | consumo confirmado | estimado | límite acordado | alerta | fuente |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-01 | Meta Model API | final_v1 SAM pass (P1-07) | hackathon $150 | UNKNOWN (Billing not re-read) | 80 live SAM calls (8,087 frames, 2 trial + 78) | ≤ $4.3 (bound) | participant approved ≤ $5 | - | benchmark/final/sam_v1/tracking.json |
 | 2026-11-01 | Meta Model API | balance read (C-03) | hackathon $150 | $149.26 remaining | $0.74 total to date (all live calls since 2026-10-27) | - | $150 | - | participant, Billing page |
 | 2026-10-27 | Meta Model API | G0 (superseded: credits claimed later that day) | hackathon $150 | NOT_CLAIMED | $0 | - | $150 total; backend guard `META_BUDGET_USD=40` per environment | Spend Limit notification to be set by participant | participant (no credits yet) |
 | 2026-10-27 | Meta Model API | G1-04 | hackathon $150 | CLAIMED per participant; balance UNKNOWN (no dashboard read) | $0 (no live call yet) | - | $150 total; live SAM calls need explicit `--max-live-calls` | - | participant message |

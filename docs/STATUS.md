@@ -1,8 +1,8 @@
 # EventProof — STATUS (generated)
 
-Updated (America/Panama): 2026-10-28 10:40  
+Updated (America/Panama): 2026-11-01 21:49  
 Deadline: 2026-11-04 21:00 America/Panama (internal target 17:00)  
-P0 verified: 19/27 · P1: 4/7 · P2: 0/3
+P0 verified: 19/27 · P1: 4/8 · P2: 0/3
 
 ## In progress
 - P1-03: >=3 adversarial families and >=2 temporal rules (challenge)

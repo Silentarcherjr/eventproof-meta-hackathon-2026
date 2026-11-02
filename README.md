@@ -40,9 +40,10 @@ before a rule goes live, it shows where the rule is wrong, why, and whether a fi
 | Repair | Muse Spark, 3 rounds, 8 patches. **2 accepted, 6 rejected** (1–26 holdout regressions each). Round 1 was too strict and rejected; the accepted patch counts time only while the box stands still (≤ 0.08 of the frame per second, ≥ 0.80 s). |
 | Hidden holdout (200 scenes) | **144 → 164 correct**, dangerous false PASS 40 → 21, **0 regressions**. |
 | Final test (pre-registered, 320 scenes, evaluated once) | Same scene types: **141 → 158 / 200**. Three scene types never seen before: **109 → 117 / 120**. 0 regressions. Accepted patches gained +17 on average vs. +7.3 for rejected ones: the grader's choices transfer. |
+| Same final test with **real SAM 3.1 tracks** (80 scenes, pre-registered, 80 live calls) | **71 → 76 / 80**, false PASS **5 → 0**, 0 regressions; the only errors left are 4 abstentions behind an occluder. SAM gets 10/10 tailgating scenes right where the mock tracker gets 2/10. |
 
 Full comparison (hand-written rule, Muse rule, Muse repair, baseline grid repair): [`benchmark/REPORT.md`](benchmark/REPORT.md).
-Final test protocol and results: [`benchmark/final/`](benchmark/final/). Each recorded run has a hash-sealed evidence
+Final test protocol and results: [`benchmark/final/`](benchmark/final/) (SAM 3.1 pass: [`benchmark/final/sam_v1/`](benchmark/final/sam_v1/REPORT_sam_v1.md)). Each recorded run has a hash-sealed evidence
 ledger (file hashes, model request ids, live vs. cached outputs) that anyone can re-verify.
 
 ## Why Meta models
@@ -52,12 +53,13 @@ ledger (file hashes, model request ids, live vs. cached outputs) that anyone can
 - **SAM 3.1 (`sam-3.1`)** gives text-prompted video tracks with stable ids. It keeps two overlapping boxes apart where
   a naive tracker merges them (5/5 tailgating cases right with SAM, 0/5 with the mock tracker) and confirms
   counterexamples on real tracks.
-- Total Meta API spend for the whole build: **$0.74** of the $150 credits. Live calls need explicit per-process
+- Meta API spend: **$0.74** of the $150 credits before the 80-call SAM 3.1 final-test pass (bounded at ≤ $4.3). Live calls need explicit per-process
   allowances (default 0); everything else is served from a cache of recorded responses.
 
 ## Honest limits
-- The large-scale evidence is synthetic (a conveyor world with scripted truth). Holdout and final scoring use a
-  deterministic mock tracker; SAM 3.1 is used for the real clip and to confirm counterexamples. n = 200–320 scenes.
+- The large-scale evidence is synthetic (a conveyor world with scripted truth). Holdout and primary final scoring use a
+  deterministic mock tracker (n = 200–320); an 80-scene subset of the final test was re-run with real SAM 3.1 tracks and
+  gives the same conclusion (the mock is pessimistic on tailgating and occlusion).
 - On one never-seen scene type (slow belt with a stop) Muse's patches leave 2–3 errors that a deterministic grid search
   fixes. Reported, not tuned away.
 - Real phone-video validation has a blind-labelling protocol ([`docs/REAL_VIDEO_PROTOCOL.md`](docs/REAL_VIDEO_PROTOCOL.md)); results will be reported separately.

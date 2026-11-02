@@ -90,13 +90,22 @@ def track(max_live: int, tracker: SamTracker | None = None, manifest_path: Path 
     return log
 
 
-def sam_cached_perceiver(tracker: SamTracker):
+def sam_cached_perceiver(tracker: SamTracker, log: dict | None = None):
+    """SAM tracks from the cache only. With the tracking log, the cache entry is found by the MP4 sha256 recorded at
+    tracking time (the scene itself is checked against the frozen manifest), so no video has to be re-encoded."""
     memo: dict[str, TrackSet] = {}
+    rows = {r["scene_sha256"]: r for r in (log or {}).get("scenes", {}).values() if r.get("status") == "ok"}
 
     def perceive(scene: SceneSpec, gt: TrackSet) -> TrackSet:
         h = scene.scene_hash()
         if h not in memo:
-            memo[h] = tracker.tracks(_mp4(scene), _concept(scene), gt.video)
+            row = rows.get(h)
+            if row is None:
+                memo[h] = tracker.tracks(_mp4(scene), _concept(scene), gt.video)
+            else:
+                c = json.loads((tracker.cache_dir / f"{tracker._key(row['mp4_sha256'], row['prompt'])}.json").read_text())
+                ref = f"{c['model']}:{c['response_id']}:video={row['mp4_sha256'][:16]}:prompt={row['prompt']!r}:cached"
+                memo[h] = to_trackset(parse_output(c["deltas"]), gt.video, row["prompt"], ref)
         return memo[h]
 
     return perceive
@@ -131,7 +140,7 @@ def report(manifest_path: Path = DEFAULT_PATH, tracking_path: Path = TRACKING,
         raise SystemExit(f"{len(missing)} subset scenes not tracked yet (run `track` first): {missing[:5]}")
     ok = {_key(c) for c, _ in sub if log["scenes"][_key(c)]["status"] == "ok"}
     tracker = tracker or SamTracker(cache_dir=CACHE_DIR, max_live_calls=0)  # report never calls the API
-    sam = sam_cached_perceiver(tracker)
+    sam = sam_cached_perceiver(tracker, log)
     keep = lambda c: in_subset(c) and _key(c) in ok  # noqa: E731
     return {
         "preregistration": "benchmark/final/PREREGISTRATION_SAM_v1.md",

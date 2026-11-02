@@ -39,6 +39,7 @@
 - [x] **P1-04** (G6, DONE_VERIFIED) Baselines/ablations table (manual DSL, Muse w/o Challenge, full) — DoD: benchmark/report.md from real runs
 - [x] **P1-05** (G5, DONE_VERIFIED) Verifiable evidence export (sha256 + model version) — DoD: Tests
 - [x] **P1-06** (G4, DONE_VERIFIED) Pre-registered final test set (report-only, distribution shift) + regression tests on every published number — DoD: Frozen + pre-registered before evaluation; evaluated once; report committed; CI recomputes it
+- [ ] **P1-07** (G4, IN_REVIEW) Live SAM 3.1 pass on a pre-registered final_v1 subset (80 scenes), reported separately — DoD: Pre-registered before any call; cost within the approved $5; raw outputs committed; CI recomputes the report with 0 calls
 
 ## P2
 

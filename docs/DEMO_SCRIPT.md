@@ -41,6 +41,7 @@ Numbers only from `benchmark/real/report_*.md`. If they are worse than synthetic
 | 8 proposals, 2 accepted, first one 26 regressions, 144 → 164 / 166 | `…/challenge/repair_muse.json` |
 | 1.53 s vs 0.00 s, false PASS 40 → 21 | studio before/after view (`before_after_muse.json`, computed by the evaluator) |
 | 141 → 158 / 200, 109 → 117 / 120, 0 regressions, pre-registered | `benchmark/final/REPORT_final_v1.md`, `report_final_v1.json`, `PREREGISTRATION.md` |
+| SAM 3.1 final-test pass: 71 → 76 / 80, false PASS 5 → 0 | `benchmark/final/sam_v1/REPORT_sam_v1.md` |
 | 221 tests | CI run on the commit used for recording (update the number if it changed) |
 | ledger verified | `uv run python -m eventproof.ledger verify artifacts/runs/20261028T023754Z-a922b5bb` |
 
