@@ -1,22 +1,33 @@
 # EventProof
 
-**Rule QA for vision AI.** Write a visual rule in plain English. Muse Spark and SAM 3.1 build a detector for it in
-seconds. EventProof then tries to break that detector, repairs it, and only keeps the repair if it holds on cases it
-never saw.
+**AI-generated vision software that doesn't just claim to work, but actively searches for evidence that it might be
+wrong.** Say a rule in plain English over a video. Muse Spark builds the vision check, SAM 3.1 tracks the objects, Muse
+Wonder independently re-reads the rule. Then EventProof attacks its own check, finds the smallest scene that fools it,
+repairs it, and only trusts the repair if it holds on unseen scenes and on labelled real footage. Every rule ends with a
+one-page **certificate** a reviewer can sign, or refuse.
 
 **Who needs it now.** Cities have started issuing stop-sign tickets from AI cameras: Takoma Park, Maryland issues $40
 citations from automated stop-sign cameras since January 8, 2026 (a four-year state pilot; a city study found violation
 rates up to 87% at some intersections), and Virginia passed a law in April 2026 allowing AI cameras to cite flagrant
 stop-sign and crosswalk violations. What counts as a "full stop" is a rule someone writes; a privacy expert told IEEE
 Spectrum that such systems' claims are *"rarely backed up by independent studies that validate what these AI technologies
-can really do."* EventProof is that check, before deployment: for the **traffic-safety program manager** who signs off
-on the rule, and the **staff reviewer** who approves every citation. A false PASS is a dangerous driver who is never
-cited; a false FAIL is a $40 ticket for a resident who did stop. On real footage below, a repair that passed every synthetic test
-missed a real rolling stop and **all 10** cars that never stopped at the line; EventProof flagged it before deployment.
+can really do."* EventProof is that check, before deployment, for the **traffic-safety program manager** who signs off
+on the rule and the **staff reviewer** who approves every citation. A false PASS is a dangerous driver who is never
+cited; a false FAIL is a $40 ticket for a resident who did stop. The same loop applies to any zone-and-time rule a camera
+enforces (inspection steps on a line, waiting zones, restricted areas).
 
-**At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · 27/30 cars right on real traffic footage from 2 cities (0 wrong verdicts), labels
-frozen before any model call · one-command replay with no API key (`docker compose`) · 246 backend tests, CI recomputes every
-published number · MIT licensed.
+**What it caught, on real footage (labels frozen before any model call):**
+- A repair that passed every synthetic test **missed a real rolling stop and every car that never stopped** far from the
+  camera: 16/30 labelled cars, against 27/30 (0 wrong verdicts) for the rule Muse Spark compiled.
+- A new rule typed in the studio, *"Every car must remain behind the stop line for at least 2 seconds"*: **both Muse Spark
+  and Muse Wonder read it as "be present", not "stop"**, so the two cars on the clip that never stopped pass. Two models
+  agreeing is not proof; the certificate checks the rule against the clip's labels and says **NOT CERTIFIED (3/5)**.
+- Asked to judge the same clips directly from video, **Muse Spark alone** got every clip verdict right but counted
+  crossings and violations exactly in only 11/25 runs.
+
+**At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · 27/30 cars right on real traffic footage from 2 cities
+(0 wrong verdicts) · per-rule certificate · one-command replay with no API key (`docker compose`) · 250+ backend tests,
+CI recomputes every published number · MIT licensed.
 
 ![Real footage: the same SAM 3.1 tracks judged by two readings of "wait"](docs/media/real_traffic.png)
 
@@ -55,6 +66,11 @@ Sources for the deployment facts above: [MoCo Show, 2026-01-07](https://mocoshow
 4. **Prove.** An independent grader accepts a patch only if it fixes the counterexample with **zero regressions** on a
    frozen hidden holdout. A third, pre-registered test set (including scene types no rule was designed for) is
    evaluated once, after every decision is recorded. Real labelled footage is the last check (it caught the repair above).
+5. **Certify.** One printable page per rule (`/runs/<id>/certificate`, "Rule certificate" in the studio): the sentence,
+   both readings and the one the reviewer chose, the counterexamples, hidden-holdout and final-test results, every
+   labelled real clip it was checked on, model request ids and file hashes. Its status follows fixed rules: a wrong
+   verdict on labelled footage → NOT CERTIFIED; an object perception never tracked → CONDITIONAL (perception gap); a
+   repair with no field check yet → REPAIR CONDITIONAL. No model writes it.
 
 ![Before and after the repair: the same failing case judged by both rules](docs/media/before_after.png)
 
@@ -67,6 +83,7 @@ crossings and violations exactly in only 11/25. [pooled](benchmark/real/traffic_
 
 | Test | Result |
 |---|---|
+| **New rule typed in the studio** (Novi Sad clip, *"remain behind the stop line for at least 2 seconds"*) | Muse Spark and Muse Wonder both read it as presence, not stopping (0/150 synthetic scenes where they differ). All 10 cars PASS, including the 2 that never stopped. Challenge Mode: 36/150 failures. Certificate vs the clip's frozen labels: **NOT CERTIFIED, 3/5**. [run](docs/evidence/runs/20261102T080747Z-6b0ae7d4) |
 | **Traffic, Wroclaw** — footbridge view along the road; 2 clips, 16 labelled cars (6 wait at red, 10 drive through on green) | Muse Spark's rule: 14/16 (2 abstained). Synthetic-accepted repair: **6/16** — it passes all 10 cars that never stop, because far from the camera they move under its 0.08 frame-widths/s "still" threshold (perspective). [findings](benchmark/real/traffic_v2/FINDINGS.md) |
 | **Traffic, full loop** — Pexels drone view of a crossing in Novi Sad; 2 clips, 6 labelled cars (2 stop, 2 roll through, 2 wait); 1 Muse + 2 SAM calls | Rule compiled by Muse Spark: **8/8 labelled objects right**, both clip verdicts right, incl. a real rolling stop. Same rule + the repair accepted on synthetic data: **7/8** — it passes the rolling stop. SAM 3.1 found every labelled car. [findings](benchmark/real/novisad/FINDINGS.md) |
 | **Baseline: Muse Spark alone** — same 2 clips, rule and labels; Muse Spark watches the video and answers directly; 5 runs per clip | Overall verdict right in 10/10 runs (the red car is obvious), but crossings and violations counted right in only **5/10** — **0/5 on the clip with the rolling stop**. The rolling van is flagged in 1/5 runs, and in 3/5 runs it reports waiting cars as crossing. EventProof: 8/8 objects, deterministic, with evidence. [findings](benchmark/real/spark_alone/FINDINGS.md) |
