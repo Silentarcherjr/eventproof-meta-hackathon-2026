@@ -980,15 +980,16 @@
       ],
       "evidence_paths": [
         "GitHub Actions run 41384281488 success",
+        "GitHub Actions run 41385163221 success",
         "benchmark/real/pexels/PREREGISTRATION.md (c1907a7, before the call)",
-        "benchmark/real/pexels/REPORT_pexels.md",
         "benchmark/real/pexels/PREREGISTRATION_v2.md (3fa782f, before v2 calls)",
+        "benchmark/real/pexels/REPORT_pexels.md",
         "benchmark/real/pexels/REPORT_pexels_v2.md"
       ],
-      "commit_sha": "0d30a36",
+      "commit_sha": "59205d0",
       "pr_url": null,
       "started_at": "2026-11-02T03:37:28Z",
-      "updated_at": "2026-11-02T03:42:28Z",
+      "updated_at": "2026-11-02T03:52:35Z",
       "blocker": null,
       "next_action": null,
       "cost_note": "9 live SAM calls (v1: 1 x 203 frames; v2: 8 x 50-frame windows)"
