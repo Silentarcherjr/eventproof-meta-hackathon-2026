@@ -1133,7 +1133,9 @@
       "pr_url": null,
       "blocker": null,
       "started_at": "2026-11-02T00:00:00Z",
-      "updated_at": "2026-11-02T21:00:00Z"
+      "updated_at": "2026-11-02T21:00:00Z",
+      "cost_note": "≈ $0.2 (estimate), see docs/COSTS.md",
+      "next_action": "none"
     },
     {
       "id": "P1-14",
@@ -1156,7 +1158,9 @@
       "pr_url": null,
       "blocker": null,
       "started_at": "2026-11-02T00:00:00Z",
-      "updated_at": "2026-11-02T21:00:00Z"
+      "updated_at": "2026-11-02T21:00:00Z",
+      "cost_note": "≈ $0.05 (estimate)",
+      "next_action": "none"
     },
     {
       "id": "P1-15",
@@ -1179,7 +1183,9 @@
       "pr_url": null,
       "blocker": null,
       "started_at": "2026-11-02T00:00:00Z",
-      "updated_at": "2026-11-02T21:00:00Z"
+      "updated_at": "2026-11-02T21:00:00Z",
+      "cost_note": "≈ $0.05 (estimate)",
+      "next_action": "none"
     },
     {
       "id": "P1-16",
@@ -1202,7 +1208,9 @@
       "pr_url": null,
       "blocker": null,
       "started_at": "2026-11-02T00:00:00Z",
-      "updated_at": "2026-11-02T21:00:00Z"
+      "updated_at": "2026-11-02T21:00:00Z",
+      "cost_note": "≈ $0.15 (estimate)",
+      "next_action": "none"
     },
     {
       "id": "P1-17",
@@ -1226,7 +1234,9 @@
       "pr_url": null,
       "blocker": null,
       "started_at": "2026-11-02T00:00:00Z",
-      "updated_at": "2026-11-02T21:00:00Z"
+      "updated_at": "2026-11-02T21:00:00Z",
+      "cost_note": "≈ $0.05 (estimate)",
+      "next_action": "mark DONE_VERIFIED once CI is green on the pilot commit"
     }
   ]
 }
