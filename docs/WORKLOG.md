@@ -136,3 +136,4 @@
   0.8 s): 7/8, passes the slow-roll van (crawl 0.04-0.09/s). Reported as is; post-hoc label notes in FINDINGS.md.
 
 
+
