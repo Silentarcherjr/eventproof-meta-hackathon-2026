@@ -1,0 +1,108 @@
+{
+  "raw_output": {
+    "assumptions": [
+      "'Wait' is interpreted as continuously stopped/still in the zone, so DWELL uses max_speed 0.05.",
+      "1.5 seconds is converted to 1500 ms.",
+      "Crossing the stop line is interpreted in the normal approach direction, top to bottom, which maps to direction 'to_right' on line 'packing_entry'.",
+      "No time limit was specified between completing the wait and crossing, so BEFORE uses within_ms null.",
+      "Cars that never cross the stop line pass, per the IMPLIES(OCCURS(crossing), BEFORE(wait, crossing)) idiom."
+    ],
+    "entity_concept": "car",
+    "entity_name": "car",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_right",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": 0.05,
+          "min_ms": 1500,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_right",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every car that crosses packing_entry to_right must first complete DWELL(inspection, 1500 ms, max_speed 0.05) before that crossing.",
+    "root": 2,
+    "rule_id": "car_dwell1500_inspection_before_cross_packing_entry",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-wonder-1.0",
+  "request_ids": [
+    "chatcmpl-01a19af1-f181-7465-adb6-82bf0c08653c",
+    "chatcmpl-01a19af2-4139-74ec-95fa-fa609835e523"
+  ],
+  "attempts": 2,
+  "usage": [
+    {
+      "completion_tokens": 4891,
+      "prompt_tokens": 406,
+      "total_tokens": 5297,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 4526,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    },
+    {
+      "completion_tokens": 2634,
+      "prompt_tokens": 796,
+      "total_tokens": 3430,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 2236,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 372,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+  "latency_s": 62.84
+}
