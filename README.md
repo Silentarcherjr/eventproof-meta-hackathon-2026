@@ -40,6 +40,7 @@ before a rule goes live, it shows where the rule is wrong, why, and whether a fi
 | Repair | Muse Spark, 3 rounds, 8 patches. **2 accepted, 6 rejected** (1–26 holdout regressions each). Round 1 was too strict and rejected; the accepted patch counts time only while the box stands still (≤ 0.08 of the frame per second, ≥ 0.80 s). |
 | Hidden holdout (200 scenes) | **144 → 164 correct**, dangerous false PASS 40 → 21, **0 regressions**. |
 | Final test (pre-registered, 320 scenes, evaluated once) | Same scene types: **141 → 158 / 200**. Three scene types never seen before: **109 → 117 / 120**. 0 regressions. Accepted patches gained +17 on average vs. +7.3 for rejected ones: the grader's choices transfer. |
+| Real footage (Pexels, 8 labelled parcel crossings, perception only) | Single SAM 3.1 request: 2/8 (object cap). Cropped + 5 s windows: **8/8**, 0 false, median 0.2 s. |
 | Same final test with **real SAM 3.1 tracks** (80 scenes, pre-registered, 80 live calls) | **71 → 76 / 80**, false PASS **5 → 0**, 0 regressions; the only errors left are 4 abstentions behind an occluder. SAM gets 10/10 tailgating scenes right where the mock tracker gets 2/10. |
 
 Full comparison (hand-written rule, Muse rule, Muse repair, baseline grid repair): [`benchmark/REPORT.md`](benchmark/REPORT.md).
@@ -60,10 +61,11 @@ ledger (file hashes, model request ids, live vs. cached outputs) that anyone can
 - The large-scale evidence is synthetic (a conveyor world with scripted truth). Holdout and primary final scoring use a
   deterministic mock tracker (n = 200–320); an 80-scene subset of the final test was re-run with real SAM 3.1 tracks and
   gives the same conclusion (the mock is pessimistic on tailgating and occlusion).
-- On real public footage (one Pexels clip, cluttered, parcels arriving continuously) SAM 3.1 found only **2 of 8**
-  hand-labelled line crossings: it fills its 16-objects-per-frame cap at the first frame, partly with static clutter, so
-  later parcels get no track ([report](benchmark/real/pexels/REPORT_pexels.md)). Untracked objects are invisible to
-  any rule downstream, so perception must be checked on the target scene before a rule is trusted.
+- Real public footage (one Pexels clip, cluttered, parcels arriving continuously; n = 8 hand-labelled line crossings,
+  perception only): a single SAM 3.1 request found **2 of 8**, because it fills its 16-objects-per-frame cap at the first
+  frame and later parcels get no track ([v1](benchmark/real/pexels/REPORT_pexels.md)). Cropped to the belt and tracked in
+  overlapping 5 s windows: **8 of 8**, 0 false, median 0.2 s from the label ([v2](benchmark/real/pexels/REPORT_pexels_v2.md)).
+  Both pre-registered; the crop is a per-scene setup step.
 - On one never-seen scene type (slow belt with a stop) Muse's patches leave 2–3 errors that a deterministic grid search
   fixes. Reported, not tuned away.
 - Real phone-video validation has a blind-labelling protocol ([`docs/REAL_VIDEO_PROTOCOL.md`](docs/REAL_VIDEO_PROTOCOL.md)); results will be reported separately.

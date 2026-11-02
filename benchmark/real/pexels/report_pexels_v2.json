@@ -1,0 +1,198 @@
+{
+  "preregistration": "benchmark/real/pexels/PREREGISTRATION_v2.md",
+  "labels_sha256": "e736161dcfed5c8d9cf11710ac1ff9879ad5ea174458b8681dbf0b9d730af3d3",
+  "perception": "sam-3.1 (live Meta API, cropped + windowed; raw outputs in benchmark/real/pexels/sam_cache)",
+  "crop": [
+    160,
+    60,
+    480,
+    240
+  ],
+  "window": 50,
+  "step": 25,
+  "windows": [
+    {
+      "start": 0,
+      "end": 50,
+      "response_id": "resp_6ae8077d58882964f4684396",
+      "objects": 15,
+      "max_per_frame": 13
+    },
+    {
+      "start": 25,
+      "end": 75,
+      "response_id": "resp_6ae80785e4bc0fdb3d9545de",
+      "objects": 14,
+      "max_per_frame": 13
+    },
+    {
+      "start": 50,
+      "end": 100,
+      "response_id": "resp_6ae8078e9206f666221441bf",
+      "objects": 15,
+      "max_per_frame": 14
+    },
+    {
+      "start": 75,
+      "end": 125,
+      "response_id": "resp_6ae80795c8d00c26b5364750",
+      "objects": 16,
+      "max_per_frame": 15
+    },
+    {
+      "start": 100,
+      "end": 150,
+      "response_id": "resp_6ae8079e769846d4fa7a4f91",
+      "objects": 13,
+      "max_per_frame": 12
+    },
+    {
+      "start": 125,
+      "end": 175,
+      "response_id": "resp_6ae807a516d0eb02e60d44d6",
+      "objects": 16,
+      "max_per_frame": 15
+    },
+    {
+      "start": 150,
+      "end": 200,
+      "response_id": "resp_6ae807ae6282a2f63ad34eb9",
+      "objects": 16,
+      "max_per_frame": 16
+    },
+    {
+      "start": 175,
+      "end": 203,
+      "response_id": "resp_6ae807b6a6c1c2ec73cb4b97",
+      "objects": 15,
+      "max_per_frame": 15
+    }
+  ],
+  "clips": {
+    "pexels_5903898": {
+      "labels": 8,
+      "matched": 8,
+      "missed": [],
+      "false_crossings_in_window": [],
+      "median_abs_dt_s": 0.20000000000000107,
+      "distinct_track_ids_matched": 8,
+      "pairs": [
+        {
+          "label_s": 2.9,
+          "sam": {
+            "track_id": 1,
+            "frame": 30,
+            "t_s": 3.0
+          }
+        },
+        {
+          "label_s": 4.2,
+          "sam": {
+            "track_id": 4,
+            "frame": 45,
+            "t_s": 4.5
+          }
+        },
+        {
+          "label_s": 5.6,
+          "sam": {
+            "track_id": 10,
+            "frame": 59,
+            "t_s": 5.9
+          }
+        },
+        {
+          "label_s": 7.5,
+          "sam": {
+            "track_id": 13,
+            "frame": 76,
+            "t_s": 7.6
+          }
+        },
+        {
+          "label_s": 10.0,
+          "sam": {
+            "track_id": 15,
+            "frame": 108,
+            "t_s": 10.8
+          }
+        },
+        {
+          "label_s": 13.6,
+          "sam": {
+            "track_id": 17,
+            "frame": 137,
+            "t_s": 13.7
+          }
+        },
+        {
+          "label_s": 15.9,
+          "sam": {
+            "track_id": 20,
+            "frame": 161,
+            "t_s": 16.1
+          }
+        },
+        {
+          "label_s": 18.8,
+          "sam": {
+            "track_id": 22,
+            "frame": 187,
+            "t_s": 18.7
+          }
+        }
+      ],
+      "all_sam_crossings": [
+        {
+          "track_id": 2,
+          "frame": 2,
+          "t_s": 0.2
+        },
+        {
+          "track_id": 1,
+          "frame": 30,
+          "t_s": 3.0
+        },
+        {
+          "track_id": 4,
+          "frame": 45,
+          "t_s": 4.5
+        },
+        {
+          "track_id": 10,
+          "frame": 59,
+          "t_s": 5.9
+        },
+        {
+          "track_id": 13,
+          "frame": 76,
+          "t_s": 7.6
+        },
+        {
+          "track_id": 15,
+          "frame": 108,
+          "t_s": 10.8
+        },
+        {
+          "track_id": 17,
+          "frame": 137,
+          "t_s": 13.7
+        },
+        {
+          "track_id": 20,
+          "frame": 161,
+          "t_s": 16.1
+        },
+        {
+          "track_id": 22,
+          "frame": 187,
+          "t_s": 18.7
+        }
+      ],
+      "sam_tracks": 33,
+      "sam_boxes": 2544
+    }
+  },
+  "live_sam_calls_this_run": 8,
+  "code_commit": "3fa782f5ef327607984f37a1424b0ca6d2c57cc0"
+}

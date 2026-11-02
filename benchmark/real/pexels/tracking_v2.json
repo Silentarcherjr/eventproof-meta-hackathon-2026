@@ -1,0 +1,84 @@
+{
+  "crop": [
+    160,
+    60,
+    480,
+    240
+  ],
+  "window": 50,
+  "step": 25,
+  "windows": [
+    {
+      "start": 0,
+      "end": 50,
+      "mp4_sha256": "95caea470ab188e345ef52056aaee45e6d325c7fc4bd4cf19c62260c435d5c9f",
+      "response_id": "resp_6ae8077d58882964f4684396",
+      "live": true,
+      "objects": 15,
+      "max_per_frame": 13
+    },
+    {
+      "start": 25,
+      "end": 75,
+      "mp4_sha256": "26fabf15eae784c56b30f292cf9cfa28f0abb4e3ed87a64e3ff68dd8a816f974",
+      "response_id": "resp_6ae80785e4bc0fdb3d9545de",
+      "live": true,
+      "objects": 14,
+      "max_per_frame": 13
+    },
+    {
+      "start": 50,
+      "end": 100,
+      "mp4_sha256": "d1753f8b9ae3b2a73c9a38008a1efa0dbd6248896533310653c6f4de467ab8f1",
+      "response_id": "resp_6ae8078e9206f666221441bf",
+      "live": true,
+      "objects": 15,
+      "max_per_frame": 14
+    },
+    {
+      "start": 75,
+      "end": 125,
+      "mp4_sha256": "e40c6c82f26517a7f7fa46d947931ab090cfdb74a6e87fc323b2bdc78b86bca7",
+      "response_id": "resp_6ae80795c8d00c26b5364750",
+      "live": true,
+      "objects": 16,
+      "max_per_frame": 15
+    },
+    {
+      "start": 100,
+      "end": 150,
+      "mp4_sha256": "341e0ecfec5e4d72ca4e981a2dbe1ce6215609b4ea668426772f3730a4ee208c",
+      "response_id": "resp_6ae8079e769846d4fa7a4f91",
+      "live": true,
+      "objects": 13,
+      "max_per_frame": 12
+    },
+    {
+      "start": 125,
+      "end": 175,
+      "mp4_sha256": "010ef15302998f3e8d3fea50e077ffeb3700b5e657a1ca9ecff1a642ad488333",
+      "response_id": "resp_6ae807a516d0eb02e60d44d6",
+      "live": true,
+      "objects": 16,
+      "max_per_frame": 15
+    },
+    {
+      "start": 150,
+      "end": 200,
+      "mp4_sha256": "54657754f6e79a8d6456751d66040bda6663916b65d3ca05d87f60783bdc62ad",
+      "response_id": "resp_6ae807ae6282a2f63ad34eb9",
+      "live": true,
+      "objects": 16,
+      "max_per_frame": 16
+    },
+    {
+      "start": 175,
+      "end": 203,
+      "mp4_sha256": "222f8041f0e445e84ed2a1d4853a718cdb70892f194cae3c08b2956e5714e18b",
+      "response_id": "resp_6ae807b6a6c1c2ec73cb4b97",
+      "live": true,
+      "objects": 15,
+      "max_per_frame": 15
+    }
+  ]
+}

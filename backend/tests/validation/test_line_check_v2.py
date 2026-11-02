@@ -42,3 +42,25 @@ def test_stitch_does_not_join_far_apart_boxes():
     a = [_f(k, 0, 100) for k in range(10)]
     b = [_f(k, 0, 500) for k in range(5, 15)]
     assert len({f.object_id for f in v2.stitch([a, b], FULL).frames}) == 2
+
+
+def test_committed_v2_report_is_reproducible_from_cached_outputs(monkeypatch, tmp_path):
+    import json
+
+    from eventproof.perception import sam as sam_mod
+
+    monkeypatch.setattr(sam_mod, "get_client", lambda s: (_ for _ in ()).throw(AssertionError("no API calls")))
+    real = v2.DIR
+    fake = tmp_path / "pexels"
+    fake.mkdir()
+    for f in ("labels.json", "tracking_v2.json"):
+        (fake / f).write_text((real / f).read_text())
+    (fake / "sam_cache").symlink_to(real / "sam_cache")
+    monkeypatch.setattr(v2, "DIR", fake)
+    monkeypatch.setattr(v2, "LOG", fake / "tracking_v2.json")
+    committed = json.loads((real / "report_pexels_v2.json").read_text())
+    rep = v2.run(0)
+    for k in ("code_commit", "live_sam_calls_this_run"):
+        committed.pop(k)
+        rep.pop(k, None)
+    assert json.loads(json.dumps(rep)) == committed

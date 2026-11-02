@@ -125,3 +125,5 @@
 - Clip 5903898: hand labels (8 right-to-left crossings of the center line) + pre-registration pushed (c1907a7) before the call.
 - 1 live SAM call: **2/8 crossings found**, 0 false, no merges. Cause: 16 objects/frame cap filled at frame 0 (9 of them static
   clutter), no new tracks for parcels arriving later. Reported as is; mitigations (crop, windowed tracking) not run.
+- v2 (approved): crop to belt + 8 overlapping 50-frame windows + IoU stitching, pre-registered (3fa782f) before the calls.
+  8 live SAM calls: **8/8 crossings, 0 false, median |dt| 0.2 s, 8 distinct ids**. v1 kept as the first result.
