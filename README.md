@@ -4,17 +4,20 @@
 seconds. EventProof then tries to break that detector, repairs it, and only keeps the repair if it holds on cases it
 never saw.
 
-![Before and after the repair: the same failing case judged by both rules](docs/media/before_after.png)
+![Real footage: the same SAM 3.1 tracks judged by two readings of "wait"](docs/media/real_traffic.png)
 
 ## The problem
-An AI model can turn "every box must stay 1.5 s in inspection before packing" into a working video check almost
-instantly. It also silently picks an interpretation. In our recorded run, Muse Spark wrote its assumption down:
-*"'Stay at least 1.5 seconds' is DWELL … with any motion allowed, not requiring stopped."* With that reading, a box that
-never stops but drifts slowly through the zone passes inspection: a **false PASS**, the dangerous kind of error for
-compliance, safety and quality checks. Nobody sees it until it costs something.
+An AI model can turn a sentence like "every car must wait 1.5 s before the stop line" into a working video check almost
+instantly. It also silently picks an interpretation, and the choice decides the verdict:
+- On **real drone footage of a crossing** (above), Muse Spark read "wait" as *standing still* and caught a van that
+  crawls through without ever stopping. A repair that had passed every synthetic test read "still" as *slower than
+  0.08 frame widths/s* and **let that real rolling stop pass**.
+- In our recorded warehouse run, Muse Spark read "stay at least 1.5 s" as *"any motion allowed, not requiring stopped"*,
+  so a box that never stops but drifts through inspection passes: a **false PASS**.
 
-EventProof is for the people who deploy such rules (warehouse and production-line QA, safety and compliance teams):
-before a rule goes live, it shows where the rule is wrong, why, and whether a fix really generalizes.
+Both are the dangerous kind of error for compliance, safety and quality checks, and nobody sees them until they cost
+something. EventProof is for the people who deploy such rules (warehouse and production-line QA, traffic and safety
+teams): before a rule goes live, it shows where the rule is wrong, why, and whether a fix really generalizes.
 
 ## What it does
 1. **Build.** Muse Spark compiles the sentence into a typed temporal rule (strict JSON schema, validated by Pydantic,
@@ -28,11 +31,17 @@ before a rule goes live, it shows where the rule is wrong, why, and whether a fi
    conditions; no free-form code). It revises over up to 3 rounds using only visible development cases.
 4. **Prove.** An independent grader accepts a patch only if it fixes the counterexample with **zero regressions** on a
    frozen hidden holdout. A third, pre-registered test set (including scene types no rule was designed for) is
-   evaluated once, after every decision is recorded.
+   evaluated once, after every decision is recorded. Real labelled footage is the last check (it caught the repair above).
 
-![Studio: rule, tracks, verdict and Challenge Mode results](docs/media/studio.png)
+![Before and after the repair: the same failing case judged by both rules](docs/media/before_after.png)
 
-## Results (recorded run `20261028T023754Z-a922b5bb`, all numbers from committed files)
+## Results on real footage (labels frozen and pushed before any model call)
+| Test | Result |
+|---|---|
+| **Traffic, full loop** — Pexels drone view of a crossing in Novi Sad; 2 clips, 6 labelled cars (2 stop, 2 roll through, 2 wait); 1 Muse + 2 SAM calls | Rule compiled by Muse Spark: **8/8 labelled objects right**, both clip verdicts right, incl. a real rolling stop. Same rule + the repair accepted on synthetic data: **7/8** — it passes the rolling stop. SAM 3.1 found every labelled car. [findings](benchmark/real/novisad/FINDINGS.md) |
+| **Parcels, perception** — Pexels conveyor clip, 8 hand-labelled line crossings | One SAM 3.1 request on the full frame: **2/8** (it fills its 16-objects-per-frame cap at frame 0, later parcels get no track). Cropped to the belt, 5 s overlapping windows: **8/8**, 0 false, median 0.2 s from the label. [v1](benchmark/real/pexels/REPORT_pexels.md) · [v2](benchmark/real/pexels/REPORT_pexels_v2.md) |
+
+## Results on synthetic scenes with known truth (recorded run `20261028T023754Z-a922b5bb`)
 | Step | Result |
 |---|---|
 | Build | Rule compiled by Muse Spark; SAM 3.1 tracked both boxes (110/110 boxes matched on the reference clip, median IoU 1.00); verdict FAIL for the box that tailgated into packing at frame 88. |
@@ -40,13 +49,14 @@ before a rule goes live, it shows where the rule is wrong, why, and whether a fi
 | Repair | Muse Spark, 3 rounds, 8 patches. **2 accepted, 6 rejected** (1–26 holdout regressions each). Round 1 was too strict and rejected; the accepted patch counts time only while the box stands still (≤ 0.08 of the frame per second, ≥ 0.80 s). |
 | Hidden holdout (200 scenes) | **144 → 164 correct**, dangerous false PASS 40 → 21, **0 regressions**. |
 | Final test (pre-registered, 320 scenes, evaluated once) | Same scene types: **141 → 158 / 200**. Three scene types never seen before: **109 → 117 / 120**. 0 regressions. Accepted patches gained +17 on average vs. +7.3 for rejected ones: the grader's choices transfer. |
-| **Real traffic footage, full loop** (Pexels drone view, 2 clips, 6 labelled cars; pre-registered) | Muse Spark read "wait" as "stopped": **8/8 objects right, incl. a real rolling stop**. The repair accepted on synthetic data: 7/8 — it passes that rolling stop (its 0.08/s stillness threshold is too loose for a real crawl). [findings](benchmark/real/novisad/FINDINGS.md) |
-| Real footage (Pexels, 8 labelled parcel crossings, perception only) | Single SAM 3.1 request: 2/8 (object cap). Cropped + 5 s windows: **8/8**, 0 false, median 0.2 s. |
 | Same final test with **real SAM 3.1 tracks** (80 scenes, pre-registered, 80 live calls) | **71 → 76 / 80**, false PASS **5 → 0**, 0 regressions; the only errors left are 4 abstentions behind an occluder. SAM gets 10/10 tailgating scenes right where the mock tracker gets 2/10. |
 
 Full comparison (hand-written rule, Muse rule, Muse repair, baseline grid repair): [`benchmark/REPORT.md`](benchmark/REPORT.md).
-Final test protocol and results: [`benchmark/final/`](benchmark/final/) (SAM 3.1 pass: [`benchmark/final/sam_v1/`](benchmark/final/sam_v1/REPORT_sam_v1.md)). Each recorded run has a hash-sealed evidence
-ledger (file hashes, model request ids, live vs. cached outputs) that anyone can re-verify.
+Final test protocol and results: [`benchmark/final/`](benchmark/final/) (SAM 3.1 pass: [`benchmark/final/sam_v1/`](benchmark/final/sam_v1/REPORT_sam_v1.md)).
+Each recorded run has a hash-sealed evidence ledger (file hashes, model request ids, live vs. cached outputs) that anyone
+can re-verify, and CI recomputes every number above from committed files (no video, no API key).
+
+![Studio: rule, tracks, verdict and Challenge Mode results](docs/media/studio.png)
 
 ## Why Meta models
 - **Muse Spark (`muse-spark-1.3`)** does the two reasoning-heavy jobs: rule compilation through a constant-size strict
@@ -55,23 +65,21 @@ ledger (file hashes, model request ids, live vs. cached outputs) that anyone can
 - **SAM 3.1 (`sam-3.1`)** gives text-prompted video tracks with stable ids. It keeps two overlapping boxes apart where
   a naive tracker merges them (5/5 tailgating cases right with SAM, 0/5 with the mock tracker) and confirms
   counterexamples on real tracks.
-- Meta API spend: **$0.74** of the $150 credits before the 80-call SAM 3.1 final-test pass (bounded at ≤ $4.3). Live calls need explicit per-process
-  allowances (default 0); everything else is served from a cache of recorded responses.
+- Meta API spend for the whole build: at most about $6 of the $150 credits ($0.74 read from Billing before the real-footage
+  and SAM final-test passes, plus their per-frame bounds). Live calls need explicit per-process allowances (default 0);
+  everything else is served from a cache of recorded responses.
 
 ## Honest limits
+- Real footage is small: 2 traffic clips with 6 labelled cars and 1 conveyor clip with 8 crossings, labelled by hand from
+  frame sheets. It shows concrete failures and fixes; it does not measure accuracy. Crops are a per-scene setup step.
 - The large-scale evidence is synthetic (a conveyor world with scripted truth). Holdout and primary final scoring use a
-  deterministic mock tracker (n = 200–320); an 80-scene subset of the final test was re-run with real SAM 3.1 tracks and
-  gives the same conclusion (the mock is pessimistic on tailgating and occlusion).
-- Real public footage (one Pexels clip, cluttered, parcels arriving continuously; n = 8 hand-labelled line crossings,
-  perception only): a single SAM 3.1 request found **2 of 8**, because it fills its 16-objects-per-frame cap at the first
-  frame and later parcels get no track ([v1](benchmark/real/pexels/REPORT_pexels.md)). Cropped to the belt and tracked in
-  overlapping 5 s windows: **8 of 8**, 0 false, median 0.2 s from the label ([v2](benchmark/real/pexels/REPORT_pexels_v2.md)).
-  Both pre-registered; the crop is a per-scene setup step.
-- Real traffic footage is n = 2 clips / 6 labelled cars, labelled by hand from frame sheets: it shows a synthetic-tuned
-  threshold failing on a real slow roll, it does not measure accuracy.
-- On one never-seen scene type (slow belt with a stop) Muse's patches leave 2–3 errors that a deterministic grid search
-  fixes. Reported, not tuned away.
-- Real phone-video validation has a blind-labelling protocol ([`docs/REAL_VIDEO_PROTOCOL.md`](docs/REAL_VIDEO_PROTOCOL.md)); results will be reported separately.
+  deterministic mock tracker (n = 200–320); an 80-scene subset re-run with real SAM 3.1 tracks gives the same conclusion
+  (the mock is pessimistic on tailgating and occlusion).
+- A repair that passes synthetic holdouts can still be too permissive on real footage (the traffic van above): repairs
+  should be re-graded on labelled footage of the target scene before deployment.
+- On one never-seen synthetic scene type (slow belt with a stop) Muse's patches leave 2–3 errors that a deterministic
+  grid search fixes. Reported, not tuned away.
+- A protocol for clips recorded by the user is ready ([`docs/REAL_VIDEO_PROTOCOL.md`](docs/REAL_VIDEO_PROTOCOL.md)).
 
 ## Run it
 ```
@@ -85,7 +93,7 @@ calls explicitly: `EVENTPROOF_MAX_LIVE_MUSE_CALLS=6 EVENTPROOF_MAX_LIVE_SAM_CALL
 Without Docker: `cd backend && uv sync && uv run pytest && uv run uvicorn eventproof.api.main:app` and
 `cd frontend && npm ci && npm run dev`.
 
-Engineering: FastAPI + Pydantic backend, Next.js studio, 221 backend tests + Playwright end-to-end tests in CI,
+Engineering: FastAPI + Pydantic backend, Next.js studio, 237 backend tests + Playwright end-to-end tests in CI,
 regression tests that recompute every published number, images pinned by digest. Showcase deployment (no key, no
 uploads, rate-limited) in [`deploy/`](deploy/).
 
