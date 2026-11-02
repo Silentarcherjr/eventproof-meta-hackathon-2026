@@ -1,0 +1,389 @@
+{
+  "schema": "eventproof-layout-eval/1",
+  "preregistration": "benchmark/layout/PREREGISTRATION.md",
+  "model": "muse-spark-1.3",
+  "live_calls_this_run": 4,
+  "labelled": 30,
+  "right": {
+    "hand": 27,
+    "proposed_layout": 20
+  },
+  "right_ci95": {
+    "hand": [
+      0.7438,
+      0.9654
+    ],
+    "proposed_layout": [
+      0.4878,
+      0.8077
+    ]
+  },
+  "median_zone_iou": 0.237,
+  "clips": [
+    {
+      "clip": "novisad_approach_a.mp4",
+      "set": "novisad",
+      "labelled": 5,
+      "request_id": "chatcmpl-01a19b6e-cded-77dc-ae51-f5eb022c5ab9",
+      "proposed": {
+        "zones": [
+          {
+            "zone": {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.24,
+                  0.53
+                ],
+                [
+                  0.97,
+                  0.53
+                ],
+                [
+                  0.9,
+                  0.99
+                ],
+                [
+                  0.1,
+                  0.99
+                ]
+              ]
+            },
+            "description": "waiting area in the lanes immediately before the stop line where cars queue"
+          }
+        ],
+        "lines": [
+          {
+            "line": {
+              "id": "packing_entry",
+              "a": [
+                0.24,
+                0.53
+              ],
+              "b": [
+                0.97,
+                0.53
+              ]
+            },
+            "description": "stop line at the edge of the crosswalk; from bottom to top of the image, moving upward across the line"
+          }
+        ]
+      },
+      "assumptions": [
+        "Cars travel from the bottom of the image toward the top toward the intersection/crosswalk.",
+        "The stop line is the southern edge of the pedestrian crosswalk.",
+        "The line is placed just south of the zebra stripes and north of the BUS road marking.",
+        "The line is drawn straight across the full width of the traffic lanes that approach the crosswalk.",
+        "The waiting zone is the lane area immediately south of the stop line on the approach side.",
+        "The top edge of the zone coincides with/touches the stop line.",
+        "The zone extends south far enough to contain queuing cars including the BUS lane."
+      ],
+      "zone_iou": 0.475,
+      "line": {
+        "angle_deg": 34.7,
+        "midpoint_dist": 0.314
+      },
+      "hand": {
+        "right": 5,
+        "abstained": 0,
+        "missing": 0
+      },
+      "proposed_layout": {
+        "right": 5,
+        "abstained": 0,
+        "missing": 0
+      }
+    },
+    {
+      "clip": "novisad_approach_b.mp4",
+      "set": "novisad",
+      "labelled": 3,
+      "request_id": "chatcmpl-01a19b6f-981d-7522-8979-6d794b3c6337",
+      "proposed": {
+        "zones": [
+          {
+            "zone": {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.15,
+                  0.46
+                ],
+                [
+                  0.83,
+                  0.4
+                ],
+                [
+                  0.78,
+                  0.73
+                ],
+                [
+                  0.18,
+                  0.79
+                ]
+              ]
+            },
+            "description": "waiting area in the traffic lanes immediately before the stop line where cars queue before the crosswalk"
+          }
+        ],
+        "lines": [
+          {
+            "line": {
+              "id": "packing_entry",
+              "a": [
+                0.15,
+                0.46
+              ],
+              "b": [
+                0.83,
+                0.4
+              ]
+            },
+            "description": "stop line at the edge of the crosswalk across the traffic lanes; moving upward from the bottom of the image toward the top across the line"
+          }
+        ]
+      },
+      "assumptions": [
+        "road runs roughly bottom-to-top on the right side of the image with crosswalk across it in the upper third",
+        "cars travel from bottom of image toward top, lead vehicle front facing top and stopped at crosswalk edge",
+        "stop line placed at southern/downstream edge of crosswalk parallel to crosswalk edge across both traffic lanes",
+        "line endpoints at left and right edges of the trafficked lanes to cover full width",
+        "waiting zone is the lane area immediately south of the line on the approach side, touching the line along its full length and extending ~2 car lengths upstream to capture queuing cars"
+      ],
+      "zone_iou": 0.448,
+      "line": {
+        "angle_deg": 29.7,
+        "midpoint_dist": 0.176
+      },
+      "hand": {
+        "right": 3,
+        "abstained": 0,
+        "missing": 0
+      },
+      "proposed_layout": {
+        "right": 3,
+        "abstained": 0,
+        "missing": 0
+      }
+    },
+    {
+      "clip": "wroclaw_w1.mp4",
+      "set": "traffic_v2",
+      "labelled": 6,
+      "request_id": "chatcmpl-01a19b6f-bdcb-76a7-bad5-25efc5b93a5b",
+      "proposed": {
+        "zones": [
+          {
+            "zone": {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.11,
+                  0.52
+                ],
+                [
+                  0.81,
+                  0.52
+                ],
+                [
+                  0.81,
+                  0.82
+                ],
+                [
+                  0.11,
+                  0.82
+                ]
+              ]
+            },
+            "description": "waiting area covering the car traffic lanes immediately upstream of the stop line"
+          }
+        ],
+        "lines": [
+          {
+            "line": {
+              "id": "packing_entry",
+              "a": [
+                0.11,
+                0.82
+              ],
+              "b": [
+                0.81,
+                0.82
+              ]
+            },
+            "description": "stop line across the car lanes; vehicles travel from top of image toward bottom and cross the line in the top-to-bottom direction"
+          }
+        ]
+      },
+      "assumptions": [
+        "No painted stop line is visible in the first frame, so a proxy stop line was placed near the bottom of the image where cars exit the view.",
+        "Travel direction inferred as top-to-bottom because car fronts and headlights face the camera, indicating oncoming movement toward the camera.",
+        "Line placed horizontally across all motor-vehicle lanes to apply to every car.",
+        "Zone placed immediately upstream of the line on the approach side, with its bottom edge coincident with the line so it touches the line.",
+        "Zone lateral extent set to cover car and bus lanes while excluding the left-side red bicycle track.",
+        "Zone longitudinal extent set to provide observable waiting area upstream of the line."
+      ],
+      "zone_iou": 0.0,
+      "line": {
+        "angle_deg": 0.0,
+        "midpoint_dist": 0.302
+      },
+      "hand": {
+        "right": 6,
+        "abstained": 0,
+        "missing": 0
+      },
+      "proposed_layout": {
+        "right": 0,
+        "abstained": 0,
+        "missing": 3
+      }
+    },
+    {
+      "clip": "wroclaw_w2.mp4",
+      "set": "traffic_v2",
+      "labelled": 10,
+      "request_id": "chatcmpl-01a19b6f-e2f3-716d-b5e2-b724835aafea",
+      "proposed": {
+        "zones": [
+          {
+            "zone": {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.05,
+                  0.55
+                ],
+                [
+                  0.98,
+                  0.55
+                ],
+                [
+                  0.98,
+                  0.85
+                ],
+                [
+                  0.05,
+                  0.85
+                ]
+              ]
+            },
+            "description": "waiting area on the roadway immediately before the stop line covering all approach lanes"
+          }
+        ],
+        "lines": [
+          {
+            "line": {
+              "id": "packing_entry",
+              "a": [
+                0.05,
+                0.85
+              ],
+              "b": [
+                0.98,
+                0.85
+              ]
+            },
+            "description": "stop line across all approach lanes; from top of image toward bottom of image across the line"
+          }
+        ]
+      },
+      "assumptions": [
+        "Travel direction inferred as top-to-bottom in image from lane arrows pointing downward and distant car front facing toward camera",
+        "No clearly painted stop bar visible so stop line placed near lower part of view at y=0.85 as downstream boundary for the rule",
+        "Line drawn across full approach carriageway from x=0.05 to x=0.98 to cover all car lanes the rule applies to",
+        "Zone placed immediately upstream of the line on the approach side, touching the line along its top edge of zone to bottom edge coincidence",
+        "Zone upstream extent to y=0.55 chosen to provide sufficient waiting area depth for 1.5 second dwell before crossing"
+      ],
+      "zone_iou": 0.0,
+      "line": {
+        "angle_deg": 0.0,
+        "midpoint_dist": 0.33
+      },
+      "hand": {
+        "right": 8,
+        "abstained": 2,
+        "missing": 0
+      },
+      "proposed_layout": {
+        "right": 8,
+        "abstained": 2,
+        "missing": 0
+      }
+    },
+    {
+      "clip": "wroclaw_w3.mp4",
+      "set": "traffic_v3",
+      "labelled": 6,
+      "request_id": "chatcmpl-01a19b70-1df7-7436-87ad-2c1cd6137d64",
+      "proposed": {
+        "zones": [
+          {
+            "zone": {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.09,
+                  0.38
+                ],
+                [
+                  0.97,
+                  0.38
+                ],
+                [
+                  0.985,
+                  0.72
+                ],
+                [
+                  0.06,
+                  0.72
+                ]
+              ]
+            },
+            "description": "waiting area on the carriageway immediately before the stop line where cars must wait"
+          }
+        ],
+        "lines": [
+          {
+            "line": {
+              "id": "packing_entry",
+              "a": [
+                0.09,
+                0.38
+              ],
+              "b": [
+                0.97,
+                0.38
+              ]
+            },
+            "description": "stop line across all traffic lanes that cars must not cross until after waiting; vehicles move from bottom to top of the image, entering the zone at its lower edge and exiting across the line at its up"
+          }
+        ]
+      },
+      "assumptions": [
+        "No painted stop line is visible so a virtual stop line was placed across the carriageway at mid-distance.",
+        "Travel direction inferred as bottom-to-top from painted lane arrows pointing toward top of image and visible vehicle rears.",
+        "Line was drawn to span the full width of the car lanes from left to right.",
+        "Zone was placed on the approach side where vehicles come from, i.e. immediately south/below the line.",
+        "Top edge of zone was made coincident with the line so the zone touches the line.",
+        "Zone bottom and lateral extents were chosen to cover all car lanes over a length sufficient to observe a 1.5s wait, excluding most of the left red bike/pedestrian strip."
+      ],
+      "zone_iou": 0.237,
+      "line": {
+        "angle_deg": 0.0,
+        "midpoint_dist": 0.144
+      },
+      "hand": {
+        "right": 5,
+        "abstained": 0,
+        "missing": 1
+      },
+      "proposed_layout": {
+        "right": 4,
+        "abstained": 0,
+        "missing": 2
+      }
+    }
+  ],
+  "code_commit": "3b05f16b68becb63e8c9a2d0107b40ba023021a4"
+}

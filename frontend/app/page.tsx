@@ -7,7 +7,7 @@ import ChallengePanel from "@/components/ChallengePanel";
 import Results from "@/components/Results";
 import Timeline from "@/components/Timeline";
 import VideoStage, { type Tool } from "@/components/VideoStage";
-import { certificateUrl, createRun, getFinalReport, rerunWithRule, getHealth, getRun, getTracks, type Health, videoUrl } from "@/lib/api";
+import { certificateUrl, createRun, getFinalReport, type LayoutProposal, proposeLayout, rerunWithRule, getHealth, getRun, getTracks, type Health, videoUrl } from "@/lib/api";
 import { DEFAULT_LAYOUT, EXAMPLE_RULES } from "@/lib/defaults";
 import type { BeforeAfter, Evidence, FinalReport, Layout, ObjectVerdict, TrackFrame, TrackSet } from "@/lib/types";
 
@@ -50,6 +50,23 @@ export default function Studio() {
       }
     })();
   }, []);
+
+  const [proposal, setProposal] = useState<LayoutProposal | null>(null);
+  const [suggesting, setSuggesting] = useState(false);
+  const suggest = async () => {
+    if (!file) return;
+    setSuggesting(true);
+    setError(null);
+    try {
+      const p = await proposeLayout(file, rule);
+      setLayout(p.layout);
+      setProposal(p);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setSuggesting(false);
+    }
+  };
 
   const pick = (f: File | null) => {
     setFile(f);
@@ -162,6 +179,16 @@ export default function Studio() {
               </div>
             </div>
             <p className="text-xs text-zinc-500">Drag on the video to redraw. Ids must be lowercase (a–z, 0–9, _).</p>
+            <button onClick={suggest} disabled={!file || suggesting || rule.trim().length < 3} data-testid="suggest-layout"
+                    className="w-full rounded bg-zinc-800 py-1.5 text-xs font-semibold text-zinc-200 hover:bg-zinc-700 disabled:opacity-40">
+              {suggesting ? "Muse Spark is reading the first frame…" : "Suggest zone and line with Muse Spark (from the rule and the first frame)"}
+            </button>
+            {proposal && (
+              <div className="rounded bg-amber-500/10 p-2 text-xs text-amber-100 ring-1 ring-amber-500/40" data-testid="layout-proposal">
+                <b>Draft from {proposal.model}{proposal.cached ? " (recorded response)" : ""}: check it on the video and redraw if needed.</b>
+                <ul className="mt-1 list-disc pl-4">{proposal.assumptions.slice(0, 4).map((a) => <li key={a}>{a}</li>)}</ul>
+              </div>
+            )}
           </div>
 
           <div className="space-y-2 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800">

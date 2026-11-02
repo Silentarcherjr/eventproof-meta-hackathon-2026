@@ -90,3 +90,13 @@ export async function rerunWithRule(runId: string, ruleText: string, layout: Lay
     method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ rule_text: ruleText, layout }),
   }));
 }
+
+export interface LayoutProposal { layout: Layout; assumptions: string[]; model: string; request_id: string; cached: boolean }
+
+/** Muse Spark drafts the zone and line from the video's first frame and the rule text. */
+export async function proposeLayout(video: File, ruleText: string): Promise<LayoutProposal> {
+  const form = new FormData();
+  form.append("video", video);
+  form.append("rule_text", ruleText);
+  return json<LayoutProposal>(await fetch(`${API_URL}/propose-layout`, { method: "POST", body: form }));
+}

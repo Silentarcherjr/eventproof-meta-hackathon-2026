@@ -15,6 +15,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import subprocess
 import tempfile
 import threading
 import time
@@ -153,6 +154,32 @@ def create_run(video: Annotated[UploadFile, File()],
             raise HTTPException(422, f"video rejected: {e}") from None
         except (MetaApiUnavailable, LiveCallLimit) as e:
             raise HTTPException(503, str(e)) from None
+
+
+@app.post("/propose-layout")
+def propose_layout(video: Annotated[UploadFile, File()],
+                   rule_text: Annotated[str, Form(min_length=3, max_length=2000)]) -> dict:
+    """Muse Spark drafts the zone and line from the first frame and the rule text; the user confirms or redraws."""
+    from eventproof.meta.layout_proposer import LayoutProposer, first_frame_png
+    from eventproof.meta.muse_rules import RuleCompileError
+
+    _no_live_in_showcase("proposing a layout for a new video")
+    suffix = Path(video.filename or "").suffix.lower()
+    if suffix not in (".mp4", ".mov"):
+        raise HTTPException(415, "only .mp4 / .mov uploads are accepted")
+    with tempfile.TemporaryDirectory() as tmp:
+        src = Path(tmp) / f"upload{suffix}"
+        src.write_bytes(video.file.read(MAX_BYTES + 1)[:MAX_BYTES])
+        try:
+            r = LayoutProposer(budget=MUSE_BUDGET).propose(first_frame_png(src), rule_text)
+        except subprocess.CalledProcessError:
+            raise HTTPException(422, "could not read the first frame") from None
+        except RuleCompileError as e:
+            raise HTTPException(422, str(e)) from None
+        except (MetaApiUnavailable, LiveCallLimit) as e:
+            raise HTTPException(503, str(e)) from None
+    return {"layout": json.loads(r["layout"].model_dump_json()), "assumptions": r["assumptions"],
+            "model": r["model"], "request_id": r["request_id"], "cached": r["cached"]}
 
 
 class NewRuleRequest(BaseModel):

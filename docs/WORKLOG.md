@@ -160,3 +160,6 @@
   least 2 seconds before it crosses it." Muse Spark and Muse Wonder both read it as presence (no stopping); verdicts all PASS;
   Challenge Mode 36/150 failures; certificate checks the run against the clip's frozen labels: 3/5, the 2 cars that never
   stopped judged PASS -> NOT CERTIFIED. Evidence in docs/evidence/runs/20261102T080747Z-6b0ae7d4.
+- P1-14 layout proposer (Muse Spark, first frame + rule text -> zone + line, strict schema, validated): pre-registered; 5 real
+  clips: same verdicts as hand zones on Novi Sad (8/8); Wroclaw has no painted stop line in the crop -> proxy line, 20/30 vs
+  27/30 overall. Studio: "Suggest zone and line" draft with Muse's assumptions; API POST /propose-layout within the allowance.
