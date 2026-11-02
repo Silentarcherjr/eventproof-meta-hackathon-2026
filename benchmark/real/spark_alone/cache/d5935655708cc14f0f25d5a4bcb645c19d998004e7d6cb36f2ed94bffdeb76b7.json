@@ -1,0 +1,70 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae82df9d339e8d7fd364feb",
+ "video_sha256": "7afdd2395e71020be8236228599341c18b97d5eb5454874377d7cb2c9ce3d5d4",
+ "run": 1,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 5.8, \"description\": \"black Lexus sedan, front of left queue\", \"verdict\": \"PASS\", \"waited_s\": 5.8}, {\"approx_cross_time_s\": 6.5, \"description\": \"silver sedan, front of right queue\", \"verdict\": \"PASS\", \"waited_s\": 6.5}, {\"approx_cross_time_s\": 9.2, \"description\": \"light blue small hatchback, second in left queue\", \"verdict\": \"PASS\", \"waited_s\": 9.2}, {\"approx_cross_time_s\": 10.5, \"description\": \"teal-gray sedan, second in right queue\", \"verdict\": \"PASS\", \"waited_s\": 10.5}, {\"approx_cross_time_s\": 11.5, \"description\": \"dark SUV, third in right queue\", \"verdict\": \"PASS\", \"waited_s\": 11.5}, {\"approx_cross_time_s\": 12.3, \"description\": \"black sedan, fourth in right queue\", \"verdict\": \"PASS\", \"waited_s\": 12.3}, {\"approx_cross_time_s\": 13.3, \"description\": \"white Volvo SUV, third in left queue\", \"verdict\": \"PASS\", \"waited_s\": 13.3}], \"notes\": \"All 7 cars were already inside inspection zone at t=0 and remained stopped in queue until ~5s before proceeding. Each waited well over 1.5s stationary in zone before crossing packing_entry. Motorcycle, bicycle and yellow bus crossings excluded as not cars; cross-traffic at bottom never crosses the line.\", \"overall\": \"PASS\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 5.8,
+    "description": "black Lexus sedan, front of left queue",
+    "verdict": "PASS",
+    "waited_s": 5.8
+   },
+   {
+    "approx_cross_time_s": 6.5,
+    "description": "silver sedan, front of right queue",
+    "verdict": "PASS",
+    "waited_s": 6.5
+   },
+   {
+    "approx_cross_time_s": 9.2,
+    "description": "light blue small hatchback, second in left queue",
+    "verdict": "PASS",
+    "waited_s": 9.2
+   },
+   {
+    "approx_cross_time_s": 10.5,
+    "description": "teal-gray sedan, second in right queue",
+    "verdict": "PASS",
+    "waited_s": 10.5
+   },
+   {
+    "approx_cross_time_s": 11.5,
+    "description": "dark SUV, third in right queue",
+    "verdict": "PASS",
+    "waited_s": 11.5
+   },
+   {
+    "approx_cross_time_s": 12.3,
+    "description": "black sedan, fourth in right queue",
+    "verdict": "PASS",
+    "waited_s": 12.3
+   },
+   {
+    "approx_cross_time_s": 13.3,
+    "description": "white Volvo SUV, third in left queue",
+    "verdict": "PASS",
+    "waited_s": 13.3
+   }
+  ],
+  "notes": "All 7 cars were already inside inspection zone at t=0 and remained stopped in queue until ~5s before proceeding. Each waited well over 1.5s stationary in zone before crossing packing_entry. Motorcycle, bicycle and yellow bus crossings excluded as not cars; cross-traffic at bottom never crosses the line.",
+  "overall": "PASS"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 2524,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 2409
+  },
+  "output_tokens": 4691,
+  "output_tokens_details": {
+   "reasoning_tokens": 4317
+  },
+  "total_tokens": 7215
+ },
+ "latency_s": 34.87
+}

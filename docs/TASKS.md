@@ -44,6 +44,7 @@
 - [x] **P1-09** (G6, DONE_VERIFIED) Real traffic footage (Pexels Novi Sad): full loop Muse rule -> SAM 3.1 -> verdicts, before/after repair — DoD: Labels frozen + pre-registered before calls; result reported as is; CI recomputes verdicts from committed tracks
 - [x] **P1-10** (G6, DONE_VERIFIED) Baseline: Muse Spark alone judging from video vs EventProof on the same real clips — DoD: Pre-registered before calls; raw answers committed; CI recomputes metrics
 - [x] **P1-11** (G4, DONE_VERIFIED) Ambiguity finder: Muse Spark vs Muse Wonder readings of the same rule + minimal pair to ask the user — DoD: Pre-registered before calls; raw outputs committed; CI recomputes the report
+- [ ] **P1-12** (G6, IN_REVIEW) Real traffic v2 (Wroclaw, 16 cars) + pooled real-traffic result across 4 clips — DoD: Labels frozen + pre-registered before calls; CI recomputes pooled numbers
 
 ## P2
 

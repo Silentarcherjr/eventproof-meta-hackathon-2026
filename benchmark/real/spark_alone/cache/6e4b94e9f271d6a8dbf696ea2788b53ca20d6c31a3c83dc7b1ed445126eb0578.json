@@ -1,0 +1,100 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae82ed42e065ea853724978",
+ "video_sha256": "6ea7f78f326220fe1038674b4cd366bdf7c59982543687c0690a52c2a676ca8a",
+ "run": 1,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 4.3, \"description\": \"silver sedan in left lane, first vehicle\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 6.6, \"description\": \"grey SUV in middle lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 8.4, \"description\": \"silver small hatchback in left lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 9.4, \"description\": \"silver peugeot in middle lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 10.7, \"description\": \"black sedan in middle lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 12.4, \"description\": \"white Toyota in left lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 13.6, \"description\": \"silver sedan in middle lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 14.7, \"description\": \"green SUV in middle lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 15.7, \"description\": \"light blue sedan in left lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 16.6, \"description\": \"white taxi in right lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 17.6, \"description\": \"white sedan in left lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 18.3, \"description\": \"dark sedan in middle lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}], \"notes\": \"All cars moved continuously through the inspection zone from top to bottom and crossed packing_entry without stopping. No stationary waiting observed in zone; waited time ~0s < 1.5s for each, so all are VIOLATIONS. Motorcycles and bicycle excluded as not cars.\", \"overall\": \"FAIL\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 4.3,
+    "description": "silver sedan in left lane, first vehicle",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 6.6,
+    "description": "grey SUV in middle lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 8.4,
+    "description": "silver small hatchback in left lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 9.4,
+    "description": "silver peugeot in middle lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 10.7,
+    "description": "black sedan in middle lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 12.4,
+    "description": "white Toyota in left lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 13.6,
+    "description": "silver sedan in middle lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 14.7,
+    "description": "green SUV in middle lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 15.7,
+    "description": "light blue sedan in left lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 16.6,
+    "description": "white taxi in right lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 17.6,
+    "description": "white sedan in left lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 18.3,
+    "description": "dark sedan in middle lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   }
+  ],
+  "notes": "All cars moved continuously through the inspection zone from top to bottom and crossed packing_entry without stopping. No stationary waiting observed in zone; waited time ~0s < 1.5s for each, so all are VIOLATIONS. Motorcycles and bicycle excluded as not cars.",
+  "overall": "FAIL"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 2524,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 2409
+  },
+  "output_tokens": 9307,
+  "output_tokens_details": {
+   "reasoning_tokens": 8741
+  },
+  "total_tokens": 11831
+ },
+ "latency_s": 65.59
+}

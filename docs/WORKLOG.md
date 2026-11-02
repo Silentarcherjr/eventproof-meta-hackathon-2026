@@ -152,3 +152,9 @@
   readings take from the Muse allowance; the readings cache ships in the backend image. CI 41397438034 green.
 - C-04: MIT license added at the participant's choice (2026-11-02, provisional until the rules are checked).
 
+## 2026-11-02 · session 1 (cont.) · local macOS · orchestrator — P1-12 real traffic v2 (Wroclaw) + pooled result
+- Screened Taiwan (rejected: almost no crossings) and Wroclaw; 2 Wroclaw clips (red-light queue; green free flow), 16 cars
+  labelled at 4 fps, frozen + pre-registered (730d351) before any call.
+- Muse rule 14/16 (2 abstained); synthetic-accepted repair 6/16 (perspective: far cars < 0.08/s for 1.2-2.0 s); Wonder = Spark
+  reading; Spark alone overall 10/10, counts exact 6/10. Pooled 4 clips / 24 cars: Muse rule 22/24, repair 13/24, Spark alone
+  counts exact 11/20. One car crossing at 18.4 s in w2 was not labelled (post-hoc note). `real_pooled.py` + CI test.

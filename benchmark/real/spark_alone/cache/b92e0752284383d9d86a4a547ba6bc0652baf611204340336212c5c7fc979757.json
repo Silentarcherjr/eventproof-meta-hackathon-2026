@@ -1,0 +1,64 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae82e27ec2ee726b7f948ca",
+ "video_sha256": "7afdd2395e71020be8236228599341c18b97d5eb5454874377d7cb2c9ce3d5d4",
+ "run": 2,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\":[{\"approx_cross_time_s\":4.9,\"description\":\"black sedan in left lane, front of queue at start\",\"verdict\":\"PASS\",\"waited_s\":4.9},{\"approx_cross_time_s\":5.4,\"description\":\"silver sedan in right lane, front of queue at start\",\"verdict\":\"PASS\",\"waited_s\":5.4},{\"approx_cross_time_s\":9.5,\"description\":\"grey sedan in middle lane, second in queue\",\"verdict\":\"PASS\",\"waited_s\":9.5},{\"approx_cross_time_s\":9.8,\"description\":\"light blue hatchback in left lane, second in queue\",\"verdict\":\"PASS\",\"waited_s\":9.8},{\"approx_cross_time_s\":12.4,\"description\":\"black sedan in right lane, third in queue\",\"verdict\":\"PASS\",\"waited_s\":12.4},{\"approx_cross_time_s\":12.7,\"description\":\"white SUV in left lane, third in queue\",\"verdict\":\"PASS\",\"waited_s\":12.7}],\"notes\":\"All 6 passenger cars crossing top-to-bottom were already stationary inside the inspection zone at t=0 and waited for the queue to discharge. Observed time in zone equals approx crossing time, all >1.5s. Bus, motorcycle and bicycle excluded as not cars.\",\"overall\":\"PASS\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 4.9,
+    "description": "black sedan in left lane, front of queue at start",
+    "verdict": "PASS",
+    "waited_s": 4.9
+   },
+   {
+    "approx_cross_time_s": 5.4,
+    "description": "silver sedan in right lane, front of queue at start",
+    "verdict": "PASS",
+    "waited_s": 5.4
+   },
+   {
+    "approx_cross_time_s": 9.5,
+    "description": "grey sedan in middle lane, second in queue",
+    "verdict": "PASS",
+    "waited_s": 9.5
+   },
+   {
+    "approx_cross_time_s": 9.8,
+    "description": "light blue hatchback in left lane, second in queue",
+    "verdict": "PASS",
+    "waited_s": 9.8
+   },
+   {
+    "approx_cross_time_s": 12.4,
+    "description": "black sedan in right lane, third in queue",
+    "verdict": "PASS",
+    "waited_s": 12.4
+   },
+   {
+    "approx_cross_time_s": 12.7,
+    "description": "white SUV in left lane, third in queue",
+    "verdict": "PASS",
+    "waited_s": 12.7
+   }
+  ],
+  "notes": "All 6 passenger cars crossing top-to-bottom were already stationary inside the inspection zone at t=0 and waited for the queue to discharge. Observed time in zone equals approx crossing time, all >1.5s. Bus, motorcycle and bicycle excluded as not cars.",
+  "overall": "PASS"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 2524,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 2409
+  },
+  "output_tokens": 6634,
+  "output_tokens_details": {
+   "reasoning_tokens": 6350
+  },
+  "total_tokens": 9158
+ },
+ "latency_s": 45.43
+}

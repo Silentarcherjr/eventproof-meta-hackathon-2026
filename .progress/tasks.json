@@ -1080,6 +1080,36 @@
       "blocker": null,
       "next_action": "demo shot",
       "cost_note": "24 live compiles; \u2248 $1.4 cached + \u2248 $2 uncached (estimate)"
+    },
+    {
+      "id": "P1-12",
+      "title": "Real traffic v2 (Wroclaw, 16 cars) + pooled real-traffic result across 4 clips",
+      "priority": "P1",
+      "gate": "G6",
+      "state": "IN_REVIEW",
+      "dependencies": [
+        "P1-09",
+        "P1-10",
+        "P1-11"
+      ],
+      "owner": "agentic-eval",
+      "branch": null,
+      "definition_of_done": "Labels frozen + pre-registered before calls; CI recomputes pooled numbers",
+      "test_commands": [
+        "cd backend && uv run pytest tests/validation/test_real_pooled.py"
+      ],
+      "evidence_paths": [
+        "benchmark/real/traffic_v2/PREREGISTRATION.md (730d351)",
+        "benchmark/real/traffic_v2/FINDINGS.md",
+        "benchmark/real/POOLED.json"
+      ],
+      "commit_sha": null,
+      "pr_url": null,
+      "started_at": "2026-11-02T06:37:08Z",
+      "updated_at": "2026-11-02T06:37:08Z",
+      "blocker": null,
+      "next_action": "CI green -> DONE_VERIFIED",
+      "cost_note": "\u2248 $0.5"
     }
   ]
 }

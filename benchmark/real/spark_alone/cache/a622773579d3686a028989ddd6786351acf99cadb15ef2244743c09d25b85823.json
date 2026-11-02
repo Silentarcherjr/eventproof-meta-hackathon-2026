@@ -1,0 +1,64 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae82e4b6231fbb332d649ba",
+ "video_sha256": "7afdd2395e71020be8236228599341c18b97d5eb5454874377d7cb2c9ce3d5d4",
+ "run": 3,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\":[{\"approx_cross_time_s\":5.6,\"description\":\"black Lexus sedan, left lane front\",\"verdict\":\"PASS\",\"waited_s\":5.6},{\"approx_cross_time_s\":6.0,\"description\":\"silver sedan, right lane front\",\"verdict\":\"PASS\",\"waited_s\":6.0},{\"approx_cross_time_s\":9.4,\"description\":\"light blue small hatch, left lane second\",\"verdict\":\"PASS\",\"waited_s\":9.4},{\"approx_cross_time_s\":10.0,\"description\":\"grey sedan, middle lane second\",\"verdict\":\"PASS\",\"waited_s\":10.0},{\"approx_cross_time_s\":12.6,\"description\":\"black hatch sedan, middle lane third\",\"verdict\":\"PASS\",\"waited_s\":12.6},{\"approx_cross_time_s\":13.4,\"description\":\"white Volvo SUV, left lane third\",\"verdict\":\"PASS\",\"waited_s\":13.4}],\"notes\":\"6 passenger cars crossed packing_entry top-to-bottom during video. All were stationary queued in inspection zone from 0.0s, so wait time equals crossing time, all >1.5s. Bicycle, motorcycle and yellow bus excluded as not cars. Vehicles visible at bottom in first 2s had already crossed before 0s.\",\"overall\":\"PASS\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 5.6,
+    "description": "black Lexus sedan, left lane front",
+    "verdict": "PASS",
+    "waited_s": 5.6
+   },
+   {
+    "approx_cross_time_s": 6.0,
+    "description": "silver sedan, right lane front",
+    "verdict": "PASS",
+    "waited_s": 6.0
+   },
+   {
+    "approx_cross_time_s": 9.4,
+    "description": "light blue small hatch, left lane second",
+    "verdict": "PASS",
+    "waited_s": 9.4
+   },
+   {
+    "approx_cross_time_s": 10.0,
+    "description": "grey sedan, middle lane second",
+    "verdict": "PASS",
+    "waited_s": 10.0
+   },
+   {
+    "approx_cross_time_s": 12.6,
+    "description": "black hatch sedan, middle lane third",
+    "verdict": "PASS",
+    "waited_s": 12.6
+   },
+   {
+    "approx_cross_time_s": 13.4,
+    "description": "white Volvo SUV, left lane third",
+    "verdict": "PASS",
+    "waited_s": 13.4
+   }
+  ],
+  "notes": "6 passenger cars crossed packing_entry top-to-bottom during video. All were stationary queued in inspection zone from 0.0s, so wait time equals crossing time, all >1.5s. Bicycle, motorcycle and yellow bus excluded as not cars. Vehicles visible at bottom in first 2s had already crossed before 0s.",
+  "overall": "PASS"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 2524,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 2409
+  },
+  "output_tokens": 6956,
+  "output_tokens_details": {
+   "reasoning_tokens": 6677
+  },
+  "total_tokens": 9480
+ },
+ "latency_s": 35.94
+}

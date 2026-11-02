@@ -4,7 +4,7 @@
 seconds. EventProof then tries to break that detector, repairs it, and only keeps the repair if it holds on cases it
 never saw.
 
-**At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · tested on real drone and conveyor footage, labels
+**At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · 22/24 cars right on real traffic footage from 2 cities, labels
 frozen before any model call · one-command replay with no API key (`docker compose`) · 245 backend tests, CI recomputes every
 published number · MIT licensed.
 
@@ -43,8 +43,14 @@ teams): before a rule goes live, it shows where the rule is wrong, why, and whet
 ![Before and after the repair: the same failing case judged by both rules](docs/media/before_after.png)
 
 ## Results on real footage (labels frozen and pushed before any model call)
+**Pooled over 4 real traffic clips (24 hand-labelled cars, 2 cities):** Muse Spark's rule → SAM 3.1 → engine judged
+**22/24 cars right** (2 abstained, 0 wrong; Wilson 95 % 0.74–0.98) and 4/4 clips. The repair that passed every synthetic
+test: **13/24**. Muse Spark alone from the video: right clip verdict 20/20 runs, but counted crossings and violations
+exactly in only 11/20. [pooled](benchmark/real/traffic_v2/FINDINGS.md)
+
 | Test | Result |
 |---|---|
+| **Traffic, Wroclaw** — footbridge view along the road; 2 clips, 16 labelled cars (6 wait at red, 10 drive through on green) | Muse Spark's rule: 14/16 (2 abstained). Synthetic-accepted repair: **6/16** — it passes all 10 cars that never stop, because far from the camera they move under its 0.08 frame-widths/s "still" threshold (perspective). [findings](benchmark/real/traffic_v2/FINDINGS.md) |
 | **Traffic, full loop** — Pexels drone view of a crossing in Novi Sad; 2 clips, 6 labelled cars (2 stop, 2 roll through, 2 wait); 1 Muse + 2 SAM calls | Rule compiled by Muse Spark: **8/8 labelled objects right**, both clip verdicts right, incl. a real rolling stop. Same rule + the repair accepted on synthetic data: **7/8** — it passes the rolling stop. SAM 3.1 found every labelled car. [findings](benchmark/real/novisad/FINDINGS.md) |
 | **Baseline: Muse Spark alone** — same 2 clips, rule and labels; Muse Spark watches the video and answers directly; 5 runs per clip | Overall verdict right in 10/10 runs (the red car is obvious), but crossings and violations counted right in only **5/10** — **0/5 on the clip with the rolling stop**. The rolling van is flagged in 1/5 runs, and in 3/5 runs it reports waiting cars as crossing. EventProof: 8/8 objects, deterministic, with evidence. [findings](benchmark/real/spark_alone/FINDINGS.md) |
 | **Parcels, perception** — Pexels conveyor clip, 8 hand-labelled line crossings | One SAM 3.1 request on the full frame: **2/8** (it fills its 16-objects-per-frame cap at frame 0, later parcels get no track). Cropped to the belt, 5 s overlapping windows: **8/8**, 0 false, median 0.2 s from the label. [v1](benchmark/real/pexels/REPORT_pexels.md) · [v2](benchmark/real/pexels/REPORT_pexels_v2.md) |
@@ -81,8 +87,8 @@ can re-verify, and CI recomputes every number above from committed files (no vid
   everything else is served from a cache of recorded responses.
 
 ## Honest limits
-- Real footage is small: 2 traffic clips with 6 labelled cars and 1 conveyor clip with 8 crossings, labelled by hand from
-  frame sheets. It shows concrete failures and fixes; it does not measure accuracy. Crops are a per-scene setup step.
+- Real footage is small: 4 traffic clips (24 labelled cars, 2 cities) and 1 conveyor clip (8 crossings), labelled by one
+  person from frame sheets. It shows concrete failures and fixes; it is not an accuracy benchmark. Crops are a setup step.
 - The large-scale evidence is synthetic (a conveyor world with scripted truth). Holdout and primary final scoring use a
   deterministic mock tracker (n = 200–320); an 80-scene subset re-run with real SAM 3.1 tracks gives the same conclusion
   (the mock is pessimistic on tailgating and occlusion).

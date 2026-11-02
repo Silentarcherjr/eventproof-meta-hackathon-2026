@@ -1,0 +1,64 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae82dd69f6289e5065b4539",
+ "video_sha256": "7afdd2395e71020be8236228599341c18b97d5eb5454874377d7cb2c9ce3d5d4",
+ "run": 0,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\":[{\"approx_cross_time_s\":5.5,\"description\":\"black Lexus sedan in left lane, first to cross\",\"verdict\":\"PASS\",\"waited_s\":5.5},{\"approx_cross_time_s\":5.7,\"description\":\"silver sedan in center-right lane, second to cross\",\"verdict\":\"PASS\",\"waited_s\":5.7},{\"approx_cross_time_s\":9.5,\"description\":\"light blue hatchback in left lane\",\"verdict\":\"PASS\",\"waited_s\":9.5},{\"approx_cross_time_s\":9.8,\"description\":\"gray sedan in center lane\",\"verdict\":\"PASS\",\"waited_s\":9.8},{\"approx_cross_time_s\":11.4,\"description\":\"black sedan in right-center lane\",\"verdict\":\"PASS\",\"waited_s\":11.4},{\"approx_cross_time_s\":12.3,\"description\":\"white Volvo SUV in left lane\",\"verdict\":\"PASS\",\"waited_s\":12.3}],\"notes\":\"All cars were already inside the inspection zone at t=0 queued stationary and crossed after several seconds, so waited time equals time from start to crossing, all well over 1.5s. Bus, motorcycle and bicycle excluded as not cars.\",\"overall\":\"PASS\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 5.5,
+    "description": "black Lexus sedan in left lane, first to cross",
+    "verdict": "PASS",
+    "waited_s": 5.5
+   },
+   {
+    "approx_cross_time_s": 5.7,
+    "description": "silver sedan in center-right lane, second to cross",
+    "verdict": "PASS",
+    "waited_s": 5.7
+   },
+   {
+    "approx_cross_time_s": 9.5,
+    "description": "light blue hatchback in left lane",
+    "verdict": "PASS",
+    "waited_s": 9.5
+   },
+   {
+    "approx_cross_time_s": 9.8,
+    "description": "gray sedan in center lane",
+    "verdict": "PASS",
+    "waited_s": 9.8
+   },
+   {
+    "approx_cross_time_s": 11.4,
+    "description": "black sedan in right-center lane",
+    "verdict": "PASS",
+    "waited_s": 11.4
+   },
+   {
+    "approx_cross_time_s": 12.3,
+    "description": "white Volvo SUV in left lane",
+    "verdict": "PASS",
+    "waited_s": 12.3
+   }
+  ],
+  "notes": "All cars were already inside the inspection zone at t=0 queued stationary and crossed after several seconds, so waited time equals time from start to crossing, all well over 1.5s. Bus, motorcycle and bicycle excluded as not cars.",
+  "overall": "PASS"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 2524,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 0
+  },
+  "output_tokens": 7788,
+  "output_tokens_details": {
+   "reasoning_tokens": 7525
+  },
+  "total_tokens": 10312
+ },
+ "latency_s": 45.83
+}
