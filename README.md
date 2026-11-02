@@ -25,8 +25,8 @@ enforces (inspection steps on a line, waiting zones, restricted areas).
 - Asked to judge the same clips directly from video, **Muse Spark alone** got every clip verdict right but counted
   crossings and violations exactly in only 11/25 runs.
 
-**At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · 27/30 cars right on real traffic footage from 2 cities
-(0 wrong verdicts) · per-rule certificate · one-command replay with no API key (`docker compose`) · 250+ backend tests,
+**At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · real footage from 2 cities in 3 domains (cars,
+pedestrians, cyclists): 34/38 labelled objects right, 0 wrong verdicts · per-rule certificate · one-command replay with no API key (`docker compose`) · 250+ backend tests,
 CI recomputes every published number · MIT licensed.
 
 ![Real footage: the same SAM 3.1 tracks judged by two readings of "wait"](docs/media/real_traffic.png)

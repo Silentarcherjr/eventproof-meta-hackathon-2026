@@ -167,3 +167,6 @@
 - P1-15 field repair (pre-registered): Muse Spark repairs from Novi Sad failures; its patches lift Wroclaw 9 -> 19/22 but move
   min_ms to 1.0 s, 7 synthetic regressions -> 0/4 accepted; grid 3/16 accepted (<= 0.03-0.05/s, >= 0.8 s: Wroclaw 19/22,
   synthetic 166/200, 0 regressions).
+- P1-16 new domains: 109 Pexels clips screened (subagent; 7 usable); 2 used (zebra one-way, bike one-way; 3 clips, 8 objects),
+  pre-registered; Muse compiled NOT CROSSES(wrong direction); 7/8 right, 0 wrong verdicts. Store/toll/other clips not used
+  (ambiguous truth, or rules about objects that never cross, which the label format does not cover).

@@ -18,6 +18,7 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 | fecha (Panamá) | plataforma | sesión/tarea | tipo de crédito | saldo confirmado | consumo confirmado | estimado | límite acordado | alerta | fuente |
 |---|---|---|---|---|---|---|---|---|---|
 | 2026-11-02 | Meta Model API | balance read (participant) | hackathon $150 | **$138.91 remaining** | $11.09 total to date | - | participant: use the remaining credits for product work | - | participant message |
+| 2026-11-02 | Meta Model API | New domains (P1-16) | hackathon $150 | - | 2 Muse compiles + 3 SAM calls (~520 frames) | ≈ $0.15 (estimate) | participant: use credits | - | benchmark/real/domains/report_domains.json |
 | 2026-11-02 | Meta Model API | Field repair (P1-15) | hackathon $150 | - | 2 Muse Spark calls | ≈ $0.05 (estimate) | participant: use credits | - | benchmark/field_repair/report.json |
 | 2026-11-02 | Meta Model API | Layout proposals, Muse Spark vision (P1-14) | hackathon $150 | $138.91 before this row | 5 image calls (1 smoke counted + 4) | ≈ $0.05 (estimate) | participant: use credits | - | benchmark/layout/report.json |
 | 2026-11-02 | Meta Model API | Live-rule demo run (P1-13) | hackathon $150 | UNKNOWN | 1 Muse compile + 2 compiles (Spark + Wonder readings) | ≈ $0.2 (estimate) | within the $60 approval | - | docs/evidence/runs/20261102T080747Z-6b0ae7d4 |
