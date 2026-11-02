@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import type { Evidence } from "@/lib/types";
 
 const OVERALL: Record<string, string> = {
@@ -74,6 +75,9 @@ export default function Results({ ev, onSeek }: { ev: Evidence; onSeek: (f: numb
         <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 font-mono text-xs text-zinc-400">
           <dt>rule</dt><dd>{ev.rule.model} · {ev.rule.request_ids.map((x) => short(x, 18)).join(", ") || "—"}{ev.rule.cached ? " · cached" : ""}</dd>
           {ev.perception && <><dt>tracks</dt><dd>{ev.perception.model} · prompt “{ev.perception.prompt}” · {ev.perception.boxes} boxes{ev.perception.cached ? " · cached" : ""}</dd></>}
+          {ev.perception?.context?.map((c) => (
+            <Fragment key={c.prompt}><dt>context</dt><dd>{ev.perception!.model} · prompt “{c.prompt}” · {c.boxes} boxes{c.cached ? " · cached" : ""}</dd></Fragment>
+          ))}
           <dt>video</dt><dd>{ev.video.filename} · {ev.video.info.width}×{ev.video.info.height} · {ev.video.info.fps} fps · {short(ev.video.sha256)}{ev.video.reencoded ? ` · re-encoded (${ev.video.reencode_reasons.join("; ")})` : ""}</dd>
           <dt>evidence</dt><dd>{ev.run_id} · sha256 {short(ev.evidence_sha256)}</dd>
         </dl>

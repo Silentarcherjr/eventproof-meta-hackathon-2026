@@ -35,7 +35,8 @@ export interface Evidence {
   rule: { text: string; layout: Layout; model: string; request_ids: string[]; cached: boolean | null; attempts: number | null;
           compiled_rule: Record<string, unknown> | null; rule_hash: string | null; assumptions: string[]; error: string | null };
   perception: { model: string; prompt: string; source_ref: string | null; cached: boolean | null; tracks_sha256: string | null;
-                frames_with_detections: number; boxes: number; track_ids: number[]; error: string | null } | null;
+                frames_with_detections: number; boxes: number; track_ids: number[]; error: string | null;
+                context?: { prompt: string; source_ref: string; cached: boolean; boxes: number; track_ids: number[] }[] } | null;
   result: RuleReport | null;
   evidence_sha256: string;
 }
