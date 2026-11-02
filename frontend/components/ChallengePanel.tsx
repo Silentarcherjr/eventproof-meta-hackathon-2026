@@ -97,7 +97,7 @@ export default function ChallengePanel({ runId, onBeforeAfter }: { runId: string
   const nAll = shown.reduce((k, w) => k + rep[w].decisions.length, 0);
 
   return (
-    <section className="space-y-4 rounded-xl bg-zinc-900/60 p-4 ring-1 ring-violet-500/30" data-testid="challenge-panel">
+    <section id="challenge" className="space-y-4 rounded-xl bg-zinc-900/60 p-4 ring-1 ring-violet-500/30" data-testid="challenge-panel">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
           <h2 className="text-lg font-bold">Challenge Mode</h2>

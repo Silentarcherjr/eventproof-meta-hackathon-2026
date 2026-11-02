@@ -135,5 +135,29 @@ test("?run= reopens a recorded run with its stored results, without calling any 
   await expect(page.getByTestId("sam-result")).toContainText("real SAM 3.1");
   await expect(page.getByTestId("repair-headline")).toContainText("2 of 8 proposals accepted");
   await expect(page.getByTestId("ba-after")).toContainText("Says FAIL — right");
+  // the stepper summarises where the rule stands (certificate unavailable here: step 4 stays a link)
+  await expect(page.getByTestId("step-2")).toContainText("test scenes fool it");
+  await expect(page.getByTestId("step-3")).toContainText("2/8 repairs hold on hidden scenes");
+  await expect(page.getByTestId("certificate-link")).toHaveAttribute("href", `http://api.test/runs/${id}/certificate`);
   expect(posts).toEqual([]);
+});
+
+test("a new rule on the open run's video posts to /runs/{id}/rule", async ({ page }) => {
+  const id = evidence.run_id;
+  let body: { rule_text?: string } = {};
+  await page.route(`http://api.test/runs/${id}`, (r) => r.fulfill({ json: evidence }));
+  await page.route(`http://api.test/runs/${id}/tracks`, (r) => r.fulfill({ path: fx("tracks.json") }));
+  await page.route(`http://api.test/runs/${id}/video`, (r) => r.fulfill({ path: fx("tailgate-7.mp4"), contentType: "video/mp4" }));
+  await page.route(`http://api.test/runs/${id}/rule`, async (r) => {
+    body = JSON.parse(r.request().postData() ?? "{}");
+    await r.fulfill({ json: { ...evidence, run_id: "20261102T000000Z-0000beef", rule: { ...evidence.rule, text: body.rule_text } } });
+  });
+  await page.route("http://api.test/runs/20261102T000000Z-0000beef/tracks", (r) => r.fulfill({ path: fx("tracks.json") }));
+  await page.goto(`/?run=${id}`);
+  await expect(page.getByTestId("overall")).toContainText("FAIL");
+  await expect(page.getByTestId("run")).toBeDisabled();  // nothing changed yet
+  await page.getByTestId("rule-input").fill("Every blue box must stand still 2 s at inspection.");
+  await page.getByTestId("run").click();
+  await expect(page.getByTestId("stale")).toHaveCount(0);
+  expect(body.rule_text).toBe("Every blue box must stand still 2 s at inspection.");
 });

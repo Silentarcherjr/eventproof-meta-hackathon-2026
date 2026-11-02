@@ -5,6 +5,7 @@ import BeforeAfterView from "@/components/BeforeAfter";
 import AmbiguityPanel from "@/components/AmbiguityPanel";
 import ChallengePanel from "@/components/ChallengePanel";
 import Results from "@/components/Results";
+import Stepper from "@/components/Stepper";
 import Timeline from "@/components/Timeline";
 import VideoStage, { type Tool } from "@/components/VideoStage";
 import { certificateUrl, createRun, getFinalReport, type LayoutProposal, proposeLayout, rerunWithRule, getHealth, getRun, getTracks, type Health, videoUrl } from "@/lib/api";
@@ -135,6 +136,8 @@ export default function Studio() {
         </div>
       )}
 
+      {ev?.status === "completed" && !stale && <Stepper key={`st-${ev.run_id}`} ev={ev} />}
+
       <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         <section className="space-y-4">
           <VideoStage src={ev ? videoUrl(ev.run_id) : localUrl} layout={layout} onLayoutChange={setLayout} tool={tool}
@@ -218,7 +221,7 @@ export default function Studio() {
               Rule certificate (one page, printable)
             </a>
           )}
-          {ev && <Results ev={ev} onSeek={onSeek} />}
+          <div id="results">{ev && <Results ev={ev} onSeek={onSeek} />}</div>
         </section>
       </div>
       {ba && ev?.run_id === ba.run_id && !stale && <div className="mt-6"><BeforeAfterView ba={ba} final={finalReport} /></div>}

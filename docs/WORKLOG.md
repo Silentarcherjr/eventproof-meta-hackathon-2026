@@ -163,3 +163,4 @@
 - P1-14 layout proposer (Muse Spark, first frame + rule text -> zone + line, strict schema, validated): pre-registered; 5 real
   clips: same verdicts as hand zones on Novi Sad (8/8); Wroclaw has no painted stop line in the crop -> proxy line, 20/30 vs
   27/30 overall. Studio: "Suggest zone and line" draft with Muse's assumptions; API POST /propose-layout within the allowance.
+- Studio stepper (Build → Break → Repair → Certify) with live status per run; e2e +1 test (new rule on the same video).
