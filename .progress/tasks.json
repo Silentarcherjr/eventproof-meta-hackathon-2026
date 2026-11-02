@@ -1086,7 +1086,7 @@
       "title": "Real traffic v2 (Wroclaw, 16 cars) + pooled real-traffic result across 4 clips",
       "priority": "P1",
       "gate": "G6",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "P1-09",
         "P1-10",
@@ -1099,14 +1099,15 @@
         "cd backend && uv run pytest tests/validation/test_real_pooled.py"
       ],
       "evidence_paths": [
-        "benchmark/real/traffic_v2/PREREGISTRATION.md (730d351)",
+        "GitHub Actions run 41401675641 success",
+        "benchmark/real/POOLED.json",
         "benchmark/real/traffic_v2/FINDINGS.md",
-        "benchmark/real/POOLED.json"
+        "benchmark/real/traffic_v2/PREREGISTRATION.md (730d351)"
       ],
-      "commit_sha": null,
+      "commit_sha": "c7ec295",
       "pr_url": null,
       "started_at": "2026-11-02T06:37:08Z",
-      "updated_at": "2026-11-02T06:37:08Z",
+      "updated_at": "2026-11-02T06:45:20Z",
       "blocker": null,
       "next_action": "CI green -> DONE_VERIFIED",
       "cost_note": "\u2248 $0.5"

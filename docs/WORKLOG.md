@@ -158,3 +158,4 @@
 - Muse rule 14/16 (2 abstained); synthetic-accepted repair 6/16 (perspective: far cars < 0.08/s for 1.2-2.0 s); Wonder = Spark
   reading; Spark alone overall 10/10, counts exact 6/10. Pooled 4 clips / 24 cars: Muse rule 22/24, repair 13/24, Spark alone
   counts exact 11/20. One car crossing at 18.4 s in w2 was not labelled (post-hoc note). `real_pooled.py` + CI test.
+- CI 41401253197 failed: Wonder's Wroclaw reading was not committed (cache file untracked); committed in c7ec295, CI 41401675641 green.
