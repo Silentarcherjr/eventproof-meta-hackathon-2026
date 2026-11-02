@@ -1,0 +1,24 @@
+{
+  "schema_version": "eventproof-with-labels/1",
+  "labeled_by": "EventProof developer (hand labels from 2 fps gridded frames, before any model run)",
+  "labeled_at": "2026-11-02T20:30:00-05:00",
+  "source": "Pexels video 39488108 (rainy zebra crossing, fixed high camera), t 1.5-4.5 s, 10 fps, metadata stripped",
+  "clip": "umbrella_crossing.mp4",
+  "clip_sha256": "11a07f560002e6f19b259fbd3f7c067ec93d1a2deb0329aac8d3305abd39881a",
+  "rule_text": "Every pedestrian in the crossing zone must hold an umbrella over their head.",
+  "layout": {
+    "zones": [{"zone": {"id": "crossing", "polygon": [[0.0, 0.55], [1.0, 0.55], [1.0, 1.0], [0.0, 1.0]]},
+               "description": "lower half of the zebra crossing, nearest the camera"}],
+    "lines": []
+  },
+  "people": [
+    {"description": "white-haired man, black shirt, walks up from bottom-left", "t_s": 2.9, "feet": [0.28, 0.63],
+     "umbrella": false, "intended": "VIOLATION"},
+    {"description": "man in white cap and grey shirt, walks up from bottom-right", "t_s": 2.9, "feet": [0.74, 0.75],
+     "umbrella": false, "intended": "VIOLATION"},
+    {"description": "person under a dark tartan umbrella, enters at the left edge", "t_s": 2.9, "feet": [0.17, 0.62],
+     "umbrella": true, "intended": "PASS"},
+    {"description": "person under a clear umbrella, enters at the bottom-left corner near the end", "t_s": 2.9,
+     "feet": [0.05, 1.0], "umbrella": true, "intended": "PASS"}
+  ]
+}

@@ -51,3 +51,13 @@ def test_near_forklift_for_a_duration():
     v = {o.object_id: o.verdict for o in rep.objects}
     assert v[2] == "VIOLATION" and v[1] == "PASS"
     assert rule(near).context_concepts() == ["forklift"]
+
+
+def test_umbrella_seen_from_above_overlaps_the_head_band():
+    umb = {"op": "IMPLIES", "premise": {"op": "OCCURS", "event": {"op": "IN_ZONE", "zone": "site"}},
+           "conclusion": {"op": "OCCURS", "event": {"op": "WITH", "concept": "umbrella", "relation": "on_top"}}}
+    walker = frames(1, "person", {f: (40, 40, 50, 70) for f in range(10)})
+    bare = frames(2, "person", {f: (70, 40, 80, 70) for f in range(10)})
+    canopy = frames(9, "umbrella", {f: (30, 25, 48, 42) for f in range(10)})  # centre above the box, edge over the head
+    rep = evaluate(rule(umb), TrackSet(video=INFO, source="mock", frames=walker + bare + canopy))
+    assert {o.object_id: o.verdict for o in rep.objects} == {1: "PASS", 2: "VIOLATION"}

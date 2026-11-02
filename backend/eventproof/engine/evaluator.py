@@ -117,14 +117,15 @@ def _context_boxes(rule: VisualRule, tracks: TrackSet) -> dict[str, dict[int, li
     return out
 
 
-ON_TOP_ABOVE, ON_TOP_DEPTH = 0.15, 0.35  # head region: from 15 % of the box height above it to 35 % into it
+ON_TOP_ABOVE, ON_TOP_DEPTH = 0.15, 0.35  # head band: from 15 % of the box height above it to 35 % into it
 
 
 def _relation(ev: With, own: tuple, other: tuple) -> bool:
-    ox, oy = (other[0] + other[2]) / 2, (other[1] + other[3]) / 2
-    if ev.relation == "on_top":
+    if ev.relation == "on_top":  # the other box overlaps the head band (seen from above, an umbrella sits up-and-beside)
         bh = own[3] - own[1]
-        return own[0] <= ox <= own[2] and own[1] - ON_TOP_ABOVE * bh <= oy <= own[1] + ON_TOP_DEPTH * bh
+        top, bottom = own[1] - ON_TOP_ABOVE * bh, own[1] + ON_TOP_DEPTH * bh
+        return other[0] <= own[2] and other[2] >= own[0] and other[1] <= bottom and other[3] >= top
+    ox, oy = (other[0] + other[2]) / 2, (other[1] + other[3]) / 2
     cx, cy = (own[0] + own[2]) / 2, (own[1] + own[3]) / 2
     return hypot(ox - cx, oy - cy) <= ev.max_dist
 
