@@ -1,0 +1,79 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "layout": {
+    "zones": [
+      {
+        "zone": {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.1111,
+              0.5513
+            ],
+            [
+              0.5185,
+              0.2692
+            ],
+            [
+              1.0,
+              0.6026
+            ],
+            [
+              1.0,
+              1.0
+            ],
+            [
+              0.7593,
+              1.0
+            ]
+          ]
+        },
+        "description": "waiting zone: the right-hand approach lanes just before the stop line of the pedestrian crossing (top-down view)"
+      }
+    ],
+    "lines": [
+      {
+        "line": {
+          "id": "packing_entry",
+          "a": [
+            0.1111,
+            0.5513
+          ],
+          "b": [
+            0.5185,
+            0.2692
+          ]
+        },
+        "description": "stop line at the near edge of the pedestrian crossing; cars travel from bottom-right to top-left"
+      }
+    ]
+  },
+  "packing_line": "packing_entry",
+  "rule_text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+  "labeled_by": "EventProof developer (hand labels from 2-5 fps frame sheets, before any model run)",
+  "labeled_at": "2026-11-01T22:30:00-05:00",
+  "clip": "novisad_approach_b.mp4",
+  "clip_sha256": "f9c2698045b04ea605d5bcb38bbfc991dc3223611b739b37018c2d797d259ee3",
+  "objects": [
+    {
+      "description": "white SUV already standing in the waiting zone at 0 s, stands still until ~5.5 s, crosses ~6.8 s",
+      "crosses_packing": true,
+      "stood_still_s": 5.5,
+      "intended": "PASS"
+    },
+    {
+      "description": "white car waiting in the left-hand lane the whole clip (upper of the two, lower-left of the frame)",
+      "crosses_packing": false,
+      "stood_still_s": 19.0,
+      "intended": "PASS"
+    },
+    {
+      "description": "white car waiting in the left-hand lane the whole clip (lower, at the bottom-left edge)",
+      "crosses_packing": false,
+      "stood_still_s": 19.0,
+      "intended": "PASS"
+    }
+  ],
+  "expected_overall": "PASS",
+  "notes": "Pexels video 15411757 (Pexels License), frames 521-1013 of the 1280x720 file, same crop, 10 fps. Not labelled (edge transient): the van of clip a leaving at the top-left edge in the first frames."
+}

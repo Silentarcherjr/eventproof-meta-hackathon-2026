@@ -1,0 +1,91 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "layout": {
+    "zones": [
+      {
+        "zone": {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.1111,
+              0.5513
+            ],
+            [
+              0.5185,
+              0.2692
+            ],
+            [
+              1.0,
+              0.6026
+            ],
+            [
+              1.0,
+              1.0
+            ],
+            [
+              0.7593,
+              1.0
+            ]
+          ]
+        },
+        "description": "waiting zone: the right-hand approach lanes just before the stop line of the pedestrian crossing (top-down view)"
+      }
+    ],
+    "lines": [
+      {
+        "line": {
+          "id": "packing_entry",
+          "a": [
+            0.1111,
+            0.5513
+          ],
+          "b": [
+            0.5185,
+            0.2692
+          ]
+        },
+        "description": "stop line at the near edge of the pedestrian crossing; cars travel from bottom-right to top-left"
+      }
+    ]
+  },
+  "packing_line": "packing_entry",
+  "rule_text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+  "labeled_by": "EventProof developer (hand labels from 2-5 fps frame sheets, before any model run)",
+  "labeled_at": "2026-11-01T22:30:00-05:00",
+  "clip": "novisad_approach_a.mp4",
+  "clip_sha256": "c1b8e02a6edd920a52d6806623d1f28acbf3a99299e4fbfea3b0850b916b3517",
+  "objects": [
+    {
+      "description": "red car entering at the right edge ~2.0 s, rolls through and crosses ~4.2 s without stopping",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "silver sedan entering ~5.5 s, stands still ~7.5-11.5 s, crosses ~13.7 s",
+      "crosses_packing": true,
+      "stood_still_s": 4.0,
+      "intended": "PASS"
+    },
+    {
+      "description": "white van entering ~13.8 s, rolls through at ~50 px/s (never stops, checked at 5 fps) and crosses ~17.0 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "white car waiting in the left-hand lane the whole clip (upper of the two, lower-left of the frame)",
+      "crosses_packing": false,
+      "stood_still_s": 19.0,
+      "intended": "PASS"
+    },
+    {
+      "description": "white car waiting in the left-hand lane the whole clip (lower, at the bottom-left edge)",
+      "crosses_packing": false,
+      "stood_still_s": 19.0,
+      "intended": "PASS"
+    }
+  ],
+  "expected_overall": "FAIL",
+  "notes": "Pexels video 15411757 (Pexels License), frames 46-520 of the 1280x720 file, crop x1010-1280 y330-720, 10 fps. Not labelled (edge transients, < 2 s partly in view): a red car leaving past the line at 0-0.5 s, a dark car corner at the bottom-left edge 0-2 s, the next car entering at the bottom-right edge ~17.5-19 s. Tracks on them are reported as extra."
+}

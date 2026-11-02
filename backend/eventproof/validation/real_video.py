@@ -52,8 +52,9 @@ NOT_LABELS = ("TEMPLATE.json", MANIFEST)
 REPAIR_SOURCE = ROOT / "docs/evidence/runs/20261028T023754Z-a922b5bb/challenge/repair_muse.json"
 MIN_STOP_S = 1.0  # process truth, same as the synthetic world
 LOCATION_KEYS = ("location", "gps", "iso6709")
-DISCLAIMER = ("Real-world phone videos recorded and labelled by the participant (labels frozen before any model ran). "
-              "Reported separately from the synthetic results; never used to tune rules, thresholds, repairs or the grader.")
+DISCLAIMER = ("Real-world videos (the participant's own recordings or licensed public footage; source in each label's "
+              "notes), labelled by hand and frozen before any model ran. Reported separately from the synthetic results; "
+              "never used to tune rules, thresholds, repairs or the grader.")
 
 
 class RealVideoError(RuntimeError):

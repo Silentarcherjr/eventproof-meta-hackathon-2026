@@ -1,0 +1,12 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "frozen_at": "2026-11-02T04:08:03+00:00",
+  "labels": {
+    "novisad_approach_a.json": "0262e7c89a41bd3d6a31f379df4cb4c2a7b1d492d65b53da1dc79dea4317bcbd",
+    "novisad_approach_b.json": "6e0abc480a9cfbcc3218b425a8e5916055cc582a742782b0e40b7f39daae06f2"
+  },
+  "clips": {
+    "novisad_approach_a.mp4": "c1b8e02a6edd920a52d6806623d1f28acbf3a99299e4fbfea3b0850b916b3517",
+    "novisad_approach_b.mp4": "f9c2698045b04ea605d5bcb38bbfc991dc3223611b739b37018c2d797d259ee3"
+  }
+}
