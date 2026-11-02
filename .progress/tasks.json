@@ -1215,18 +1215,19 @@
     {
       "id": "P1-17",
       "title": "Two-object rules (WITH event, compiler escalation, multi-concept SAM) + umbrella pilot on real footage: 2/4 right, 1 wrong, 1 not tracked",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [],
       "definition_of_done": "Pre-registered before calls; CI recomputes the published numbers",
       "test_commands": [
         "cd backend && uv run pytest tests/engine/test_with.py tests/validation/test_with_pilot.py"
       ],
       "evidence_paths": [
+        "GitHub Actions run 41422353556 success",
         "benchmark/real/with_umbrella/FINDINGS.md",
         "benchmark/real/with_umbrella/PREREGISTRATION.md (291009f)",
         "d716c82"
       ],
-      "commit_sha": null,
+      "commit_sha": "ffc3c73",
       "priority": "P1",
       "gate": "G6",
       "owner": "agentic-eval",
@@ -1234,9 +1235,9 @@
       "pr_url": null,
       "blocker": null,
       "started_at": "2026-11-02T00:00:00Z",
-      "updated_at": "2026-11-02T21:00:00Z",
+      "updated_at": "2026-11-02T21:30:00Z",
       "cost_note": "≈ $0.05 (estimate)",
-      "next_action": "mark DONE_VERIFIED once CI is green on the pilot commit"
+      "next_action": "none"
     }
   ]
 }
