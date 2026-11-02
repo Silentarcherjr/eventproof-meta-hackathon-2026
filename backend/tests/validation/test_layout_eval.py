@@ -64,7 +64,8 @@ def test_committed_scores_recompute_from_the_recorded_proposals():
             tracks = TrackSet.model_validate_json((run / "tracks.json").read_text())
             lab = labels[c["clip"]]
             assert le.score(lab, rule, tracks) == row["hand"]
-            assert le.score(lab, le.with_geometry(rule, Layout.model_validate(row["proposed"])), tracks) == row["proposed_layout"]
+            proposed = le.with_geometry(rule, Layout.model_validate(row["proposed"]))
+            assert le.score(lab, proposed, tracks) == row["proposed_layout"]
     assert rep["right"] == {"hand": 27, "proposed_layout": 20}
 
 
