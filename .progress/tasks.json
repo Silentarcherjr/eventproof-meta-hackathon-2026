@@ -968,7 +968,7 @@
       "title": "Real public footage (Pexels) perception check: SAM 3.1 line crossings vs hand labels",
       "priority": "P1",
       "gate": "G6",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "P1-07"
       ],
@@ -979,15 +979,16 @@
         "cd backend && uv run pytest tests/validation/test_line_check.py"
       ],
       "evidence_paths": [
+        "GitHub Actions run 41384281488 success",
         "benchmark/real/pexels/PREREGISTRATION.md (c1907a7, before the call)",
         "benchmark/real/pexels/REPORT_pexels.md"
       ],
-      "commit_sha": null,
+      "commit_sha": "0d30a36",
       "pr_url": null,
       "started_at": "2026-11-02T03:37:28Z",
-      "updated_at": "2026-11-02T03:37:28Z",
+      "updated_at": "2026-11-02T03:42:28Z",
       "blocker": null,
-      "next_action": "CI green -> DONE_VERIFIED; optional v2 (crop/windowed tracking) needs approval",
+      "next_action": "optional v2 (crop to belt / windowed tracking) needs approval",
       "cost_note": "1 live SAM call, 203 frames"
     }
   ]
