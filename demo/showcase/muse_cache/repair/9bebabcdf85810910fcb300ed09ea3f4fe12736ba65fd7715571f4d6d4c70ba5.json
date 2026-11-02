@@ -1,0 +1,83 @@
+{
+  "output": {
+    "diagnosis": "spec_error: DWELL without max_speed counts transit time (1.835s >1.5s) as stay, so 0ms still passes. Prior max_speed-only patches fix it but regress on jitter/occlusion because noisy low-conf centers inflate speed over ~1/3s and break still-time.",
+    "proposals": [
+      {
+        "confidence": 0.65,
+        "expected_effect": "Counterexample stays FAIL (0ms still <1500ms, transit speed ~0.118/s >0.07/s ignored). Canonical stopped stays PASS after jitter filtered; occluded bridged instead of false FAIL.",
+        "ops": [
+          {
+            "max_speed": 0.07,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          },
+          {
+            "op": "set_min_confidence",
+            "value": 0.3
+          },
+          {
+            "op": "set_max_gap_frames",
+            "value": 10
+          }
+        ],
+        "rationale": "'stay 1.5s' means nearly-still time. 0.07/s is well below belt transit speed but above stopped jitter, plus confidence filtering stabilizes speed and larger gap bridges occlusion after filtering."
+      },
+      {
+        "confidence": 0.55,
+        "expected_effect": "Same FAIL on counterexample with stricter stillness; stronger filtering recovers canonical/occluded still-time while drive-through high-conf motion still rejected.",
+        "ops": [
+          {
+            "max_speed": 0.05,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          },
+          {
+            "op": "set_min_confidence",
+            "value": 0.4
+          },
+          {
+            "op": "set_max_gap_frames",
+            "value": 12
+          }
+        ],
+        "rationale": "Keep original 0.05 stopped definition to guarantee drive-through rejection, add aggressive low-conf rejection and bridging to prevent noisy speed spikes from breaking true dwells."
+      },
+      {
+        "confidence": 0.45,
+        "expected_effect": "Counterexample FAILs (transit >0.08/s). More tolerant than 0.05 so fewer canonical regressions, still below ~0.118/s belt speed to keep fix.",
+        "ops": [
+          {
+            "max_speed": 0.08,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          },
+          {
+            "op": "set_min_confidence",
+            "value": 0.2
+          }
+        ],
+        "rationale": "Intermediate stopped threshold balances stillness intent vs tracker jitter without raising above drive-through speed, with light confidence filtering."
+      }
+    ]
+  },
+  "request_id": "chatcmpl-01a18054-dab9-7673-892b-d2f642fa82a3",
+  "usage": {
+    "completion_tokens": 5714,
+    "prompt_tokens": 1489,
+    "total_tokens": 7203,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 5202,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 1009,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  }
+}

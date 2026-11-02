@@ -1,0 +1,51 @@
+{
+  "output": {
+    "diagnosis": "spec_error: DWELL(inspection, 1500ms) has max_speed=null so any time inside the zone counts. Counterexample has 0ms still but 1.835s transit >1.5s, so dwell is satisfied and rule PASSes while truth is FAIL. Rule text 'stay at least 1.5 seconds' means stopped/stationary time, not pass-through time.",
+    "proposals": [
+      {
+        "confidence": 0.9,
+        "expected_effect": "Counterexample: still-time 0ms <1500ms so DWELL false, BEFORE false, rule FAILs as labelled. In general slow drive_throughs with transit>1.5s flip PASS->FAIL; canonical >=1.5s stopped stays PASS; brief_stop stays FAIL.",
+        "ops": [
+          {
+            "max_speed": 0.05,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          }
+        ],
+        "rationale": "'stay' requires being nearly still. Adding max_speed ~stopped requires 1.5s continuous nearly-stationary time in inspection before crossing, not just transit time."
+      },
+      {
+        "confidence": 0.75,
+        "expected_effect": "Same as above but more tolerant to center jitter during a true stop; drive-through at belt speed still rejected while stationary dwell still counted.",
+        "ops": [
+          {
+            "max_speed": 0.1,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          }
+        ],
+        "rationale": "Looser stopped threshold to capture intent while tolerating tracking jitter; still requires stillness, rejecting moving transit."
+      }
+    ]
+  },
+  "request_id": "chatcmpl-01a18054-6d93-72d1-8818-515d3c4a257e",
+  "usage": {
+    "completion_tokens": 2370,
+    "prompt_tokens": 1058,
+    "total_tokens": 3428,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 2035,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 1009,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  }
+}

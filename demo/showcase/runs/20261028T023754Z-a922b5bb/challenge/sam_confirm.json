@@ -1,0 +1,13 @@
+{
+  "scene_sha256": "b54a133b54dd38c42bf30fd4c143bfc880a1376e2df703786443bcb1a97ea4a4",
+  "sam": {
+    "perception_source": "sam-3.1",
+    "intended": "FAIL",
+    "oracle_verdict": "PASS",
+    "detector_verdict": "PASS",
+    "outcome": "spec_error"
+  },
+  "mock_outcome": "spec_error",
+  "still_fails_with_sam": true,
+  "live_sam_calls": 1
+}

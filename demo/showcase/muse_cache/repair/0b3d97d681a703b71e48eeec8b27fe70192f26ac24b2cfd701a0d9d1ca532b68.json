@@ -1,0 +1,78 @@
+{
+  "output": {
+    "diagnosis": "spec_error: DWELL without max_speed counts any presence (1.835s transit) as stay, so drive-through passes. Intent of 'stay' needs near-stopped time. Strict 0.05/0.10 +1500ms over-rejects brief_stop labelled PASS with 1200-1600ms strict-still due to jitter/creep fragmentation, so need stillness below belt speed ~0.118 with slightly reduced min_ms for tolerance.",
+    "proposals": [
+      {
+        "confidence": 0.7,
+        "expected_effect": "Counterexample: 0ms still <1100ms -> FAIL fixed. Drive-through with transit>1500 but speed~0.118>0.08 stays FAIL. Brief_stop with 1200-1600ms still now PASS, removing regressions.",
+        "ops": [
+          {
+            "op": "set_dwell_min_ms",
+            "value": 1100,
+            "zone": "inspection"
+          },
+          {
+            "max_speed": 0.08,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          }
+        ],
+        "rationale": "'stay' means nearly still, not transit. 0.08 rejects belt-speed transit ~0.118 but tolerates jitter, and 1100ms keeps 1.5s intent with tolerance for fragmented still measurement."
+      },
+      {
+        "confidence": 0.6,
+        "expected_effect": "Counterexample FAIL (0<1000). Brief_stop 1200+ PASS with margin for fragmentation. Canonical long stops stay PASS.",
+        "ops": [
+          {
+            "op": "set_dwell_min_ms",
+            "value": 1000,
+            "zone": "inspection"
+          },
+          {
+            "max_speed": 0.05,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          }
+        ],
+        "rationale": "Strict stopped definition with lower dwell threshold to separate 0ms drive-through from 1200ms+ brief stops while preserving stay intent."
+      },
+      {
+        "confidence": 0.5,
+        "expected_effect": "Counterexample FAIL. Brief_stop borderline 1200ms PASS if continuous; more conservative toward 1.5s text but less margin for jitter than P1/P2.",
+        "ops": [
+          {
+            "op": "set_dwell_min_ms",
+            "value": 1200,
+            "zone": "inspection"
+          },
+          {
+            "max_speed": 0.07,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          }
+        ],
+        "rationale": "Minimal reduction from 1500ms that still includes 1200ms labelled PASS examples, with 0.07 still below drive-through speed to require true stop."
+      }
+    ]
+  },
+  "request_id": "chatcmpl-01a18056-236d-7088-a2ba-2495d6f89afe",
+  "usage": {
+    "completion_tokens": 8142,
+    "prompt_tokens": 1769,
+    "total_tokens": 9911,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 7599,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 1393,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "output": {
+    "diagnosis": "spec_error: DWELL without max_speed counts any presence as stay. Counterexample has 0ms still but 1.835s transit >1.5s so PASSes while truth is FAIL. 'stay' needs near-stopped time below belt speed ~0.118. Prior strict-speed +1500/1100ms patches fragment on jitter/1-3s windowing so 1067-1267ms still labelled PASS fail to accumulate continuous dwell.",
+    "proposals": [
+      {
+        "confidence": 0.65,
+        "expected_effect": "Counterexample: 0ms still <800ms -> FAIL fixed. Drive-through at belt speed ~0.118 >0.08 not counted -> FAIL. Brief_stop with 1067-1600ms still can accumulate ~800ms continuous despite windowing/fragmentation -> PASS, removing 4 regressions.",
+        "ops": [
+          {
+            "op": "set_dwell_min_ms",
+            "value": 800,
+            "zone": "inspection"
+          },
+          {
+            "max_speed": 0.08,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          }
+        ],
+        "rationale": "'stay' means nearly still, not transit. 0.08 is below belt 0.1178-0.1180 to reject drive-through but above strict stopped to tolerate jitter, and 800ms preserves 1.5s intent with tolerance for speed-window loss and split stops while staying far above 0."
+      },
+      {
+        "confidence": 0.55,
+        "expected_effect": "Counterexample FAIL (0<700). 1067ms+ still PASS with more margin for fragmentation; strict 0.05 more robust to slow drive-throughs counted as stopped.",
+        "ops": [
+          {
+            "op": "set_dwell_min_ms",
+            "value": 700,
+            "zone": "inspection"
+          },
+          {
+            "max_speed": 0.05,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          }
+        ],
+        "rationale": "Strict stopped definition with lower dwell to compensate windowing loss: requires true stop, separates 0ms drive-through from 1000ms+ brief stops."
+      },
+      {
+        "confidence": 0.5,
+        "expected_effect": "Counterexample FAIL. 1200ms+ still PASS if jitter <0.10; retains higher 1000ms closer to 1.5s text.",
+        "ops": [
+          {
+            "op": "set_dwell_min_ms",
+            "value": 1000,
+            "zone": "inspection"
+          },
+          {
+            "max_speed": 0.1,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          }
+        ],
+        "rationale": "Max permissible stillness just below belt speed to maximize jitter tolerance while still rejecting belt transit, with 1000ms as compromise between 1.5s text and observed 1067ms PASS labels."
+      }
+    ]
+  },
+  "request_id": "chatcmpl-01a18056-ff2b-71f7-98cd-f8fe0947757d",
+  "usage": {
+    "completion_tokens": 8444,
+    "prompt_tokens": 2872,
+    "total_tokens": 11316,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 7854,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 1649,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  }
+}

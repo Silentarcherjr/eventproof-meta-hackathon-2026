@@ -1,0 +1,88 @@
+{
+  "raw_output": {
+    "assumptions": [
+      "'Been in the inspection zone for one second' interpreted as DWELL continuously inside >=1000 ms with any motion (max_speed null).",
+      "'Reach packing within 6 seconds' interpreted as CROSSES packing_entry with 6000 ms limit measured from satisfaction of the 1-second dwell to the crossing.",
+      "'Reach packing' direction interpreted as normal left-to-right travel, which per the given mapping is direction to_left.",
+      "Objects that never dwell 1 second in inspection vacuously pass."
+    ],
+    "entity_concept": "blue box",
+    "entity_name": "blue box",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "max_speed": null,
+          "min_ms": 1000,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": null,
+          "min_ms": 1000,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "within_ms": 6000
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every blue box that dwells continuously in the inspection zone for at least 1 second must cross the packing_entry line in the to_left direction within 6 seconds afterwards.",
+    "root": 2,
+    "rule_id": "blue-box-inspection-to-packing",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-spark-1.3",
+  "request_ids": [
+    "chatcmpl-01a17fc5-d180-7150-babc-187664547e60"
+  ],
+  "attempts": 1,
+  "usage": [
+    {
+      "completion_tokens": 3755,
+      "prompt_tokens": 1421,
+      "total_tokens": 5176,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 3436,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "After a blue box has been in the inspection zone for one second, it must reach packing within 6 seconds.",
+  "latency_s": 12.89
+}

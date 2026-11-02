@@ -1,0 +1,217 @@
+{
+  "schema": "eventproof-ledger/1",
+  "eventproof_version": "0.1.0",
+  "run_id": "20261028T023754Z-a922b5bb",
+  "created_at": "2026-10-28T02:37:54+00:00",
+  "status": "completed",
+  "evidence_sha256": "b95ee48dbdf0c20b6901b38f3c8e474ed1fc44c9b8d93aac963b43f119a659b6",
+  "evidence_seal_valid": true,
+  "inputs": {
+    "video_sha256": "8a2ed1d0bd4fb416174914ba8a05323f7931d0d95e805c5a8fe94f764722a6c4",
+    "video_original_sha256": "8a2ed1d0bd4fb416174914ba8a05323f7931d0d95e805c5a8fe94f764722a6c4",
+    "rule_text_sha256": "67102aa001fc144e799a8cda73d130e0a57a74f697785576f34a8f27132031a3",
+    "rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b"
+  },
+  "verdict": "FAIL",
+  "models": [
+    {
+      "stage": "rule",
+      "model": "muse-spark-1.3",
+      "request_ids": [
+        "chatcmpl-01a17fc4-ee68-75f3-97dd-afe01dc99296"
+      ],
+      "cached": true,
+      "usage": [
+        {
+          "completion_tokens": 2648,
+          "prompt_tokens": 1420,
+          "total_tokens": 4068,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 2336,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 0,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ]
+    },
+    {
+      "stage": "perception",
+      "model": "sam-3.1",
+      "source_ref": "sam-3.1:resp_6ae1579972c203e08f434b8e:video=8a2ed1d0bd4fb416:prompt='blue box':cached",
+      "cached": true,
+      "tracks_sha256": "2f2b2d81d68b72de1a288bc5899c5eb98a74dd3d1692ede466adeb9f4e1c9d0f"
+    },
+    {
+      "stage": "repair round 1",
+      "model": "muse-spark-1.3",
+      "request_ids": [
+        "chatcmpl-01a18054-6d93-72d1-8818-515d3c4a257e"
+      ],
+      "cached": true
+    },
+    {
+      "stage": "repair round 2",
+      "model": "muse-spark-1.3",
+      "request_ids": [
+        "chatcmpl-01a18056-236d-7088-a2ba-2495d6f89afe"
+      ],
+      "cached": true
+    },
+    {
+      "stage": "repair round 3",
+      "model": "muse-spark-1.3",
+      "request_ids": [
+        "chatcmpl-01a18056-ff2b-71f7-98cd-f8fe0947757d"
+      ],
+      "cached": true
+    }
+  ],
+  "challenge": {
+    "perception": "mock (NOT SAM)",
+    "suite_cases": 150,
+    "failures": 44,
+    "counterexample": {
+      "family": "drive_through",
+      "seed": 0,
+      "outcome": "spec_error"
+    },
+    "sam_confirm": {
+      "scene_sha256": "b54a133b54dd38c42bf30fd4c143bfc880a1376e2df703786443bcb1a97ea4a4",
+      "still_fails_with_sam": true,
+      "live_sam_calls": 1
+    }
+  },
+  "repairs": {
+    "muse": {
+      "proposer": "muse-spark-1.3",
+      "holdout": [
+        [
+          "holdout_v2",
+          "bc76a6b52faf290f71c9a4d106059a2e95cb394703041b72cca78ea49c33fe32"
+        ]
+      ],
+      "decisions": [
+        {
+          "proposal_id": "muse-spark-1.3-r1-0",
+          "patch": "DWELL(inspection) counts only while speed <= 0.05/s",
+          "accepted": false,
+          "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+          "patched_rule_hash": "eb29fbc5b6280375680e9a127824f26e4dfbcb67c22e96084adc68a1da6b36ad"
+        },
+        {
+          "proposal_id": "muse-spark-1.3-r1-1",
+          "patch": "DWELL(inspection) counts only while speed <= 0.10/s",
+          "accepted": false,
+          "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+          "patched_rule_hash": "93f1cfe983488033b6fcc81aa8fd31ece5447b817a24c48af65c9b07a9db44a7"
+        },
+        {
+          "proposal_id": "muse-spark-1.3-r2-0",
+          "patch": "DWELL(inspection) >= 1.10 s; DWELL(inspection) counts only while speed <= 0.08/s",
+          "accepted": false,
+          "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+          "patched_rule_hash": "18ab8486e404081bd5be1798f885295d7c298235c2b769211d559c914d329cb2"
+        },
+        {
+          "proposal_id": "muse-spark-1.3-r2-1",
+          "patch": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.05/s",
+          "accepted": false,
+          "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+          "patched_rule_hash": "07e87d3df25b7e3e480151388702bc1648facc0342176b28c776bd2f33091538"
+        },
+        {
+          "proposal_id": "muse-spark-1.3-r2-2",
+          "patch": "DWELL(inspection) >= 1.20 s; DWELL(inspection) counts only while speed <= 0.07/s",
+          "accepted": false,
+          "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+          "patched_rule_hash": "a5bc1502ff07b73c6ddaff6d86d0dca7e52970e01123e60c1f0ae26e0d6531ca"
+        },
+        {
+          "proposal_id": "muse-spark-1.3-r3-0",
+          "patch": "DWELL(inspection) >= 0.80 s; DWELL(inspection) counts only while speed <= 0.08/s",
+          "accepted": true,
+          "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+          "patched_rule_hash": "e43ab2e1522d235a9b7c815988adf6abb8165bc9dd2ed26a62de347a92d1564c"
+        },
+        {
+          "proposal_id": "muse-spark-1.3-r3-1",
+          "patch": "DWELL(inspection) >= 0.70 s; DWELL(inspection) counts only while speed <= 0.05/s",
+          "accepted": true,
+          "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+          "patched_rule_hash": "b97e956caab235e5fed9d623bc2723ccae762aa10e50cf95db61f6566ebaa548"
+        },
+        {
+          "proposal_id": "muse-spark-1.3-r3-2",
+          "patch": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.10/s",
+          "accepted": false,
+          "previous_rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+          "patched_rule_hash": "d9f1dff9a891fa067124924e9fec3135f5e9dccee1f28aceab6449c7c17a7300"
+        }
+      ]
+    }
+  },
+  "files": {
+    "challenge/before_after_muse.json": {
+      "sha256": "224ab0c87954eb756aad022b1fd98865822b0b142b402d36c2dbe24ca7eafae8",
+      "bytes": 45070
+    },
+    "challenge/challenge.json": {
+      "sha256": "2aad10e62f046531fca3284547085580fd5af9a5a6ce06447af5454078daa36e",
+      "bytes": 1686
+    },
+    "challenge/counterexample.json": {
+      "sha256": "bde3abb95a6c13cc063d160f9ac8ac9eda3c6a4939de0f20b8297551759b3687",
+      "bytes": 4538
+    },
+    "challenge/counterexample.mp4": {
+      "sha256": "a35a75e1f3f17e5e2f43d29e37c5a2cc28cc7a6fa1e1836a7993d56c95da0706",
+      "bytes": 12834
+    },
+    "challenge/decisive_f0098.png": {
+      "sha256": "45a1846ba88dbc1fe5a159731fc32a50ed90c7790c574db0f09e7f409b89913a",
+      "bytes": 12120
+    },
+    "challenge/repair_muse.json": {
+      "sha256": "8031f8f43d3b6a1913ae84e84c7e6d2938c24c038dda94e328e37b61bc978a10",
+      "bytes": 41652
+    },
+    "challenge/replay.json": {
+      "sha256": "3084a7e6958ddc98fbddd568ee854fdb6491c3d5aeb267180812bbfddf3c1bee",
+      "bytes": 741
+    },
+    "challenge/sam_confirm.json": {
+      "sha256": "5b038f0cde4e3b5867e095b39a14713813b2f54fd80b5499900eceda69c8397a",
+      "bytes": 341
+    },
+    "challenge/side_by_side.mp4": {
+      "sha256": "0912efff49aebcb9d1c8f073fe0708491cddec5b4a52c68212a9925cd30cbb6b",
+      "bytes": 88840
+    },
+    "evidence.json": {
+      "sha256": "b8dbe29722c8cbc05c499ea3836b43945f55a4147131edfd56a68560104ca22f",
+      "bytes": 7387
+    },
+    "rule.json": {
+      "sha256": "c526bcb4f06110dd81e86568ebcef96e83d64b3bc43c926dbd3f08d89fad17b3",
+      "bytes": 1364
+    },
+    "tracks.json": {
+      "sha256": "2f2b2d81d68b72de1a288bc5899c5eb98a74dd3d1692ede466adeb9f4e1c9d0f",
+      "bytes": 25280
+    },
+    "video.mp4": {
+      "sha256": "8a2ed1d0bd4fb416174914ba8a05323f7931d0d95e805c5a8fe94f764722a6c4",
+      "bytes": 16497
+    }
+  },
+  "ledger_sha256": "0a333eee98b3def48b7ce5d2fa8b9cc35521365d3573f8d388360bd6fd74eafc"
+}

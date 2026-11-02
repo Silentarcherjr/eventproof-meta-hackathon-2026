@@ -1,0 +1,73 @@
+{
+  "run_id": "20261028T023754Z-a922b5bb",
+  "rule_hash": "0c44b2fbb95ce5342034b18c2d227a405c7bef8ede97738f4a86501d8a167e8b",
+  "world": "synthetic conveyor (process truth: box stands still >= 1.0 s at inspection before packing)",
+  "perception": "mock (NOT SAM)",
+  "suite": {
+    "brief_stop": {
+      "correct": 27,
+      "spec_error": 3
+    },
+    "canonical": {
+      "correct": 30
+    },
+    "drive_through": {
+      "spec_error": 11,
+      "correct": 19
+    },
+    "occluded_station": {
+      "correct": 18,
+      "perception_error": 11,
+      "abstained": 1
+    },
+    "tailgate": {
+      "perception_error": 19,
+      "correct": 5,
+      "abstained": 6
+    }
+  },
+  "suite_cases": 150,
+  "failures": 44,
+  "counterexample": {
+    "family": "drive_through",
+    "seed": 0,
+    "outcome": "spec_error",
+    "detector_verdict": "PASS",
+    "intended": "FAIL",
+    "oracle_verdict": "PASS",
+    "truths": [
+      {
+        "object_id": 0,
+        "label": "blue box",
+        "station_stop_ms": 0.0,
+        "crosses_packing_frame": 104,
+        "intended": "VIOLATION"
+      }
+    ],
+    "notes": "transit_in_zone_s=1.835",
+    "reduction": [
+      "trim tail to 130 frames",
+      "trim 7 leading frames"
+    ],
+    "evaluations": 32,
+    "knob": "belt speed",
+    "t_fail": 0.1177734375,
+    "t_pass": 0.11796875,
+    "pass_verdict": "FAIL",
+    "decisive_frames": [
+      98
+    ],
+    "scene_difference": {
+      "frames_compared": 123,
+      "frames_differing": 92,
+      "first_differing_frame": 4,
+      "max_pixels_differing_in_a_frame": 1980
+    },
+    "identity_events_fail": []
+  },
+  "files": [
+    "side_by_side.mp4",
+    "replay.json",
+    "decisive_f0098.png"
+  ]
+}

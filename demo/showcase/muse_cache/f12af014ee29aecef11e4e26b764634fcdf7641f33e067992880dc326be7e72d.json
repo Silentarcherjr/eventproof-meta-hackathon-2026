@@ -1,0 +1,84 @@
+{
+  "raw_output": {
+    "assumptions": [
+      "Going into packing is interpreted as crossing packing_entry in direction to_left, since boxes travel left-to-right (+x) which maps to to_left."
+    ],
+    "entity_concept": "blue box",
+    "entity_name": "blue box",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": 0.05,
+          "min_ms": 1000,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every blue box that crosses packing_entry to the left must have previously stopped in inspection for at least 1000 ms.",
+    "root": 2,
+    "rule_id": "blue-box-inspection-before-packing",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-spark-1.3",
+  "request_ids": [
+    "chatcmpl-01a17fc5-6f41-75a3-a3d0-2f0e788733d6"
+  ],
+  "attempts": 1,
+  "usage": [
+    {
+      "completion_tokens": 2153,
+      "prompt_tokens": 1420,
+      "total_tokens": 3573,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 1858,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 1393,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "A blue box may only go into packing after it has stopped at the inspection station for at least one second.",
+  "latency_s": 9.85
+}

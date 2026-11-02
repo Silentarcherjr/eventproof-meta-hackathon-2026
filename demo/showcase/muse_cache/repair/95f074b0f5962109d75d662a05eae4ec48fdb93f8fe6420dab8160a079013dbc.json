@@ -1,0 +1,51 @@
+{
+  "output": {
+    "diagnosis": "spec_error: DWELL zone inspection has max_speed null so any presence counts. Counterexample stood still 0 ms but transit_in_zone_s=1.835 >1.5s, so DWELL passes and rule PASSes with perfect tracks. Rule text 'stay at least 1.5 seconds' intends stopped time, not moving transit. Hence 11x drive_through and 3x brief_stop spec_errors where moving+brief time exceeds threshold.",
+    "proposals": [
+      {
+        "confidence": 0.92,
+        "expected_effect": "Counterexample DWELL time 1.835s -> ~0s still, BEFORE fails, IMPLIES verdict PASS->FAIL matching truth. In general all drive_through with no stop FAIL, brief_stop with <1.5s stopped FAIL, canonical with >1.5s stopped still PASS.",
+        "ops": [
+          {
+            "max_speed": 0.05,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          }
+        ],
+        "rationale": "Captures intent of 'stay' as stopped: only nearly-still time counts toward the 1500ms threshold. Preserves 1500ms from rule text instead of numeric tweak to min_ms to beat 1.835s transit."
+      },
+      {
+        "confidence": 0.84,
+        "expected_effect": "Same flip PASS->FAIL on counterexample (belt speed ~0.118 >0.08) and same general fix as 0.05 but more tolerant to tracking jitter while stopped.",
+        "ops": [
+          {
+            "max_speed": 0.08,
+            "op": "set_dwell_max_speed",
+            "zone": "inspection"
+          }
+        ],
+        "rationale": "Same stopped intent, threshold still below observed belt/transit speed ~0.117-0.118 from boundary pair, so drive-through still excluded but small jitter while stationed still counts."
+      }
+    ]
+  },
+  "request_id": "chatcmpl-01a18053-b86b-77db-a54f-f89d823440e3",
+  "usage": {
+    "completion_tokens": 3521,
+    "prompt_tokens": 1058,
+    "total_tokens": 4579,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 3130,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 0,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  }
+}

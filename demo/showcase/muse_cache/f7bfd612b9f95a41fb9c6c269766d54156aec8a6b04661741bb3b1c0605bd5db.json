@@ -1,0 +1,87 @@
+{
+  "raw_output": {
+    "assumptions": [
+      "Crossing into packing is crossing line 'packing_entry' in direction 'to_left' (rightwards/+x), per the stated left-to-right travel mapping.",
+      "'Stay at least 1.5 seconds' is DWELL continuously inside zone 'inspection' for >=1500 ms with any motion allowed (max_speed null), not requiring stopped.",
+      "No maximum gap between dwell and crossing is enforced (within_ms null); only ordering before the first crossing is required.",
+      "Boxes that never cross packing_entry pass vacuously."
+    ],
+    "entity_concept": "blue box",
+    "entity_name": "blue box",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": null,
+          "min_ms": 1500,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every blue box that crosses packing_entry to_left must have dwelled continuously in the inspection zone for at least 1500 ms before that crossing.",
+    "root": 2,
+    "rule_id": "blue-box-inspection-before-packing",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-spark-1.3",
+  "request_ids": [
+    "chatcmpl-01a17fc4-ee68-75f3-97dd-afe01dc99296"
+  ],
+  "attempts": 1,
+  "usage": [
+    {
+      "completion_tokens": 2648,
+      "prompt_tokens": 1420,
+      "total_tokens": 4068,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 2336,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Every blue box must stay at least 1.5 seconds in the inspection zone before it crosses into packing.",
+  "latency_s": 12.29
+}
