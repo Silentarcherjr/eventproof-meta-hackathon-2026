@@ -41,7 +41,7 @@
 - [x] **P1-06** (G4, DONE_VERIFIED) Pre-registered final test set (report-only, distribution shift) + regression tests on every published number — DoD: Frozen + pre-registered before evaluation; evaluated once; report committed; CI recomputes it
 - [x] **P1-07** (G4, DONE_VERIFIED) Live SAM 3.1 pass on a pre-registered final_v1 subset (80 scenes), reported separately — DoD: Pre-registered before any call; cost within the approved $5; raw outputs committed; CI recomputes the report with 0 calls
 - [x] **P1-08** (G6, DONE_VERIFIED) Real public footage (Pexels) perception check: SAM 3.1 line crossings vs hand labels — DoD: Labels + pre-registration pushed before the call; result reported as is; CI recomputes from cached output
-- [ ] **P1-09** (G6, IN_REVIEW) Real traffic footage (Pexels Novi Sad): full loop Muse rule -> SAM 3.1 -> verdicts, before/after repair — DoD: Labels frozen + pre-registered before calls; result reported as is; CI recomputes verdicts from committed tracks
+- [x] **P1-09** (G6, DONE_VERIFIED) Real traffic footage (Pexels Novi Sad): full loop Muse rule -> SAM 3.1 -> verdicts, before/after repair — DoD: Labels frozen + pre-registered before calls; result reported as is; CI recomputes verdicts from committed tracks
 
 ## P2
 

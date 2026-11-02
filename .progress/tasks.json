@@ -999,7 +999,7 @@
       "title": "Real traffic footage (Pexels Novi Sad): full loop Muse rule -> SAM 3.1 -> verdicts, before/after repair",
       "priority": "P1",
       "gate": "G6",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "P1-08"
       ],
@@ -1010,14 +1010,15 @@
         "cd backend && uv run pytest tests/validation/test_novisad.py"
       ],
       "evidence_paths": [
-        "benchmark/real/novisad/PREREGISTRATION.md (45bde5e, before calls)",
+        "GitHub Actions run 41387194810 success",
         "benchmark/real/novisad/FINDINGS.md",
+        "benchmark/real/novisad/PREREGISTRATION.md (45bde5e, before calls)",
         "benchmark/real/novisad/report_novisad.json"
       ],
-      "commit_sha": null,
+      "commit_sha": "60ffb09",
       "pr_url": null,
       "started_at": "2026-11-02T04:10:54Z",
-      "updated_at": "2026-11-02T04:10:54Z",
+      "updated_at": "2026-11-02T04:15:38Z",
       "blocker": null,
       "next_action": "CI green -> DONE_VERIFIED",
       "cost_note": "1 Muse compile + 2 SAM calls (387 frames)"
