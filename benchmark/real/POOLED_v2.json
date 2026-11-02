@@ -1,0 +1,146 @@
+{
+  "schema": "eventproof-real-pooled/1",
+  "clips": 5,
+  "labelled_cars": 30,
+  "readings": {
+    "muse_spark_rule": {
+      "objects_right": 27,
+      "clips_right": 5,
+      "abstained": 2,
+      "objects_ci95": [
+        0.7438,
+        0.9654
+      ]
+    },
+    "muse_spark_rule_plus_synthetic_repair": {
+      "objects_right": 16,
+      "clips_right": 4,
+      "abstained": 0,
+      "objects_ci95": [
+        0.3614,
+        0.6977
+      ]
+    },
+    "muse_wonder_rule": {
+      "objects_right": 27,
+      "clips_right": 5,
+      "abstained": 2,
+      "objects_ci95": [
+        0.7438,
+        0.9654
+      ]
+    }
+  },
+  "muse_spark_alone_from_video": {
+    "runs": 25,
+    "overall_right": 25,
+    "counts_exact": 11,
+    "counts_exact_ci95": [
+      0.2667,
+      0.6293
+    ]
+  },
+  "per_clip": [
+    {
+      "clip": "novisad_approach_a.mp4",
+      "labelled": 5,
+      "expected": "FAIL",
+      "muse_spark_rule": {
+        "objects_right": 5,
+        "abstained": 0,
+        "overall": "FAIL"
+      },
+      "muse_spark_rule_plus_synthetic_repair": {
+        "objects_right": 4,
+        "abstained": 0,
+        "overall": "FAIL"
+      },
+      "muse_wonder_rule": {
+        "objects_right": 5,
+        "abstained": 0,
+        "overall": "FAIL"
+      }
+    },
+    {
+      "clip": "novisad_approach_b.mp4",
+      "labelled": 3,
+      "expected": "PASS",
+      "muse_spark_rule": {
+        "objects_right": 3,
+        "abstained": 0,
+        "overall": "PASS"
+      },
+      "muse_spark_rule_plus_synthetic_repair": {
+        "objects_right": 3,
+        "abstained": 0,
+        "overall": "PASS"
+      },
+      "muse_wonder_rule": {
+        "objects_right": 3,
+        "abstained": 0,
+        "overall": "PASS"
+      }
+    },
+    {
+      "clip": "wroclaw_w1.mp4",
+      "labelled": 6,
+      "expected": "PASS",
+      "muse_spark_rule": {
+        "objects_right": 6,
+        "abstained": 0,
+        "overall": "PASS"
+      },
+      "muse_spark_rule_plus_synthetic_repair": {
+        "objects_right": 6,
+        "abstained": 0,
+        "overall": "PASS"
+      },
+      "muse_wonder_rule": {
+        "objects_right": 6,
+        "abstained": 0,
+        "overall": "PASS"
+      }
+    },
+    {
+      "clip": "wroclaw_w2.mp4",
+      "labelled": 10,
+      "expected": "FAIL",
+      "muse_spark_rule": {
+        "objects_right": 8,
+        "abstained": 2,
+        "overall": "FAIL"
+      },
+      "muse_spark_rule_plus_synthetic_repair": {
+        "objects_right": 0,
+        "abstained": 0,
+        "overall": "PASS"
+      },
+      "muse_wonder_rule": {
+        "objects_right": 8,
+        "abstained": 2,
+        "overall": "FAIL"
+      }
+    },
+    {
+      "clip": "wroclaw_w3.mp4",
+      "labelled": 6,
+      "expected": "FAIL",
+      "muse_spark_rule": {
+        "objects_right": 5,
+        "abstained": 0,
+        "overall": "FAIL"
+      },
+      "muse_spark_rule_plus_synthetic_repair": {
+        "objects_right": 3,
+        "abstained": 0,
+        "overall": "FAIL"
+      },
+      "muse_wonder_rule": {
+        "objects_right": 5,
+        "abstained": 0,
+        "overall": "FAIL"
+      }
+    }
+  ],
+  "note": "Per-object scores need tracks, so they exist only for the three rule readings; Muse Spark alone is scored per run on its overall verdict and on whether it counted crossings and violations exactly."
+}

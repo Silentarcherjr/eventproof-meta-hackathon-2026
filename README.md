@@ -14,7 +14,7 @@ on the rule, and the **staff reviewer** who approves every citation. A false PAS
 cited; a false FAIL is a $40 ticket for a resident who did stop. On real footage below, a repair that passed every synthetic test
 missed a real rolling stop and **all 10** cars that never stopped at the line; EventProof flagged it before deployment.
 
-**At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · 22/24 cars right on real traffic footage from 2 cities, labels
+**At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · 27/30 cars right on real traffic footage from 2 cities (0 wrong verdicts), labels
 frozen before any model call · one-command replay with no API key (`docker compose`) · 246 backend tests, CI recomputes every
 published number · MIT licensed.
 
@@ -59,10 +59,11 @@ Sources for the deployment facts above: [MoCo Show, 2026-01-07](https://mocoshow
 ![Before and after the repair: the same failing case judged by both rules](docs/media/before_after.png)
 
 ## Results on real footage (labels frozen and pushed before any model call)
-**Pooled over 4 real traffic clips (24 hand-labelled cars, 2 cities):** Muse Spark's rule → SAM 3.1 → engine judged
-**22/24 cars right** (2 abstained, 0 wrong; Wilson 95 % 0.74–0.98) and 4/4 clips. The repair that passed every synthetic
-test: **13/24**. Muse Spark alone from the video: right clip verdict 20/20 runs, but counted crossings and violations
-exactly in only 11/20. [pooled](benchmark/real/traffic_v2/FINDINGS.md)
+**Pooled over 5 real traffic clips (30 hand-labelled cars, 2 cities):** Muse Spark's rule → SAM 3.1 → engine judged
+**27/30 cars right** (2 abstained, 1 car SAM 3.1 never tracked, **0 wrong verdicts**; Wilson 95 % 0.74–0.97). The repair
+that passed every synthetic test: **16/30**. Muse Spark alone from the video: right clip verdict 25/25 runs, but counted
+crossings and violations exactly in only 11/25. [pooled](benchmark/real/traffic_v3/FINDINGS.md) · first pooled result
+(4 clips, 22/24 vs 13/24): [here](benchmark/real/traffic_v2/FINDINGS.md)
 
 | Test | Result |
 |---|---|

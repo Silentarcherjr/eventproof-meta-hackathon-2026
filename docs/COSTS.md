@@ -16,6 +16,7 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 
 | fecha (Panamá) | plataforma | sesión/tarea | tipo de crédito | saldo confirmado | consumo confirmado | estimado | límite acordado | alerta | fuente |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-02 | Meta Model API | Real traffic v3, Wroclaw w3 (P1-12) | hackathon $150 | UNKNOWN | 1 SAM call (91 frames) + 5 Muse video calls | ≈ $0.1 (estimate) | within the $60 approval | - | benchmark/real/traffic_v3/FINDINGS.md |
 | 2026-11-02 | Meta Model API | Real traffic v2, Wroclaw (P1-12) | hackathon $150 | UNKNOWN | 1 Muse compile + 10 Muse video calls + 2 Wonder compiles + 2 SAM calls (380 frames) | ≈ $0.5 at list price (estimate) | within the $60 approval | - | benchmark/real/traffic_v2/FINDINGS.md |
 | 2026-11-02 | Meta Model API | Ambiguity finder, Spark vs Wonder (P1-11) | hackathon $150 | UNKNOWN | 1 Wonder smoke + 23 live compiles (8 Spark, 15 Wonder incl. retries) + 2 Wonder compiles (Novi Sad addendum) | cached usage ≈ $1.41 + one uncached Wonder runaway ≈ $2 (estimate) | within the $60 approval | - | benchmark/ambiguity/FINDINGS.md |
 | 2026-11-02 | Meta Model API | Muse Spark-alone video baseline (P1-10) | hackathon $150 | UNKNOWN | 1 smoke + 10 live muse-spark-1.3 video calls (26.7k in / 42.6k out tokens) | ≈ $0.23 at list price | within the $60 approval | - | benchmark/real/spark_alone/report.json |

@@ -150,3 +150,9 @@
   reading; Spark alone overall 10/10, counts exact 6/10. Pooled 4 clips / 24 cars: Muse rule 22/24, repair 13/24, Spark alone
   counts exact 11/20. One car crossing at 18.4 s in w2 was not labelled (post-hoc note). `real_pooled.py` + CI test.
 - CI 41401253197 failed: Wonder's Wroclaw reading was not committed (cache file untracked); committed in c7ec295, CI 41401675641 green.
+## 2026-11-02 · session 1 (cont.) · local macOS · orchestrator — certificate, more real footage
+- Rule certificate (7812f91): one printable page per run with a fixed status rule; API `/runs/{id}/certificate`; studio links.
+- Factory footage: ~15 Pexels factory/forklift/bottling clips screened; none usable for a zone-time rule with a fixed camera.
+- Wroclaw w3 (t 81.5-90.6 s, 6 cars) pre-registered (45ba9ba): rule 5/6 (1 car never tracked by SAM), repair 3/6, Spark alone
+  counts exact 0/5. Pooled 5 clips / 30 cars: rule 27/30 (0 wrong verdicts), repair 16/30. Certificate: untracked objects
+  make a rule CONDITIONAL (perception gap), wrong verdicts make it NOT CERTIFIED.

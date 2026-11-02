@@ -1,0 +1,70 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae842d11c21e1a3b467487a",
+ "video_sha256": "9596099ad33746f20fe9b25b0e066e512f6e30175b5961a7f24e6ef0947e3a7f",
+ "run": 1,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 0.4, \"description\": \"white Renault hatchback in left lane, first car to cross\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 2.2, \"description\": \"silver Skoda sedan in second lane from left\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 2.9, \"description\": \"black sedan in center lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 5.0, \"description\": \"silver Hyundai sedan in leftmost lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 5.9, \"description\": \"grey Toyota SUV in center lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 7.8, \"description\": \"white Toyota taxi in rightmost lane\", \"verdict\": \"PASS\", \"waited_s\": 7.5}, {\"approx_cross_time_s\": 8.5, \"description\": \"dark sedan in lane left of taxi\", \"verdict\": \"PASS\", \"waited_s\": 8.0}], \"notes\": \"Cars travel top to bottom, line at y=0.5207. Waited means stationary time in inspection zone. First 5 cars moved continuously through zone with no stop, 0s wait. Right-lane taxi and dark sedan were stationary in zone from t=0 until crossing, >1.5s. Motorcycle crossing ~0.6s excluded as not a car.\", \"overall\": \"FAIL\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 0.4,
+    "description": "white Renault hatchback in left lane, first car to cross",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 2.2,
+    "description": "silver Skoda sedan in second lane from left",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 2.9,
+    "description": "black sedan in center lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 5.0,
+    "description": "silver Hyundai sedan in leftmost lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 5.9,
+    "description": "grey Toyota SUV in center lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 7.8,
+    "description": "white Toyota taxi in rightmost lane",
+    "verdict": "PASS",
+    "waited_s": 7.5
+   },
+   {
+    "approx_cross_time_s": 8.5,
+    "description": "dark sedan in lane left of taxi",
+    "verdict": "PASS",
+    "waited_s": 8.0
+   }
+  ],
+  "notes": "Cars travel top to bottom, line at y=0.5207. Waited means stationary time in inspection zone. First 5 cars moved continuously through zone with no stop, 0s wait. Right-lane taxi and dark sedan were stationary in zone from t=0 until crossing, >1.5s. Motorcycle crossing ~0.6s excluded as not a car.",
+  "overall": "FAIL"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 1344,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 0
+  },
+  "output_tokens": 9297,
+  "output_tokens_details": {
+   "reasoning_tokens": 8904
+  },
+  "total_tokens": 10641
+ },
+ "latency_s": 51.61
+}

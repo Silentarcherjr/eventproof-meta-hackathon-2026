@@ -21,11 +21,12 @@ def test_synthetic_run_repair_is_conditional_until_a_field_check():
     assert "REPAIR CONDITIONAL" in html and "144/200 → 164/200" in html
 
 
-def test_real_traffic_rule_is_certified_for_checked_scenes_and_the_repair_is_flagged():
+def test_real_traffic_rule_has_no_wrong_verdict_but_a_perception_gap_and_the_repair_is_flagged():
     c = certificate.build(*NOVI_SAD[:1], runs_dir=NOVI_SAD[1])
-    assert c["status"]["label"] == "CERTIFIED FOR CHECKED SCENES"
-    assert len(c["field"]) == 4 and sum(x["labelled"] for x in c["field"]) == 24
-    assert sum(x["rule"]["right"] for x in c["field"]) == 22 and sum(x["repair"]["right"] for x in c["field"]) == 13
+    assert c["status"]["label"] == "CONDITIONAL: PERCEPTION GAPS"  # one labelled car in wroclaw_w3 never got a track
+    assert len(c["field"]) == 5 and sum(x["labelled"] for x in c["field"]) == 30
+    assert sum(x["rule"]["right"] for x in c["field"]) == 27 and sum(x["repair"]["right"] for x in c["field"]) == 16
+    assert sum(x["rule"]["not_tracked"] for x in c["field"]) == 1
     assert any("do not deploy it" in r for r in c["status"]["reasons"])
 
 
@@ -35,6 +36,6 @@ def test_certificate_endpoint(monkeypatch):
     monkeypatch.setattr(certificate, "RUNS_DIR", NOVI_SAD[1])
     client = TestClient(api.app)
     r = client.get(f"/runs/{NOVI_SAD[0]}/certificate")
-    assert r.status_code == 200 and "Rule certificate" in r.text and "CERTIFIED FOR CHECKED SCENES" in r.text
-    assert client.get(f"/runs/{NOVI_SAD[0]}/certificate?format=json").json()["status"]["label"].startswith("CERTIFIED")
+    assert r.status_code == 200 and "Rule certificate" in r.text and "PERCEPTION GAPS" in r.text
+    assert client.get(f"/runs/{NOVI_SAD[0]}/certificate?format=json").json()["status"]["label"].startswith("CONDITIONAL")
     assert client.get("/runs/not-a-run/certificate").status_code in (400, 404)

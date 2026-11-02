@@ -49,6 +49,7 @@ def field_checks(rule_text: str, real_dir: Path = REAL_DIR) -> list[dict]:
                 "clip_sha256": c["clip_sha256"], "labelled": len(rows),
                 "rule": {"right": sum(r["agree_before"] for r in rows),
                          "abstained": sum(r["before"] == "UNKNOWN" for r in rows),
+                         "not_tracked": sum(r["matched_object_id"] is None for r in rows),
                          "overall_agrees": c["before"]["agrees_overall"]},
                 "repair": {"proposal_id": rep["repair"]["proposal_id"], "source_run": rep["repair"]["run_id"],
                            "right": sum(r["agree_after"] for r in rows),
@@ -115,16 +116,24 @@ def status(c: dict) -> dict:
     n = sum(x["labelled"] for x in f)
     right = sum(x["rule"]["right"] for x in f)
     abst = sum(x["rule"]["abstained"] for x in f)
-    wrong = n - right - abst
+    missed = sum(x["rule"].get("not_tracked", 0) for x in f)
+    wrong = n - right - abst - missed
     reasons, rep = [], c["repair"]
     if f:
-        reasons.append(f"labelled real footage: {right}/{n} objects right, {abst} abstained, {wrong} wrong "
+        reasons.append(f"labelled real footage: {right}/{n} objects right, {abst} abstained, {missed} not tracked, "
+                       f"{wrong} wrong verdicts "
                        f"({len(f)} clip(s); Wilson 95 % {_wilson(right, n)})")
         rep_right = sum(x["repair"]["right"] for x in f)
         reasons.append(f"repair {f[0]['repair']['proposal_id']} from run {f[0]['repair']['source_run']} "
                        "on the same footage: "
                        f"{rep_right}/{n} right" + (" - do not deploy it for these scenes" if rep_right < right else ""))
-        return {"label": "CERTIFIED FOR CHECKED SCENES" if wrong == 0 else "NOT CERTIFIED", "reasons": reasons}
+        if wrong:
+            return {"label": "NOT CERTIFIED", "reasons": reasons}
+        if missed:
+            reasons.append(f"{missed} labelled object(s) never got a track: the rule cannot judge what perception misses; "
+                           "fix the camera view or crop before certifying those scenes")
+            return {"label": "CONDITIONAL: PERCEPTION GAPS", "reasons": reasons}
+        return {"label": "CERTIFIED FOR CHECKED SCENES", "reasons": reasons}
     if c["challenge"] and c["challenge"]["failures"]:
         reasons.append(f"Challenge Mode: {c['challenge']['failures']}/{c['challenge']['scenes']} synthetic scenes fail "
                        "with the rule as written")
@@ -148,7 +157,8 @@ def _e(x) -> str:
 
 def render_html(c: dict) -> str:
     s = c["status"]
-    colour = {"CERTIFIED FOR CHECKED SCENES": "#15803d", "REPAIR CONDITIONAL": "#b45309"}.get(s["label"], "#b91c1c")
+    colour = {"CERTIFIED FOR CHECKED SCENES": "#15803d", "REPAIR CONDITIONAL": "#b45309",
+              "CONDITIONAL: PERCEPTION GAPS": "#b45309"}.get(s["label"], "#b91c1c")
     rows = []
 
     def section(title: str, body: str) -> None:
@@ -206,7 +216,8 @@ def render_html(c: dict) -> str:
     if c["field"]:
         tr = "".join(
             f"<tr><td>{_e(x['set'])} / {_e(x['clip'])}</td><td>{x['labelled']}</td><td>{x['rule']['right']}"
-            f"{' (' + str(x['rule']['abstained']) + ' abstained)' if x['rule']['abstained'] else ''}</td>"
+            f"{' (' + str(x['rule']['abstained']) + ' abstained)' if x['rule']['abstained'] else ''}"
+            f"{' (' + str(x['rule'].get('not_tracked', 0)) + ' not tracked)' if x['rule'].get('not_tracked') else ''}</td>"
             f"<td>{x['repair']['right']}</td></tr>" for x in c["field"])
         section("5 · Field check on labelled real footage (labels frozen before any model call)",
                 "<table><tr><th>clip</th><th>labelled</th><th>this rule right</th><th>with repair "

@@ -3,7 +3,8 @@ Novi Sad and Wroclaw clips, judged on the committed SAM 3.1 tracks by three read
 compiled rule, the same rule + the synthetic-accepted repair, Muse Wonder's rule), next to Muse Spark judging from the
 video alone. Recomputed from committed files only (no video, no API):
 
-    uv run python -m eventproof.validation.real_pooled > ../benchmark/real/POOLED.json
+    uv run python -m eventproof.validation.real_pooled > ../benchmark/real/POOLED.json            # 4 clips (first)
+    uv run python -m eventproof.validation.real_pooled --v2 > ../benchmark/real/POOLED_v2.json   # + Wroclaw w3
 """
 
 from __future__ import annotations
@@ -24,6 +25,7 @@ SETS = (  # (folder, real_video report, spark-alone report)
     ("benchmark/real/novisad", "report_novisad.json", "../spark_alone/report.json"),
     ("benchmark/real/traffic_v2", "report_wroclaw.json", "spark_alone_wroclaw.json"),
 )
+SETS_V2 = SETS + (("benchmark/real/traffic_v3", "report_wroclaw_w3.json", "spark_alone_wroclaw_w3.json"),)
 WONDER_CACHE = ROOT / "benchmark" / "ambiguity" / "cache" / "muse-wonder-1.0"
 
 
@@ -34,14 +36,14 @@ def _wonder_rule(text: str, layout) -> VisualRule:
     return MuseRuleCompiler(s, cache_dir=WONDER_CACHE).compile(text, layout).rule  # cache only (no key)
 
 
-def pooled() -> dict:
+def pooled(sets: tuple = SETS) -> dict:
     repair = load_repair()
     readers = ("muse_spark_rule", "muse_spark_rule_plus_synthetic_repair", "muse_wonder_rule")
     tally = {k: {"objects_right": 0, "clips_right": 0, "abstained": 0} for k in readers}
     n_obj = n_clips = 0
     spark_alone = {"runs": 0, "overall_right": 0, "counts_exact": 0}
     clips = []
-    for folder, rep_name, sa_name in SETS:
+    for folder, rep_name, sa_name in sets:
         d = ROOT / folder
         labels = {lb.clip: lb for _, lb in load_labels(d / "labels")}
         rep = json.loads((d / rep_name).read_text())
@@ -82,7 +84,7 @@ def pooled() -> dict:
 
 
 def main() -> None:
-    json.dump(pooled(), sys.stdout, indent=2)
+    json.dump(pooled(SETS_V2 if "--v2" in sys.argv else SETS), sys.stdout, indent=2)
     sys.stdout.write("\n")
 
 

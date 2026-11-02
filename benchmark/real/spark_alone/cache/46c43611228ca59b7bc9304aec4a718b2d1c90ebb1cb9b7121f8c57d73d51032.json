@@ -1,0 +1,64 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae8429ed2d0c96bec7a41f0",
+ "video_sha256": "9596099ad33746f20fe9b25b0e066e512f6e30175b5961a7f24e6ef0947e3a7f",
+ "run": 0,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 1.4, \"description\": \"white hatchback in left lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0}, {\"approx_cross_time_s\": 3.1, \"description\": \"silver Skoda with roof sign in left lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0}, {\"approx_cross_time_s\": 4.2, \"description\": \"black sedan in middle lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0}, {\"approx_cross_time_s\": 5.6, \"description\": \"light silver Hyundai in left lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0}, {\"approx_cross_time_s\": 6.3, \"description\": \"grey Toyota in middle lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0}, {\"approx_cross_time_s\": 7.7, \"description\": \"white Toyota taxi with yellow roof sign in right lane\", \"verdict\": \"PASS\", \"waited_s\": 7.0}], \"notes\": \"Motorcycle crossing ~0.4s excluded as not a car. Dark car at bottom in first frame was already past line, not counted. Five through cars moved continuously through inspection zone without stopping (waited 0s <1.5s). Right-lane taxi stayed stopped in zone from start until ~6.8s then crossed, waiting ~7s.\", \"overall\": \"FAIL\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 1.4,
+    "description": "white hatchback in left lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0
+   },
+   {
+    "approx_cross_time_s": 3.1,
+    "description": "silver Skoda with roof sign in left lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0
+   },
+   {
+    "approx_cross_time_s": 4.2,
+    "description": "black sedan in middle lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0
+   },
+   {
+    "approx_cross_time_s": 5.6,
+    "description": "light silver Hyundai in left lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0
+   },
+   {
+    "approx_cross_time_s": 6.3,
+    "description": "grey Toyota in middle lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0
+   },
+   {
+    "approx_cross_time_s": 7.7,
+    "description": "white Toyota taxi with yellow roof sign in right lane",
+    "verdict": "PASS",
+    "waited_s": 7.0
+   }
+  ],
+  "notes": "Motorcycle crossing ~0.4s excluded as not a car. Dark car at bottom in first frame was already past line, not counted. Five through cars moved continuously through inspection zone without stopping (waited 0s <1.5s). Right-lane taxi stayed stopped in zone from start until ~6.8s then crossed, waiting ~7s.",
+  "overall": "FAIL"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 1344,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 0
+  },
+  "output_tokens": 9212,
+  "output_tokens_details": {
+   "reasoning_tokens": 8876
+  },
+  "total_tokens": 10556
+ },
+ "latency_s": 44.91
+}
