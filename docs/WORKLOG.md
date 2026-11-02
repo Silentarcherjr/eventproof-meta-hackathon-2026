@@ -147,3 +147,6 @@
   the 150-scene dev suite with oracle tracks; minimal pair by knob bisection. Pre-registered (19bfe76). Both compiled 6;
   agreed on 4; "wait" and "remain" read differently (Spark: still, Wonder: present), 45/150 scenes differ, minimal pairs
   found (belt speed 0.11777/0.11797; stop knob 0.24434/0.24453). Wonder: 1 malformed runaway output, 1 declined.
+- Studio "Two readings" panel + API `/runs/{id}/ambiguity` (854f8c6): both readings with assumptions, disagreement count, the
+  minimal pair rendered as two clips with scene facts (stood still / inside the zone), the user picks the meaning. Live
+  readings take from the Muse allowance; the readings cache ships in the backend image. CI 41397438034 green.

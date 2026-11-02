@@ -23,6 +23,9 @@ teams): before a rule goes live, it shows where the rule is wrong, why, and whet
 1. **Build.** Muse Spark compiles the sentence into a typed temporal rule (strict JSON schema, validated by Pydantic,
    never executed as code) and lists its assumptions. SAM 3.1 tracks every object in the video. A deterministic engine
    returns a verdict per object, with the decisive frames.
+   **Two readings:** Muse Wonder reads the same sentence independently. If the two rules behave differently, EventProof
+   shows the smallest pair of scenes that separates them ("the box never stopped but was inside 1.53 s: PASS or FAIL?")
+   and the user picks the meaning, instead of a model picking it silently.
 2. **Break.** Challenge Mode renders synthetic scenes whose truth is known (drive-through, brief stop, occlusion,
    tailgating) and searches for the smallest scene that fools the rule: a minimal pair of clips that differ in one
    factor, one judged wrong and one judged right. The failing scene is re-checked with real SAM 3.1 tracks to separate
@@ -50,6 +53,7 @@ teams): before a rule goes live, it shows where the rule is wrong, why, and whet
 | Repair | Muse Spark, 3 rounds, 8 patches. **2 accepted, 6 rejected** (1–26 holdout regressions each). Round 1 was too strict and rejected; the accepted patch counts time only while the box stands still (≤ 0.08 of the frame per second, ≥ 0.80 s). |
 | Hidden holdout (200 scenes) | **144 → 164 correct**, dangerous false PASS 40 → 21, **0 regressions**. |
 | Final test (pre-registered, 320 scenes, evaluated once) | Same scene types: **141 → 158 / 200**. Three scene types never seen before: **109 → 117 / 120**. 0 regressions. Accepted patches gained +17 on average vs. +7.3 for rejected ones: the grader's choices transfer. |
+| **Two readings** (Muse Spark vs. Muse Wonder, 8 phrasings of the same rule, 150 scenes) | Both models compiled 6; same behaviour on 4; **"wait" and "remain" read differently** (Spark: standing still, Wonder: just inside) → verdicts differ on 45/150 scenes; minimal pair found automatically (belt speed 0.11777 vs 0.11797: 1.53 s vs 1.47 s inside). In the traffic scene Wonder also reads "wait" as standing still. [findings](benchmark/ambiguity/FINDINGS.md) |
 | Same final test with **real SAM 3.1 tracks** (80 scenes, pre-registered, 80 live calls) | **71 → 76 / 80**, false PASS **5 → 0**, 0 regressions; the only errors left are 4 abstentions behind an occluder. SAM gets 10/10 tailgating scenes right where the mock tracker gets 2/10. |
 
 Full comparison (hand-written rule, Muse rule, Muse repair, baseline grid repair): [`benchmark/REPORT.md`](benchmark/REPORT.md).
@@ -63,6 +67,8 @@ can re-verify, and CI recomputes every number above from committed files (no vid
 - **Muse Spark (`muse-spark-1.3`)** does the two reasoning-heavy jobs: rule compilation through a constant-size strict
   JSON schema (~1.4k prompt tokens; it refuses rules it cannot express, e.g. "workers must wear a helmet") and failure
   diagnosis + repair proposals.
+- **Muse Wonder (`muse-wonder-1.0`)** gives an independent second reading of every rule through the same strict schema,
+  so EventProof can detect ambiguous sentences and ask the user, instead of trusting one model's interpretation.
 - **SAM 3.1 (`sam-3.1`)** gives text-prompted video tracks with stable ids. It keeps two overlapping boxes apart where
   a naive tracker merges them (5/5 tailgating cases right with SAM, 0/5 with the mock tracker) and confirms
   counterexamples on real tracks.

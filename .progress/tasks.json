@@ -1028,7 +1028,7 @@
       "title": "Baseline: Muse Spark alone judging from video vs EventProof on the same real clips",
       "priority": "P1",
       "gate": "G6",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "P1-09"
       ],
@@ -1039,13 +1039,14 @@
         "cd backend && uv run pytest tests/validation/test_spark_alone.py"
       ],
       "evidence_paths": [
-        "benchmark/real/spark_alone/PREREGISTRATION.md (d9531ee)",
-        "benchmark/real/spark_alone/FINDINGS.md"
+        "GitHub Actions run 41397438034 success",
+        "benchmark/real/spark_alone/FINDINGS.md",
+        "benchmark/real/spark_alone/PREREGISTRATION.md (d9531ee)"
       ],
-      "commit_sha": null,
+      "commit_sha": "27db3df",
       "pr_url": null,
       "started_at": "2026-11-02T05:24:58Z",
-      "updated_at": "2026-11-02T05:24:58Z",
+      "updated_at": "2026-11-02T06:04:28Z",
       "blocker": null,
       "next_action": "CI green -> DONE_VERIFIED",
       "cost_note": "11 Muse Spark video calls, about $0.23"
@@ -1055,7 +1056,7 @@
       "title": "Ambiguity finder: Muse Spark vs Muse Wonder readings of the same rule + minimal pair to ask the user",
       "priority": "P1",
       "gate": "G4",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "G4-01"
       ],
@@ -1066,15 +1067,16 @@
         "cd backend && uv run pytest tests/test_ambiguity.py"
       ],
       "evidence_paths": [
-        "benchmark/ambiguity/PREREGISTRATION.md (19bfe76)",
-        "benchmark/ambiguity/FINDINGS.md"
+        "GitHub Actions run 41397438034 success",
+        "benchmark/ambiguity/FINDINGS.md",
+        "benchmark/ambiguity/PREREGISTRATION.md (19bfe76)"
       ],
-      "commit_sha": null,
+      "commit_sha": "854f8c6",
       "pr_url": null,
       "started_at": "2026-11-02T05:52:12Z",
-      "updated_at": "2026-11-02T05:52:12Z",
+      "updated_at": "2026-11-02T06:04:28Z",
       "blocker": null,
-      "next_action": "studio panel + demo shot",
+      "next_action": "demo shot",
       "cost_note": "24 live compiles; \u2248 $1.4 cached + \u2248 $2 uncached (estimate)"
     }
   ]
