@@ -39,3 +39,13 @@ def test_certificate_endpoint(monkeypatch):
     assert r.status_code == 200 and "Rule certificate" in r.text and "PERCEPTION GAPS" in r.text
     assert client.get(f"/runs/{NOVI_SAD[0]}/certificate?format=json").json()["status"]["label"].startswith("CONDITIONAL")
     assert client.get("/runs/not-a-run/certificate").status_code in (400, 404)
+
+
+def test_a_new_rule_typed_on_a_labelled_clip_is_checked_against_its_labels():
+    """Recorded live demo rule: 'remain behind the stop line 2 s' read by both models as presence, not stopping."""
+    c = certificate.build("20261102T080747Z-6b0ae7d4", runs_dir=DEMO[1])
+    assert c["readings"]["comparison"]["disagree"] == 0  # both models agree, and both are wrong for this scene
+    assert c["challenge"]["failures"] == 36
+    (f,) = c["field"]
+    assert (f["clip"], f["labelled"], f["rule"]["right"], len(f["rule"]["wrong"])) == ("novisad_approach_a.mp4", 5, 3, 2)
+    assert c["status"]["label"] == "NOT CERTIFIED"

@@ -1,0 +1,75 @@
+{
+  "run_id": "20261102T080747Z-6b0ae7d4",
+  "rule_hash": "69d41bcc1d6997d2610c956103ea4370487056b97d3bebad44d8d2bf44e03a50",
+  "world": "synthetic conveyor (process truth: box stands still >= 1.0 s at inspection before packing)",
+  "perception": "mock (NOT SAM)",
+  "suite": {
+    "brief_stop": {
+      "correct": 26,
+      "spec_error": 4
+    },
+    "canonical": {
+      "correct": 29,
+      "spec_error": 1
+    },
+    "drive_through": {
+      "correct": 30
+    },
+    "occluded_station": {
+      "correct": 17,
+      "perception_error": 11,
+      "spec_error": 1,
+      "abstained": 1
+    },
+    "tailgate": {
+      "perception_error": 19,
+      "correct": 5,
+      "abstained": 6
+    }
+  },
+  "suite_cases": 150,
+  "failures": 36,
+  "counterexample": {
+    "family": "brief_stop",
+    "seed": 8,
+    "outcome": "spec_error",
+    "detector_verdict": "FAIL",
+    "intended": "PASS",
+    "oracle_verdict": "FAIL",
+    "truths": [
+      {
+        "object_id": 0,
+        "label": "blue box",
+        "station_stop_ms": 1200.0,
+        "crosses_packing_frame": 56,
+        "intended": "PASS"
+      }
+    ],
+    "notes": "stop_s=1.176",
+    "reduction": [
+      "trim tail to 66 frames",
+      "trim 3 leading frames"
+    ],
+    "evaluations": 32,
+    "knob": "station stop duration",
+    "t_fail": 0.15546875,
+    "t_pass": 0.15566406249999998,
+    "pass_verdict": "PASS",
+    "decisive_frames": [
+      64
+    ],
+    "scene_difference": {
+      "frames_compared": 67,
+      "frames_differing": 25,
+      "first_differing_frame": 40,
+      "max_pixels_differing_in_a_frame": 1935
+    },
+    "identity_events_fail": []
+  },
+  "files": [
+    "side_by_side.mp4",
+    "replay.json",
+    "counterexample.mp4",
+    "decisive_f0064.png"
+  ]
+}

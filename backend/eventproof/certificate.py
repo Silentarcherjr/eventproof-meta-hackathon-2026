@@ -58,6 +58,39 @@ def field_checks(rule_text: str, real_dir: Path = REAL_DIR) -> list[dict]:
     return out
 
 
+def clip_check(run_dir: Path, ev: Evidence, real_dir: Path = REAL_DIR) -> list[dict]:
+    """If this run's video is itself a labelled real clip, judge the labels with this run's own rule and tracks (whatever
+    the rule text): the same matching as `real_video`, no model call."""
+    from eventproof.engine.evaluator import evaluate
+    from eventproof.schemas.rules import VisualRule
+    from eventproof.schemas.tracks import TrackSet
+    from eventproof.validation.real_video import ClipLabel, match_objects, perceive
+
+    shas = {ev.video.sha256, ev.video.original_sha256}
+    out = []
+    for lp in sorted(real_dir.glob("*/labels/*.json")):
+        if lp.name in ("TEMPLATE.json", "MANIFEST.json"):
+            continue
+        label = ClipLabel.model_validate_json(lp.read_text())
+        if label.clip_sha256 not in shas or not ev.rule.compiled_rule:
+            continue
+        rule = VisualRule.model_validate(ev.rule.compiled_rule)
+        tracks = TrackSet.model_validate_json((run_dir / "tracks.json").read_text())
+        verdict = {o.object_id: o.verdict for o in evaluate(rule, tracks).objects}
+        pair = dict(match_objects(label.objects, perceive(rule, tracks, label.packing_line)).pairs)
+        rows = [(verdict.get(pair.get(i)), o.intended, pair.get(i)) for i, o in enumerate(label.objects)]
+        out.append({"set": lp.parent.parent.name, "report": f"this run vs {lp.relative_to(ROOT)}", "clip": label.clip,
+                    "clip_sha256": label.clip_sha256, "labelled": len(rows),
+                    "rule": {"right": sum(v == want for v, want, _ in rows),
+                             "abstained": sum(v == "UNKNOWN" for v, _, _ in rows),
+                             "not_tracked": sum(oid is None for _, _, oid in rows),
+                             "wrong": [f"labelled {want}, rule says {v}" for v, want, oid in rows
+                                       if oid is not None and v not in (want, "UNKNOWN")],
+                             "overall_agrees": None},
+                    "repair": None})
+    return out
+
+
 def build(run_id: str, runs_dir: Path | None = None, chosen: str | None = None) -> dict:
     run_dir = (runs_dir or RUNS_DIR) / run_id
     ev = Evidence.model_validate_json((run_dir / "evidence.json").read_text())
@@ -107,6 +140,8 @@ def build(run_id: str, runs_dir: Path | None = None, chosen: str | None = None) 
                 cert["final_test"] = {sp: {"n": m["n"], "before": base[sp]["correct"], "after": m["correct"],
                                            "regressed": p["regressed"][sp]} for sp, m in p["splits"].items()}
     cert["field"] = field_checks(ev.rule.text)
+    seen = {x["clip_sha256"] for x in cert["field"]}
+    cert["field"] += [x for x in clip_check(run_dir, ev) if x["clip_sha256"] not in seen]
     cert["status"] = status(cert)
     return cert
 
@@ -123,10 +158,17 @@ def status(c: dict) -> dict:
         reasons.append(f"labelled real footage: {right}/{n} objects right, {abst} abstained, {missed} not tracked, "
                        f"{wrong} wrong verdicts "
                        f"({len(f)} clip(s); Wilson 95 % {_wilson(right, n)})")
-        rep_right = sum(x["repair"]["right"] for x in f)
-        reasons.append(f"repair {f[0]['repair']['proposal_id']} from run {f[0]['repair']['source_run']} "
-                       "on the same footage: "
-                       f"{rep_right}/{n} right" + (" - do not deploy it for these scenes" if rep_right < right else ""))
+        fr = [x for x in f if x["repair"]]
+        if fr:
+            rep_right = sum(x["repair"]["right"] for x in fr)
+            rep_n = sum(x["labelled"] for x in fr)
+            reasons.append(f"repair {fr[0]['repair']['proposal_id']} from run {fr[0]['repair']['source_run']} "
+                           f"on the same footage: {rep_right}/{rep_n} right"
+                           + (" - do not deploy it for these scenes" if rep_right < sum(x['rule']['right'] for x in fr)
+                              else ""))
+        for x in f:
+            for w in x["rule"].get("wrong", []):
+                reasons.append(f"{x['clip']}: {w}")
         if wrong:
             return {"label": "NOT CERTIFIED", "reasons": reasons}
         if missed:
@@ -218,10 +260,10 @@ def render_html(c: dict) -> str:
             f"<tr><td>{_e(x['set'])} / {_e(x['clip'])}</td><td>{x['labelled']}</td><td>{x['rule']['right']}"
             f"{' (' + str(x['rule']['abstained']) + ' abstained)' if x['rule']['abstained'] else ''}"
             f"{' (' + str(x['rule'].get('not_tracked', 0)) + ' not tracked)' if x['rule'].get('not_tracked') else ''}</td>"
-            f"<td>{x['repair']['right']}</td></tr>" for x in c["field"])
+            f"<td>{x['repair']['right'] if x['repair'] else '–'}</td></tr>" for x in c["field"])
         section("5 · Field check on labelled real footage (labels frozen before any model call)",
-                "<table><tr><th>clip</th><th>labelled</th><th>this rule right</th><th>with repair "
-                f"{_e(c['field'][0]['repair']['proposal_id'])}</th></tr>{tr}</table>")
+                "<table><tr><th>clip</th><th>labelled</th><th>this rule right</th><th>with the synthetic-accepted "
+                f"repair</th></tr>{tr}</table>")
     else:
         section("5 · Field check on labelled real footage",
                 "<p class='muted'>No labelled footage for this rule text yet.</p>")

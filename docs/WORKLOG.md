@@ -156,3 +156,7 @@
 - Wroclaw w3 (t 81.5-90.6 s, 6 cars) pre-registered (45ba9ba): rule 5/6 (1 car never tracked by SAM), repair 3/6, Spark alone
   counts exact 0/5. Pooled 5 clips / 30 cars: rule 27/30 (0 wrong verdicts), repair 16/30. Certificate: untracked objects
   make a rule CONDITIONAL (perception gap), wrong verdicts make it NOT CERTIFIED.
+- New-rule-on-same-video (1d9fbfb). Demo rule typed on the Novi Sad clip: "Every car must remain behind the stop line for at
+  least 2 seconds before it crosses it." Muse Spark and Muse Wonder both read it as presence (no stopping); verdicts all PASS;
+  Challenge Mode 36/150 failures; certificate checks the run against the clip's frozen labels: 3/5, the 2 cars that never
+  stopped judged PASS -> NOT CERTIFIED. Evidence in docs/evidence/runs/20261102T080747Z-6b0ae7d4.

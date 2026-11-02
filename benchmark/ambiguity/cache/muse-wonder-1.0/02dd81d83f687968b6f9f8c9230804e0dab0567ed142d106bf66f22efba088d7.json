@@ -1,0 +1,109 @@
+{
+  "raw_output": {
+    "assumptions": [
+      "Each car is evaluated independently.",
+      "'Remain behind the stop line' means continuously inside the 'inspection' zone for at least 2000 ms, using DWELL.",
+      "No stopped/still requirement is stated, so DWELL uses max_speed=null (any motion).",
+      "Cars travel bottom-right to top-left, so crossing 'packing_entry' is to_left.",
+      "No maximum gap between dwelling and crossing is stated, so BEFORE uses within_ms=null.",
+      "Cars that never cross pass, via IMPLIES(OCCURS(crossing), BEFORE(dwell, crossing))."
+    ],
+    "entity_concept": "car approaching the pedestrian crossing",
+    "entity_name": "car",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": null,
+          "min_ms": 2000,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "IMPLIES(OCCURS(CROSSES(packing_entry, to_left)), BEFORE(DWELL(inspection, 2000 ms, any speed), CROSSES(packing_entry, to_left)))",
+    "root": 2,
+    "rule_id": "car_stop_line_dwell_before_cross",
+    "supported": true,
+    "unsupported_reason": "none"
+  },
+  "model": "muse-wonder-1.0",
+  "request_ids": [
+    "chatcmpl-01a19b4e-6a11-76ed-9c05-3d15230386e3",
+    "chatcmpl-01a19b4f-7b2a-733c-a269-61410aab544a"
+  ],
+  "attempts": 2,
+  "usage": [
+    {
+      "completion_tokens": 6993,
+      "prompt_tokens": 428,
+      "total_tokens": 7421,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 6580,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    },
+    {
+      "completion_tokens": 8160,
+      "prompt_tokens": 880,
+      "total_tokens": 9040,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 7760,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Every car must remain behind the stop line for at least 2 seconds before it crosses it.",
+  "latency_s": 129.74
+}
