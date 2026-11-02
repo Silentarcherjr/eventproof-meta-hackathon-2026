@@ -1,50 +1,27 @@
-# 3-minute demo — script and shot list (draft for the participant)
+# 3-minute demo — script (v2, 2026-11-02)
 
-Rule for this video: **every number on screen is read from a committed file** (table at the end). Nothing is animated
-from made-up data, nothing mock is called Meta, and recorded runs are said to be recorded.
+Every number on screen and in the narration is read from a committed file (table at the end). Recorded runs are
+replayed from their cache and say so; nothing mock is called Meta. The video is produced by `demo/video/build.sh`
+(screen capture of the real studio with Playwright, narration with a synthetic voice, cards rendered from HTML).
 
-Recording setup: local stack with no key (`MODEL_API_KEY= EVENTPROOF_MAX_LIVE_SAM_CALLS=0 uv run uvicorn …` + `npm run dev`,
-or the showcase compose). Browser at 1920×1080, zoom 110 %, dark theme. Open
-`http://localhost:3000/?run=20261028T023754Z-a922b5bb` — the run recorded on 2026-10-28 with live Muse Spark and SAM 3.1;
-its outputs are replayed from cache (the evidence says `cached`, with the original request ids). Costs 0 credits.
-Optional section 5b only if the participant has recorded and run real clips (`docs/REAL_VIDEO_PROTOCOL.md`).
+| # | screen | narration |
+|---|---|---|
+| 1 | Title card | AI can now build a video checker from one sentence. Muse Spark writes the rule, SAM 3.1 tracks every object. But who checks the checker? |
+| 2 | Studio, run `20261102T040830Z-37064c4a` (Novi Sad, real drone footage): video with tracks, rule, assumptions, timeline | Here is real drone footage of a crossing in Novi Sad. The rule: every car must wait one and a half seconds before the stop line. Muse Spark turns it into a typed rule, never code, and writes down its assumptions: wait means standing still. SAM 3.1 tracks the cars, and a deterministic engine judges each one. This white van crawls through without ever stopping: a violation, with the exact frames. |
+| 3 | Studio, demo run, "Two readings" panel with the minimal pair | But the same words can mean different things. EventProof asks a second Meta model, Muse Wonder, to read the rule too. For boxes on a conveyor, Spark reads wait as standing still; Wonder reads it as just being inside. The two rules disagree on 45 of 150 test scenes, and EventProof finds the smallest pair that separates them: a box that never stops, inside for 1.53 seconds. You decide what you meant. |
+| 4 | Studio, demo run, Challenge Mode: suite table, counterexample, repair decisions | Then it attacks the rule. Challenge Mode renders 150 synthetic scenes with known truth and finds 44 failures. It shrinks the clearest one to a minimal pair: the same scene with the belt speed changed in the fourth decimal. Muse Spark diagnoses the failure and proposes bounded patches. An independent grader tests each one on 200 hidden scenes: 2 of 8 accepted, with zero regressions. |
+| 5 | Before → after view, holdout and final-test cards | Correct verdicts on the hidden scenes go from 144 to 164. A third test set, frozen before anything was evaluated, confirms it, and re-run with real SAM 3.1 tracks, false passes drop from 5 to 0. |
+| 6 | Real-traffic figure (`docs/media/real_traffic.png`), then the pooled table | So is that repair safe to deploy? We checked it on real footage, with labels frozen before any model ran. It is not. On a real rolling stop, and on cars far from the camera, its threshold calls a crawling car still. Across 24 labelled cars in two cities, Muse Spark's own rule gets 22 right. The repair that passed every synthetic test gets 13. And Muse Spark watching the video alone gets the headline right, but miscounts the cars in 9 of 20 runs. |
+| 7 | Closing card | EventProof does not trust a model's reading, a synthetic test, or itself. Every number here is recomputed in CI from committed evidence. Build it, break it, repair it, and prove it on real video. |
 
-| time | screen | narration (English, ~150 wpm) | on-screen text |
-|---|---|---|---|
-| 0:00–0:12 | Title card over the studio | "AI can now build a visual checker from one sentence. The question nobody asks: who checks the checker?" | **EventProof** — AI builds visual apps. Then tries to break them. |
-| 0:12–0:40 | Studio: rule text, compiled rule, assumptions, video with tracks, timeline | "I describe a rule in plain English. Muse Spark turns it into a typed rule — never code — and writes down its assumptions. SAM 3.1 tracks every box. Box 1 tailgated into packing without inspection: FAIL, with the exact frames." | Muse Spark → typed DSL · SAM 3.1 → tracks · verdict FAIL (frame 88) |
-| 0:40–0:52 | Zoom on the assumptions list | "Look at one assumption: Muse read 'stay 1.5 seconds' as *any* time inside the zone — moving or not. Is that what we meant?" | highlight: "any motion allowed … not requiring stopped" |
-| 0:52–1:22 | Challenge Mode: suite table, counterexample card, side-by-side replay | "Challenge Mode attacks the rule with 150 synthetic scenes whose truth we know. 44 fail. The clearest one: a box that never stopped — zero seconds — but crawled through the zone in 1.8 seconds. The rule says PASS. It then finds the minimal pair: two clips that differ only in belt speed, one fools the rule, one doesn't." | 150 scenes · 44 failures · spec error · belt speed 0.1178 vs 0.1180 |
-| 1:22–1:35 | Click "Confirm with SAM 3.1" result | "Is this just our simulator? Real SAM 3.1 tracks on the same scene: still PASS. The rule is wrong, not the perception." | SAM 3.1: still fails → specification error |
-| 1:35–2:05 | Repair panel: round diagnoses, 8 proposals, accepted/rejected with reasons | "Muse Spark diagnoses it: 'stay' must mean standing still. It proposes bounded patches — no free-form code. An independent grader tests every proposal on 200 hidden cases Muse never saw. Its first idea was too strict: 26 regressions, rejected. Three rounds later, 2 of 8 proposals pass: zero regressions." | 8 proposals · 2 accepted · 6 rejected (reasons shown) |
-| 2:05–2:30 | Before → after view: verdict cards, video + counter chart (scrub), holdout bars | "Same case, both rules. The old rule counted 1.53 seconds of *moving* time and passed it. The repaired rule counts only standing still: zero. FAIL — correct. On the hidden cases: 144 → 164 of 200 right, dangerous false passes 40 → 21, no regressions." | before 1.53 s ✗ · after 0.00 s ✓ · 144 → 164 / 200 |
-| 2:30–2:48 | Final-test card (zoom) | "But the grader picked among proposals on those cases, so we froze a third test set *before* evaluating anything, with three kinds of scenes no rule was designed for. Evaluated once: 141 → 158 of 200, and 109 → 117 of 120 on the new kinds. Zero regressions." | pre-registered final test · 141 → 158 / 200 · 109 → 117 / 120 |
-| 2:48–3:00 | Ledger / hashes footer, then closing card | "Every verdict comes with hashes, model request ids and a ledger anyone can verify. EventProof: build, break, repair — and prove it." | 221 tests · evidence ledger verified · github link (after approval) |
-
-## 5b (optional, only with real results) — replaces 2:30–2:48 if the real-video report exists
-"On clips I recorded with my phone, labelled blind before any model ran: X of N verdicts agree before the repair, Y after."
-Numbers only from `benchmark/real/report_*.md`. If they are worse than synthetic, say so — that is the honest result.
-
-## Visual direction
-- One idea per shot; zoom into the element being talked about (the assumption line, the counter chart, the bars).
-- The before/after chart is the hero shot: scrub the video so the playhead runs while the orange line climbs past
-  "needs 1.50 s" and the blue line stays at 0.
-- Orange = before, blue = after everywhere (validated color pair; ✓/✗ always next to the color).
-- No stock footage, no fake UI, no numbers that are not on the screen of the real app.
-
-## Claims → source (check before recording)
+## Claims → source
 | claim | source |
 |---|---|
-| rule text, Muse assumptions, request id, verdict FAIL frame 88 | `docs/evidence/runs/20261028T023754Z-a922b5bb/evidence.json` |
-| 150 scenes, 44 failures, drive_through spec error, 0 s still / 1.835 s transit, belt speed pair | `…/challenge/challenge.json`, round diagnoses in `…/challenge/repair_muse.json` |
-| SAM 3.1 confirms (spec error with real tracks) | `…/challenge/sam_confirm.json` |
-| 8 proposals, 2 accepted, first one 26 regressions, 144 → 164 / 166 | `…/challenge/repair_muse.json` |
-| 1.53 s vs 0.00 s, false PASS 40 → 21 | studio before/after view (`before_after_muse.json`, computed by the evaluator) |
-| 141 → 158 / 200, 109 → 117 / 120, 0 regressions, pre-registered | `benchmark/final/REPORT_final_v1.md`, `report_final_v1.json`, `PREREGISTRATION.md` |
-| SAM 3.1 final-test pass: 71 → 76 / 80, false PASS 5 → 0 | `benchmark/final/sam_v1/REPORT_sam_v1.md` |
-| 221 tests | CI run on the commit used for recording (update the number if it changed) |
-| ledger verified | `uv run python -m eventproof.ledger verify artifacts/runs/20261028T023754Z-a922b5bb` |
+| Novi Sad rule, "wait" = standing still (`max_speed 0.05`), van VIOLATION | `benchmark/real/novisad/runs/20261102T040830Z-37064c4a/evidence.json`, `report_novisad.json` |
+| Spark vs Wonder, 45/150, minimal pair 1.53 s inside | `benchmark/ambiguity/report.json`, `FINDINGS.md` |
+| 150 scenes, 44 failures, belt-speed pair, 2/8 accepted, 0 regressions, 144 → 164 | `docs/evidence/runs/20261028T023754Z-a922b5bb/challenge/*.json` |
+| final test confirms; SAM pass false PASS 5 → 0 | `benchmark/final/REPORT_final_v1.md`, `benchmark/final/sam_v1/REPORT_sam_v1.md` |
+| 24 cars, 22 vs 13, Spark alone counts wrong in 9/20 runs | `benchmark/real/POOLED.json` |
+| every number recomputed in CI | `backend/tests/regression/`, `backend/tests/validation/` |
 
-Limitations to keep honest in narration or captions: synthetic scenes; Challenge/holdout/final scoring uses a mock tracker
-(SAM 3.1 confirms the counterexample); n is small; the baseline patch did slightly better than Muse's on one new family
-(stop_and_go).
+Limits stated in the README, not in the narration for time: small real set labelled by one person; synthetic voice.
