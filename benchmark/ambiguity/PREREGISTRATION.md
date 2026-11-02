@@ -23,3 +23,9 @@ with the product's compiler (strict JSON schema, up to 2 attempts). Up to 32 liv
   separation, occluder length) from a disagreeing scene to the nearest agreeing one.
 - Summary: texts compiled by both, identical, behaving differently, with a minimal pair. All reported; nothing tuned.
 Raw compiler outputs (and declines) are cached and committed; the report never overwrites.
+
+## Addendum 2026-11-02 (written after the main report, before this call): the real traffic clips
+Muse Wonder compiles the Novi Sad rule text with the Novi Sad layout (1 call, up to 2 attempts; frozen labels and SAM 3.1
+tracks from `benchmark/real/novisad/` unchanged). Both readings (Muse Spark's recorded rule, Wonder's) are evaluated on
+the committed tracks of both clips; reported: each reading's per-object verdicts vs. the labels and the objects where the
+two readings differ. Nothing else is run; the result is reported whatever it is.
