@@ -1,0 +1,63 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "packing_line": "packing_entry",
+  "labeled_by": "EventProof developer (hand labels from 2-4 fps frame sheets, before any model run)",
+  "labeled_at": "2026-11-02T05:20:00-05:00",
+  "clip": "bike_oneway_b.mp4",
+  "clip_sha256": "f636d9c91f413bc8b574807bde4c2343229507ccf0025d61362d1c398d92fab0",
+  "layout": {
+    "zones": [
+      {
+        "zone": {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.0,
+              0.55
+            ],
+            [
+              1.0,
+              0.55
+            ],
+            [
+              1.0,
+              0.85
+            ],
+            [
+              0.0,
+              0.85
+            ]
+          ]
+        },
+        "description": "the bike lane along the bridge (lower part of the image)"
+      }
+    ],
+    "lines": [
+      {
+        "line": {
+          "id": "packing_entry",
+          "a": [
+            0.5,
+            0.5
+          ],
+          "b": [
+            0.5,
+            0.9
+          ]
+        },
+        "description": "midpoint of the bridge across the bike lane; cyclists ride horizontally"
+      }
+    ]
+  },
+  "rule_text": "Cyclists may ride past the midpoint of the bike lane only from left to right.",
+  "objects": [
+    {
+      "description": "cyclist in orange, rides right to left, passes the midpoint ~15.7 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    }
+  ],
+  "expected_overall": "FAIL",
+  "notes": "Same video, t 8.5-27.5 s, same scaling. Cars on the road above are not labelled."
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "packing_line": "packing_entry",
+  "labeled_by": "EventProof developer (hand labels from 2-4 fps frame sheets, before any model run)",
+  "labeled_at": "2026-11-02T05:20:00-05:00",
+  "clip": "bike_oneway_a.mp4",
+  "clip_sha256": "17837fba177ab8cd798450c5e35dc0015ddf6ad2e0abc59d32aab506b2c20f47",
+  "layout": {
+    "zones": [
+      {
+        "zone": {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.0,
+              0.55
+            ],
+            [
+              1.0,
+              0.55
+            ],
+            [
+              1.0,
+              0.85
+            ],
+            [
+              0.0,
+              0.85
+            ]
+          ]
+        },
+        "description": "the bike lane along the bridge (lower part of the image)"
+      }
+    ],
+    "lines": [
+      {
+        "line": {
+          "id": "packing_entry",
+          "a": [
+            0.5,
+            0.5
+          ],
+          "b": [
+            0.5,
+            0.9
+          ]
+        },
+        "description": "midpoint of the bridge across the bike lane; cyclists ride horizontally"
+      }
+    ]
+  },
+  "rule_text": "Cyclists may ride past the midpoint of the bike lane only from left to right.",
+  "objects": [
+    {
+      "description": "cyclist in white and black, rides left to right, passes the midpoint ~1.2 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "PASS"
+    }
+  ],
+  "expected_overall": "PASS",
+  "notes": "Pexels video 15928375 (Pexels License), t 0-19 s, scaled to 640x360, 10 fps. Cars on the road above are not cyclists and are not labelled."
+}

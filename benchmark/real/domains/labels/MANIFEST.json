@@ -1,0 +1,14 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "frozen_at": "2026-11-02T08:57:34+00:00",
+  "labels": {
+    "bike_oneway_a.json": "48d8115418d9fc6520503bca485dad7b57b0a692bad6b693b042ab7f8a67a17f",
+    "bike_oneway_b.json": "3623418a183b814165c9a196d82b46338989209ce484b798e47e3ffdd8a1d613",
+    "crosswalk_oneway.json": "cb4bef573b5fdfa8af345d6ad5e60b955bb36fe2bbe40044c550d34f8ef8353c"
+  },
+  "clips": {
+    "bike_oneway_a.mp4": "17837fba177ab8cd798450c5e35dc0015ddf6ad2e0abc59d32aab506b2c20f47",
+    "bike_oneway_b.mp4": "f636d9c91f413bc8b574807bde4c2343229507ccf0025d61362d1c398d92fab0",
+    "crosswalk_oneway.mp4": "e8e0c41a0ef0560adb49e24ce9c8a15759299f5c08b820819fd147f51f61be62"
+  }
+}

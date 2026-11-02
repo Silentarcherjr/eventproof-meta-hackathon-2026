@@ -1,0 +1,93 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "packing_line": "packing_entry",
+  "labeled_by": "EventProof developer (hand labels from 2-4 fps frame sheets, before any model run)",
+  "labeled_at": "2026-11-02T05:20:00-05:00",
+  "clip": "crosswalk_oneway.mp4",
+  "clip_sha256": "e8e0c41a0ef0560adb49e24ce9c8a15759299f5c08b820819fd147f51f61be62",
+  "layout": {
+    "zones": [
+      {
+        "zone": {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.05,
+              0.2
+            ],
+            [
+              0.85,
+              0.2
+            ],
+            [
+              0.85,
+              0.9
+            ],
+            [
+              0.05,
+              0.9
+            ]
+          ]
+        },
+        "description": "the zebra crossing seen from above"
+      }
+    ],
+    "lines": [
+      {
+        "line": {
+          "id": "packing_entry",
+          "a": [
+            0.45,
+            0.15
+          ],
+          "b": [
+            0.45,
+            0.95
+          ]
+        },
+        "description": "middle of the zebra crossing; people walk or ride horizontally across the image"
+      }
+    ]
+  },
+  "rule_text": "Everyone must cross the middle of the zebra crossing only from left to right.",
+  "objects": [
+    {
+      "description": "man in dark clothes, walks right to left, crosses the middle ~3.1 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "second man, walks right to left behind him, crosses ~4.2 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "cyclist, rides left to right, crosses ~7.8 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "PASS"
+    },
+    {
+      "description": "second cyclist, rides left to right, crosses ~8.4 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "PASS"
+    },
+    {
+      "description": "woman, walks left to right, crosses ~10.0 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "PASS"
+    },
+    {
+      "description": "person at the top-left corner ~5-9 s, leaves without crossing the middle",
+      "crosses_packing": false,
+      "stood_still_s": 0.0,
+      "intended": "PASS"
+    }
+  ],
+  "expected_overall": "FAIL",
+  "notes": "Pexels video 37247586 (Pexels License), 640x360 preview file, 10 fps, full clip (13.7 s). Direction rule: crossing right-to-left is the violation. stood_still_s is not used by this rule (process-truth warnings about stopping do not apply)."
+}
