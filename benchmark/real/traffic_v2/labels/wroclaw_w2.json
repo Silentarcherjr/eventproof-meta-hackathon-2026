@@ -1,0 +1,117 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "layout": {
+    "zones": [
+      {
+        "zone": {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.09,
+              0.5207
+            ],
+            [
+              1.0,
+              0.5207
+            ],
+            [
+              0.72,
+              0.1
+            ],
+            [
+              0.12,
+              0.1
+            ]
+          ]
+        },
+        "description": "waiting zone: the approach lanes just before the stop line (camera looks along the road; cars come toward the camera)"
+      }
+    ],
+    "lines": [
+      {
+        "line": {
+          "id": "packing_entry",
+          "a": [
+            0.0,
+            0.5207
+          ],
+          "b": [
+            1.0,
+            0.5207
+          ]
+        },
+        "description": "stop line across the approach lanes; cars travel from top to bottom of the frame"
+      }
+    ]
+  },
+  "packing_line": "packing_entry",
+  "rule_text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+  "labeled_by": "EventProof developer (hand labels from 4 fps frame sheets, before any model run)",
+  "labeled_at": "2026-11-02T03:30:00-05:00",
+  "clip": "wroclaw_w2.mp4",
+  "clip_sha256": "6ea7f78f326220fe1038674b4cd366bdf7c59982543687c0690a52c2a676ca8a",
+  "objects": [
+    {
+      "description": "grey hatchback, lane 1; crosses ~4.75 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "white car, lane 2; crosses ~7.4 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "dark green-grey SUV, lane 2; crosses ~8.75 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "silver car, lane 1; crosses ~9.25 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "dark car, lane 1; crosses ~10.6 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "silver hatchback, lane 2; crosses ~11.0 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "white SUV, lane 1; crosses ~12.25 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "grey car, lane 2; crosses ~13.25 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "green SUV, lane 2; crosses ~15.0 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "silver car, lane 1; crosses ~15.7 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    }
+  ],
+  "expected_overall": "FAIL",
+  "notes": "Same Pexels video, t 62.5-81.5 s, same crop, 10 fps. Green light: free-flowing traffic, no car stops. Not labelled: cars still approaching at the end (no crossing), the motorcycle and the cyclist; tracks on them are reported as extra. Crossing times read at 4 fps (about +-0.3 s)."
+}

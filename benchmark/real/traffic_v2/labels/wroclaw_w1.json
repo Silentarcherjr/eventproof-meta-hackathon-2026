@@ -1,0 +1,93 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "layout": {
+    "zones": [
+      {
+        "zone": {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.09,
+              0.5207
+            ],
+            [
+              1.0,
+              0.5207
+            ],
+            [
+              0.72,
+              0.1
+            ],
+            [
+              0.12,
+              0.1
+            ]
+          ]
+        },
+        "description": "waiting zone: the approach lanes just before the stop line (camera looks along the road; cars come toward the camera)"
+      }
+    ],
+    "lines": [
+      {
+        "line": {
+          "id": "packing_entry",
+          "a": [
+            0.0,
+            0.5207
+          ],
+          "b": [
+            1.0,
+            0.5207
+          ]
+        },
+        "description": "stop line across the approach lanes; cars travel from top to bottom of the frame"
+      }
+    ]
+  },
+  "packing_line": "packing_entry",
+  "rule_text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+  "labeled_by": "EventProof developer (hand labels from 4 fps frame sheets, before any model run)",
+  "labeled_at": "2026-11-02T03:30:00-05:00",
+  "clip": "wroclaw_w1.mp4",
+  "clip_sha256": "7afdd2395e71020be8236228599341c18b97d5eb5454874377d7cb2c9ce3d5d4",
+  "objects": [
+    {
+      "description": "dark Lexus, lane 1, first in the red-light queue; crosses ~4.9 s",
+      "crosses_packing": true,
+      "stood_still_s": 4.5,
+      "intended": "PASS"
+    },
+    {
+      "description": "white sedan, lane 2, first in queue; crosses ~5.8 s",
+      "crosses_packing": true,
+      "stood_still_s": 5.0,
+      "intended": "PASS"
+    },
+    {
+      "description": "light blue car, lane 1, second in queue; crosses ~7.4 s",
+      "crosses_packing": true,
+      "stood_still_s": 5.5,
+      "intended": "PASS"
+    },
+    {
+      "description": "grey-blue car, lane 2, second in queue; crosses ~8.6 s",
+      "crosses_packing": true,
+      "stood_still_s": 6.5,
+      "intended": "PASS"
+    },
+    {
+      "description": "dark car, lane 2, third in queue; crosses ~10.9 s",
+      "crosses_packing": true,
+      "stood_still_s": 7.5,
+      "intended": "PASS"
+    },
+    {
+      "description": "white SUV, lane 1, behind the motorcycle in the queue; crosses ~12.1 s",
+      "crosses_packing": true,
+      "stood_still_s": 7.5,
+      "intended": "PASS"
+    }
+  ],
+  "expected_overall": "PASS",
+  "notes": "Pexels video 36366105 (Wroclaw, Pexels License), 1280x720 59.94 fps, t 38.5-57.5 s, crop x0-330 y60-350, 10 fps. Queue stands at a red light from before the clip until ~4.5 s, then drives off. stood_still_s counts only time visible in the clip. Not labelled: the bus (not a car), the motorcycle and the cyclist on the bike lane; tracks on them are reported as extra."
+}

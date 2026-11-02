@@ -1,0 +1,12 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "frozen_at": "2026-11-02T06:26:15+00:00",
+  "labels": {
+    "wroclaw_w1.json": "3679146ddecbbb54fab531fb316e6876091c8fb463ea200c089baec1d7042d94",
+    "wroclaw_w2.json": "09616ad3933b0b82b7c3ba68ee89e16a55e77a8ec3c1429e80f1dcc7b9de5e96"
+  },
+  "clips": {
+    "wroclaw_w1.mp4": "7afdd2395e71020be8236228599341c18b97d5eb5454874377d7cb2c9ce3d5d4",
+    "wroclaw_w2.mp4": "6ea7f78f326220fe1038674b4cd366bdf7c59982543687c0690a52c2a676ca8a"
+  }
+}
