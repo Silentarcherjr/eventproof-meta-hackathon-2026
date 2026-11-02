@@ -4,8 +4,18 @@
 seconds. EventProof then tries to break that detector, repairs it, and only keeps the repair if it holds on cases it
 never saw.
 
+**Who needs it now.** Cities have started issuing stop-sign tickets from AI cameras: Takoma Park, Maryland issues $40
+citations from automated stop-sign cameras since January 8, 2026 (a four-year state pilot; a city study found violation
+rates up to 87% at some intersections), and Virginia passed a law in April 2026 allowing AI cameras to cite flagrant
+stop-sign and crosswalk violations. What counts as a "full stop" is a rule someone writes; a privacy expert told IEEE
+Spectrum that such systems' claims are *"rarely backed up by independent studies that validate what these AI technologies
+can really do."* EventProof is that check, before deployment: for the **traffic-safety program manager** who signs off
+on the rule, and the **staff reviewer** who approves every citation. A false PASS is a dangerous driver who is never
+cited; a false FAIL is a $40 ticket for a resident who did stop. On real footage below, a repair that passed every synthetic test
+missed a real rolling stop and **all 10** cars that never stopped at the line; EventProof flagged it before deployment.
+
 **At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · 22/24 cars right on real traffic footage from 2 cities, labels
-frozen before any model call · one-command replay with no API key (`docker compose`) · 245 backend tests, CI recomputes every
+frozen before any model call · one-command replay with no API key (`docker compose`) · 246 backend tests, CI recomputes every
 published number · MIT licensed.
 
 ![Real footage: the same SAM 3.1 tracks judged by two readings of "wait"](docs/media/real_traffic.png)
@@ -20,8 +30,14 @@ instantly. It also silently picks an interpretation, and the choice decides the 
   so a box that never stops but drifts through inspection passes: a **false PASS**.
 
 Both are the dangerous kind of error for compliance, safety and quality checks, and nobody sees them until they cost
-something. EventProof is for the people who deploy such rules (warehouse and production-line QA, traffic and safety
-teams): before a rule goes live, it shows where the rule is wrong, why, and whether a fix really generalizes.
+something. The same loop serves anyone who deploys a visual rule (traffic enforcement, warehouse and production-line QA,
+site safety): before a rule goes live, it shows where the rule is wrong, why, and whether a fix really generalizes.
+
+Sources for the deployment facts above: [MoCo Show, 2026-01-07](https://mocoshow.com/?p=121089) and
+[2025-12-08](https://mocoshow.com/?p=119749) (Takoma Park pilot, $40 fine, staff review of every citation);
+[The Baltimore Banner, 2026-01-07](https://www.thebanner.com/community/transportation/artificial-intelligence-takoma-park-stop-RVZ4ACYBYREI3N2MEQ3IBJM76A/)
+(87% violation rates in the city study); [WTVR](https://www.wtvr.com/news/local-news/ai-cameras-virginia-stop-signs-june-17-2026)
+(Virginia SB84); [IEEE Spectrum, 2025-07-05](https://spectrum.ieee.org/ai-intersection-monitoring) (quote: Daniel Schwarz, NYCLU).
 
 ## What it does
 1. **Build.** Muse Spark compiles the sentence into a typed temporal rule (strict JSON schema, validated by Pydantic,
