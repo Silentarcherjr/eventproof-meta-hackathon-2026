@@ -939,7 +939,7 @@
       "title": "Live SAM 3.1 pass on a pre-registered final_v1 subset (80 scenes), reported separately",
       "priority": "P1",
       "gate": "G4",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "P1-06"
       ],
@@ -950,16 +950,17 @@
         "cd backend && uv run pytest tests/validation/test_sam_pass.py"
       ],
       "evidence_paths": [
+        "GitHub Actions run 41379950836 success",
         "benchmark/final/PREREGISTRATION_SAM_v1.md (3c32c7b, before any call)",
         "benchmark/final/sam_v1/REPORT_sam_v1.md",
         "benchmark/final/sam_v1/report_sam_v1.json"
       ],
-      "commit_sha": null,
+      "commit_sha": "4b3f9c2",
       "pr_url": null,
       "started_at": "2026-11-02T02:49:21Z",
-      "updated_at": "2026-11-02T02:49:21Z",
+      "updated_at": "2026-11-02T02:55:30Z",
       "blocker": null,
-      "next_action": "CI green on the report commit -> DONE_VERIFIED; participant reads Billing for the exact charge",
+      "next_action": "participant re-reads Billing for the exact charge",
       "cost_note": "80 live SAM 3.1 calls, 8,087 frames, approved up to $5; bound <= $4.3; exact charge UNKNOWN until Billing is read"
     }
   ]
