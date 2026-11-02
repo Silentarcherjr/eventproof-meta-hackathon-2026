@@ -102,15 +102,10 @@
 - Real-video flow by a subagent in a worktree (296433c), reviewed and merged (11fb83d).
 - Demo script draft `docs/DEMO_SCRIPT.md` with a claims→source table. Docs de-contradicted (PROGRESS, COSTS, DEPLOY_PROPOSAL, HANDOFF).
 - Tests: backend 221, Playwright 4; CI 40717424645 green. Meta calls: 0.
-## 2026-11-01 · session 1 (cont.) · local macOS · orchestrator — README
+## 2026-11-01 · session 1 (cont.) · local macOS · orchestrator — README and demo replay
 - Credits read by the participant: $149.26 of $150 left ($0.74 spent in total). COSTS.md updated.
 
-
-
-
-
-
-
+  fresh clone replays it with no key (verified in Docker from a clean clone). 0 Meta calls.
 ## 2026-11-01 · session 1 (cont.) · local macOS · orchestrator — P1-07 live SAM 3.1 pass on final_v1
 - Participant approved up to $5. Subset fixed by seed index (40000–40009 × 8 families = 80 scenes) and pre-registered in
   `benchmark/final/PREREGISTRATION_SAM_v1.md`, committed and pushed (3c32c7b) before the first call.
@@ -134,9 +129,6 @@
   pre-registration pushed (45bde5e) before any call. 1 Muse + 2 SAM live calls.
 - Result: Muse compiled "wait" as stopped (max_speed 0.05): 8/8 objects right. Synthetic-accepted repair r3-0 (<= 0.08/s,
   0.8 s): 7/8, passes the slow-roll van (crawl 0.04-0.09/s). Reported as is; post-hoc label notes in FINDINGS.md.
-
-
-
 ## 2026-11-02 · session 1 (cont.) · local macOS · orchestrator — P1-10 Muse Spark-alone baseline
 - Participant approved up to $60 more. Official prices read (SAM $0.20 / 1k frames; Spark $1.25 / $4.25 per 1M tokens).
 - Screened ~20 more Pexels traffic clips (frames only); usable fixed-camera ones downloaded for later labelling (Wroclaw
@@ -151,7 +143,6 @@
   minimal pair rendered as two clips with scene facts (stood still / inside the zone), the user picks the meaning. Live
   readings take from the Muse allowance; the readings cache ships in the backend image. CI 41397438034 green.
 - C-04: MIT license added at the participant's choice (2026-11-02, provisional until the rules are checked).
-
 ## 2026-11-02 · session 1 (cont.) · local macOS · orchestrator — P1-12 real traffic v2 (Wroclaw) + pooled result
 - Screened Taiwan (rejected: almost no crossings) and Wroclaw; 2 Wroclaw clips (red-light queue; green free flow), 16 cars
   labelled at 4 fps, frozen + pre-registered (730d351) before any call.
