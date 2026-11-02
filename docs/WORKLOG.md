@@ -134,3 +134,5 @@
   pre-registration pushed (45bde5e) before any call. 1 Muse + 2 SAM live calls.
 - Result: Muse compiled "wait" as stopped (max_speed 0.05): 8/8 objects right. Synthetic-accepted repair r3-0 (<= 0.08/s,
   0.8 s): 7/8, passes the slow-roll van (crawl 0.04-0.09/s). Reported as is; post-hoc label notes in FINDINGS.md.
+
+
