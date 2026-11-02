@@ -37,3 +37,11 @@ The user's answer picks the rule; no model decides it silently.
   still (the Novi Sad traffic run).
 - Cost: 23 live calls. Cached usage is about $1.41 (Spark $0.11, Wonder $1.31). One Wonder call that ran away (≈ 388k
   characters of output, not valid JSON) is not in the cache; its cost is estimated at ≈ $2 (UNKNOWN until Billing is read).
+
+## Addendum: the real traffic clips (pre-registered before the call)
+Muse Wonder compiled the Novi Sad rule ("Every car must wait at least 1.5 seconds in the waiting zone before it crosses the
+stop line"; 2 calls, request ids in [`addendum_novisad.json`](addendum_novisad.json)) and, unlike for boxes, read "wait"
+as **standing still** (`max_speed 0.05`), the same as Muse Spark. On the committed SAM 3.1 tracks both readings give
+identical verdicts on every object (8/8 labelled right for both, rolling van included). So the same verb is read
+differently depending on the scene ("box waits at inspection" vs. "car waits at a stop line"): one more reason to check the
+reading for each deployment instead of assuming it.

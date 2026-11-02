@@ -1,0 +1,41 @@
+{
+  "addendum": "novisad",
+  "wonder_request_ids": [
+    "chatcmpl-01a19ad1-75b9-74bd-bd83-a70a39ddfcac",
+    "chatcmpl-01a19ad2-a63d-7208-a534-62674143ba38"
+  ],
+  "wonder_assumptions": [
+    "The waiting zone is zone 'inspection' and the stop line is line 'packing_entry'.",
+    "'Wait at least 1.5 seconds' is interpreted as 1500 ms of continuous DWELL in 'inspection' while stopped/still, so max_speed is 0.05.",
+    "Cars travel from bottom-right to top-left, which is leftward/upward across 'packing_entry'; per the line definition this is direction 'to_left'.",
+    "No maximum interval between waiting and crossing was specified, so within_ms is null.",
+    "Cars that never cross the stop line pass, using IMPLIES(OCCURS(crossing), BEFORE(waiting, crossing))."
+  ],
+  "wonder_rule_first": {
+    "op": "DWELL",
+    "zone": "inspection",
+    "min_ms": 1500.0,
+    "max_speed": 0.05
+  },
+  "clips": [
+    {
+      "clip": "novisad_approach_a.mp4",
+      "objects_differ": [],
+      "labelled_right": {
+        "spark": 5,
+        "wonder": 5
+      },
+      "n_labelled": 5
+    },
+    {
+      "clip": "novisad_approach_b.mp4",
+      "objects_differ": [],
+      "labelled_right": {
+        "spark": 3,
+        "wonder": 3
+      },
+      "n_labelled": 3
+    }
+  ],
+  "result": "Muse Wonder also reads 'wait' as standing still in the traffic context; both readings give identical per-object verdicts"
+}
