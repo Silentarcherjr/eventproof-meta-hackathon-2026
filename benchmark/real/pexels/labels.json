@@ -1,0 +1,27 @@
+{
+  "protocol": "PREREGISTRATION.md (this folder); labels written by hand from frame sheets BEFORE any SAM call",
+  "line": {"x": 0.5, "direction": "right_to_left", "measure": "box center x, as a fraction of frame width"},
+  "scored_window_s": [1.0, 19.0],
+  "match_tolerance_s": 1.0,
+  "clips": {
+    "pexels_5903898": {
+      "source": "https://www.pexels.com/video/packages-moving-on-a-conveyor-belt-5903898/",
+      "license": "Pexels License (free use and modification, attribution not required)",
+      "downloaded_file": "5903898-sd_640_360_30fps.mp4",
+      "downloaded_sha256": "16734f3a7e58ce7fb0c228820f45178f2e7493d29b635d6b9db91e691162072b",
+      "prepared": "ffmpeg -map 0:v:0 -an -map_metadata -1 -vf fps=10 -c:v libx264 -pix_fmt yuv420p -preset medium -crf 18 -threads 1",
+      "prepared_sha256": "f7fca634380380e584682494b1485bcaf3b9e6028e06bdb4df77c4b757d7e8b2",
+      "video": {"width": 640, "height": 360, "fps": 10, "frames": 203},
+      "camera": "fixed (background sign and foreground helmet do not move)",
+      "prompt": "package",
+      "crossings_s": [2.9, 4.2, 5.6, 7.5, 10.0, 13.6, 15.9, 18.8],
+      "crossing_items": ["blue wrapped parcel", "black parcel 1", "black parcel 2", "white/black parcel",
+                         "small cardboard box", "white printed box", "orange box", "white 'ns' box"],
+      "not_scored": ["DURU box: on the line at t=0", "white/black wrapped parcel: on the line at the last frame (~19.5 s)"],
+      "labeller_note": "times read from 4-5 fps frame sheets; estimated uncertainty about ±0.3 s"
+    }
+  },
+  "excluded_before_any_call": {
+    "pexels_4156510": "camera pans and shifts during the clip (handheld), so no fixed line exists; mostly bags; person in frame. Not sent to SAM."
+  }
+}
