@@ -52,7 +52,7 @@ TRUST_PROXY = os.environ.get("EVENTPROOF_TRUST_PROXY") == "1"
 _hits: dict[str, deque] = {}
 _hits_lock = threading.Lock()
 _heavy = threading.Semaphore(1)
-HEAVY = re.compile(r"^/runs(/[^/]+/(challenge|challenge/sam-confirm|repair|before-after|ambiguity))?$")
+HEAVY = re.compile(r"^/runs(/[^/]+/(challenge|challenge/sam-confirm|repair|before-after|ambiguity|rule))?$")
 
 
 def _client_ip(request: Request) -> str:
@@ -153,6 +153,28 @@ def create_run(video: Annotated[UploadFile, File()],
             raise HTTPException(422, f"video rejected: {e}") from None
         except (MetaApiUnavailable, LiveCallLimit) as e:
             raise HTTPException(503, str(e)) from None
+
+
+class NewRuleRequest(BaseModel):
+    rule_text: str
+    layout: Layout | None = None
+
+
+@app.post("/runs/{run_id}/rule", response_model=pipeline.Evidence)
+def rerun_with_rule(run_id: str, req: NewRuleRequest) -> pipeline.Evidence:
+    """A new rule on the same video (and, unless given, the same zones): a new run. The Muse compile counts against the
+    live allowance unless cached; SAM tracks come from cache when the prompt is unchanged."""
+    if not 3 <= len(req.rule_text.strip()) <= 2000:
+        raise HTTPException(422, "rule_text must be 3-2000 characters")
+    ev = pipeline.Evidence.model_validate_json(_run_file(run_id, "evidence.json").read_text())
+    video = _run_file(run_id, "video.mp4")
+    try:
+        return pipeline.run(video, req.rule_text, req.layout or ev.rule.layout, get_compiler(), get_tracker(),
+                            filename=ev.video.filename)
+    except VideoRejected as e:
+        raise HTTPException(422, f"video rejected: {e}") from None
+    except (MetaApiUnavailable, LiveCallLimit) as e:
+        raise HTTPException(503, str(e)) from None
 
 
 def _run_file(run_id: str, name: str) -> Path:

@@ -162,3 +162,21 @@ def test_stored_and_final_report_endpoints(run, monkeypatch):
     assert c.post(f"/runs/{ev.run_id}/before-after", json={"proposer": "x"}).status_code == 422
     r = c.get("/final-report")
     assert r.status_code == 200 and r.json()["final_set"] == "final_v1"
+
+
+def test_new_rule_on_the_same_video_is_a_new_run(run, monkeypatch, tmp_path):
+    ev, _, runs = run
+    monkeypatch.setattr(pipeline, "RUNS_DIR", runs)
+    monkeypatch.setattr(mr, "get_client", lambda s: FakeMuse([GOOD]))
+    monkeypatch.setattr(api, "_compiler", MuseRuleCompiler(SETTINGS, cache_dir=tmp_path / "mc"))
+    scene = FAMILIES["canonical"](3)
+    monkeypatch.setattr(sam_mod, "get_client", lambda s: FakeClient(encode_wire(ground_truth(scene))))
+    monkeypatch.setattr(api, "_tracker", SamTracker(SETTINGS, cache_dir=tmp_path / "sc", max_live_calls=1))
+    c = TestClient(api.app)
+    text = "Every blue box must stand still for 2 seconds at inspection before packing."
+    r = c.post(f"/runs/{ev.run_id}/rule", json={"rule_text": text})
+    assert r.status_code == 200
+    new = r.json()
+    assert new["run_id"] != ev.run_id and new["rule"]["text"] == text and new["video"]["sha256"] == ev.video.sha256
+    assert new["rule"]["layout"] == ev.rule.layout.model_dump(mode="json")
+    assert c.post(f"/runs/{ev.run_id}/rule", json={"rule_text": "x"}).status_code == 422

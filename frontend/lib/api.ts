@@ -83,3 +83,10 @@ export async function askBothModels(runId: string, text: string): Promise<Ambigu
 
 export const certificateUrl = (runId: string, chosen?: "A" | "B") =>
   `${run(runId)}/certificate${chosen ? `?chosen=${chosen}` : ""}`;
+
+/** The same video (and zones) with a new rule: a new run. */
+export async function rerunWithRule(runId: string, ruleText: string, layout: Layout): Promise<Evidence> {
+  return json<Evidence>(await fetch(`${run(runId)}/rule`, {
+    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ rule_text: ruleText, layout }),
+  }));
+}

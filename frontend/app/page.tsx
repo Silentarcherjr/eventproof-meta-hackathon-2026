@@ -7,7 +7,7 @@ import ChallengePanel from "@/components/ChallengePanel";
 import Results from "@/components/Results";
 import Timeline from "@/components/Timeline";
 import VideoStage, { type Tool } from "@/components/VideoStage";
-import { certificateUrl, createRun, getFinalReport, getHealth, getRun, getTracks, type Health, videoUrl } from "@/lib/api";
+import { certificateUrl, createRun, getFinalReport, rerunWithRule, getHealth, getRun, getTracks, type Health, videoUrl } from "@/lib/api";
 import { DEFAULT_LAYOUT, EXAMPLE_RULES } from "@/lib/defaults";
 import type { BeforeAfter, Evidence, FinalReport, Layout, ObjectVerdict, TrackFrame, TrackSet } from "@/lib/types";
 
@@ -61,12 +61,13 @@ export default function Studio() {
   };
 
   const run = async () => {
-    if (!file) return;
+    if (!file && !ev) return;
     setBusy(true);
     setError(null);
     setTool("none");
     try {
-      const e = await createRun(file, rule, layout);
+      // a new file starts a new run; otherwise the open run's video is checked against the edited rule and zones
+      const e = file ? await createRun(file, rule, layout) : await rerunWithRule(ev!.run_id, rule, layout);
       setBa(null);
       setEv(e);
       setTracks(e.status === "completed" ? await getTracks(e.run_id) : null);
@@ -174,7 +175,7 @@ export default function Studio() {
             </div>
           </div>
 
-          <button onClick={run} disabled={!file || busy || rule.trim().length < 3} data-testid="run"
+          <button onClick={run} disabled={(!file && !(ev && stale)) || busy || rule.trim().length < 3} data-testid="run"
                   className="w-full rounded-lg bg-sky-600 py-2.5 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40">
             {busy ? "Running Muse Spark + SAM 3.1…" : "Check the rule"}
           </button>
