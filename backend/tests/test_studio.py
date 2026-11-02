@@ -180,3 +180,16 @@ def test_new_rule_on_the_same_video_is_a_new_run(run, monkeypatch, tmp_path):
     assert new["run_id"] != ev.run_id and new["rule"]["text"] == text and new["video"]["sha256"] == ev.video.sha256
     assert new["rule"]["layout"] == ev.rule.layout.model_dump(mode="json")
     assert c.post(f"/runs/{ev.run_id}/rule", json={"rule_text": "x"}).status_code == 422
+
+
+def test_challenge_declines_two_concept_rules(run):
+    from eventproof.schemas.rules import VisualRule
+
+    ev, _, runs = run
+    rule = VisualRule.model_validate(ev.rule.compiled_rule)
+    check = {"op": "OCCURS", "event": {"op": "WITH", "concept": "hard hat", "relation": "on_top", "min_ms": 200}}
+    two = ev.model_copy(deep=True)
+    two.rule.compiled_rule = rule.model_copy(update={"check": VisualRule.model_validate(
+        {**rule.model_dump(mode="json"), "check": check}).check}).model_dump(mode="json")
+    with pytest.raises(studio.ChallengeUnavailable, match="another object type"):
+        studio.challenge(two, runs_dir=runs)

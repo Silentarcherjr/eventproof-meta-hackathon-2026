@@ -53,7 +53,10 @@ Sources for the deployment facts above: [MoCo Show, 2026-01-07](https://mocoshow
 ## What it does
 1. **Build.** Muse Spark compiles the sentence into a typed temporal rule (strict JSON schema, validated by Pydantic,
    never executed as code) and lists its assumptions. SAM 3.1 tracks every object in the video. A deterministic engine
-   returns a verdict per object, with the decisive frames.
+   returns a verdict per object, with the decisive frames. Events: being in a zone, dwelling there (optionally only while
+   standing still), crossing a line in a direction, and **WITH**: a relation to an object of a second concept (a hard hat
+   *on top* of a worker, a person *near* a forklift) held for a duration. When a sentence needs a second object type,
+   Muse Spark escalates to the WITH schema and SAM 3.1 tracks that concept with its own prompt.
    **Two readings:** Muse Wonder reads the same sentence independently. If the two rules behave differently, EventProof
    shows the smallest pair of scenes that separates them ("the box never stopped but was inside 1.53 s: PASS or FAIL?")
    and the user picks the meaning, instead of a model picking it silently.
