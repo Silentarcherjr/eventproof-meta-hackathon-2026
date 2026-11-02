@@ -1,0 +1,48 @@
+{
+ "out": {
+  "diagnosis": "Current max_speed=0.08 too loose: white van that never stops (rolls ~50 px/s) gets longest_still 2.0s >800ms => false PASS. At <=0.04 van longest_still=0.0s. True stops retain large still time at strict thresholds (silver 2.4s at 0.02/3.3s at 0.04, SUV 3.0s at 0.02/4.4s at 0.04). min_ms=800 is below truth 1.0s.",
+  "proposals": [
+   {
+    "max_speed": 0.04,
+    "min_ms": 1000.0,
+    "rationale": "Aligns duration to truth 1.0s. At 0.04 van=0.0s<1.0s VIOLATION with 1.0s margin, red=0.0s VIOLATION, silver=3.3s>1.0s PASS, SUV=4.4s>1.0s PASS with >2s margin. 0.04 is just below van roll speed, rejecting slow roll while allowing tracker jitter."
+   },
+   {
+    "max_speed": 0.03,
+    "min_ms": 1000.0,
+    "rationale": "More conservative speed for other distances/perspectives where slow roll appears even smaller in frame-widths/sec. Van=0.0s<1.0s VIOLATION, silver=2.7s>1.0s PASS, SUV=3.9s>1.0s PASS. Keeps >1.7s PASS margin while adding ~0.02 frame-widths/sec speed margin below van roll."
+   }
+  ]
+ },
+ "request_id": "chatcmpl-01a19b77-2fd9-701f-ab55-f73f2a8c0ef9",
+ "messages": [
+  {
+   "role": "system",
+   "content": "You repair a video rule's thresholds so its verdicts match labelled real footage. You may only change the DWELL\nmin_ms and max_speed. Propose 1 to 3 patches. Prefer patches that fix every labelled car shown, with margin, and that\nwould also hold on other real cameras (other distances and perspectives) you have not seen. Output only the JSON."
+  },
+  {
+   "role": "user",
+   "content": "Rule text: Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.\nCurrent DWELL: min_ms=800.0, max_speed=0.08 (only time while the car's center moves at most max_speed frame widths per second, measured over 1/3 s, counts; the run must be continuous). Truth: a car that crosses must have stood still >= 1.0 s.\nDevelopment clips (real drone footage). Per labelled car, measured on its SAM 3.1 track:\n{\"clip\": \"novisad_approach_a.mp4\", \"object\": \"red car entering at the right edge ~2.0 s, rolls through and crosses ~4.2 s without stopping\", \"labelled\": \"VIOLATION\", \"rule_now\": \"VIOLATION\", \"tracked\": true, \"in_zone_s\": 2.6, \"longest_still_s\": {\"0.02\": 0.0, \"0.03\": 0.0, \"0.04\": 0.0, \"0.05\": 0.0, \"0.06\": 0.0, \"0.08\": 0.0, \"0.1\": 0.0}}\n{\"clip\": \"novisad_approach_a.mp4\", \"object\": \"silver sedan entering ~5.5 s, stands still ~7.5-11.5 s, crosses ~13.7 s\", \"labelled\": \"PASS\", \"rule_now\": \"PASS\", \"tracked\": true, \"in_zone_s\": 8.9, \"longest_still_s\": {\"0.02\": 2.4, \"0.03\": 2.7, \"0.04\": 3.3, \"0.05\": 3.5, \"0.06\": 3.9, \"0.08\": 4.3, \"0.1\": 4.8}}\n{\"clip\": \"novisad_approach_a.mp4\", \"object\": \"white van entering ~13.8 s, rolls through at ~50 px/s (never stops, checked at 5 fps) and crosses ~17.0 s\", \"labelled\": \"VIOLATION\", \"rule_now\": \"PASS\", \"tracked\": true, \"in_zone_s\": 5.8, \"longest_still_s\": {\"0.02\": 0.0, \"0.03\": 0.0, \"0.04\": 0.0, \"0.05\": 0.5, \"0.06\": 0.8, \"0.08\": 2.0, \"0.1\": 2.7}}\n{\"clip\": \"novisad_approach_a.mp4\", \"object\": \"white car waiting in the left-hand lane the whole clip (upper of the two, lower-left of the frame)\", \"labelled\": \"PASS\", \"rule_now\": \"PASS\", \"tracked\": true, \"in_zone_s\": 0.0, \"longest_still_s\": {\"0.02\": 0.0, \"0.03\": 0.0, \"0.04\": 0.0, \"0.05\": 0.0, \"0.06\": 0.0, \"0.08\": 0.0, \"0.1\": 0.0}}\n{\"clip\": \"novisad_approach_a.mp4\", \"object\": \"white car waiting in the left-hand lane the whole clip (lower, at the bottom-left edge)\", \"labelled\": \"PASS\", \"rule_now\": \"PASS\", \"tracked\": true, \"in_zone_s\": 19.0, \"longest_still_s\": {\"0.02\": 18.9, \"0.03\": 18.9, \"0.04\": 18.9, \"0.05\": 18.9, \"0.06\": 18.9, \"0.08\": 18.9, \"0.1\": 18.9}}\n{\"clip\": \"novisad_approach_b.mp4\", \"object\": \"white SUV already standing in the waiting zone at 0 s, stands still until ~5.5 s, crosses ~6.8 s\", \"labelled\": \"PASS\", \"rule_now\": \"PASS\", \"tracked\": true, \"in_zone_s\": 7.6, \"longest_still_s\": {\"0.02\": 3.0, \"0.03\": 3.9, \"0.04\": 4.4, \"0.05\": 4.8, \"0.06\": 5.1, \"0.08\": 5.5, \"0.1\": 6.3}}\n{\"clip\": \"novisad_approach_b.mp4\", \"object\": \"white car waiting in the left-hand lane the whole clip (upper of the two, lower-left of the frame)\", \"labelled\": \"PASS\", \"rule_now\": \"PASS\", \"tracked\": true, \"in_zone_s\": 0.0, \"longest_still_s\": {\"0.02\": 0.0, \"0.03\": 0.0, \"0.04\": 0.0, \"0.05\": 0.0, \"0.06\": 0.0, \"0.08\": 0.0, \"0.1\": 0.0}}\n{\"clip\": \"novisad_approach_b.mp4\", \"object\": \"white car waiting in the left-hand lane the whole clip (lower, at the bottom-left edge)\", \"labelled\": \"PASS\", \"rule_now\": \"PASS\", \"tracked\": true, \"in_zone_s\": 19.7, \"longest_still_s\": {\"0.02\": 19.6, \"0.03\": 19.6, \"0.04\": 19.6, \"0.05\": 19.6, \"0.06\": 19.6, \"0.08\": 19.6, \"0.1\": 19.6}}"
+  }
+ ],
+ "usage": {
+  "completion_tokens": 6801,
+  "prompt_tokens": 1534,
+  "total_tokens": 8335,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 6441,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": {
+   "audio_tokens": null,
+   "cache_write_tokens": null,
+   "cached_tokens": 0,
+   "image_tokens": null,
+   "text_tokens": null
+  }
+ },
+ "latency_s": 37.7
+}

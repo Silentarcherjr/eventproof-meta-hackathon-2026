@@ -164,3 +164,6 @@
   clips: same verdicts as hand zones on Novi Sad (8/8); Wroclaw has no painted stop line in the crop -> proxy line, 20/30 vs
   27/30 overall. Studio: "Suggest zone and line" draft with Muse's assumptions; API POST /propose-layout within the allowance.
 - Studio stepper (Build → Break → Repair → Certify) with live status per run; e2e +1 test (new rule on the same video).
+- P1-15 field repair (pre-registered): Muse Spark repairs from Novi Sad failures; its patches lift Wroclaw 9 -> 19/22 but move
+  min_ms to 1.0 s, 7 synthetic regressions -> 0/4 accepted; grid 3/16 accepted (<= 0.03-0.05/s, >= 0.8 s: Wroclaw 19/22,
+  synthetic 166/200, 0 regressions).

@@ -1,0 +1,729 @@
+{
+  "schema": "eventproof-field-repair/1",
+  "preregistration": "benchmark/field_repair/PREREGISTRATION.md",
+  "start_rule": "compiled rule + synthetic-accepted repair r3-0",
+  "dev": [
+    "novisad_approach_a.mp4",
+    "novisad_approach_b.mp4"
+  ],
+  "real_holdout": [
+    "wroclaw_w1.mp4",
+    "wroclaw_w2.mp4",
+    "wroclaw_w3.mp4"
+  ],
+  "synthetic_holdout": {
+    "name": "holdout_v2",
+    "sha256": "bc76a6b52faf290f71c9a4d106059a2e95cb394703041b72cca78ea49c33fe32"
+  },
+  "dev_before": {
+    "n": 8,
+    "right": 7,
+    "wrong": [
+      "novisad_approach_a.mp4: white van entering ~13.8 s, rolls throug labelled VIOLATION, now PASS"
+    ],
+    "note": "r0 = this patch already applied"
+  },
+  "muse": {
+    "diagnosis": [
+      "Current max_speed=0.08 too loose: white van that never stops (rolls ~50 px/s) gets longest_still 2.0s >800ms => false PASS. At <=0.04 van longest_still=0.0s. True stops retain large still time at strict thresholds (silver 2.4s at 0.02/3.3s at 0.04, SUV 3.0s at 0.02/4.4s at 0.04). min_ms=800 is below truth 1.0s.",
+      "Both prior patches score 8/8 dev, fixing white-van false PASS (roll ~0.04-0.05 fw/s, 0.0s still at <=0.04 vs 2.0s at 0.08). True stops retain large margin down to 0.02 (silver 2.4s, SUV 3.0s). In fw/s units farther cameras shrink apparent roll speed, so lower max_speed generalizes; 0.02 is lowest validated threshold with >1s margin both sides. min_ms=1000 matches truth >=1.0s."
+    ],
+    "trace": [
+      {
+        "round": "1",
+        "request_id": "chatcmpl-01a19b77-2fd9-701f-ab55-f73f2a8c0ef9",
+        "cached": false
+      },
+      {
+        "round": "2",
+        "request_id": "chatcmpl-01a19b77-80fc-706d-8d66-02bcb13558c1",
+        "cached": false
+      }
+    ],
+    "decisions": [
+      {
+        "proposal": {
+          "max_speed": 0.04,
+          "min_ms": 1000.0,
+          "rationale": "Aligns duration to truth 1.0s. At 0.04 van=0.0s<1.0s VIOLATION with 1.0s margin, red=0.0s VIOLATION, silver=3.3s>1.0s PASS, SUV=4.4s>1.0s PASS with >2s margin. 0.04 is just below van roll speed, rejecting slow roll while allowing tracker jitter.",
+          "round": 1
+        },
+        "patch": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.04/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 159,
+          "n": 200,
+          "regressions": 7,
+          "false_pass_before": 21,
+          "false_pass_after": 19
+        },
+        "accepted": false,
+        "reasons": [
+          "7 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "max_speed": 0.03,
+          "min_ms": 1000.0,
+          "rationale": "More conservative speed for other distances/perspectives where slow roll appears even smaller in frame-widths/sec. Van=0.0s<1.0s VIOLATION, silver=2.7s>1.0s PASS, SUV=3.9s>1.0s PASS. Keeps >1.7s PASS margin while adding ~0.02 frame-widths/sec speed margin below van roll.",
+          "round": 1
+        },
+        "patch": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.03/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 159,
+          "n": 200,
+          "regressions": 7,
+          "false_pass_before": 21,
+          "false_pass_after": 19
+        },
+        "accepted": false,
+        "reasons": [
+          "7 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "max_speed": 0.02,
+          "min_ms": 1000.0,
+          "rationale": "Most distance-robust validated point. Van 0.0s<1.0s VIOLATION, red 0.0s VIOLATION, silver 2.4s>1.0s PASS, SUV 3.0s>1.0s PASS. Rejects ~2x farther/distant-camera slow rolls that would appear <0.03-0.04 fw/s while staying above tracker jitter.",
+          "round": 2
+        },
+        "patch": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.02/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 158,
+          "n": 200,
+          "regressions": 8,
+          "false_pass_before": 21,
+          "false_pass_after": 19
+        },
+        "accepted": false,
+        "reasons": [
+          "8 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "max_speed": 0.03,
+          "min_ms": 1000.0,
+          "rationale": "Balanced fallback. Van 0.0s VIOLATION, silver 2.7s PASS, SUV 3.9s PASS. Keeps 1.0s violation margin and >1.7s pass margin with more tolerance to center jitter on closer cameras.",
+          "round": 2
+        },
+        "patch": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.03/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 159,
+          "n": 200,
+          "regressions": 7,
+          "false_pass_before": 21,
+          "false_pass_after": 19
+        },
+        "accepted": false,
+        "reasons": [
+          "7 synthetic-holdout regression(s)"
+        ]
+      }
+    ],
+    "accepted": 0,
+    "first_accepted": null
+  },
+  "baseline_grid": {
+    "decisions": [
+      {
+        "proposal": {
+          "min_ms": 800.0,
+          "max_speed": 0.03,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 0.80 s; DWELL(inspection) counts only while speed <= 0.03/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 166,
+          "n": 200,
+          "regressions": 0,
+          "false_pass_before": 21,
+          "false_pass_after": 19
+        },
+        "accepted": true,
+        "reasons": [
+          "verified: real holdout 9 -> 19/22, synthetic 164 -> 166/200, 0 regressions"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 1000.0,
+          "max_speed": 0.03,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.03/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 159,
+          "n": 200,
+          "regressions": 7,
+          "false_pass_before": 21,
+          "false_pass_after": 19
+        },
+        "accepted": false,
+        "reasons": [
+          "7 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 1200.0,
+          "max_speed": 0.03,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 1.20 s; DWELL(inspection) counts only while speed <= 0.03/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 155,
+          "n": 200,
+          "regressions": 17,
+          "false_pass_before": 21,
+          "false_pass_after": 14
+        },
+        "accepted": false,
+        "reasons": [
+          "17 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 1500.0,
+          "max_speed": 0.03,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 1.50 s; DWELL(inspection) counts only while speed <= 0.03/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 158,
+          "n": 200,
+          "regressions": 27,
+          "false_pass_before": 21,
+          "false_pass_after": 2
+        },
+        "accepted": false,
+        "reasons": [
+          "27 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 800.0,
+          "max_speed": 0.04,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 0.80 s; DWELL(inspection) counts only while speed <= 0.04/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 166,
+          "n": 200,
+          "regressions": 0,
+          "false_pass_before": 21,
+          "false_pass_after": 19
+        },
+        "accepted": true,
+        "reasons": [
+          "verified: real holdout 9 -> 19/22, synthetic 164 -> 166/200, 0 regressions"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 1000.0,
+          "max_speed": 0.04,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.04/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 159,
+          "n": 200,
+          "regressions": 7,
+          "false_pass_before": 21,
+          "false_pass_after": 19
+        },
+        "accepted": false,
+        "reasons": [
+          "7 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 1200.0,
+          "max_speed": 0.04,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 1.20 s; DWELL(inspection) counts only while speed <= 0.04/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 155,
+          "n": 200,
+          "regressions": 17,
+          "false_pass_before": 21,
+          "false_pass_after": 14
+        },
+        "accepted": false,
+        "reasons": [
+          "17 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 1500.0,
+          "max_speed": 0.04,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 1.50 s; DWELL(inspection) counts only while speed <= 0.04/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 158,
+          "n": 200,
+          "regressions": 27,
+          "false_pass_before": 21,
+          "false_pass_after": 2
+        },
+        "accepted": false,
+        "reasons": [
+          "27 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 800.0,
+          "max_speed": 0.05,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 0.80 s; DWELL(inspection) counts only while speed <= 0.05/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 166,
+          "n": 200,
+          "regressions": 0,
+          "false_pass_before": 21,
+          "false_pass_after": 19
+        },
+        "accepted": true,
+        "reasons": [
+          "verified: real holdout 9 -> 19/22, synthetic 164 -> 166/200, 0 regressions"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 1000.0,
+          "max_speed": 0.05,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.05/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 159,
+          "n": 200,
+          "regressions": 7,
+          "false_pass_before": 21,
+          "false_pass_after": 19
+        },
+        "accepted": false,
+        "reasons": [
+          "7 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 1200.0,
+          "max_speed": 0.05,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 1.20 s; DWELL(inspection) counts only while speed <= 0.05/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 155,
+          "n": 200,
+          "regressions": 15,
+          "false_pass_before": 21,
+          "false_pass_after": 15
+        },
+        "accepted": false,
+        "reasons": [
+          "15 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 1500.0,
+          "max_speed": 0.05,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 1.50 s; DWELL(inspection) counts only while speed <= 0.05/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 156,
+          "n": 200,
+          "regressions": 27,
+          "false_pass_before": 21,
+          "false_pass_after": 4
+        },
+        "accepted": false,
+        "reasons": [
+          "27 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 800.0,
+          "max_speed": 0.06,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 0.80 s; DWELL(inspection) counts only while speed <= 0.06/s",
+        "dev": {
+          "n": 8,
+          "right": 7,
+          "wrong": [
+            "novisad_approach_a.mp4: white van entering ~13.8 s, rolls throug labelled VIOLATION, now PASS"
+          ]
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 16,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 166,
+          "n": 200,
+          "regressions": 0,
+          "false_pass_before": 21,
+          "false_pass_after": 19
+        },
+        "accepted": false,
+        "reasons": [
+          "dev not fixed (7/8)"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 1000.0,
+          "max_speed": 0.06,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 1.00 s; DWELL(inspection) counts only while speed <= 0.06/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 18,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 163,
+          "n": 200,
+          "regressions": 3,
+          "false_pass_before": 21,
+          "false_pass_after": 19
+        },
+        "accepted": false,
+        "reasons": [
+          "3 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 1200.0,
+          "max_speed": 0.06,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 1.20 s; DWELL(inspection) counts only while speed <= 0.06/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 18,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 155,
+          "n": 200,
+          "regressions": 13,
+          "false_pass_before": 21,
+          "false_pass_after": 17
+        },
+        "accepted": false,
+        "reasons": [
+          "13 synthetic-holdout regression(s)"
+        ]
+      },
+      {
+        "proposal": {
+          "min_ms": 1500.0,
+          "max_speed": 0.06,
+          "rationale": "grid",
+          "round": 0
+        },
+        "patch": "DWELL(inspection) >= 1.50 s; DWELL(inspection) counts only while speed <= 0.06/s",
+        "dev": {
+          "n": 8,
+          "right": 8,
+          "wrong": []
+        },
+        "real_holdout": {
+          "n": 22,
+          "before": 9,
+          "after": 19,
+          "regressions": 0
+        },
+        "synthetic_holdout": {
+          "before": 164,
+          "after": 152,
+          "n": 200,
+          "regressions": 25,
+          "false_pass_before": 21,
+          "false_pass_after": 9
+        },
+        "accepted": false,
+        "reasons": [
+          "25 synthetic-holdout regression(s)"
+        ]
+      }
+    ],
+    "accepted": 3,
+    "first_accepted": {
+      "proposal": {
+        "min_ms": 800.0,
+        "max_speed": 0.03,
+        "rationale": "grid",
+        "round": 0
+      },
+      "patch": "DWELL(inspection) >= 0.80 s; DWELL(inspection) counts only while speed <= 0.03/s",
+      "dev": {
+        "n": 8,
+        "right": 8,
+        "wrong": []
+      },
+      "real_holdout": {
+        "n": 22,
+        "before": 9,
+        "after": 19,
+        "regressions": 0
+      },
+      "synthetic_holdout": {
+        "before": 164,
+        "after": 166,
+        "n": 200,
+        "regressions": 0,
+        "false_pass_before": 21,
+        "false_pass_after": 19
+      },
+      "accepted": true,
+      "reasons": [
+        "verified: real holdout 9 -> 19/22, synthetic 164 -> 166/200, 0 regressions"
+      ]
+    }
+  },
+  "live_calls_this_run": 2,
+  "code_commit": "ff6fbc582d8d402cdfd40ad2577ba7365c4c6951"
+}
