@@ -16,6 +16,7 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 
 | fecha (Panamá) | plataforma | sesión/tarea | tipo de crédito | saldo confirmado | consumo confirmado | estimado | límite acordado | alerta | fuente |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-02 | Meta Model API | budget approval (real-footage set v2 + Spark-alone baseline) | hackathon $150 | UNKNOWN | - | - | participant approved up to $60 more | - | participant message |
 | 2026-11-01 | Meta Model API | Novi Sad real traffic loop (P1-09) | hackathon $150 | UNKNOWN | 2 live SAM calls (190 + 197 frames) + 1 live Muse compile | ≤ $0.21 SAM (bound) + 1 Muse compile | participant approved | - | benchmark/real/novisad/report_novisad.json |
 | 2026-11-01 | Meta Model API | Pexels check v2 (P1-08) | hackathon $150 | UNKNOWN | 8 live SAM calls (50-frame windows) | ≤ $0.21 (bound) | participant approved | - | benchmark/real/pexels/report_pexels_v2.json |
 | 2026-11-01 | Meta Model API | Pexels real-footage check (P1-08) | hackathon $150 | UNKNOWN | 1 live SAM call (203 frames) | ≤ $0.11 (bound) | participant approved | - | benchmark/real/pexels/report_pexels.json |
@@ -36,4 +37,8 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 
 ## Pricing notes
 - SAM 3.1 bills a minimum of 50 frames per request (dev.meta.ai/docs/sam/segmenting, 2026-10-27). Cache results by (video sha256, model, prompt).
+- Official prices read 2026-11-02 (dev.meta.ai/docs/pricing-rate-limits): SAM 3.1 video $0.20 per 1,000 frames (min 50
+  per request), images $2.50 per 1,000; Muse Spark 1.3 $1.25 / $4.25 per 1M input / output tokens (cached input $0.15);
+  Muse Wonder 1.0 $4 / $20. Earlier "≤ $X (bound)" entries used a cost-per-frame bound derived from the $0.74 total and
+  overstate SAM spend: at list price all ~10,500 SAM frames so far cost about $2.1.
 - Muse Spark pricing: not yet read from the account's Billing page — fill in once credits are active.
