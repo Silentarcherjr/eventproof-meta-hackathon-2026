@@ -4,6 +4,10 @@
 seconds. EventProof then tries to break that detector, repairs it, and only keeps the repair if it holds on cases it
 never saw.
 
+**At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · tested on real drone and conveyor footage, labels
+frozen before any model call · one-command replay with no API key (`docker compose`) · 245 backend tests, CI recomputes every
+published number · MIT licensed.
+
 ![Real footage: the same SAM 3.1 tracks judged by two readings of "wait"](docs/media/real_traffic.png)
 
 ## The problem
@@ -100,7 +104,7 @@ calls explicitly: `EVENTPROOF_MAX_LIVE_MUSE_CALLS=6 EVENTPROOF_MAX_LIVE_SAM_CALL
 Without Docker: `cd backend && uv sync && uv run pytest && uv run uvicorn eventproof.api.main:app` and
 `cd frontend && npm ci && npm run dev`.
 
-Engineering: FastAPI + Pydantic backend, Next.js studio, 237 backend tests + Playwright end-to-end tests in CI,
+Engineering: FastAPI + Pydantic backend, Next.js studio, 245 backend tests + Playwright end-to-end tests in CI,
 regression tests that recompute every published number, images pinned by digest. Showcase deployment (no key, no
 uploads, rate-limited) in [`deploy/`](deploy/).
 
