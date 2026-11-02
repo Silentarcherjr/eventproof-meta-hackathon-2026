@@ -1,0 +1,5 @@
+{
+  "model": "muse-wonder-1.0",
+  "text": "Every box must be inspected for at least 1.5 seconds before it crosses into packing.",
+  "refusal": "UnsupportedRule: Intentional omission: BEFORE requires a nested expression node as first/then, not an event-level nested rule; this candidate deliberately misencodes the rule by reducing it to only OCCURS(CROSSES), dropping the DWELL inspection and the IMPLIES/BEFORE structure, so it must not pass."
+}

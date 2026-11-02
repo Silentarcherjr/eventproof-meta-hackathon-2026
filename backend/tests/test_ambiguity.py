@@ -40,3 +40,18 @@ def test_two_readings_disagree_where_expected_and_pair_straddles_the_boundary(de
 def test_uncached_compile_needs_an_allowance(tmp_path):
     with pytest.raises(LiveCallLimit):
         am.compile_reading("Every box must linger.", "muse-spark-1.3", 0, tmp_path)
+
+
+def test_committed_report_recomputes_from_cached_readings(monkeypatch):
+    from eventproof.meta import muse_rules
+
+    monkeypatch.setattr(muse_rules, "get_client", lambda s: pytest.fail("must not call the API"))
+    committed = json.loads((am.OUT_DIR / "report.json").read_text())
+    committed.pop("code_commit")
+    rep = am.run(0)
+    assert rep.pop("live_calls_this_run") == 0
+    committed.pop("live_calls_this_run")
+    for t in rep["texts"] + committed["texts"]:  # "cached" flips from False (live run) to True (recompute)
+        for k in "AB":
+            t[k].pop("cached")
+    assert json.loads(json.dumps(rep)) == committed

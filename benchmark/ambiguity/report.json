@@ -1,0 +1,2141 @@
+{
+  "schema": "eventproof-ambiguity/1",
+  "preregistration": "benchmark/ambiguity/PREREGISTRATION.md",
+  "models": {
+    "A": "muse-spark-1.3",
+    "B": "muse-wonder-1.0"
+  },
+  "suite": {
+    "families": [
+      "canonical",
+      "drive_through",
+      "brief_stop",
+      "occluded_station",
+      "tailgate"
+    ],
+    "seeds": [
+      0,
+      29
+    ],
+    "tracks": "ground truth (oracle)"
+  },
+  "live_calls_this_run": 23,
+  "summary": {
+    "texts": 8,
+    "both_compiled": 6,
+    "refused_by": {
+      "muse-spark-1.3": 0,
+      "muse-wonder-1.0": 2
+    },
+    "identical": 0,
+    "behave_differently": 2,
+    "with_minimal_pair": 2
+  },
+  "texts": [
+    {
+      "text": "Every box must stay at least 1.5 seconds in the inspection zone before it crosses into packing.",
+      "A": {
+        "model": "muse-spark-1.3",
+        "ok": true,
+        "rule": {
+          "rule_id": "box-inspection-dwell-before-packing",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "box"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": null
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "Every box that crosses packing_entry must have dwelled continuously in the inspection zone for at least 1500 ms before that crossing."
+        },
+        "assumptions": [
+          "Crossing into packing is interpreted as CROSSES packing_entry with direction to_left, per given mapping that rightward (+x) motion is to_left and boxes travel left to right.",
+          "Stay at least 1.5 seconds is interpreted as DWELL in inspection for >=1500 ms continuously.",
+          "DWELL allows any motion (max_speed null), not only stopped, since stillness is not stated.",
+          "BEFORE has no maximum gap (within_ms null); the dwell may occur any time before the first packing crossing.",
+          "Boxes that never cross packing_entry pass vacuously via IMPLIES."
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19abb-9ccd-7630-8974-75ebe208e92a"
+        ],
+        "cached": false
+      },
+      "B": {
+        "model": "muse-wonder-1.0",
+        "ok": true,
+        "rule": {
+          "rule_id": "rule-",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "box"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": null
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "Every box must dwell continuously for at least 1500 ms in the inspection zone before crossing packing_entry to_left into packing."
+        },
+        "assumptions": [
+          "'Stay at least 1.5 seconds' is interpreted as continuous DWELL in 'inspection' for at least 1500 ms with any motion (max_speed=null).",
+          "Crossing into packing is a left-to-right/rightward (+x) crossing of 'packing_entry', which per the line definition is direction 'to_left'.",
+          "No maximum interval between the dwell and the crossing is specified, so BEFORE uses within_ms=null.",
+          "Boxes that never cross into packing pass vacuously via the IMPLIES idiom."
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19abc-2443-710e-8ae9-9cdac4c9bd22",
+          "chatcmpl-01a19abd-17ad-71b2-b426-81e337659a67"
+        ],
+        "cached": false
+      },
+      "identical_rules": false,
+      "comparison": {
+        "scenes": 150,
+        "disagree": 0,
+        "disagree_by_family": {
+          "canonical": 0,
+          "drive_through": 0,
+          "brief_stop": 0,
+          "occluded_station": 0,
+          "tailgate": 0
+        },
+        "correct_vs_process_truth": {
+          "A": 136,
+          "B": 136
+        },
+        "pairs": [],
+        "disagreeing_scenes": []
+      }
+    },
+    {
+      "text": "Every box must stop in the inspection zone for at least 1.5 seconds before it crosses into packing.",
+      "A": {
+        "model": "muse-spark-1.3",
+        "ok": true,
+        "rule": {
+          "rule_id": "box-stop-inspection-before-packing",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "box"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": 0.05
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "Every box that crosses packing_entry rightwards must have previously dwelled stopped in the inspection zone for at least 1500 ms."
+        },
+        "assumptions": [
+          "Crossing into packing is interpreted as CROSSES line 'packing_entry' in direction 'to_left', since rightwards (+x) is defined as to_left and boxes travel left to right.",
+          "Stop is interpreted as DWELL with max_speed 0.05, meaning continuously stopped/still inside the zone.",
+          "1.5 seconds is converted to 1500 ms of continuous dwell in zone 'inspection'.",
+          "No maximum time gap is imposed between the dwell and the crossing (within_ms null); the dwell must simply precede the first packing crossing.",
+          "Boxes that never cross into packing pass vacuously via IMPLIES."
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19abd-64cc-7261-a67e-f3a18df2ac2a"
+        ],
+        "cached": false
+      },
+      "B": {
+        "model": "muse-wonder-1.0",
+        "ok": true,
+        "rule": {
+          "rule_id": "rule",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "box"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": 0.05
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "Every box must have a stopped dwell in inspection for at least 1.5s before crossing packing_entry in the to_left (left-to-right) direction"
+        },
+        "assumptions": [
+          "'Stop' is interpreted as a continuous DWELL in zone 'inspection' for at least 1500 ms with max_speed 0.05 (stopped/still)",
+          "1.5 seconds is converted to 1500 milliseconds",
+          "Crossing into packing is crossing line 'packing_entry' left-to-right (+x), which the provided mapping labels as direction 'to_left'",
+          "No maximum time between the inspection dwell and the packing crossing is specified, so BEFORE has within_ms null",
+          "Boxes that never cross into packing pass, following IMPLIES(OCCURS(crossing), BEFORE(dwell, crossing))",
+          "BEFORE uses its first/then event fields with no children, as required by validation"
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19abd-dd90-7105-b7ed-60e3edc04829",
+          "chatcmpl-01a19abe-68b8-70b3-be00-4c8aa81cdcbd"
+        ],
+        "cached": false
+      },
+      "identical_rules": false,
+      "comparison": {
+        "scenes": 150,
+        "disagree": 0,
+        "disagree_by_family": {
+          "canonical": 0,
+          "drive_through": 0,
+          "brief_stop": 0,
+          "occluded_station": 0,
+          "tailgate": 0
+        },
+        "correct_vs_process_truth": {
+          "A": 119,
+          "B": 119
+        },
+        "pairs": [],
+        "disagreeing_scenes": []
+      }
+    },
+    {
+      "text": "Every box must wait at least 1.5 seconds in the inspection zone before it crosses into packing.",
+      "A": {
+        "model": "muse-spark-1.3",
+        "ok": true,
+        "rule": {
+          "rule_id": "box-wait-inspection-before-packing",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "box"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": 0.05
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "Every box that crosses packing_entry to the left must have first dwelled stopped in inspection for at least 1500 ms."
+        },
+        "assumptions": [
+          "Crossing into packing means CROSSES packing_entry in direction to_left, which per the line description corresponds to rightwards left-to-right travel.",
+          "'wait' means stopped, so DWELL uses max_speed 0.05 for stopped/still.",
+          "'at least 1.5 seconds' means continuously inside for min_ms 1500.",
+          "No maximum gap between the wait and the crossing is required, so within_ms is null.",
+          "Boxes that never cross packing_entry vacuously pass via IMPLIES."
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19abe-c715-773f-a387-c9f04bb38c80"
+        ],
+        "cached": false
+      },
+      "B": {
+        "model": "muse-wonder-1.0",
+        "ok": true,
+        "rule": {
+          "rule_id": "inspection_dwell_before_packing_entry",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "box"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": null
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "IMPLIES(OCCURS(CROSSES), BEFORE(DWELL 1500ms, CROSSES))"
+        },
+        "assumptions": [
+          "'Wait at least 1.5 seconds' is interpreted as continuously dwelling in the inspection zone for at least 1500 ms, with no explicitly stated stopped/still requirement, so max_speed is null.",
+          "Crossing into packing is left-to-right (+x) movement, which the provided line definition maps to direction 'to_left' on packing_entry.",
+          "No maximum time between the inspection dwell and the packing crossing is stated, so BEFORE uses within_ms null.",
+          "Boxes that never cross into packing pass, using the IMPLIES(OCCURS(B), BEFORE(A, B)) idiom."
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19abf-8b0f-77d5-9518-e3bd7fb3e5dd",
+          "chatcmpl-01a19abf-ad93-72d1-92fb-56efb9791af7"
+        ],
+        "cached": false
+      },
+      "identical_rules": false,
+      "comparison": {
+        "scenes": 150,
+        "disagree": 45,
+        "disagree_by_family": {
+          "canonical": 7,
+          "drive_through": 11,
+          "brief_stop": 15,
+          "occluded_station": 12,
+          "tailgate": 0
+        },
+        "correct_vs_process_truth": {
+          "A": 119,
+          "B": 136
+        },
+        "pairs": [
+          {
+            "family": "brief_stop",
+            "seed": 1,
+            "knob": "station stop duration",
+            "t_differ": 0.24434,
+            "t_agree": 0.24453,
+            "differ": {
+              "scene_sha256": "9f1ae6da4edef858b5ff1fd7e4d59ec9640f0f862690014c84140d1b60f50e77",
+              "truth": "PASS",
+              "verdicts": {
+                "A": "FAIL",
+                "B": "PASS"
+              }
+            },
+            "agree": {
+              "scene_sha256": "6591c2c00c7eb32a04ebbd5c1ee9814cd2603a014f5984782b1cf5b1ef1b35d1",
+              "truth": "PASS",
+              "verdicts": {
+                "A": "PASS",
+                "B": "PASS"
+              }
+            }
+          },
+          {
+            "family": "drive_through",
+            "seed": 0,
+            "knob": "belt speed",
+            "t_differ": 0.11777,
+            "t_agree": 0.11797,
+            "differ": {
+              "scene_sha256": "1383718a4932b3817816a3a6a697ab0a9ad2c0f6327d57ccbe7c003f4e245260",
+              "truth": "FAIL",
+              "verdicts": {
+                "A": "FAIL",
+                "B": "PASS"
+              }
+            },
+            "agree": {
+              "scene_sha256": "ce25b36c7276523af92ecc2591ad937f2289f7ee6d0cb5834370a339790941a4",
+              "truth": "FAIL",
+              "verdicts": {
+                "A": "FAIL",
+                "B": "FAIL"
+              }
+            }
+          }
+        ],
+        "disagreeing_scenes": [
+          {
+            "family": "canonical",
+            "seed": 8,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "canonical",
+            "seed": 12,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "canonical",
+            "seed": 15,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "canonical",
+            "seed": 16,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "canonical",
+            "seed": 23,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "canonical",
+            "seed": 25,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "canonical",
+            "seed": 27,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 0,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 2,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 4,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 5,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 7,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 9,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 16,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 17,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 21,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 23,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 29,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 1,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 4,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 5,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 8,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 9,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 10,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 12,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 14,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 15,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 17,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 18,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 19,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 26,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 27,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 29,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 1,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 2,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 3,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 6,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 10,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 11,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 13,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          }
+        ]
+      }
+    },
+    {
+      "text": "Every box must pause in the inspection zone for 1.5 seconds before entering packing.",
+      "A": {
+        "model": "muse-spark-1.3",
+        "ok": true,
+        "rule": {
+          "rule_id": "box-pause-inspection-before-packing",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "box"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": 0.05
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "Every box that crosses packing_entry to the left must have first dwelled stopped in the inspection zone for at least 1500 ms."
+        },
+        "assumptions": [
+          "Pause interpreted as stopped dwell with max_speed 0.05.",
+          "1.5 seconds interpreted as 1500 ms continuously inside the zone.",
+          "Entering packing interpreted as CROSSES packing_entry in direction to_left, which per provided mapping is rightwards (+x) travel left to right.",
+          "Boxes that never cross packing_entry pass vacuously.",
+          "No maximum time limit between pause and entry, so within_ms is null."
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19abf-f308-7290-8b58-71689348d9aa"
+        ],
+        "cached": false
+      },
+      "B": {
+        "model": "muse-wonder-1.0",
+        "ok": true,
+        "rule": {
+          "rule_id": "pause_in_inspection_before_packing",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "box"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": 0.05
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "Every box that crosses packing_entry to_left must first dwell stopped in inspection for at least 1500 ms."
+        },
+        "assumptions": [
+          "'Pause' is interpreted as a continuous DWELL in the inspection zone with max_speed 0.05 (stopped/still).",
+          "1.5 seconds is converted to 1500 ms.",
+          "Entering packing is interpreted as crossing packing_entry in the boxes' left-to-right travel direction, which the given mapping labels as to_left (rightwards, +x).",
+          "No maximum interval between the pause and entering packing is specified, so BEFORE uses within_ms null.",
+          "Boxes that never enter packing pass, following the IMPLIES(OCCURS(entering), BEFORE(pause, entering)) idiom."
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19ac0-6b52-7362-a30e-756ab13d11cf",
+          "chatcmpl-01a19ac1-434b-707a-bb9e-86b942593f8b"
+        ],
+        "cached": false
+      },
+      "identical_rules": false,
+      "comparison": {
+        "scenes": 150,
+        "disagree": 0,
+        "disagree_by_family": {
+          "canonical": 0,
+          "drive_through": 0,
+          "brief_stop": 0,
+          "occluded_station": 0,
+          "tailgate": 0
+        },
+        "correct_vs_process_truth": {
+          "A": 119,
+          "B": 119
+        },
+        "pairs": [],
+        "disagreeing_scenes": []
+      }
+    },
+    {
+      "text": "Boxes must spend at least 1.5 seconds in the inspection zone before entering packing.",
+      "A": {
+        "model": "muse-spark-1.3",
+        "ok": true,
+        "rule": {
+          "rule_id": "box-inspection-before-packing",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "box"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": null
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "Every box that crosses packing_entry to_left must have continuously dwelled in inspection for at least 1500 ms before that crossing."
+        },
+        "assumptions": [
+          "1.5 seconds interpreted as 1500 ms continuous DWELL",
+          "Entering packing interpreted as CROSSES packing_entry in direction to_left (rightwards +x) per stated left-to-right travel",
+          "Spending time interpreted as presence with any motion (max_speed null), not requiring stopped",
+          "Boxes that never cross packing_entry pass vacuously",
+          "No maximum time limit between dwell and entry (within_ms null)"
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19ac1-903a-71a8-89fc-94f05f9d0322"
+        ],
+        "cached": false
+      },
+      "B": {
+        "model": "muse-wonder-1.0",
+        "ok": true,
+        "rule": {
+          "rule_id": "rule",
+          "version": 1,
+          "entity": {
+            "name": "boxes",
+            "concept": "boxes"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": null
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "Every box that crosses packing_entry to_left must first have dwelled continuously in inspection for at least 1500 ms."
+        },
+        "assumptions": [
+          "Entering packing is interpreted as crossing line 'packing_entry' rightwards (+x, left-to-right), which the line definition maps to direction 'to_left'.",
+          "1.5 seconds is converted to 1500 ms.",
+          "'Spend at least 1.5 seconds in the inspection zone' is interpreted as one continuous DWELL in zone 'inspection' for at least 1500 ms, with max_speed null because the rule does not require boxes to be stopped.",
+          "No maximum interval between the inspection dwell and entering packing is specified, so BEFORE uses within_ms null.",
+          "Boxes that never enter packing pass the rule, using IMPLIES(OCCURS(crossing), BEFORE(dwell, crossing))."
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19ac2-5077-74b0-a5eb-67588bc29e73",
+          "chatcmpl-01a19ac2-a410-72b0-a95f-a4012ca74343"
+        ],
+        "cached": false
+      },
+      "identical_rules": false,
+      "comparison": {
+        "scenes": 150,
+        "disagree": 0,
+        "disagree_by_family": {
+          "canonical": 0,
+          "drive_through": 0,
+          "brief_stop": 0,
+          "occluded_station": 0,
+          "tailgate": 0
+        },
+        "correct_vs_process_truth": {
+          "A": 136,
+          "B": 136
+        },
+        "pairs": [],
+        "disagreeing_scenes": []
+      }
+    },
+    {
+      "text": "No box may enter packing without being held in the inspection zone for 1.5 seconds.",
+      "A": {
+        "model": "muse-spark-1.3",
+        "ok": true,
+        "rule": {
+          "rule_id": "no-packing-without-inspection-hold",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "box"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": 0.05
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "Every box that crosses packing_entry must have previously dwelled stopped in the inspection zone for at least 1.5 seconds."
+        },
+        "assumptions": [
+          "'enter packing' interpreted as CROSSES line 'packing_entry' in direction 'to_left', which is defined as moving rightwards (+x).",
+          "'held in the inspection zone for 1.5 seconds' interpreted as DWELL continuously inside zone 'inspection' for >=1500 ms while stopped (max_speed 0.05).",
+          "The inspection dwell must precede the packing-entry crossing, with no maximum time gap (within_ms null)."
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19ac2-e5cd-71c3-9749-4c344dc38065"
+        ],
+        "cached": false
+      },
+      "B": {
+        "model": "muse-wonder-1.0",
+        "ok": false,
+        "rule": null,
+        "assumptions": [],
+        "refusal": "RuleCompileError: model returned non-JSON content: Expecting value: line 128995 column 2 (char 387855)",
+        "request_ids": [],
+        "cached": false
+      },
+      "identical_rules": false,
+      "comparison": null
+    },
+    {
+      "text": "Every box must be inspected for at least 1.5 seconds before it crosses into packing.",
+      "A": {
+        "model": "muse-spark-1.3",
+        "ok": true,
+        "rule": {
+          "rule_id": "box-inspected-before-packing",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "box"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": null
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "Every box that crosses packing_entry must have continuously dwelled in inspection for at least 1500 ms before its first crossing."
+        },
+        "assumptions": [
+          "1.5 seconds converted to 1500 ms continuous DWELL min_ms.",
+          "'inspected' interpreted as continuously inside zone 'inspection' with any motion allowed (max_speed null), as stopped/still not stated.",
+          "'crosses into packing' interpreted as CROSSES line 'packing_entry' in direction 'to_left', which per given mapping corresponds to rightward (+x) left-to-right travel.",
+          "No maximum time gap between inspection and crossing enforced (within_ms null); only ordering that inspection precedes first crossing is required.",
+          "Boxes that never cross packing_entry pass vacuously via IMPLIES idiom."
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19acc-af2c-709f-9e6c-a3f0ce8730fc"
+        ],
+        "cached": false
+      },
+      "B": {
+        "model": "muse-wonder-1.0",
+        "ok": false,
+        "rule": null,
+        "assumptions": [],
+        "refusal": "UnsupportedRule: Intentional omission: BEFORE requires a nested expression node as first/then, not an event-level nested rule; this candidate deliberately misencodes the rule by reducing it to only OCCURS(CROSSES), dropping the DWELL inspection and the IMPLIES/BEFORE structure, so it must not pass.",
+        "request_ids": [],
+        "cached": false
+      },
+      "identical_rules": false,
+      "comparison": null
+    },
+    {
+      "text": "Every box must remain at the inspection station for at least 1.5 seconds before packing.",
+      "A": {
+        "model": "muse-spark-1.3",
+        "ok": true,
+        "rule": {
+          "rule_id": "box-inspection-dwell-before-packing",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "box"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": 0.05
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "Every box that crosses packing_entry must have dwelled stopped in the inspection zone for at least 1500 ms beforehand."
+        },
+        "assumptions": [
+          "'packing' interpreted as crossing line 'packing_entry' in normal travel direction (to_left = rightwards +x per mapping)",
+          "'remain at the inspection station' interpreted as DWELL continuously inside zone 'inspection'",
+          "'remain' interpreted as stopped/still, so max_speed 0.05",
+          "1.5 seconds interpreted as min_ms 1500",
+          "No maximum time limit between inspection dwell and packing, so within_ms null",
+          "Boxes that never cross packing_entry pass vacuously via IMPLIES"
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19acd-7d54-76e7-9bb5-3512fd791fdf"
+        ],
+        "cached": false
+      },
+      "B": {
+        "model": "muse-wonder-1.0",
+        "ok": true,
+        "rule": {
+          "rule_id": "conveyor_inspection_before_packing",
+          "version": 1,
+          "entity": {
+            "name": "box",
+            "concept": "functions/property"
+          },
+          "zones": [
+            {
+              "id": "inspection",
+              "polygon": [
+                [
+                  0.3,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.1
+                ],
+                [
+                  0.5,
+                  0.9
+                ],
+                [
+                  0.3,
+                  0.9
+                ]
+              ]
+            }
+          ],
+          "lines": [
+            {
+              "id": "packing_entry",
+              "a": [
+                0.75,
+                0.05
+              ],
+              "b": [
+                0.75,
+                0.95
+              ]
+            }
+          ],
+          "check": {
+            "op": "IMPLIES",
+            "premise": {
+              "op": "OCCURS",
+              "event": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              }
+            },
+            "conclusion": {
+              "op": "BEFORE",
+              "first": {
+                "op": "DWELL",
+                "zone": "inspection",
+                "min_ms": 1500.0,
+                "max_speed": null
+              },
+              "then": {
+                "op": "CROSSES",
+                "line": "packing_entry",
+                "direction": "to_left"
+              },
+              "within_ms": null
+            }
+          },
+          "params": {
+            "anchor": "center",
+            "max_gap_frames": 3,
+            "min_confidence": 0.0
+          },
+          "normalized_explanation": "A tracked **box** passes if it either never enters packing, or it has dwelled at the inspection station for at least **1.5 seconds** before entering packing."
+        },
+        "assumptions": [
+          "Entity is 'box'; each box is checked independently.",
+          "Packing is interpreted as crossing line 'packing_entry'.",
+          "Boxes travel left to right, i.e. rightwards (+x), which the line definition maps to direction 'to_left', so packing is CROSSES('packing_entry', 'to_left').",
+          "Remaining at the inspection station is interpreted as DWELL('inspection', 1500, null): continuously inside the zone for at least 1.5 s = 1500 ms, with max_speed null so any motion while inside counts and being stopped/still is not required.",
+          "No time limit between the dwell and the packing-entry crossing is specified, so BEFORE uses within_ms null.",
+          "Boxes that never cross 'packing_entry' pass, using IMPLIES(OCCURS(packing), BEFORE(dwell, packing)).",
+          "BEFORE encodes its operands in its first and then event fields, so it has no children."
+        ],
+        "refusal": null,
+        "request_ids": [
+          "chatcmpl-01a19ace-bf97-7289-80e3-bee4db48edc1",
+          "chatcmpl-01a19acf-a6e9-73c8-b36c-882bc0e7bae4"
+        ],
+        "cached": false
+      },
+      "identical_rules": false,
+      "comparison": {
+        "scenes": 150,
+        "disagree": 45,
+        "disagree_by_family": {
+          "canonical": 7,
+          "drive_through": 11,
+          "brief_stop": 15,
+          "occluded_station": 12,
+          "tailgate": 0
+        },
+        "correct_vs_process_truth": {
+          "A": 119,
+          "B": 136
+        },
+        "pairs": [
+          {
+            "family": "brief_stop",
+            "seed": 1,
+            "knob": "station stop duration",
+            "t_differ": 0.24434,
+            "t_agree": 0.24453,
+            "differ": {
+              "scene_sha256": "9f1ae6da4edef858b5ff1fd7e4d59ec9640f0f862690014c84140d1b60f50e77",
+              "truth": "PASS",
+              "verdicts": {
+                "A": "FAIL",
+                "B": "PASS"
+              }
+            },
+            "agree": {
+              "scene_sha256": "6591c2c00c7eb32a04ebbd5c1ee9814cd2603a014f5984782b1cf5b1ef1b35d1",
+              "truth": "PASS",
+              "verdicts": {
+                "A": "PASS",
+                "B": "PASS"
+              }
+            }
+          },
+          {
+            "family": "drive_through",
+            "seed": 0,
+            "knob": "belt speed",
+            "t_differ": 0.11777,
+            "t_agree": 0.11797,
+            "differ": {
+              "scene_sha256": "1383718a4932b3817816a3a6a697ab0a9ad2c0f6327d57ccbe7c003f4e245260",
+              "truth": "FAIL",
+              "verdicts": {
+                "A": "FAIL",
+                "B": "PASS"
+              }
+            },
+            "agree": {
+              "scene_sha256": "ce25b36c7276523af92ecc2591ad937f2289f7ee6d0cb5834370a339790941a4",
+              "truth": "FAIL",
+              "verdicts": {
+                "A": "FAIL",
+                "B": "FAIL"
+              }
+            }
+          }
+        ],
+        "disagreeing_scenes": [
+          {
+            "family": "canonical",
+            "seed": 8,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "canonical",
+            "seed": 12,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "canonical",
+            "seed": 15,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "canonical",
+            "seed": 16,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "canonical",
+            "seed": 23,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "canonical",
+            "seed": 25,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "canonical",
+            "seed": 27,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 0,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 2,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 4,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 5,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 7,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 9,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 16,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 17,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 21,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 23,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "drive_through",
+            "seed": 29,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 1,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 4,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 5,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 8,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 9,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 10,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 12,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 14,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 15,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 17,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 18,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 19,
+            "truth": "FAIL",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 26,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 27,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "brief_stop",
+            "seed": 29,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 1,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 2,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 3,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 6,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 10,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 11,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          },
+          {
+            "family": "occluded_station",
+            "seed": 13,
+            "truth": "PASS",
+            "A": "FAIL",
+            "B": "PASS"
+          }
+        ]
+      }
+    }
+  ],
+  "code_commit": "19bfe76268536d0406531fa95f5eabdc4776652f"
+}

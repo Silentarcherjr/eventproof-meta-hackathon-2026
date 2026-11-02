@@ -43,6 +43,7 @@
 - [x] **P1-08** (G6, DONE_VERIFIED) Real public footage (Pexels) perception check: SAM 3.1 line crossings vs hand labels — DoD: Labels + pre-registration pushed before the call; result reported as is; CI recomputes from cached output
 - [x] **P1-09** (G6, DONE_VERIFIED) Real traffic footage (Pexels Novi Sad): full loop Muse rule -> SAM 3.1 -> verdicts, before/after repair — DoD: Labels frozen + pre-registered before calls; result reported as is; CI recomputes verdicts from committed tracks
 - [ ] **P1-10** (G6, IN_REVIEW) Baseline: Muse Spark alone judging from video vs EventProof on the same real clips — DoD: Pre-registered before calls; raw answers committed; CI recomputes metrics
+- [ ] **P1-11** (G4, IN_REVIEW) Ambiguity finder: Muse Spark vs Muse Wonder readings of the same rule + minimal pair to ask the user — DoD: Pre-registered before calls; raw outputs committed; CI recomputes the report
 
 ## P2
 

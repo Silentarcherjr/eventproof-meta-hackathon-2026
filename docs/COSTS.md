@@ -16,6 +16,7 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 
 | fecha (Panamá) | plataforma | sesión/tarea | tipo de crédito | saldo confirmado | consumo confirmado | estimado | límite acordado | alerta | fuente |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-02 | Meta Model API | Ambiguity finder, Spark vs Wonder (P1-11) | hackathon $150 | UNKNOWN | 1 Wonder smoke + 23 live compiles (8 Spark, 15 Wonder incl. retries) | cached usage ≈ $1.41 + one uncached Wonder runaway ≈ $2 (estimate) | within the $60 approval | - | benchmark/ambiguity/FINDINGS.md |
 | 2026-11-02 | Meta Model API | Muse Spark-alone video baseline (P1-10) | hackathon $150 | UNKNOWN | 1 smoke + 10 live muse-spark-1.3 video calls (26.7k in / 42.6k out tokens) | ≈ $0.23 at list price | within the $60 approval | - | benchmark/real/spark_alone/report.json |
 | 2026-11-02 | Meta Model API | budget approval (real-footage set v2 + Spark-alone baseline) | hackathon $150 | UNKNOWN | - | - | participant approved up to $60 more | - | participant message |
 | 2026-11-01 | Meta Model API | Novi Sad real traffic loop (P1-09) | hackathon $150 | UNKNOWN | 2 live SAM calls (190 + 197 frames) + 1 live Muse compile | ≤ $0.21 SAM (bound) + 1 Muse compile | participant approved | - | benchmark/real/novisad/report_novisad.json |

@@ -143,3 +143,7 @@
   36366105, Taiwan 9322364); the winter one is a time-lapse with cuts (rejected).
 - Baseline pre-registered (d9531ee) then run: Muse Spark judging from video, 5 runs per Novi Sad clip. Overall verdict 10/10,
   counts exact 5/10 (0/5 on the rolling-stop clip); rolling van flagged 1/5; waiting cars reported as crossing in 3/5.
+- P1-11 ambiguity finder (`eventproof/ambiguity.py`): Muse Spark and Muse Wonder compile 8 phrasings; behaviour compared on
+  the 150-scene dev suite with oracle tracks; minimal pair by knob bisection. Pre-registered (19bfe76). Both compiled 6;
+  agreed on 4; "wait" and "remain" read differently (Spark: still, Wonder: present), 45/150 scenes differ, minimal pairs
+  found (belt speed 0.11777/0.11797; stop knob 0.24434/0.24453). Wonder: 1 malformed runaway output, 1 declined.

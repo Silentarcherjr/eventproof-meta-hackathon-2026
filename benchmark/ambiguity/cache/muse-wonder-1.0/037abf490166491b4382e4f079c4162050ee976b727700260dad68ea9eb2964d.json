@@ -1,0 +1,108 @@
+{
+  "raw_output": {
+    "assumptions": [
+      "Entering packing is interpreted as crossing line 'packing_entry' rightwards (+x, left-to-right), which the line definition maps to direction 'to_left'.",
+      "1.5 seconds is converted to 1500 ms.",
+      "'Spend at least 1.5 seconds in the inspection zone' is interpreted as one continuous DWELL in zone 'inspection' for at least 1500 ms, with max_speed null because the rule does not require boxes to be stopped.",
+      "No maximum interval between the inspection dwell and entering packing is specified, so BEFORE uses within_ms null.",
+      "Boxes that never enter packing pass the rule, using IMPLIES(OCCURS(crossing), BEFORE(dwell, crossing))."
+    ],
+    "entity_concept": "boxes",
+    "entity_name": "boxes",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": null,
+          "min_ms": 1500,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every box that crosses packing_entry to_left must first have dwelled continuously in inspection for at least 1500 ms.",
+    "root": 2,
+    "rule_id": "rule",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-wonder-1.0",
+  "request_ids": [
+    "chatcmpl-01a19ac2-5077-74b0-a5eb-67588bc29e73",
+    "chatcmpl-01a19ac2-a410-72b0-a95f-a4012ca74343"
+  ],
+  "attempts": 2,
+  "usage": [
+    {
+      "completion_tokens": 6689,
+      "prompt_tokens": 381,
+      "total_tokens": 7070,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 6222,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    },
+    {
+      "completion_tokens": 3113,
+      "prompt_tokens": 869,
+      "total_tokens": 3982,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 2715,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 372,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Boxes must spend at least 1.5 seconds in the inspection zone before entering packing.",
+  "latency_s": 70.55
+}

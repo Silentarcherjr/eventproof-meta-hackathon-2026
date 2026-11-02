@@ -1049,6 +1049,33 @@
       "blocker": null,
       "next_action": "CI green -> DONE_VERIFIED",
       "cost_note": "11 Muse Spark video calls, about $0.23"
+    },
+    {
+      "id": "P1-11",
+      "title": "Ambiguity finder: Muse Spark vs Muse Wonder readings of the same rule + minimal pair to ask the user",
+      "priority": "P1",
+      "gate": "G4",
+      "state": "IN_REVIEW",
+      "dependencies": [
+        "G4-01"
+      ],
+      "owner": "orchestrator",
+      "branch": null,
+      "definition_of_done": "Pre-registered before calls; raw outputs committed; CI recomputes the report",
+      "test_commands": [
+        "cd backend && uv run pytest tests/test_ambiguity.py"
+      ],
+      "evidence_paths": [
+        "benchmark/ambiguity/PREREGISTRATION.md (19bfe76)",
+        "benchmark/ambiguity/FINDINGS.md"
+      ],
+      "commit_sha": null,
+      "pr_url": null,
+      "started_at": "2026-11-02T05:52:12Z",
+      "updated_at": "2026-11-02T05:52:12Z",
+      "blocker": null,
+      "next_action": "studio panel + demo shot",
+      "cost_note": "24 live compiles; \u2248 $1.4 cached + \u2248 $2 uncached (estimate)"
     }
   ]
 }

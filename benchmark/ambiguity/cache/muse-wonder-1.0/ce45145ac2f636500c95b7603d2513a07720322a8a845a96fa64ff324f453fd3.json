@@ -1,0 +1,110 @@
+{
+  "raw_output": {
+    "assumptions": [
+      "Entity is 'box'; each box is checked independently.",
+      "Packing is interpreted as crossing line 'packing_entry'.",
+      "Boxes travel left to right, i.e. rightwards (+x), which the line definition maps to direction 'to_left', so packing is CROSSES('packing_entry', 'to_left').",
+      "Remaining at the inspection station is interpreted as DWELL('inspection', 1500, null): continuously inside the zone for at least 1.5 s = 1500 ms, with max_speed null so any motion while inside counts and being stopped/still is not required.",
+      "No time limit between the dwell and the packing-entry crossing is specified, so BEFORE uses within_ms null.",
+      "Boxes that never cross 'packing_entry' pass, using IMPLIES(OCCURS(packing), BEFORE(dwell, packing)).",
+      "BEFORE encodes its operands in its first and then event fields, so it has no children."
+    ],
+    "entity_concept": "functions/property",
+    "entity_name": "box",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": null,
+          "min_ms": 1500,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "A tracked **box** passes if it either never enters packing, or it has dwelled at the inspection station for at least **1.5 seconds** before entering packing.",
+    "root": 2,
+    "rule_id": "conveyor_inspection_before_packing",
+    "supported": true,
+    "unsupported_reason": "null"
+  },
+  "model": "muse-wonder-1.0",
+  "request_ids": [
+    "chatcmpl-01a19ace-bf97-7289-80e3-bee4db48edc1",
+    "chatcmpl-01a19acf-a6e9-73c8-b36c-882bc0e7bae4"
+  ],
+  "attempts": 2,
+  "usage": [
+    {
+      "completion_tokens": 9565,
+      "prompt_tokens": 382,
+      "total_tokens": 9947,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 9047,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 244,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    },
+    {
+      "completion_tokens": 6503,
+      "prompt_tokens": 920,
+      "total_tokens": 7423,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 6036,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 372,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Every box must remain at the inspection station for at least 1.5 seconds before packing.",
+  "latency_s": 141.75
+}

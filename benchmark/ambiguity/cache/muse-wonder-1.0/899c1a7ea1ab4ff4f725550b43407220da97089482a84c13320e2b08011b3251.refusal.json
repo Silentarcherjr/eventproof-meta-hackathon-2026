@@ -1,0 +1,5 @@
+{
+  "model": "muse-wonder-1.0",
+  "text": "No box may enter packing without being held in the inspection zone for 1.5 seconds.",
+  "refusal": "RuleCompileError: model returned non-JSON content: Expecting value: line 128995 column 2 (char 387855)"
+}

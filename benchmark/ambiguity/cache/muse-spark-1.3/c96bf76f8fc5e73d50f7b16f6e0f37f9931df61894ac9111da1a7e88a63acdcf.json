@@ -1,0 +1,88 @@
+{
+  "raw_output": {
+    "assumptions": [
+      "Crossing into packing is interpreted as CROSSES line 'packing_entry' in direction 'to_left', since rightwards (+x) is defined as to_left and boxes travel left to right.",
+      "Stop is interpreted as DWELL with max_speed 0.05, meaning continuously stopped/still inside the zone.",
+      "1.5 seconds is converted to 1500 ms of continuous dwell in zone 'inspection'.",
+      "No maximum time gap is imposed between the dwell and the crossing (within_ms null); the dwell must simply precede the first packing crossing.",
+      "Boxes that never cross into packing pass vacuously via IMPLIES."
+    ],
+    "entity_concept": "box",
+    "entity_name": "box",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": 0.05,
+          "min_ms": 1500.0,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every box that crosses packing_entry rightwards must have previously dwelled stopped in the inspection zone for at least 1500 ms.",
+    "root": 2,
+    "rule_id": "box-stop-inspection-before-packing",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-spark-1.3",
+  "request_ids": [
+    "chatcmpl-01a19abd-64cc-7261-a67e-f3a18df2ac2a"
+  ],
+  "attempts": 1,
+  "usage": [
+    {
+      "completion_tokens": 2662,
+      "prompt_tokens": 1420,
+      "total_tokens": 4082,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 2330,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Every box must stop in the inspection zone for at least 1.5 seconds before it crosses into packing.",
+  "latency_s": 19.37
+}

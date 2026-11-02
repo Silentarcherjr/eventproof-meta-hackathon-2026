@@ -1,0 +1,89 @@
+{
+  "raw_output": {
+    "assumptions": [
+      "'packing' interpreted as crossing line 'packing_entry' in normal travel direction (to_left = rightwards +x per mapping)",
+      "'remain at the inspection station' interpreted as DWELL continuously inside zone 'inspection'",
+      "'remain' interpreted as stopped/still, so max_speed 0.05",
+      "1.5 seconds interpreted as min_ms 1500",
+      "No maximum time limit between inspection dwell and packing, so within_ms null",
+      "Boxes that never cross packing_entry pass vacuously via IMPLIES"
+    ],
+    "entity_concept": "box",
+    "entity_name": "box",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": 0.05,
+          "min_ms": 1500,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every box that crosses packing_entry must have dwelled stopped in the inspection zone for at least 1500 ms beforehand.",
+    "root": 2,
+    "rule_id": "box-inspection-dwell-before-packing",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-spark-1.3",
+  "request_ids": [
+    "chatcmpl-01a19acd-7d54-76e7-9bb5-3512fd791fdf"
+  ],
+  "attempts": 1,
+  "usage": [
+    {
+      "completion_tokens": 2774,
+      "prompt_tokens": 1417,
+      "total_tokens": 4191,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 2467,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 1393,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Every box must remain at the inspection station for at least 1.5 seconds before packing.",
+  "latency_s": 23.63
+}

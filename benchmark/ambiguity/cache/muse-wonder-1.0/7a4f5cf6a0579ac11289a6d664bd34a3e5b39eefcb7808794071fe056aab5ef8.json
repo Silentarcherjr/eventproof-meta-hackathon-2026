@@ -1,0 +1,107 @@
+{
+  "raw_output": {
+    "assumptions": [
+      "'Stay at least 1.5 seconds' is interpreted as continuous DWELL in 'inspection' for at least 1500 ms with any motion (max_speed=null).",
+      "Crossing into packing is a left-to-right/rightward (+x) crossing of 'packing_entry', which per the line definition is direction 'to_left'.",
+      "No maximum interval between the dwell and the crossing is specified, so BEFORE uses within_ms=null.",
+      "Boxes that never cross into packing pass vacuously via the IMPLIES idiom."
+    ],
+    "entity_concept": "box",
+    "entity_name": "box",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": null,
+          "min_ms": 1500,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_left",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every box must dwell continuously for at least 1500 ms in the inspection zone before crossing packing_entry to_left into packing.",
+    "root": 2,
+    "rule_id": "",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-wonder-1.0",
+  "request_ids": [
+    "chatcmpl-01a19abc-2443-710e-8ae9-9cdac4c9bd22",
+    "chatcmpl-01a19abd-17ad-71b2-b426-81e337659a67"
+  ],
+  "attempts": 2,
+  "usage": [
+    {
+      "completion_tokens": 4213,
+      "prompt_tokens": 384,
+      "total_tokens": 4597,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 3810,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    },
+    {
+      "completion_tokens": 6870,
+      "prompt_tokens": 807,
+      "total_tokens": 7677,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 6509,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 372,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Every box must stay at least 1.5 seconds in the inspection zone before it crosses into packing.",
+  "latency_s": 97.0
+}
