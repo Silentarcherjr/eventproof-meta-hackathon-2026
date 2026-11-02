@@ -1,6 +1,7 @@
 # Costs and credits
 
-## Current summary (2026-11-01)
+## Current summary (2026-11-02)
+- Balance read by the participant on 2026-11-02: **$138.91 of $150** ($11.09 spent in total).
 - Meta Model API: $150 hackathon credits. **Balance $149.26 → spent $0.74** (read by the participant from the Billing page, 2026-11-01).
 - Live calls made so far (from the rows below): SAM 3.1 = 13 (1 smoke, 10 SAM-vs-mock, 1 E2E, 1 studio confirm);
   Muse Spark ≈ 13 (1 smoke, 6 rule compiles incl. one of 194,990 prompt tokens, ~6 repair rounds). Everything since is cached.
@@ -16,6 +17,7 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 
 | fecha (Panamá) | plataforma | sesión/tarea | tipo de crédito | saldo confirmado | consumo confirmado | estimado | límite acordado | alerta | fuente |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-02 | Meta Model API | balance read (participant) | hackathon $150 | **$138.91 remaining** | $11.09 total to date | - | participant: use the remaining credits for product work | - | participant message |
 | 2026-11-02 | Meta Model API | Live-rule demo run (P1-13) | hackathon $150 | UNKNOWN | 1 Muse compile + 2 compiles (Spark + Wonder readings) | ≈ $0.2 (estimate) | within the $60 approval | - | docs/evidence/runs/20261102T080747Z-6b0ae7d4 |
 | 2026-11-02 | Meta Model API | Real traffic v3, Wroclaw w3 (P1-12) | hackathon $150 | UNKNOWN | 1 SAM call (91 frames) + 5 Muse video calls | ≈ $0.1 (estimate) | within the $60 approval | - | benchmark/real/traffic_v3/FINDINGS.md |
 | 2026-11-02 | Meta Model API | Real traffic v2, Wroclaw (P1-12) | hackathon $150 | UNKNOWN | 1 Muse compile + 10 Muse video calls + 2 Wonder compiles + 2 SAM calls (380 frames) | ≈ $0.5 at list price (estimate) | within the $60 approval | - | benchmark/real/traffic_v2/FINDINGS.md |
