@@ -1,0 +1,10 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "frozen_at": "2026-11-02T07:57:20+00:00",
+  "labels": {
+    "wroclaw_w3.json": "881ca541e466a7c4b692cb8b706930dd9aeaf6ce9a6537c1df61525aa6a97431"
+  },
+  "clips": {
+    "wroclaw_w3.mp4": "9596099ad33746f20fe9b25b0e066e512f6e30175b5961a7f24e6ef0947e3a7f"
+  }
+}
