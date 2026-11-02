@@ -1,5 +1,5 @@
 // Renders the demo video's cards (title, real-footage results, closing) to 1920x1080 PNGs. Numbers are read from
-// committed files, never typed in: benchmark/real/POOLED.json.
+// committed files, never typed in: benchmark/real/POOLED_v2.json.
 // Usage: node cards.mjs <out_dir>
 import { createRequire } from "node:module";
 import fs from "node:fs";
@@ -8,7 +8,7 @@ import path from "node:path";
 const { chromium } = createRequire(new URL("../../frontend/package.json", import.meta.url))("@playwright/test");
 const out = process.argv[2];
 const root = new URL("../../", import.meta.url);
-const pooled = JSON.parse(fs.readFileSync(new URL("benchmark/real/POOLED.json", root), "utf8"));
+const pooled = JSON.parse(fs.readFileSync(new URL("benchmark/real/POOLED_v2.json", root), "utf8"));
 const figure = "data:image/png;base64," + fs.readFileSync(new URL("docs/media/real_traffic.png", root)).toString("base64");
 
 const r = pooled.readings, sa = pooled.muse_spark_alone_from_video, n = pooled.labelled_cars, c = pooled.clips;
@@ -27,26 +27,35 @@ const STYLE = `
 
 const CARDS = {
   "card_1": `<div class="kicker">Rule QA for vision AI</div><h1>EventProof</h1>
-    <div class="sub">Write a visual rule in plain English. EventProof finds where it is wrong,<br>repairs it, and checks the repair on real video.</div>
+    <div class="sub">AI-generated vision software that doesn’t just claim to work,<br>but searches for evidence that it might be wrong.</div>
     <div class="models">Meta models: Muse Spark · Muse Wonder · SAM 3.1</div>
     <div class="note">Screen capture of the real studio replaying recorded runs (cached model outputs) · synthetic narration voice</div>`,
-  "card_6a": `<div style="display:flex;flex-direction:column;align-items:center;gap:24px">
+  "card_2": `<div class="kicker">Why now</div>
+    <h2>Cities have started writing stop-sign tickets from AI cameras</h2>
+    <table>
+      <tr><td>Takoma Park, Maryland: automated stop-sign citations since Jan 8, 2026</td><td class="num">$40</td></tr>
+      <tr><td>Virginia: law allowing AI cameras to cite stop-sign violations (April 2026)</td><td class="num">SB84</td></tr>
+    </table>
+    <div class="sub" style="margin-top:40px">“…rarely backed up by independent studies that validate what these AI technologies can really do.”</div>
+    <div class="muted" style="margin-top:12px">Daniel Schwarz, NYCLU, in IEEE Spectrum (2025)</div>
+    <div class="note">Sources: MoCo Show (2026-01-07), WTVR, IEEE Spectrum (2025-07-05) · links in the README</div>`,
+  "card_7a": `<div style="display:flex;flex-direction:column;align-items:center;gap:24px">
     <h2 style="margin:0;font-size:46px">Same SAM 3.1 tracks, two readings of “wait”: the synthetic-tuned repair passes a real rolling stop</h2>
     <img src="${figure}" style="width:1600px;border-radius:12px;background:white"></div>`,
-  "card_6b": `<div class="kicker">Real traffic footage · labels frozen before any model ran</div>
+  "card_7b": `<div class="kicker">Real traffic footage · labels frozen before any model ran</div>
     <h2>${c} clips, 2 cities, ${n} hand-labelled cars</h2>
     <table>
       <tr><td>Muse Spark’s rule → SAM 3.1 → deterministic engine</td>
-          <td class="num good">${r.muse_spark_rule.objects_right}/${n} cars</td><td class="num muted">${r.muse_spark_rule.clips_right}/${c} clips</td></tr>
+          <td class="num good">${r.muse_spark_rule.objects_right}/${n} cars</td><td class="num muted">0 wrong verdicts</td></tr>
       <tr><td>Same rule + the repair that passed every synthetic test</td>
-          <td class="num bad">${r.muse_spark_rule_plus_synthetic_repair.objects_right}/${n} cars</td><td class="num muted">${r.muse_spark_rule_plus_synthetic_repair.clips_right}/${c} clips</td></tr>
+          <td class="num bad">${r.muse_spark_rule_plus_synthetic_repair.objects_right}/${n} cars</td><td></td></tr>
       <tr><td>Muse Spark alone, watching the video</td>
           <td class="num">${sa.counts_exact}/${sa.runs} runs<br><span class="muted">count cars right</span></td>
           <td class="num muted">${sa.overall_right}/${sa.runs} runs<br>verdict right</td></tr>
     </table>
-    <div class="note">Pexels-licensed footage (Novi Sad, Wroclaw) · n is small; labels by one person · source: benchmark/real/POOLED.json</div>`,
-  "card_7": `<div class="kicker">EventProof</div>
-    <h2 style="font-size:84px">Build it. Break it. Repair it.<br>Prove it on real video.</h2>
+    <div class="note">Pexels-licensed footage (Novi Sad, Wroclaw) · n is small; labels by one person · source: benchmark/real/POOLED_v2.json</div>`,
+  "card_8": `<div class="kicker">EventProof</div>
+    <h2 style="font-size:80px">Build it. Break it. Repair it.<br>Certify it on real video.</h2>
     <div class="sub">Every number in this video is recomputed in CI from committed evidence.</div>
     <div class="models">Muse Spark · Muse Wonder · SAM 3.1 · MIT licensed</div>`,
 };

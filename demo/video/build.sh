@@ -21,11 +21,11 @@ python3 - "$W" <<'EOF'
 import json, subprocess, sys
 w = sys.argv[1]
 d = {str(i): float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of",
-                                            "csv=p=0", f"{w}/n{i}.aiff"]).decode()) for i in range(1, 8)}
+                                            "csv=p=0", f"{w}/n{i}.aiff"]).decode()) for i in range(1, 9)}
 json.dump(d, open(f"{w}/durations.json", "w"), indent=1)
 EOF
 
-# 2. studio scenes (2-5) and cards (1, 6a, 6b, 7)
+# 2. studio scenes (3-6) and cards (1, 2, 7a, 7b, 8)
 node "$HERE/record.mjs" "$W" "$W/durations.json"
 node "$HERE/cards.mjs" "$W"
 
@@ -40,23 +40,25 @@ seg() {  # seg <n> <video input args...>: picture for the narration length + gap
 card() { echo "-loop 1 -framerate 30 -i $W/$1.png"; }
 # shellcheck disable=SC2046
 seg 1 $(card card_1)
-for n in 2 3 4 5; do
+# shellcheck disable=SC2046
+seg 2 $(card card_2)
+for n in 3 4 5 6; do
   f=$(python3 -c "import json;print(json.load(open('$W/scenes.json'))['$n']['file'])")
   lead=$(python3 -c "import json;print(json.load(open('$W/scenes.json'))['$n']['lead'])")
   seg "$n" -ss "$lead" -i "$f"
 done
-# scene 6: the figure, then the pooled table (split at 55 % of the narration)
-L6=$(dur "$W/n6.aiff")
-S6=$(python3 -c "print(round($L6 * 0.55, 2))")
-T6=$(python3 -c "print(round($L6 + $GAP + 0.6, 2))")
-ffmpeg -loglevel error -y -loop 1 -framerate 30 -t "$S6" -i "$W/card_6a.png" -loop 1 -framerate 30 -i "$W/card_6b.png" \
-  -i "$W/n6.aiff" -filter_complex "[0:v][1:v]concat=n=2:v=1:a=0,trim=duration=$T6[v];[2:a]apad[a]" \
-  -map "[v]" -map "[a]" -t "$T6" $V $A "$W/seg6.mp4"
+# scene 7: the figure, then the pooled table (split at 40 % of the narration)
+L7=$(dur "$W/n7.aiff")
+S7=$(python3 -c "print(round($L7 * 0.4, 2))")
+T7=$(python3 -c "print(round($L7 + $GAP + 0.6, 2))")
+ffmpeg -loglevel error -y -loop 1 -framerate 30 -t "$S7" -i "$W/card_7a.png" -loop 1 -framerate 30 -i "$W/card_7b.png" \
+  -i "$W/n7.aiff" -filter_complex "[0:v][1:v]concat=n=2:v=1:a=0,trim=duration=$T7[v];[2:a]apad[a]" \
+  -map "[v]" -map "[a]" -t "$T7" $V $A "$W/seg7.mp4"
 # shellcheck disable=SC2046
-seg 7 $(card card_7)
+seg 8 $(card card_8)
 
 # 4. concatenate
 : > "$W/list.txt"
-for n in 1 2 3 4 5 6 7; do echo "file '$W/seg$n.mp4'" >> "$W/list.txt"; done
+for n in 1 2 3 4 5 6 7 8; do echo "file '$W/seg$n.mp4'" >> "$W/list.txt"; done
 ffmpeg -loglevel error -y -f concat -safe 0 -i "$W/list.txt" -c copy -movflags +faststart "$W/eventproof_demo.mp4"
 echo "$W/eventproof_demo.mp4 $(dur "$W/eventproof_demo.mp4") s"
