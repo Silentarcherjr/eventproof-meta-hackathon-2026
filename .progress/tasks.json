@@ -1079,7 +1079,7 @@
       "updated_at": "2026-11-02T06:04:28Z",
       "blocker": null,
       "next_action": "demo shot",
-      "cost_note": "24 live compiles; \u2248 $1.4 cached + \u2248 $2 uncached (estimate)"
+      "cost_note": "24 live compiles; ≈ $1.4 cached + ≈ $2 uncached (estimate)"
     },
     {
       "id": "P1-12",
@@ -1110,7 +1110,123 @@
       "updated_at": "2026-11-02T06:45:20Z",
       "blocker": null,
       "next_action": "CI green -> DONE_VERIFIED",
-      "cost_note": "\u2248 $0.5"
+      "cost_note": "≈ $0.5"
+    },
+    {
+      "id": "P1-13",
+      "title": "Live rule typed in the studio on a recorded clip; certificate checks a run against its clip's frozen labels",
+      "state": "DONE_VERIFIED",
+      "dependencies": [],
+      "definition_of_done": "Pre-registered before calls; CI recomputes the published numbers",
+      "test_commands": [
+        "cd backend && uv run pytest tests/test_certificate.py tests/test_studio.py"
+      ],
+      "evidence_paths": [
+        "docs/evidence/runs/20261102T080747Z-6b0ae7d4",
+        "backend/tests/test_certificate.py"
+      ],
+      "commit_sha": "13b9f11",
+      "priority": "P1",
+      "gate": "G6",
+      "owner": "agentic-eval",
+      "branch": null,
+      "pr_url": null,
+      "blocker": null,
+      "started_at": "2026-11-02T00:00:00Z",
+      "updated_at": "2026-11-02T21:00:00Z"
+    },
+    {
+      "id": "P1-14",
+      "title": "Muse Spark drafts zone + line from the first frame; evaluated on 5 real clips (hand 27/30 vs proposed 20/30)",
+      "state": "DONE_VERIFIED",
+      "dependencies": [],
+      "definition_of_done": "Pre-registered before calls; CI recomputes the published numbers",
+      "test_commands": [
+        "cd backend && uv run pytest tests/validation/test_layout_eval.py"
+      ],
+      "evidence_paths": [
+        "benchmark/layout/report.json",
+        "benchmark/layout/PREREGISTRATION.md (3b05f16)"
+      ],
+      "commit_sha": "45c3a03",
+      "priority": "P1",
+      "gate": "G6",
+      "owner": "agentic-eval",
+      "branch": null,
+      "pr_url": null,
+      "blocker": null,
+      "started_at": "2026-11-02T00:00:00Z",
+      "updated_at": "2026-11-02T21:00:00Z"
+    },
+    {
+      "id": "P1-15",
+      "title": "Field repair: Muse patches 0/4 accepted (synthetic regressions); grid 3/16 accepted",
+      "state": "DONE_VERIFIED",
+      "dependencies": [],
+      "definition_of_done": "Pre-registered before calls; CI recomputes the published numbers",
+      "test_commands": [
+        "cd backend && uv run pytest tests/validation/test_field_repair.py"
+      ],
+      "evidence_paths": [
+        "benchmark/field_repair/report.json",
+        "benchmark/field_repair/PREREGISTRATION.md (ff6fbc5)"
+      ],
+      "commit_sha": "dae386c",
+      "priority": "P1",
+      "gate": "G6",
+      "owner": "agentic-eval",
+      "branch": null,
+      "pr_url": null,
+      "blocker": null,
+      "started_at": "2026-11-02T00:00:00Z",
+      "updated_at": "2026-11-02T21:00:00Z"
+    },
+    {
+      "id": "P1-16",
+      "title": "New domains on real footage (zebra one-way, bike lane one-way): 7/8, 0 wrong verdicts",
+      "state": "DONE_VERIFIED",
+      "dependencies": [],
+      "definition_of_done": "Pre-registered before calls; CI recomputes the published numbers",
+      "test_commands": [
+        "cd backend && uv run pytest tests/validation/test_domains.py"
+      ],
+      "evidence_paths": [
+        "benchmark/real/domains/report_domains.json",
+        "benchmark/real/domains/PREREGISTRATION.md (268a48c)"
+      ],
+      "commit_sha": "82ba0aa",
+      "priority": "P1",
+      "gate": "G6",
+      "owner": "agentic-eval",
+      "branch": null,
+      "pr_url": null,
+      "blocker": null,
+      "started_at": "2026-11-02T00:00:00Z",
+      "updated_at": "2026-11-02T21:00:00Z"
+    },
+    {
+      "id": "P1-17",
+      "title": "Two-object rules (WITH event, compiler escalation, multi-concept SAM) + umbrella pilot on real footage: 2/4 right, 1 wrong, 1 not tracked",
+      "state": "IN_REVIEW",
+      "dependencies": [],
+      "definition_of_done": "Pre-registered before calls; CI recomputes the published numbers",
+      "test_commands": [
+        "cd backend && uv run pytest tests/engine/test_with.py tests/validation/test_with_pilot.py"
+      ],
+      "evidence_paths": [
+        "benchmark/real/with_umbrella/FINDINGS.md",
+        "benchmark/real/with_umbrella/PREREGISTRATION.md (291009f)",
+        "d716c82"
+      ],
+      "commit_sha": null,
+      "priority": "P1",
+      "gate": "G6",
+      "owner": "agentic-eval",
+      "branch": null,
+      "pr_url": null,
+      "blocker": null,
+      "started_at": "2026-11-02T00:00:00Z",
+      "updated_at": "2026-11-02T21:00:00Z"
     }
   ]
 }

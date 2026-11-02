@@ -26,7 +26,7 @@ enforces (inspection steps on a line, waiting zones, restricted areas).
   crossings and violations exactly in only 11/25 runs.
 
 **At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · real footage from 2 cities in 3 domains (cars,
-pedestrians, cyclists): 34/38 labelled objects right, 0 wrong verdicts · per-rule certificate · one-command replay with no API key (`docker compose`) · 250+ backend tests,
+pedestrians, cyclists), including a two-object rule (umbrellas): 36/42 labelled objects right, 1 wrong verdict · per-rule certificate · one-command replay with no API key (`docker compose`) · 250+ backend tests,
 CI recomputes every published number · MIT licensed.
 
 ![Real footage: the same SAM 3.1 tracks judged by two readings of "wait"](docs/media/real_traffic.png)
@@ -87,6 +87,7 @@ crossings and violations exactly in only 11/25. [pooled](benchmark/real/traffic_
 | Test | Result |
 |---|---|
 | **New domains, same engine** — pedestrians on a zebra crossing and cyclists on a bike lane (Pexels), one-way rules typed in plain English | Muse Spark compiled both to NOT CROSSES(wrong direction), stating how it mapped "left to right". **7/8 labelled objects right, 0 wrong verdicts** (1 person got no matching track). [findings](benchmark/real/domains/FINDINGS.md) |
+| **Two-object rule on real footage** — *"Every pedestrian in the crossing zone must hold an umbrella over their head"* (Pexels, rainy crossing seen from above, 4 labelled people) | Muse Spark escalated to the WITH schema and SAM 3.1 tracked pedestrians and umbrellas separately. Overall FAIL as labelled; **2/4 right, 1 wrong, 1 not tracked**. The wrong one: a neighbour's umbrella touched a bare-headed man's box for 0.4 s, and Muse had chosen no minimum duration, a gap in the sentence that a model filled silently. [findings](benchmark/real/with_umbrella/FINDINGS.md) |
 | **Field repair** — repair from real failures (Novi Sad), accept only with 0 regressions on another city (Wroclaw, 22 cars) **and** on the 200 synthetic hidden scenes | Muse Spark's 4 patches all fixed the real footage (Wroclaw **9 → 19/22**) but also moved "1.5 s" to "1.0 s", breaking 7 synthetic cases → all rejected. A grid patch (stillness ≤ 0.04/s, ≥ 0.8 s): Wroclaw 9 → 19/22, synthetic 164 → 166/200, 0 regressions in both → accepted. [findings](benchmark/field_repair/FINDINGS.md) |
 | **Zones drafted by Muse Spark** from the first frame + rule text (5 real clips, 30 labelled cars) | Same verdicts as the hand-drawn zones on the drone view (8/8); on the footbridge view, with no painted stop line in frame, Muse placed a proxy line elsewhere (and once read the direction backwards): **20/30** vs 27/30 by hand. So the draft is shown with Muse's assumptions and the user confirms it. [findings](benchmark/layout/FINDINGS.md) |
 | **New rule typed in the studio** (Novi Sad clip, *"remain behind the stop line for at least 2 seconds"*) | Muse Spark and Muse Wonder both read it as presence, not stopping (0/150 synthetic scenes where they differ). All 10 cars PASS, including the 2 that never stopped. Challenge Mode: 36/150 failures. Certificate vs the clip's frozen labels: **NOT CERTIFIED, 3/5**. [run](docs/evidence/runs/20261102T080747Z-6b0ae7d4) |

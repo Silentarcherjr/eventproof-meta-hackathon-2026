@@ -170,3 +170,8 @@
 - P1-16 new domains: 109 Pexels clips screened (subagent; 7 usable); 2 used (zebra one-way, bike one-way; 3 clips, 8 objects),
   pre-registered; Muse compiled NOT CROSSES(wrong direction); 7/8 right, 0 wrong verdicts. Store/toll/other clips not used
   (ambiguous truth, or rules about objects that never cross, which the label format does not cover).
+- 2026-11-02 P1-17 two-object rules on real footage: 99 Pexels clips screened (subagent) for hard hats, forklifts, helmets,
+  umbrellas, dogs; 1 usable (39488108, rainy crossing from above). `on_top` changed to box overlap with the head band
+  (disclosed), labels frozen and pre-registered (291009f) before any call. Run: Muse escalated to WITH, SAM tracked
+  pedestrians + umbrellas; overall FAIL as labelled, 2/4 right, 1 wrong (neighbour's umbrella, min_ms 0), 1 not tracked.
+  `with_pilot report` recomputes with 0 calls (CI test). ≈ $0.05.

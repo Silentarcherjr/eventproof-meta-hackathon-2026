@@ -1,0 +1,156 @@
+{
+  "schema": "eventproof-with-pilot/1",
+  "preregistration": "benchmark/real/with_umbrella/PREREGISTRATION.md",
+  "data": "real-world (public footage, Pexels)",
+  "source": "Pexels video 39488108 (rainy zebra crossing, fixed high camera), t 1.5-4.5 s, 10 fps, metadata stripped",
+  "clip": "umbrella_crossing.mp4",
+  "labels_sha256": "02df873a1d82e31ef556b7fdf99dceeed883cd1509298773f03e87c766b59865",
+  "run_id": "20261102T093201Z-e92d8565",
+  "rule_text": "Every pedestrian in the crossing zone must hold an umbrella over their head.",
+  "compiled_rule": {
+    "check": {
+      "conclusion": {
+        "event": {
+          "concept": "umbrella",
+          "max_dist": 0.5,
+          "min_ms": 0.0,
+          "op": "WITH",
+          "relation": "on_top"
+        },
+        "op": "OCCURS"
+      },
+      "op": "IMPLIES",
+      "premise": {
+        "event": {
+          "min_frames": 1,
+          "op": "IN_ZONE",
+          "zone": "crossing"
+        },
+        "op": "OCCURS"
+      }
+    },
+    "entity": {
+      "concept": "pedestrian",
+      "name": "pedestrian"
+    },
+    "lines": [],
+    "normalized_explanation": "Every pedestrian ever in the crossing zone must at some point have an umbrella on top of them.",
+    "params": {
+      "anchor": "center",
+      "max_gap_frames": 3,
+      "min_confidence": 0.0
+    },
+    "rule_id": "pedestrian-umbrella-crossing",
+    "version": 1,
+    "zones": [
+      {
+        "id": "crossing",
+        "polygon": [
+          [
+            0.0,
+            0.55
+          ],
+          [
+            1.0,
+            0.55
+          ],
+          [
+            1.0,
+            1.0
+          ],
+          [
+            0.0,
+            1.0
+          ]
+        ]
+      }
+    ]
+  },
+  "muse_request_ids": [
+    "chatcmpl-01a19b9a-470f-7007-9c5a-a07a4504c7b4"
+  ],
+  "context_concepts": [
+    {
+      "prompt": "umbrella",
+      "source_ref": "sam-3.1:resp_6ae858b2a7114b62dd524f5f:video=11a07f560002e6f1:prompt='umbrella'",
+      "cached": false,
+      "boxes": 74,
+      "track_ids": [
+        1000,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006
+      ]
+    }
+  ],
+  "result": {
+    "labelled": 4,
+    "right": 2,
+    "wrong": 1,
+    "abstained": 0,
+    "not tracked": 1,
+    "overall": "FAIL",
+    "expected_overall": "FAIL",
+    "unlabelled_tracked": [
+      0,
+      1,
+      4,
+      5,
+      6,
+      7,
+      8,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "people": [
+      {
+        "person": 0,
+        "description": "white-haired man, black shirt, walks up from bottom-left",
+        "umbrella": false,
+        "intended": "VIOLATION",
+        "matched_object_id": 2,
+        "verdict": "PASS",
+        "outcome": "wrong"
+      },
+      {
+        "person": 1,
+        "description": "man in white cap and grey shirt, walks up from bottom-right",
+        "umbrella": false,
+        "intended": "VIOLATION",
+        "matched_object_id": 3,
+        "verdict": "VIOLATION",
+        "outcome": "right"
+      },
+      {
+        "person": 2,
+        "description": "person under a dark tartan umbrella, enters at the left edge",
+        "umbrella": true,
+        "intended": "PASS",
+        "matched_object_id": 9,
+        "verdict": "PASS",
+        "outcome": "right"
+      },
+      {
+        "person": 3,
+        "description": "person under a clear umbrella, enters at the bottom-left corner near the end",
+        "umbrella": true,
+        "intended": "PASS",
+        "matched_object_id": null,
+        "verdict": null,
+        "outcome": "not tracked"
+      }
+    ]
+  },
+  "live_calls": {
+    "muse": 2,
+    "sam": 2
+  },
+  "code_commit": "291009ff9b9afa16efdf8589d3b15d405fa61cba"
+}

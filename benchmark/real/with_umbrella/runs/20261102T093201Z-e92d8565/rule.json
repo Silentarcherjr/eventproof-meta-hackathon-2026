@@ -1,0 +1,59 @@
+{
+  "rule_id": "pedestrian-umbrella-crossing",
+  "version": 1,
+  "entity": {
+    "name": "pedestrian",
+    "concept": "pedestrian"
+  },
+  "zones": [
+    {
+      "id": "crossing",
+      "polygon": [
+        [
+          0.0,
+          0.55
+        ],
+        [
+          1.0,
+          0.55
+        ],
+        [
+          1.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "lines": [],
+  "check": {
+    "op": "IMPLIES",
+    "premise": {
+      "op": "OCCURS",
+      "event": {
+        "op": "IN_ZONE",
+        "zone": "crossing",
+        "min_frames": 1
+      }
+    },
+    "conclusion": {
+      "op": "OCCURS",
+      "event": {
+        "op": "WITH",
+        "concept": "umbrella",
+        "relation": "on_top",
+        "max_dist": 0.5,
+        "min_ms": 0.0
+      }
+    }
+  },
+  "params": {
+    "anchor": "center",
+    "max_gap_frames": 3,
+    "min_confidence": 0.0
+  },
+  "normalized_explanation": "Every pedestrian ever in the crossing zone must at some point have an umbrella on top of them."
+}

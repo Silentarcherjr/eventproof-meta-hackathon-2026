@@ -1,0 +1,614 @@
+{
+  "schema_version": "eventproof-evidence/2",
+  "run_id": "20261102T093201Z-e92d8565",
+  "created_at": "2026-11-02T09:32:01+00:00",
+  "eventproof_version": "0.1.0",
+  "status": "completed",
+  "video": {
+    "filename": "umbrella_crossing.mp4",
+    "sha256": "11a07f560002e6f19b259fbd3f7c067ec93d1a2deb0329aac8d3305abd39881a",
+    "original_sha256": "11a07f560002e6f19b259fbd3f7c067ec93d1a2deb0329aac8d3305abd39881a",
+    "info": {
+      "width": 640,
+      "height": 360,
+      "fps": 10.0,
+      "frame_count": 30
+    },
+    "duration_s": 3.0,
+    "codec": "h264",
+    "reencoded": false,
+    "reencode_reasons": []
+  },
+  "rule": {
+    "text": "Every pedestrian in the crossing zone must hold an umbrella over their head.",
+    "text_sha256": "8d173b8fcd199c49b86bf94e3b61a06d981299d59af844e9914ea953e630ab65",
+    "layout": {
+      "zones": [
+        {
+          "zone": {
+            "id": "crossing",
+            "polygon": [
+              [
+                0.0,
+                0.55
+              ],
+              [
+                1.0,
+                0.55
+              ],
+              [
+                1.0,
+                1.0
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ]
+          },
+          "description": "lower half of the zebra crossing, nearest the camera"
+        }
+      ],
+      "lines": []
+    },
+    "model": "muse-spark-1.3",
+    "request_ids": [
+      "chatcmpl-01a19b9a-470f-7007-9c5a-a07a4504c7b4"
+    ],
+    "cached": false,
+    "attempts": 1,
+    "usage": [
+      {
+        "completion_tokens": 3184,
+        "prompt_tokens": 1821,
+        "total_tokens": 5005,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2884,
+          "rejected_prediction_tokens": null,
+          "text_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cache_write_tokens": null,
+          "cached_tokens": 369,
+          "image_tokens": null,
+          "text_tokens": null
+        }
+      }
+    ],
+    "compiled_rule": {
+      "check": {
+        "conclusion": {
+          "event": {
+            "concept": "umbrella",
+            "max_dist": 0.5,
+            "min_ms": 0.0,
+            "op": "WITH",
+            "relation": "on_top"
+          },
+          "op": "OCCURS"
+        },
+        "op": "IMPLIES",
+        "premise": {
+          "event": {
+            "min_frames": 1,
+            "op": "IN_ZONE",
+            "zone": "crossing"
+          },
+          "op": "OCCURS"
+        }
+      },
+      "entity": {
+        "concept": "pedestrian",
+        "name": "pedestrian"
+      },
+      "lines": [],
+      "normalized_explanation": "Every pedestrian ever in the crossing zone must at some point have an umbrella on top of them.",
+      "params": {
+        "anchor": "center",
+        "max_gap_frames": 3,
+        "min_confidence": 0.0
+      },
+      "rule_id": "pedestrian-umbrella-crossing",
+      "version": 1,
+      "zones": [
+        {
+          "id": "crossing",
+          "polygon": [
+            [
+              0.0,
+              0.55
+            ],
+            [
+              1.0,
+              0.55
+            ],
+            [
+              1.0,
+              1.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ]
+    },
+    "rule_hash": "13f76a0891de9d664752d2dff5536bd3c1140731990d6f0952cc920599a69633",
+    "assumptions": [
+      "entity tracked as visual concept 'pedestrian'",
+      "being in the crossing zone means IN_ZONE with min_frames 1",
+      "other object tracked as visual concept 'umbrella'",
+      "'over their head' mapped to relation 'on_top'",
+      "max_dist 0.5 is a placeholder because on_top does not use distance",
+      "min_ms 0 means an instantaneous on_top detection suffices; no holding duration was stated",
+      "simultaneity while inside the zone cannot be expressed, so umbrella on_top at any time in the track satisfies the consequent"
+    ],
+    "error": null
+  },
+  "perception": {
+    "model": "sam-3.1",
+    "prompt": "pedestrian",
+    "source_ref": "sam-3.1:resp_6ae858ab8593d5a23596402d:video=11a07f560002e6f1:prompt='pedestrian'",
+    "cached": false,
+    "tracks_sha256": "c0bea4f6e0fbf147fa1a55642008e4c6b45468d4b747c7becb21b93d056faad1",
+    "frames_with_detections": 30,
+    "boxes": 286,
+    "track_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "error": null,
+    "context": [
+      {
+        "prompt": "umbrella",
+        "source_ref": "sam-3.1:resp_6ae858b2a7114b62dd524f5f:video=11a07f560002e6f1:prompt='umbrella'",
+        "cached": false,
+        "boxes": 74,
+        "track_ids": [
+          1000,
+          1001,
+          1002,
+          1003,
+          1004,
+          1005,
+          1006
+        ]
+      }
+    ]
+  },
+  "result": {
+    "rule_id": "pedestrian-umbrella-crossing",
+    "rule_version": 1,
+    "rule_hash": "13f76a0891de9d664752d2dff5536bd3c1140731990d6f0952cc920599a69633",
+    "track_source": "sam-3.1",
+    "track_source_ref": "sam-3.1:resp_6ae858ab8593d5a23596402d:video=11a07f560002e6f1:prompt='pedestrian'",
+    "overall": "FAIL",
+    "objects": [
+      {
+        "object_id": 0,
+        "verdict": "PASS",
+        "first_frame": 0,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "TRUE",
+            "frame": 15,
+            "timestamp_ms": 1500.0,
+            "reason": "on_top a umbrella for 0 ms from frame 15"
+          }
+        ],
+        "explanation": "object 0: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): on_top a umbrella for 0 ms from frame 15"
+      },
+      {
+        "object_id": 1,
+        "verdict": "PASS",
+        "first_frame": 0,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "TRUE",
+            "frame": 18,
+            "timestamp_ms": 1800.0,
+            "reason": "on_top a umbrella for 0 ms from frame 18"
+          }
+        ],
+        "explanation": "object 1: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): on_top a umbrella for 0 ms from frame 18"
+      },
+      {
+        "object_id": 2,
+        "verdict": "PASS",
+        "first_frame": 5,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "TRUE",
+            "frame": 5,
+            "timestamp_ms": 500.0,
+            "reason": "inside crossing from frame 5"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "TRUE",
+            "frame": 20,
+            "timestamp_ms": 2000.0,
+            "reason": "on_top a umbrella for 0 ms from frame 20"
+          }
+        ],
+        "explanation": "object 2: PASS — IN_ZONE crossing: inside crossing from frame 5; WITH umbrella (on_top): on_top a umbrella for 0 ms from frame 20"
+      },
+      {
+        "object_id": 3,
+        "verdict": "VIOLATION",
+        "first_frame": 7,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "TRUE",
+            "frame": 7,
+            "timestamp_ms": 700.0,
+            "reason": "inside crossing from frame 7"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never on_top a umbrella"
+          }
+        ],
+        "explanation": "object 3: VIOLATION — IN_ZONE crossing: inside crossing from frame 7; WITH umbrella (on_top): never on_top a umbrella"
+      },
+      {
+        "object_id": 4,
+        "verdict": "PASS",
+        "first_frame": 9,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "TRUE",
+            "frame": 25,
+            "timestamp_ms": 2500.0,
+            "reason": "on_top a umbrella for 0 ms from frame 25"
+          }
+        ],
+        "explanation": "object 4: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): on_top a umbrella for 0 ms from frame 25"
+      },
+      {
+        "object_id": 5,
+        "verdict": "PASS",
+        "first_frame": 10,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "TRUE",
+            "frame": 13,
+            "timestamp_ms": 1300.0,
+            "reason": "on_top a umbrella for 0 ms from frame 13"
+          }
+        ],
+        "explanation": "object 5: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): on_top a umbrella for 0 ms from frame 13"
+      },
+      {
+        "object_id": 6,
+        "verdict": "PASS",
+        "first_frame": 10,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never on_top a umbrella"
+          }
+        ],
+        "explanation": "object 6: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): never on_top a umbrella"
+      },
+      {
+        "object_id": 7,
+        "verdict": "PASS",
+        "first_frame": 11,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never on_top a umbrella"
+          }
+        ],
+        "explanation": "object 7: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): never on_top a umbrella"
+      },
+      {
+        "object_id": 8,
+        "verdict": "PASS",
+        "first_frame": 11,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never on_top a umbrella"
+          }
+        ],
+        "explanation": "object 8: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): never on_top a umbrella"
+      },
+      {
+        "object_id": 9,
+        "verdict": "PASS",
+        "first_frame": 12,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "TRUE",
+            "frame": 12,
+            "timestamp_ms": 1200.0,
+            "reason": "inside crossing from frame 12"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "TRUE",
+            "frame": 15,
+            "timestamp_ms": 1500.0,
+            "reason": "on_top a umbrella for 0 ms from frame 15"
+          }
+        ],
+        "explanation": "object 9: PASS — IN_ZONE crossing: inside crossing from frame 12; WITH umbrella (on_top): on_top a umbrella for 0 ms from frame 15"
+      },
+      {
+        "object_id": 10,
+        "verdict": "PASS",
+        "first_frame": 17,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never on_top a umbrella"
+          }
+        ],
+        "explanation": "object 10: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): never on_top a umbrella"
+      },
+      {
+        "object_id": 11,
+        "verdict": "PASS",
+        "first_frame": 18,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never on_top a umbrella"
+          }
+        ],
+        "explanation": "object 11: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): never on_top a umbrella"
+      },
+      {
+        "object_id": 12,
+        "verdict": "PASS",
+        "first_frame": 18,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never on_top a umbrella"
+          }
+        ],
+        "explanation": "object 12: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): never on_top a umbrella"
+      },
+      {
+        "object_id": 13,
+        "verdict": "PASS",
+        "first_frame": 20,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "TRUE",
+            "frame": 20,
+            "timestamp_ms": 2000.0,
+            "reason": "on_top a umbrella for 0 ms from frame 20"
+          }
+        ],
+        "explanation": "object 13: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): on_top a umbrella for 0 ms from frame 20"
+      },
+      {
+        "object_id": 14,
+        "verdict": "PASS",
+        "first_frame": 22,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never on_top a umbrella"
+          }
+        ],
+        "explanation": "object 14: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): never on_top a umbrella"
+      },
+      {
+        "object_id": 15,
+        "verdict": "PASS",
+        "first_frame": 24,
+        "last_frame": 29,
+        "events": [
+          {
+            "op": "IN_ZONE",
+            "target": "crossing",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1 consecutive frames in crossing"
+          },
+          {
+            "op": "WITH",
+            "target": "umbrella (on_top)",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never on_top a umbrella"
+          }
+        ],
+        "explanation": "object 15: PASS — IN_ZONE crossing: never 1 consecutive frames in crossing; WITH umbrella (on_top): never on_top a umbrella"
+      }
+    ]
+  },
+  "files": {
+    "rule": "rule.json",
+    "tracks": "tracks.json",
+    "evidence": "evidence.json",
+    "video": "video.mp4"
+  },
+  "evidence_sha256": "aafedbb9458f5768623b1ffec5d7ab8eecd654409d2bd66e8cc57b06d0eee938"
+}
