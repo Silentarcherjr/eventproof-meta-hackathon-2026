@@ -52,7 +52,7 @@ TRUST_PROXY = os.environ.get("EVENTPROOF_TRUST_PROXY") == "1"
 _hits: dict[str, deque] = {}
 _hits_lock = threading.Lock()
 _heavy = threading.Semaphore(1)
-HEAVY = re.compile(r"^/runs(/[^/]+/(challenge|challenge/sam-confirm|repair|before-after))?$")
+HEAVY = re.compile(r"^/runs(/[^/]+/(challenge|challenge/sam-confirm|repair|before-after|ambiguity))?$")
 
 
 def _client_ip(request: Request) -> str:
@@ -227,6 +227,22 @@ def before_after_endpoint(run_id: str, req: RepairRequest) -> dict:
         raise HTTPException(422, str(e)) from None
 
 
+class AmbiguityRequest(BaseModel):
+    text: str
+
+
+@app.post("/runs/{run_id}/ambiguity")
+def ambiguity_endpoint(run_id: str, req: AmbiguityRequest) -> dict:
+    """Two readings of a rule text (Muse Spark, Muse Wonder) with this run's layout, and the minimal pair of synthetic
+    scenes that separates them. Cached readings are free; live ones take from the Muse allowance."""
+    try:
+        return studio.ambiguity(_evidence(run_id), req.text, budget=MUSE_BUDGET)
+    except studio.ChallengeUnavailable as e:
+        raise HTTPException(422, str(e)) from None
+    except (MetaApiUnavailable, LiveCallLimit) as e:
+        raise HTTPException(503, str(e)) from None
+
+
 @app.get("/runs/{run_id}/stored/{key}")
 def stored_result(run_id: str, key: str) -> dict:
     """Reopen a run: a Challenge/Repair result computed earlier (404 if it was never computed)."""
@@ -260,7 +276,7 @@ def final_report() -> dict:
 
 @app.get("/runs/{run_id}/challenge/files/{name}")
 def challenge_file(run_id: str, name: str) -> FileResponse:
-    allowed = name in studio.CHALLENGE_FILES or re.fullmatch(r"decisive_f\d{4}\.png", name)
+    allowed = name in studio.CHALLENGE_FILES or name in studio.AMBIGUITY_FILES or re.fullmatch(r"decisive_f\d{4}\.png", name)
     if not pipeline.RUN_ID_RE.match(run_id) or not allowed:
         raise HTTPException(400, "invalid file")
     p = pipeline.RUNS_DIR / run_id / "challenge" / name

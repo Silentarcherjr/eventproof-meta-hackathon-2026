@@ -55,3 +55,26 @@ def test_committed_report_recomputes_from_cached_readings(monkeypatch):
         for k in "AB":
             t[k].pop("cached")
     assert json.loads(json.dumps(rep)) == committed
+
+
+def test_studio_two_readings_from_cache_renders_the_pair(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+
+    from eventproof import studio
+    from eventproof.meta import muse_rules
+    from eventproof.meta.client import LiveBudget
+
+    monkeypatch.setattr(muse_rules, "get_client", lambda s: pytest.fail("must not call the API"))
+    ev = SimpleNamespace(run_id="20261102T000000Z-deadbeef", rule=SimpleNamespace(layout=am.LAYOUT))
+    budget = LiveBudget("muse", 0)
+    out = studio.ambiguity(ev, am.TEXTS[2], budget=budget, runs_dir=tmp_path)  # "wait": the two models differ
+    assert [r["ok"] for r in out["readings"]] == [True, True] and out["comparison"]["disagree"] == 45
+    p = out["pair"]
+    assert p["differ"]["verdicts"]["A"] != p["differ"]["verdicts"]["B"]
+    d = tmp_path / ev.run_id / "challenge"
+    assert all((d / f).stat().st_size > 0 for f in studio.AMBIGUITY_FILES)
+    assert json.loads((d / "ambiguity.json").read_text())["text"] == am.TEXTS[2]
+    same = studio.ambiguity(ev, am.TEXTS[1], budget=budget, runs_dir=tmp_path)  # "stop": they agree
+    assert same["comparison"]["disagree"] == 0 and same["pair"] is None
+    with pytest.raises(LiveCallLimit):  # an uncached text with no allowance left
+        studio.ambiguity(ev, "Every box must linger 1.5 s at inspection.", budget=budget, runs_dir=tmp_path)

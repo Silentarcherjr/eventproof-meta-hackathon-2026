@@ -63,17 +63,18 @@ class Reading(BaseModel):
     cached: bool | None = None
 
 
-def compile_reading(text: str, model: str, max_live: int, cache_root: Path) -> tuple[Reading, int]:
+def compile_reading(text: str, model: str, max_live: int, cache_root: Path,
+                    layout: Layout = LAYOUT) -> tuple[Reading, int]:
     settings = dataclasses.replace(MetaSettings.from_env(), muse_model=model)
     comp = MuseRuleCompiler(settings, cache_dir=cache_root / model)  # default 2 attempts, as in the product
-    key = comp._key(text, LAYOUT)
+    key = comp._key(text, layout)
     refusal = comp.cache_dir / f"{key}.refusal.json"
     if refusal.exists():  # the compiler caches accepted rules; declined/invalid outcomes are cached here
         return Reading(model=model, ok=False, refusal=json.loads(refusal.read_text())["refusal"], cached=True), 0
     if not (comp.cache_dir / f"{key}.json").exists() and max_live <= 0:
         raise LiveCallLimit(f"{model}: compile of {text[:40]!r} is not cached and the allowance is used up")
     try:
-        c = comp.compile(text, LAYOUT)
+        c = comp.compile(text, layout)
     except RuleCompileError as e:  # UnsupportedRule (the model declined) or an output that did not validate
         msg = f"{type(e).__name__}: {e}"[:400]
         comp.cache_dir.mkdir(parents=True, exist_ok=True)

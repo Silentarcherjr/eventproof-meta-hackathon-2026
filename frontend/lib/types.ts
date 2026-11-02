@@ -97,3 +97,16 @@ export interface FinalReport {
              splits: Record<string, FinalSplit>; fixed: Record<string, number>; regressed: Record<string, number>;
              sign_test_p: Record<string, number> }[];
 }
+
+export interface AmbiguityReading {
+  model: string; ok: boolean; assumptions: string[]; refusal: string | null; request_ids: string[];
+  cached: boolean | null; explanation: string | null; plain: string | null;
+}
+export interface SceneFact { object_id: number; stood_still_s: number; in_zone_s: number | null }
+export interface AmbiguitySide { scene_sha256: string; truth: string; verdicts: { A: string; B: string } }
+export interface Ambiguity {
+  text: string; models: string[]; readings: AmbiguityReading[];
+  comparison: { scenes: number; disagree: number; disagree_by_family: Record<string, number> } | null;
+  pair: { family: string; seed: number; knob: string; t_differ: number; t_agree: number; differ: AmbiguitySide;
+          agree: AmbiguitySide; files: string[]; facts?: { differ: SceneFact[]; agree: SceneFact[] } } | null;
+}

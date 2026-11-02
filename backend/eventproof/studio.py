@@ -217,10 +217,87 @@ def before_after(ev: Evidence, proposer_name: str, runs_dir: Path | None = None)
 
 STORED = {"challenge": "challenge.json", "sam-confirm": "sam_confirm.json", "repair-muse": "repair_muse.json",
           "repair-baseline": "repair_baseline.json", "before-after-muse": "before_after_muse.json",
-          "before-after-baseline": "before_after_baseline.json"}
+          "before-after-baseline": "before_after_baseline.json", "ambiguity": "ambiguity.json"}
 
 
 def stored(run_id: str, key: str, runs_dir: Path | None = None) -> dict | None:
     """A previously computed Challenge/Repair result of a run (so a run can be reopened), or None."""
     p = _dir(run_id, runs_dir) / STORED[key]
     return json.loads(p.read_text()) if p.is_file() else None
+
+
+# ---- two readings (ambiguity finder) ------------------------------------------------------------------------------
+
+AMBIGUITY_FILES = ("ambiguity_differ.mp4", "ambiguity_agree.mp4")
+
+
+def ambiguity(ev: Evidence, text: str, budget=None, runs_dir: Path | None = None) -> dict:
+    """Muse Spark and Muse Wonder each compile `text` with this run's layout; if their rules behave differently on the
+    synthetic development suite (ground-truth tracks), return the minimal pair that separates them, rendered to MP4.
+    Live compiles take from `budget` (the server's Muse allowance); cached readings are free."""
+    from eventproof import ambiguity as am
+    from eventproof.challenge.minimize import KNOBS
+    from eventproof.challenge.runner import WorldMismatch
+
+    text = text.strip()
+    if not 10 <= len(text) <= 400:
+        raise ChallengeUnavailable("rule text must be 10-400 characters")
+    readings = []
+    for model in am.MODELS:
+        allowed = budget.remaining if budget else 0
+        r, used = am.compile_reading(text, model, allowed, am.OUT_DIR / "cache", ev.rule.layout)
+        for _ in range(used):
+            budget.take(f"{model} reading")
+        readings.append(r)
+    a, b = readings
+    out: dict = {"text": text, "models": list(am.MODELS),
+                 "readings": [r.model_dump(mode="json", exclude={"rule"}) | {
+                     "explanation": r.rule.normalized_explanation if r.rule else None,
+                     "plain": describe_dwell(r.rule) if r.rule else None,
+                     "rule": r.rule.model_dump(mode="json") if r.rule else None} for r in readings],
+                 "comparison": None, "pair": None}
+    if a.ok and b.ok:
+        try:
+            cmp = am.compare(a.rule, b.rule)
+        except WorldMismatch as e:
+            raise ChallengeUnavailable(f"the synthetic world cannot host this layout: {e}") from None
+        out["comparison"] = {k: cmp[k] for k in ("scenes", "disagree", "disagree_by_family")}
+        if cmp["pairs"]:  # the clearest kind of difference first: a box that never stops, then a short stop
+            order = ("drive_through", "brief_stop", "occluded_station", "tailgate")
+            p = min(cmp["pairs"], key=lambda q: order.index(q["family"]) if q["family"] in order else len(order))
+            knob = KNOBS[p["family"]][1]
+            base = FAMILIES[p["family"]](p["seed"])
+            d = _dir(ev.run_id, runs_dir)
+            d.mkdir(parents=True, exist_ok=True)
+            facts = {}
+            for (name, t), side in zip((("ambiguity_differ.mp4", p["t_differ"]), ("ambiguity_agree.mp4", p["t_agree"])),
+                                       ("differ", "agree"), strict=True):
+                scene = knob(base, t)
+                encode_mp4(scene, d / name)
+                facts[side] = _scene_facts(scene, a.rule)
+            out["pair"] = p | {"files": list(AMBIGUITY_FILES), "facts": facts}
+    (_dir(ev.run_id, runs_dir)).mkdir(parents=True, exist_ok=True)
+    (_dir(ev.run_id, runs_dir) / "ambiguity.json").write_text(json.dumps(out, indent=2))
+    return out
+
+
+def _scene_facts(scene, rule: VisualRule) -> list[dict]:
+    """For each box that crosses into packing: how long it stood still at the station (scripted truth) and how long it
+    was inside the zone at all (engine count with no speed condition, on ground-truth tracks)."""
+    from eventproof.challenge.render import oracle_view
+    from eventproof.challenge.runner import bind_rule
+    from eventproof.challenge.truth import scene_truth
+
+    bound = bind_rule(rule, scene)
+    d = next((e for e in iter_events(bound.check) if isinstance(e, Dwell)), None)
+    present = d.model_copy(update={"max_speed": None}) if d else None
+    tracks = {t.object_id: t for t in build_tracks(bound, oracle_view(ground_truth(scene)))}
+    out = []
+    for tr in scene_truth(scene, scene.objects[0].label if scene.objects else "box"):
+        if tr.crosses_packing_frame is None:
+            continue
+        t = tracks.get(tr.object_id)
+        in_zone = max((st.counted_ms for st in zone_steps(present, t, bound)), default=0.0) if t and present else None
+        out.append({"object_id": tr.object_id, "stood_still_s": round(tr.station_stop_ms / 1000, 2),
+                    "in_zone_s": round(in_zone / 1000, 2) if in_zone is not None else None})
+    return out

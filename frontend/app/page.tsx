@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import BeforeAfterView from "@/components/BeforeAfter";
+import AmbiguityPanel from "@/components/AmbiguityPanel";
 import ChallengePanel from "@/components/ChallengePanel";
 import Results from "@/components/Results";
 import Timeline from "@/components/Timeline";
@@ -124,6 +125,7 @@ export default function Studio() {
             <Timeline objects={ev.result.objects} frameCount={info.frame_count} fps={info.fps} frame={frame} onSeek={onSeek} />
           )}
           {ev?.status === "completed" && !stale && <ChallengePanel key={ev.run_id} runId={ev.run_id} onBeforeAfter={setBa} />}
+          {ev?.status === "completed" && !stale && <AmbiguityPanel key={`amb-${ev.run_id}`} runId={ev.run_id} defaultText={ev.rule.text} />}
         </section>
 
         <section className="space-y-5">

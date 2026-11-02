@@ -1,4 +1,4 @@
-import type { BeforeAfter, ChallengeReport, Evidence, FinalReport, Layout, RepairRun, SamConfirm, TrackSet } from "./types";
+import type { Ambiguity, BeforeAfter, ChallengeReport, Evidence, FinalReport, Layout, RepairRun, SamConfirm, TrackSet } from "./types";
 
 export const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000").replace(/\/$/, "");
 
@@ -73,4 +73,10 @@ export interface Health {
 
 export async function getHealth(): Promise<Health | null> {
   try { const r = await fetch(`${API_URL}/health`); return r.ok ? (r.json() as Promise<Health>) : null; } catch { return null; }
+}
+
+export async function askBothModels(runId: string, text: string): Promise<Ambiguity> {
+  return json<Ambiguity>(await fetch(`${run(runId)}/ambiguity`, {
+    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text }),
+  }));
 }
