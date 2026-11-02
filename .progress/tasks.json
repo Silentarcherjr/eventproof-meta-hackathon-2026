@@ -1022,6 +1022,33 @@
       "blocker": null,
       "next_action": "CI green -> DONE_VERIFIED",
       "cost_note": "1 Muse compile + 2 SAM calls (387 frames)"
+    },
+    {
+      "id": "P1-10",
+      "title": "Baseline: Muse Spark alone judging from video vs EventProof on the same real clips",
+      "priority": "P1",
+      "gate": "G6",
+      "state": "IN_REVIEW",
+      "dependencies": [
+        "P1-09"
+      ],
+      "owner": "agentic-eval",
+      "branch": null,
+      "definition_of_done": "Pre-registered before calls; raw answers committed; CI recomputes metrics",
+      "test_commands": [
+        "cd backend && uv run pytest tests/validation/test_spark_alone.py"
+      ],
+      "evidence_paths": [
+        "benchmark/real/spark_alone/PREREGISTRATION.md (d9531ee)",
+        "benchmark/real/spark_alone/FINDINGS.md"
+      ],
+      "commit_sha": null,
+      "pr_url": null,
+      "started_at": "2026-11-02T05:24:58Z",
+      "updated_at": "2026-11-02T05:24:58Z",
+      "blocker": null,
+      "next_action": "CI green -> DONE_VERIFIED",
+      "cost_note": "11 Muse Spark video calls, about $0.23"
     }
   ]
 }

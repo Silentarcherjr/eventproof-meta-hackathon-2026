@@ -1,0 +1,487 @@
+{
+  "schema": "eventproof-spark-alone/1",
+  "preregistration": "benchmark/real/spark_alone/PREREGISTRATION.md",
+  "model": "muse-spark-1.3",
+  "prompt_version": "spark-alone/1",
+  "runs_per_clip": 5,
+  "live_calls_this_run": 10,
+  "summary": {
+    "calls": 10,
+    "valid": 10,
+    "overall_agree": 10,
+    "overall_agree_ci95": [
+      0.7225,
+      1.0
+    ],
+    "counts_exact": 5
+  },
+  "clips": [
+    {
+      "label_file": "novisad_approach_a.json",
+      "clip": "novisad_approach_a.mp4",
+      "clip_sha256": "c1b8e02a6edd920a52d6806623d1f28acbf3a99299e4fbfea3b0850b916b3517",
+      "expected_overall": "FAIL",
+      "prompt_sha256": "c3160a3c6776f9133fb1bcaf6b77f3819efcd7064b634908fb86ef0d6f78a685",
+      "runs": [
+        {
+          "run": 0,
+          "response_id": "resp_6ae81d082a2fdaf4c30d448c",
+          "cached": false,
+          "error": null,
+          "usage": {
+            "input_tokens": 2674,
+            "input_tokens_details": {
+              "cache_write_tokens": null,
+              "cached_tokens": 0
+            },
+            "output_tokens": 8022,
+            "output_tokens_details": {
+              "reasoning_tokens": 7799
+            },
+            "total_tokens": 10696
+          },
+          "valid": true,
+          "overall": "FAIL",
+          "overall_agrees": true,
+          "crossings_reported": 3,
+          "crossings_true": 3,
+          "violations_reported": 1,
+          "violations_true": 2,
+          "answer": {
+            "crossings": [
+              {
+                "approx_cross_time_s": 3.6,
+                "description": "red car travelling bottom-right to top-left",
+                "verdict": "VIOLATION",
+                "waited_s": 0.0
+              },
+              {
+                "approx_cross_time_s": 12.7,
+                "description": "silver grey car travelling bottom-right to top-left",
+                "verdict": "PASS",
+                "waited_s": 4.5
+              },
+              {
+                "approx_cross_time_s": 17.8,
+                "description": "white car travelling bottom-right to top-left",
+                "verdict": "PASS",
+                "waited_s": 6.0
+              }
+            ],
+            "notes": "Red car transits waiting zone without stopping and crosses stop line. Following silver car stops at line for pedestrians and waits ~4-5s. Following white car queues behind it in zone for ~6s before crossing. Queued white cars that never cross are not listed. Blur at 0.0s is already beyond line, crossed before video, not counted.",
+            "overall": "FAIL"
+          }
+        },
+        {
+          "run": 1,
+          "response_id": "resp_6ae81d423c62960a1cd849fe",
+          "cached": false,
+          "error": null,
+          "usage": {
+            "input_tokens": 2674,
+            "input_tokens_details": {
+              "cache_write_tokens": null,
+              "cached_tokens": 2665
+            },
+            "output_tokens": 5020,
+            "output_tokens_details": {
+              "reasoning_tokens": 4734
+            },
+            "total_tokens": 7694
+          },
+          "valid": true,
+          "overall": "FAIL",
+          "overall_agrees": true,
+          "crossings_reported": 4,
+          "crossings_true": 3,
+          "violations_reported": 3,
+          "violations_true": 2,
+          "answer": {
+            "crossings": [
+              {
+                "approx_cross_time_s": 3.6,
+                "description": "red car travelling bottom-right to top-left",
+                "verdict": "VIOLATION",
+                "waited_s": 0.0
+              },
+              {
+                "approx_cross_time_s": 13.0,
+                "description": "silver car first in queue after red",
+                "verdict": "PASS",
+                "waited_s": 5.0
+              },
+              {
+                "approx_cross_time_s": 17.0,
+                "description": "white car next in queue",
+                "verdict": "VIOLATION",
+                "waited_s": 0.5
+              },
+              {
+                "approx_cross_time_s": 18.2,
+                "description": "light silver car last crossing near end of video",
+                "verdict": "VIOLATION",
+                "waited_s": 0.5
+              }
+            ],
+            "notes": "Two white cars remain stationary in waiting zone whole video and never cross, excluded. Blurred vehicle at 0.0s top-left is already past line, no crossing observed during video, excluded. Red car enters ~2s and crosses without stopping. Silver car enters ~5.5-6s, stops ~8s to ~12.5s then crosses. Following two queue cars enter ~14-15s and cross continuously without 1.5s stop.",
+            "overall": "FAIL"
+          }
+        },
+        {
+          "run": 2,
+          "response_id": "resp_6ae81d8beec8eafda7794fff",
+          "cached": false,
+          "error": null,
+          "usage": {
+            "input_tokens": 2674,
+            "input_tokens_details": {
+              "cache_write_tokens": null,
+              "cached_tokens": 2665
+            },
+            "output_tokens": 7666,
+            "output_tokens_details": {
+              "reasoning_tokens": 7440
+            },
+            "total_tokens": 10340
+          },
+          "valid": true,
+          "overall": "FAIL",
+          "overall_agrees": true,
+          "crossings_reported": 4,
+          "crossings_true": 3,
+          "violations_reported": 1,
+          "violations_true": 2,
+          "answer": {
+            "crossings": [
+              {
+                "approx_cross_time_s": 3.8,
+                "description": "red car traveling bottom-right to top-left",
+                "verdict": "VIOLATION",
+                "waited_s": 0.0
+              },
+              {
+                "approx_cross_time_s": 12.8,
+                "description": "silver car in right approach lane",
+                "verdict": "PASS",
+                "waited_s": 4.5
+              },
+              {
+                "approx_cross_time_s": 15.8,
+                "description": "white car waiting in middle lane",
+                "verdict": "PASS",
+                "waited_s": 15.0
+              },
+              {
+                "approx_cross_time_s": 17.8,
+                "description": "white car waiting in lower lane",
+                "verdict": "PASS",
+                "waited_s": 17.0
+              }
+            ],
+            "notes": "Red car entered zone ~2s and crossed stop line ~3.8s without stopping, violating 1.5s wait. Later silver and white cars were stopped in inspection zone for several seconds before crossing.",
+            "overall": "FAIL"
+          }
+        },
+        {
+          "run": 3,
+          "response_id": "resp_6ae81db8222f313eae8e4a67",
+          "cached": false,
+          "error": null,
+          "usage": {
+            "input_tokens": 2674,
+            "input_tokens_details": {
+              "cache_write_tokens": null,
+              "cached_tokens": 2665
+            },
+            "output_tokens": 4648,
+            "output_tokens_details": {
+              "reasoning_tokens": 4406
+            },
+            "total_tokens": 7322
+          },
+          "valid": true,
+          "overall": "FAIL",
+          "overall_agrees": true,
+          "crossings_reported": 3,
+          "crossings_true": 3,
+          "violations_reported": 1,
+          "violations_true": 2,
+          "answer": {
+            "crossings": [
+              {
+                "approx_cross_time_s": 3.5,
+                "description": "red car entering from bottom-right and continuing to top-left",
+                "verdict": "VIOLATION",
+                "waited_s": 0.0
+              },
+              {
+                "approx_cross_time_s": 13.5,
+                "description": "silver car in right lane stopping before stop line then crossing",
+                "verdict": "PASS",
+                "waited_s": 4.0
+              },
+              {
+                "approx_cross_time_s": 15.8,
+                "description": "white car in middle lane from initial queue crossing after long stop",
+                "verdict": "PASS",
+                "waited_s": 15.0
+              }
+            ],
+            "notes": "Red car entered zone ~2s and crossed ~3.5s with no stop, violating 1.5s wait. Silver car entered ~6s, stopped in zone ~8.5-13s before crossing. White middle-lane car was stopped in zone from start until ~15s before crossing. Initial blur at 0.0s was already past line so not counted as crossing during video.",
+            "overall": "FAIL"
+          }
+        },
+        {
+          "run": 4,
+          "response_id": "resp_6ae81de6a61a69b9a24b4a1a",
+          "cached": false,
+          "error": null,
+          "usage": {
+            "input_tokens": 2674,
+            "input_tokens_details": {
+              "cache_write_tokens": null,
+              "cached_tokens": 2665
+            },
+            "output_tokens": 4884,
+            "output_tokens_details": {
+              "reasoning_tokens": 4621
+            },
+            "total_tokens": 7558
+          },
+          "valid": true,
+          "overall": "FAIL",
+          "overall_agrees": true,
+          "crossings_reported": 4,
+          "crossings_true": 3,
+          "violations_reported": 1,
+          "violations_true": 2,
+          "answer": {
+            "crossings": [
+              {
+                "approx_cross_time_s": 4.0,
+                "description": "bright red car traveling bottom-right to top-left",
+                "verdict": "VIOLATION",
+                "waited_s": 0.0
+              },
+              {
+                "approx_cross_time_s": 13.8,
+                "description": "silver-grey car queuing in middle lane then crossing",
+                "verdict": "PASS",
+                "waited_s": 7.0
+              },
+              {
+                "approx_cross_time_s": 16.8,
+                "description": "white car first in queue middle lane",
+                "verdict": "PASS",
+                "waited_s": 15.5
+              },
+              {
+                "approx_cross_time_s": 18.6,
+                "description": "white car second in queue lower lane",
+                "verdict": "PASS",
+                "waited_s": 17.0
+              }
+            ],
+            "notes": "Red car enters zone ~2s and crosses stop line ~4s without stopping. Following silver and two white cars were stopped in inspection zone for >1.5s before crossing in order ~13.8s, ~16.8s, ~18.6s. Car already past line at 0.0s not counted as crossing during video.",
+            "overall": "FAIL"
+          }
+        }
+      ]
+    },
+    {
+      "label_file": "novisad_approach_b.json",
+      "clip": "novisad_approach_b.mp4",
+      "clip_sha256": "f9c2698045b04ea605d5bcb38bbfc991dc3223611b739b37018c2d797d259ee3",
+      "expected_overall": "PASS",
+      "prompt_sha256": "0e3df3cbe93fa435674e283e43ab1fc3a55f5c7f4a5c30e3acc6edc685b16d43",
+      "runs": [
+        {
+          "run": 0,
+          "response_id": "resp_6ae81dfed1b8bef1c7ce427f",
+          "cached": false,
+          "error": null,
+          "usage": {
+            "input_tokens": 2674,
+            "input_tokens_details": {
+              "cache_write_tokens": null,
+              "cached_tokens": 0
+            },
+            "output_tokens": 2775,
+            "output_tokens_details": {
+              "reasoning_tokens": 2659
+            },
+            "total_tokens": 5449
+          },
+          "valid": true,
+          "overall": "PASS",
+          "overall_agrees": true,
+          "crossings_reported": 1,
+          "crossings_true": 1,
+          "violations_reported": 0,
+          "violations_true": 0,
+          "answer": {
+            "crossings": [
+              {
+                "approx_cross_time_s": 5.8,
+                "description": "lead white SUV/van in curb lane, first in queue",
+                "verdict": "PASS",
+                "waited_s": 5.5
+              }
+            ],
+            "notes": "Only the lead vehicle crosses the stop line during the video at ~5.5-6.0s after waiting stationary in the waiting zone since start of video (>1.5s). Following queued cars remain in zone and never cross.",
+            "overall": "PASS"
+          }
+        },
+        {
+          "run": 1,
+          "response_id": "resp_6ae81e16b8d574718eb54173",
+          "cached": false,
+          "error": null,
+          "usage": {
+            "input_tokens": 2674,
+            "input_tokens_details": {
+              "cache_write_tokens": null,
+              "cached_tokens": 2665
+            },
+            "output_tokens": 2578,
+            "output_tokens_details": {
+              "reasoning_tokens": 2456
+            },
+            "total_tokens": 5252
+          },
+          "valid": true,
+          "overall": "PASS",
+          "overall_agrees": true,
+          "crossings_reported": 1,
+          "crossings_true": 1,
+          "violations_reported": 0,
+          "violations_true": 0,
+          "answer": {
+            "crossings": [
+              {
+                "approx_cross_time_s": 6.2,
+                "description": "lead white car at front of queue, travelling bottom-right to top-left across packing_entry",
+                "verdict": "PASS",
+                "waited_s": 6.0
+              }
+            ],
+            "notes": "Only one car crosses packing_entry during 19.7s. It is stationary in inspection zone from t=0 until ~5s then proceeds across at ~6s, giving ~6s in zone, exceeding 1.5s requirement. Other queued cars remain in zone and never cross.",
+            "overall": "PASS"
+          }
+        },
+        {
+          "run": 2,
+          "response_id": "resp_6ae81e304ab0de44368a4941",
+          "cached": false,
+          "error": null,
+          "usage": {
+            "input_tokens": 2674,
+            "input_tokens_details": {
+              "cache_write_tokens": null,
+              "cached_tokens": 2665
+            },
+            "output_tokens": 2228,
+            "output_tokens_details": {
+              "reasoning_tokens": 2105
+            },
+            "total_tokens": 4902
+          },
+          "valid": true,
+          "overall": "PASS",
+          "overall_agrees": true,
+          "crossings_reported": 1,
+          "crossings_true": 1,
+          "violations_reported": 0,
+          "violations_true": 0,
+          "answer": {
+            "crossings": [
+              {
+                "approx_cross_time_s": 5.8,
+                "description": "white van leading the queue in the approach lane",
+                "verdict": "PASS",
+                "waited_s": 5.8
+              }
+            ],
+            "notes": "Only one car crosses packing_entry during the 19.7s. It is stationary in the inspection waiting zone from video start until ~5.2s then proceeds across, waiting ~5.8s total, satisfying >=1.5s. Other queued cars remain behind the line.",
+            "overall": "PASS"
+          }
+        },
+        {
+          "run": 3,
+          "response_id": "resp_6ae81e538582740f6b6049a2",
+          "cached": false,
+          "error": null,
+          "usage": {
+            "input_tokens": 2674,
+            "input_tokens_details": {
+              "cache_write_tokens": null,
+              "cached_tokens": 2665
+            },
+            "output_tokens": 2781,
+            "output_tokens_details": {
+              "reasoning_tokens": 2652
+            },
+            "total_tokens": 5455
+          },
+          "valid": true,
+          "overall": "PASS",
+          "overall_agrees": true,
+          "crossings_reported": 1,
+          "crossings_true": 1,
+          "violations_reported": 0,
+          "violations_true": 0,
+          "answer": {
+            "crossings": [
+              {
+                "approx_cross_time_s": 5.5,
+                "description": "white van lead vehicle in approach lane travelling bottom-right to top-left",
+                "verdict": "PASS",
+                "waited_s": 5.5
+              }
+            ],
+            "notes": "Lead van was stationary in inspection zone from 0.0s until ~5.2s then crossed packing_entry at ~5.5s, waiting ~5.5s which exceeds 1.5s. Other queued cars remained in zone and never crossed during 19.7s.",
+            "overall": "PASS"
+          }
+        },
+        {
+          "run": 4,
+          "response_id": "resp_6ae81e683ff0003b3b514054",
+          "cached": false,
+          "error": null,
+          "usage": {
+            "input_tokens": 2674,
+            "input_tokens_details": {
+              "cache_write_tokens": null,
+              "cached_tokens": 2665
+            },
+            "output_tokens": 1988,
+            "output_tokens_details": {
+              "reasoning_tokens": 1853
+            },
+            "total_tokens": 4662
+          },
+          "valid": true,
+          "overall": "PASS",
+          "overall_agrees": true,
+          "crossings_reported": 1,
+          "crossings_true": 1,
+          "violations_reported": 0,
+          "violations_true": 0,
+          "answer": {
+            "crossings": [
+              {
+                "approx_cross_time_s": 5.8,
+                "description": "white van at front of queue travelling bottom-right to top-left",
+                "verdict": "PASS",
+                "waited_s": 5.8
+              }
+            ],
+            "notes": "Leading white van was already in waiting zone at 0.0s and remained stopped until ~5.2s then crossed stop line around 5.8s, waiting ~5.8s in zone >1.5s. The following queued white cars remained stopped in zone and never crossed during 19.7s.",
+            "overall": "PASS"
+          }
+        }
+      ]
+    }
+  ],
+  "code_commit": "d9531ee6de1b424626b76b7fb10993c8530336b6"
+}

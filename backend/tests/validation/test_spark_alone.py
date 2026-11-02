@@ -52,3 +52,21 @@ def test_prompt_is_neutral_and_score_counts():
     assert s == {"valid": True, "overall": "FAIL", "overall_agrees": True, "crossings_reported": 1,
                  "crossings_true": 3, "violations_reported": 1, "violations_true": 2}
     assert sa.score(label_a, None) == {"valid": False}
+
+
+def test_committed_report_recomputes_from_committed_answers():
+    rep = json.loads((sa.DIR / "report.json").read_text())
+    labels = {lb.clip: lb for _, lb in load_labels(LABELS)}
+    cached = {json.loads(p.read_text())["response_id"]: json.loads(p.read_text()) for p in sa.CACHE.glob("*.json")}
+    valid = []
+    for c in rep["clips"]:
+        for r in c["runs"]:
+            assert cached[r["response_id"]]["parsed"] == r["answer"]
+            s = sa.score(labels[c["clip"]], r["answer"])
+            assert {k: r[k] for k in s} == s
+            valid.append(s)
+    summ = rep["summary"]
+    assert summ["valid"] == len(valid) == 10
+    assert summ["overall_agree"] == sum(s["overall_agrees"] for s in valid) == 10
+    assert summ["counts_exact"] == sum(s["violations_reported"] == s["violations_true"]
+                                       and s["crossings_reported"] == s["crossings_true"] for s in valid) == 5

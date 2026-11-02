@@ -1,0 +1,52 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae81de6a61a69b9a24b4a1a",
+ "video_sha256": "c1b8e02a6edd920a52d6806623d1f28acbf3a99299e4fbfea3b0850b916b3517",
+ "run": 4,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 4.0, \"description\": \"bright red car traveling bottom-right to top-left\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 13.8, \"description\": \"silver-grey car queuing in middle lane then crossing\", \"verdict\": \"PASS\", \"waited_s\": 7.0}, {\"approx_cross_time_s\": 16.8, \"description\": \"white car first in queue middle lane\", \"verdict\": \"PASS\", \"waited_s\": 15.5}, {\"approx_cross_time_s\": 18.6, \"description\": \"white car second in queue lower lane\", \"verdict\": \"PASS\", \"waited_s\": 17.0}], \"notes\": \"Red car enters zone ~2s and crosses stop line ~4s without stopping. Following silver and two white cars were stopped in inspection zone for >1.5s before crossing in order ~13.8s, ~16.8s, ~18.6s. Car already past line at 0.0s not counted as crossing during video.\", \"overall\": \"FAIL\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 4.0,
+    "description": "bright red car traveling bottom-right to top-left",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 13.8,
+    "description": "silver-grey car queuing in middle lane then crossing",
+    "verdict": "PASS",
+    "waited_s": 7.0
+   },
+   {
+    "approx_cross_time_s": 16.8,
+    "description": "white car first in queue middle lane",
+    "verdict": "PASS",
+    "waited_s": 15.5
+   },
+   {
+    "approx_cross_time_s": 18.6,
+    "description": "white car second in queue lower lane",
+    "verdict": "PASS",
+    "waited_s": 17.0
+   }
+  ],
+  "notes": "Red car enters zone ~2s and crosses stop line ~4s without stopping. Following silver and two white cars were stopped in inspection zone for >1.5s before crossing in order ~13.8s, ~16.8s, ~18.6s. Car already past line at 0.0s not counted as crossing during video.",
+  "overall": "FAIL"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 2674,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 2665
+  },
+  "output_tokens": 4884,
+  "output_tokens_details": {
+   "reasoning_tokens": 4621
+  },
+  "total_tokens": 7558
+ },
+ "latency_s": 45.82
+}

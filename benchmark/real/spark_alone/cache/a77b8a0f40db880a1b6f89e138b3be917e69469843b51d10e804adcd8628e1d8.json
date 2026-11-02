@@ -1,0 +1,46 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae81db8222f313eae8e4a67",
+ "video_sha256": "c1b8e02a6edd920a52d6806623d1f28acbf3a99299e4fbfea3b0850b916b3517",
+ "run": 3,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 3.5, \"description\": \"red car entering from bottom-right and continuing to top-left\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 13.5, \"description\": \"silver car in right lane stopping before stop line then crossing\", \"verdict\": \"PASS\", \"waited_s\": 4.0}, {\"approx_cross_time_s\": 15.8, \"description\": \"white car in middle lane from initial queue crossing after long stop\", \"verdict\": \"PASS\", \"waited_s\": 15.0}], \"notes\": \"Red car entered zone ~2s and crossed ~3.5s with no stop, violating 1.5s wait. Silver car entered ~6s, stopped in zone ~8.5-13s before crossing. White middle-lane car was stopped in zone from start until ~15s before crossing. Initial blur at 0.0s was already past line so not counted as crossing during video.\", \"overall\": \"FAIL\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 3.5,
+    "description": "red car entering from bottom-right and continuing to top-left",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 13.5,
+    "description": "silver car in right lane stopping before stop line then crossing",
+    "verdict": "PASS",
+    "waited_s": 4.0
+   },
+   {
+    "approx_cross_time_s": 15.8,
+    "description": "white car in middle lane from initial queue crossing after long stop",
+    "verdict": "PASS",
+    "waited_s": 15.0
+   }
+  ],
+  "notes": "Red car entered zone ~2s and crossed ~3.5s with no stop, violating 1.5s wait. Silver car entered ~6s, stopped in zone ~8.5-13s before crossing. White middle-lane car was stopped in zone from start until ~15s before crossing. Initial blur at 0.0s was already past line so not counted as crossing during video.",
+  "overall": "FAIL"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 2674,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 2665
+  },
+  "output_tokens": 4648,
+  "output_tokens_details": {
+   "reasoning_tokens": 4406
+  },
+  "total_tokens": 7322
+ },
+ "latency_s": 45.02
+}

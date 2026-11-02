@@ -1,0 +1,34 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae81e304ab0de44368a4941",
+ "video_sha256": "f9c2698045b04ea605d5bcb38bbfc991dc3223611b739b37018c2d797d259ee3",
+ "run": 2,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 5.8, \"description\": \"white van leading the queue in the approach lane\", \"verdict\": \"PASS\", \"waited_s\": 5.8}], \"notes\": \"Only one car crosses packing_entry during the 19.7s. It is stationary in the inspection waiting zone from video start until ~5.2s then proceeds across, waiting ~5.8s total, satisfying >=1.5s. Other queued cars remain behind the line.\", \"overall\": \"PASS\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 5.8,
+    "description": "white van leading the queue in the approach lane",
+    "verdict": "PASS",
+    "waited_s": 5.8
+   }
+  ],
+  "notes": "Only one car crosses packing_entry during the 19.7s. It is stationary in the inspection waiting zone from video start until ~5.2s then proceeds across, waiting ~5.8s total, satisfying >=1.5s. Other queued cars remain behind the line.",
+  "overall": "PASS"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 2674,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 2665
+  },
+  "output_tokens": 2228,
+  "output_tokens_details": {
+   "reasoning_tokens": 2105
+  },
+  "total_tokens": 4902
+ },
+ "latency_s": 26.7
+}

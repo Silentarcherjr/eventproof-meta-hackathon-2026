@@ -137,3 +137,9 @@
 
 
 
+## 2026-11-02 · session 1 (cont.) · local macOS · orchestrator — P1-10 Muse Spark-alone baseline
+- Participant approved up to $60 more. Official prices read (SAM $0.20 / 1k frames; Spark $1.25 / $4.25 per 1M tokens).
+- Screened ~20 more Pexels traffic clips (frames only); usable fixed-camera ones downloaded for later labelling (Wroclaw
+  36366105, Taiwan 9322364); the winter one is a time-lapse with cuts (rejected).
+- Baseline pre-registered (d9531ee) then run: Muse Spark judging from video, 5 runs per Novi Sad clip. Overall verdict 10/10,
+  counts exact 5/10 (0/5 on the rolling-stop clip); rolling van flagged 1/5; waiting cars reported as crossing in 3/5.

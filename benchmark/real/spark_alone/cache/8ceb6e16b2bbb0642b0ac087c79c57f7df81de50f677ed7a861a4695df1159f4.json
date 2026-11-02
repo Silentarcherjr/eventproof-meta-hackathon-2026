@@ -1,0 +1,34 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae81dfed1b8bef1c7ce427f",
+ "video_sha256": "f9c2698045b04ea605d5bcb38bbfc991dc3223611b739b37018c2d797d259ee3",
+ "run": 0,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 5.8, \"description\": \"lead white SUV/van in curb lane, first in queue\", \"verdict\": \"PASS\", \"waited_s\": 5.5}], \"notes\": \"Only the lead vehicle crosses the stop line during the video at ~5.5-6.0s after waiting stationary in the waiting zone since start of video (>1.5s). Following queued cars remain in zone and never cross.\", \"overall\": \"PASS\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 5.8,
+    "description": "lead white SUV/van in curb lane, first in queue",
+    "verdict": "PASS",
+    "waited_s": 5.5
+   }
+  ],
+  "notes": "Only the lead vehicle crosses the stop line during the video at ~5.5-6.0s after waiting stationary in the waiting zone since start of video (>1.5s). Following queued cars remain in zone and never cross.",
+  "overall": "PASS"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 2674,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 0
+  },
+  "output_tokens": 2775,
+  "output_tokens_details": {
+   "reasoning_tokens": 2659
+  },
+  "total_tokens": 5449
+ },
+ "latency_s": 24.14
+}

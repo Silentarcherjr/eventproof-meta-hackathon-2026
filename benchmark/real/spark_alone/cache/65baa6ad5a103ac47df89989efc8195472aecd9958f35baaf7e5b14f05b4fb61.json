@@ -1,0 +1,46 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae81d082a2fdaf4c30d448c",
+ "video_sha256": "c1b8e02a6edd920a52d6806623d1f28acbf3a99299e4fbfea3b0850b916b3517",
+ "run": 0,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 3.6, \"description\": \"red car travelling bottom-right to top-left\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 12.7, \"description\": \"silver grey car travelling bottom-right to top-left\", \"verdict\": \"PASS\", \"waited_s\": 4.5}, {\"approx_cross_time_s\": 17.8, \"description\": \"white car travelling bottom-right to top-left\", \"verdict\": \"PASS\", \"waited_s\": 6.0}], \"notes\": \"Red car transits waiting zone without stopping and crosses stop line. Following silver car stops at line for pedestrians and waits ~4-5s. Following white car queues behind it in zone for ~6s before crossing. Queued white cars that never cross are not listed. Blur at 0.0s is already beyond line, crossed before video, not counted.\", \"overall\": \"FAIL\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 3.6,
+    "description": "red car travelling bottom-right to top-left",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 12.7,
+    "description": "silver grey car travelling bottom-right to top-left",
+    "verdict": "PASS",
+    "waited_s": 4.5
+   },
+   {
+    "approx_cross_time_s": 17.8,
+    "description": "white car travelling bottom-right to top-left",
+    "verdict": "PASS",
+    "waited_s": 6.0
+   }
+  ],
+  "notes": "Red car transits waiting zone without stopping and crosses stop line. Following silver car stops at line for pedestrians and waits ~4-5s. Following white car queues behind it in zone for ~6s before crossing. Queued white cars that never cross are not listed. Blur at 0.0s is already beyond line, crossed before video, not counted.",
+  "overall": "FAIL"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 2674,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 0
+  },
+  "output_tokens": 8022,
+  "output_tokens_details": {
+   "reasoning_tokens": 7799
+  },
+  "total_tokens": 10696
+ },
+ "latency_s": 66.53
+}

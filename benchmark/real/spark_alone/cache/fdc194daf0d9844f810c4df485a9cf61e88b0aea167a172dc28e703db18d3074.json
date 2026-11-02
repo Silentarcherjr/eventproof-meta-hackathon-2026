@@ -1,0 +1,52 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae81d423c62960a1cd849fe",
+ "video_sha256": "c1b8e02a6edd920a52d6806623d1f28acbf3a99299e4fbfea3b0850b916b3517",
+ "run": 1,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 3.6, \"description\": \"red car travelling bottom-right to top-left\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.0}, {\"approx_cross_time_s\": 13.0, \"description\": \"silver car first in queue after red\", \"verdict\": \"PASS\", \"waited_s\": 5.0}, {\"approx_cross_time_s\": 17.0, \"description\": \"white car next in queue\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.5}, {\"approx_cross_time_s\": 18.2, \"description\": \"light silver car last crossing near end of video\", \"verdict\": \"VIOLATION\", \"waited_s\": 0.5}], \"notes\": \"Two white cars remain stationary in waiting zone whole video and never cross, excluded. Blurred vehicle at 0.0s top-left is already past line, no crossing observed during video, excluded. Red car enters ~2s and crosses without stopping. Silver car enters ~5.5-6s, stops ~8s to ~12.5s then crosses. Following two queue cars enter ~14-15s and cross continuously without 1.5s stop.\", \"overall\": \"FAIL\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 3.6,
+    "description": "red car travelling bottom-right to top-left",
+    "verdict": "VIOLATION",
+    "waited_s": 0.0
+   },
+   {
+    "approx_cross_time_s": 13.0,
+    "description": "silver car first in queue after red",
+    "verdict": "PASS",
+    "waited_s": 5.0
+   },
+   {
+    "approx_cross_time_s": 17.0,
+    "description": "white car next in queue",
+    "verdict": "VIOLATION",
+    "waited_s": 0.5
+   },
+   {
+    "approx_cross_time_s": 18.2,
+    "description": "light silver car last crossing near end of video",
+    "verdict": "VIOLATION",
+    "waited_s": 0.5
+   }
+  ],
+  "notes": "Two white cars remain stationary in waiting zone whole video and never cross, excluded. Blurred vehicle at 0.0s top-left is already past line, no crossing observed during video, excluded. Red car enters ~2s and crosses without stopping. Silver car enters ~5.5-6s, stops ~8s to ~12.5s then crosses. Following two queue cars enter ~14-15s and cross continuously without 1.5s stop.",
+  "overall": "FAIL"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 2674,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 2665
+  },
+  "output_tokens": 5020,
+  "output_tokens_details": {
+   "reasoning_tokens": 4734
+  },
+  "total_tokens": 7694
+ },
+ "latency_s": 57.31
+}

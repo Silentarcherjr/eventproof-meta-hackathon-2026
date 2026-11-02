@@ -1,0 +1,34 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6ae81e538582740f6b6049a2",
+ "video_sha256": "f9c2698045b04ea605d5bcb38bbfc991dc3223611b739b37018c2d797d259ee3",
+ "run": 3,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 5.5, \"description\": \"white van lead vehicle in approach lane travelling bottom-right to top-left\", \"verdict\": \"PASS\", \"waited_s\": 5.5}], \"notes\": \"Lead van was stationary in inspection zone from 0.0s until ~5.2s then crossed packing_entry at ~5.5s, waiting ~5.5s which exceeds 1.5s. Other queued cars remained in zone and never crossed during 19.7s.\", \"overall\": \"PASS\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 5.5,
+    "description": "white van lead vehicle in approach lane travelling bottom-right to top-left",
+    "verdict": "PASS",
+    "waited_s": 5.5
+   }
+  ],
+  "notes": "Lead van was stationary in inspection zone from 0.0s until ~5.2s then crossed packing_entry at ~5.5s, waiting ~5.5s which exceeds 1.5s. Other queued cars remained in zone and never crossed during 19.7s.",
+  "overall": "PASS"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 2674,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 2665
+  },
+  "output_tokens": 2781,
+  "output_tokens_details": {
+   "reasoning_tokens": 2652
+  },
+  "total_tokens": 5455
+ },
+ "latency_s": 34.31
+}
