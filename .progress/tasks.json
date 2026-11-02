@@ -962,6 +962,33 @@
       "blocker": null,
       "next_action": "participant re-reads Billing for the exact charge",
       "cost_note": "80 live SAM 3.1 calls, 8,087 frames, approved up to $5; bound <= $4.3; exact charge UNKNOWN until Billing is read"
+    },
+    {
+      "id": "P1-08",
+      "title": "Real public footage (Pexels) perception check: SAM 3.1 line crossings vs hand labels",
+      "priority": "P1",
+      "gate": "G6",
+      "state": "IN_REVIEW",
+      "dependencies": [
+        "P1-07"
+      ],
+      "owner": "agentic-eval",
+      "branch": null,
+      "definition_of_done": "Labels + pre-registration pushed before the call; result reported as is; CI recomputes from cached output",
+      "test_commands": [
+        "cd backend && uv run pytest tests/validation/test_line_check.py"
+      ],
+      "evidence_paths": [
+        "benchmark/real/pexels/PREREGISTRATION.md (c1907a7, before the call)",
+        "benchmark/real/pexels/REPORT_pexels.md"
+      ],
+      "commit_sha": null,
+      "pr_url": null,
+      "started_at": "2026-11-02T03:37:28Z",
+      "updated_at": "2026-11-02T03:37:28Z",
+      "blocker": null,
+      "next_action": "CI green -> DONE_VERIFIED; optional v2 (crop/windowed tracking) needs approval",
+      "cost_note": "1 live SAM call, 203 frames"
     }
   ]
 }

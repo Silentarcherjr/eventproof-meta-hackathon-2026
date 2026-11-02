@@ -60,6 +60,10 @@ ledger (file hashes, model request ids, live vs. cached outputs) that anyone can
 - The large-scale evidence is synthetic (a conveyor world with scripted truth). Holdout and primary final scoring use a
   deterministic mock tracker (n = 200–320); an 80-scene subset of the final test was re-run with real SAM 3.1 tracks and
   gives the same conclusion (the mock is pessimistic on tailgating and occlusion).
+- On real public footage (one Pexels clip, cluttered, parcels arriving continuously) SAM 3.1 found only **2 of 8**
+  hand-labelled line crossings: it fills its 16-objects-per-frame cap at the first frame, partly with static clutter, so
+  later parcels get no track ([report](benchmark/real/pexels/REPORT_pexels.md)). Untracked objects are invisible to
+  any rule downstream, so perception must be checked on the target scene before a rule is trusted.
 - On one never-seen scene type (slow belt with a stop) Muse's patches leave 2–3 errors that a deterministic grid search
   fixes. Reported, not tuned away.
 - Real phone-video validation has a blind-labelling protocol ([`docs/REAL_VIDEO_PROTOCOL.md`](docs/REAL_VIDEO_PROTOCOL.md)); results will be reported separately.

@@ -11,7 +11,8 @@ import argparse
 import json
 from pathlib import Path
 
-from eventproof.perception.sam import SamTracker, sha256_file
+from eventproof.perception.sam import SamTracker, sha256_file, to_trackset
+from eventproof.perception.sam_wire import parse_output
 from eventproof.schemas.tracks import TrackSet, VideoInfo
 from eventproof.validation.evaluate import ROOT, _git_head, sha256
 
@@ -85,11 +86,16 @@ def run(max_live: int, tracker: SamTracker | None = None) -> dict:
            "perception": "sam-3.1 (live Meta API, raw output cached in benchmark/real/pexels/sam_cache)", "clips": {}}
     for name, clip in lab["clips"].items():
         video = DIR / "videos" / f"{name}.mp4"
-        if sha256_file(video) != clip["prepared_sha256"]:
-            raise SystemExit(f"{video} does not match the labelled sha256")
         v = clip["video"]
-        ts = tracker.tracks(video, clip["prompt"], VideoInfo(width=v["width"], height=v["height"], fps=v["fps"],
-                                                             frame_count=v["frames"]))
+        info = VideoInfo(width=v["width"], height=v["height"], fps=v["fps"], frame_count=v["frames"])
+        if video.exists():
+            if sha256_file(video) != clip["prepared_sha256"]:
+                raise SystemExit(f"{video} does not match the labelled sha256")
+            ts = tracker.tracks(video, clip["prompt"], info)
+        else:  # videos are not committed: recompute from the cached raw SAM output of the labelled file
+            c = json.loads((tracker.cache_dir / f"{tracker._key(clip['prepared_sha256'], clip['prompt'])}.json").read_text())
+            ref = f"{c['model']}:{c['response_id']}:video={clip['prepared_sha256'][:16]}:prompt={clip['prompt']!r}:cached"
+            ts = to_trackset(parse_output(c["deltas"]), info, clip["prompt"], ref)
         out["clips"][name] = {"source_ref": ts.source_ref, **score(clip, ts, lab)}
     out["live_sam_calls_this_run"] = tracker.live_calls
     return out

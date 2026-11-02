@@ -37,3 +37,28 @@ def test_score_counts_misses_false_crossings_and_track_ids():
     s = score({"crossings_s": [1.0, 3.0, 8.0]}, ts, lab)
     assert s["matched"] == 2 and s["missed"] == [8.0] and s["distinct_track_ids_matched"] == 2
     assert [c["t_s"] for c in s["false_crossings_in_window"]] == [6.0]
+
+
+def test_committed_pexels_report_is_reproducible_from_the_cached_sam_output(monkeypatch, tmp_path):
+    import json
+
+    from eventproof.perception import sam as sam_mod
+    from eventproof.validation import line_check
+
+    monkeypatch.setattr(sam_mod, "get_client", lambda s: (_ for _ in ()).throw(AssertionError("no API calls")))
+    real_dir = line_check.DIR
+    fake = tmp_path / "pexels"
+    fake.mkdir()
+    for f in ("labels.json",):
+        (fake / f).write_text((real_dir / f).read_text())
+    (fake / "sam_cache").symlink_to(real_dir / "sam_cache")
+    monkeypatch.setattr(line_check, "DIR", fake)
+    committed = json.loads((real_dir / "report_pexels.json").read_text())
+    rep = line_check.run(0)
+    for k in ("code_commit", "live_sam_calls_this_run"):
+        committed.pop(k)
+        rep.pop(k, None)
+    for c in (committed, rep):
+        for clip in c["clips"].values():
+            clip.pop("source_ref")
+    assert json.loads(json.dumps(rep)) == committed

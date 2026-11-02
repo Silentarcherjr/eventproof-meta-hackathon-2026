@@ -1,0 +1,62 @@
+{
+  "preregistration": "benchmark/real/pexels/PREREGISTRATION.md",
+  "labels_sha256": "e736161dcfed5c8d9cf11710ac1ff9879ad5ea174458b8681dbf0b9d730af3d3",
+  "perception": "sam-3.1 (live Meta API, raw output cached in benchmark/real/pexels/sam_cache)",
+  "clips": {
+    "pexels_5903898": {
+      "source_ref": "sam-3.1:resp_6ae8053243569a683c7d4d37:video=f7fca634380380e5:prompt='package'",
+      "labels": 8,
+      "matched": 2,
+      "missed": [
+        5.6,
+        7.5,
+        10.0,
+        13.6,
+        15.9,
+        18.8
+      ],
+      "false_crossings_in_window": [],
+      "median_abs_dt_s": 0.2999999999999998,
+      "distinct_track_ids_matched": 2,
+      "pairs": [
+        {
+          "label_s": 2.9,
+          "sam": {
+            "track_id": 1,
+            "frame": 30,
+            "t_s": 3.0
+          }
+        },
+        {
+          "label_s": 4.2,
+          "sam": {
+            "track_id": 5,
+            "frame": 45,
+            "t_s": 4.5
+          }
+        }
+      ],
+      "all_sam_crossings": [
+        {
+          "track_id": 0,
+          "frame": 2,
+          "t_s": 0.2
+        },
+        {
+          "track_id": 1,
+          "frame": 30,
+          "t_s": 3.0
+        },
+        {
+          "track_id": 5,
+          "frame": 45,
+          "t_s": 4.5
+        }
+      ],
+      "sam_tracks": 16,
+      "sam_boxes": 2480
+    }
+  },
+  "live_sam_calls_this_run": 1,
+  "code_commit": "c1907a7373022b8bd68fab00731c6f374b605987"
+}

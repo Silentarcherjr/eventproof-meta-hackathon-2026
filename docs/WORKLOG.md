@@ -119,3 +119,9 @@
 - Result: Muse-run rule 71 → 76 / 80 with SAM tracks after the accepted patch, false PASS 5 → 0, 0 regressions; remaining
   errors are 4 abstentions (occlusion). Mock vs SAM: 68/80 same verdict; SAM 10/10 on tailgate vs mock 2/10.
 - CI test recomputes the published SAM report from committed raw outputs (no API, no video re-encode).
+## 2026-11-01 · session 1 (cont.) · local macOS · orchestrator — P1-08 Pexels real-footage check
+- Participant approved using 2 Pexels clips. Reviewed ~15 Pexels clips first (frames only): none shows a box stopping at a
+  station, so only a perception check is possible. Clip 4156510 excluded before any call (moving camera).
+- Clip 5903898: hand labels (8 right-to-left crossings of the center line) + pre-registration pushed (c1907a7) before the call.
+- 1 live SAM call: **2/8 crossings found**, 0 false, no merges. Cause: 16 objects/frame cap filled at frame 0 (9 of them static
+  clutter), no new tracks for parcels arriving later. Reported as is; mitigations (crop, windowed tracking) not run.
