@@ -341,6 +341,14 @@ def run_certificate(run_id: str, chosen: str | None = None, format: str = "html"
     return cert if format == "json" else HTMLResponse(certificate.render_html(cert))
 
 
+@app.get("/runs/{run_id}/checks")
+def run_checks(run_id: str) -> list[dict]:
+    """Deterministic checks of the compiled rule against this run's tracks (e.g. a line no anchor point ever crosses)."""
+    from eventproof import certificate
+
+    return certificate.run_checks(_run_file(run_id, "evidence.json").parent, _evidence(run_id))
+
+
 @app.get("/runs/{run_id}/ledger")
 def run_ledger(run_id: str) -> dict:
     """Build (or rebuild) the run's evidence ledger: every file hash, model/request ids, holdout manifests."""

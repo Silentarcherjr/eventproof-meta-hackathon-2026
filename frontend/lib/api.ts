@@ -103,3 +103,9 @@ export async function proposeLayout(video: File, ruleText: string): Promise<Layo
   form.append("rule_text", ruleText);
   return json<LayoutProposal>(await fetch(`${API_URL}/propose-layout`, { method: "POST", body: form }));
 }
+
+export interface RuleCheck { check: string; line: string; anchor: string; other_anchor: string; other_crossers: number; message: string }
+
+export async function getChecks(runId: string): Promise<RuleCheck[]> {
+  try { const r = await fetch(`${run(runId)}/checks`); return r.ok ? (r.json() as Promise<RuleCheck[]>) : []; } catch { return []; }
+}

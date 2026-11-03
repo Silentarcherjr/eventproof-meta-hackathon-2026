@@ -1266,6 +1266,33 @@
       "blocker": null,
       "next_action": "none",
       "cost_note": "≈ $0.04 Meta; Vercel $0"
+    },
+    {
+      "id": "P1-19",
+      "title": "Santos bike path (Brazil) real footage: 0/8 (anchor), deterministic anchor check in studio + certificate",
+      "priority": "P1",
+      "gate": "G6",
+      "state": "IN_REVIEW",
+      "dependencies": [
+        "P1-18"
+      ],
+      "owner": "agentic-eval",
+      "branch": null,
+      "definition_of_done": "Labels frozen + pre-registered before calls; lint tested on all recorded real runs",
+      "test_commands": [
+        "cd backend && uv run pytest tests/engine/test_lint.py tests/test_certificate.py"
+      ],
+      "evidence_paths": [
+        "benchmark/real/santos/FINDINGS.md",
+        "benchmark/real/santos/PREREGISTRATION.md (2eae88a)"
+      ],
+      "commit_sha": null,
+      "pr_url": null,
+      "started_at": "2026-11-03T23:00:00Z",
+      "updated_at": "2026-11-03T23:40:00Z",
+      "blocker": null,
+      "next_action": "mark DONE_VERIFIED when CI is green",
+      "cost_note": "≈ $0.12"
     }
   ]
 }

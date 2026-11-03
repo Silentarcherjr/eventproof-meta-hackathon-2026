@@ -18,6 +18,7 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 | fecha (Panamá) | plataforma | sesión/tarea | tipo de crédito | saldo confirmado | consumo confirmado | estimado | límite acordado | alerta | fuente |
 |---|---|---|---|---|---|---|---|---|---|
 | 2026-11-02 | Meta Model API | balance read (participant) | hackathon $150 | **$138.91 remaining** | $11.09 total to date | - | participant: use the remaining credits for product work | - | participant message |
+| 2026-11-03 | Meta Model API | Santos bike path, real footage (P1-19) | hackathon $150 | - | 2 Muse compiles + 2 SAM calls (200 frames each) | ≈ $0.12 (estimate) | participant: use credits | - | benchmark/real/santos/report_santos.json |
 | 2026-11-03 | Meta Model API | Private hosted studio on Vercel (P1-18): deploy checks | hackathon $150 | - | 2 live Muse compiles (same new rule on two deployments; SAM from cache) | ≈ $0.04 (estimate) | participant: use credits; server caps 40 Muse / 6 SAM per instance | - | deploy/vercel/README.md |
 | 2026-11-03 | Vercel | Hobby plan, project eventproof-studio (team HACKS), private (Vercel Authentication on all deployments) | free | - | $0 | $0 | participant approved Vercel, private only | - | participant message |
 | 2026-11-02 | Meta Model API | Umbrella pilot, two-object rule (P1-17) | hackathon $150 | - | 2 Muse compiles (1 refusal + 1 WITH) + 2 SAM calls (30 frames each, min 50 billed) | ≈ $0.05 (estimate) | participant: use credits | - | benchmark/real/with_umbrella/report.json |

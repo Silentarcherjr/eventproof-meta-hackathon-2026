@@ -9,6 +9,7 @@ import Stepper from "@/components/Stepper";
 import Timeline from "@/components/Timeline";
 import VideoStage, { type Tool } from "@/components/VideoStage";
 import Gallery from "@/components/Gallery";
+import RuleChecks from "@/components/RuleChecks";
 import { certificateUrl, createRun, getFinalReport, type LayoutProposal, proposeLayout, rerunWithRule, getHealth, getRun, getTracks, type Health, videoUrl } from "@/lib/api";
 import { DEFAULT_LAYOUT, EXAMPLE_RULES } from "@/lib/defaults";
 import type { BeforeAfter, Evidence, FinalReport, Layout, ObjectVerdict, TrackFrame, TrackSet } from "@/lib/types";
@@ -149,6 +150,7 @@ export default function Studio() {
       {health?.mode === "hosted" && !!health.demo_clips?.length && <Gallery clips={health.demo_clips} current={ev?.run_id} />}
 
       {ev?.status === "completed" && !stale && <Stepper key={`st-${ev.run_id}`} ev={ev} />}
+      {ev?.status === "completed" && !stale && <RuleChecks key={`rc-${ev.run_id}`} runId={ev.run_id} />}
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         <section className="space-y-4">

@@ -1,0 +1,61 @@
+{
+  "rule_id": "cross-only-toward-camera",
+  "version": 1,
+  "entity": {
+    "name": "cyclist",
+    "concept": "cyclist"
+  },
+  "zones": [
+    {
+      "id": "inspection",
+      "polygon": [
+        [
+          0.21999999999999997,
+          0.45
+        ],
+        [
+          0.7799999999999999,
+          0.45
+        ],
+        [
+          0.82,
+          0.87
+        ],
+        [
+          0.18,
+          0.87
+        ]
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "id": "packing_entry",
+      "a": [
+        0.3,
+        0.65
+      ],
+      "b": [
+        0.7,
+        0.65
+      ]
+    }
+  ],
+  "check": {
+    "op": "NOT",
+    "arg": {
+      "op": "OCCURS",
+      "event": {
+        "op": "CROSSES",
+        "line": "packing_entry",
+        "direction": "to_left"
+      }
+    }
+  },
+  "params": {
+    "anchor": "center",
+    "max_gap_frames": 3,
+    "min_confidence": 0.0
+  },
+  "normalized_explanation": "Each cyclist must never cross packing_entry to_left (away from the camera); only crossings toward the camera are allowed."
+}

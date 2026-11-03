@@ -39,8 +39,9 @@ print its certificate. To run it locally with no API key: `docker compose up`.
 - Asked to judge the same clips directly from video, **Muse Spark alone** got every clip verdict right but counted
   crossings and violations exactly in only 11/25 runs.
 
-**At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · real footage from 2 cities in 3 domains (cars,
-pedestrians, cyclists), including a two-object rule (umbrellas): 36/42 labelled objects right, 1 wrong verdict · per-rule certificate · one-command replay with no API key (`docker compose`) · 250+ backend tests,
+**At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · real footage from Serbia, Poland, Hong Kong and
+Brazil in 3 domains (cars, pedestrians, cyclists), including a two-object rule (umbrellas): 36/50 labelled objects right, 1 wrong verdict,
+8 never judged (the anchor failure below) · per-rule certificate · one-command replay with no API key (`docker compose`) · 250+ backend tests,
 CI recomputes every published number · MIT licensed.
 
 ![Real footage: the same SAM 3.1 tracks judged by two readings of "wait"](docs/media/real_traffic.png)
@@ -74,6 +75,9 @@ Sources for the deployment facts above: [MoCo Show, 2026-01-07](https://mocoshow
    **Two readings:** Muse Wonder reads the same sentence independently. If the two rules behave differently, EventProof
    shows the smallest pair of scenes that separates them ("the box never stopped but was inside 1.53 s: PASS or FAIL?")
    and the user picks the meaning, instead of a model picking it silently.
+   **Rule check:** before any verdict is trusted, the compiled rule is checked against the run's own tracks. If no
+   object ever crosses a line at the point the model measures (box centre or bottom), while objects do cross it at
+   the other point, the studio warns that the rule cannot see what it judges.
 2. **Break.** Challenge Mode renders synthetic scenes whose truth is known (drive-through, brief stop, occlusion,
    tailgating) and searches for the smallest scene that fools the rule: a minimal pair of clips that differ in one
    factor, one judged wrong and one judged right. The failing scene is re-checked with real SAM 3.1 tracks to separate
@@ -88,7 +92,7 @@ Sources for the deployment facts above: [MoCo Show, 2026-01-07](https://mocoshow
    labelled real clip it was checked on, model request ids and file hashes. Its status follows fixed rules: a wrong
    verdict on labelled footage → NOT CERTIFIED; an object perception never tracked → CONDITIONAL (perception gap); a
    repair with no field check yet → REPAIR CONDITIONAL; right on the labelled footage but fooled by synthetic scenes →
-   CONDITIONAL (counterexamples found). No model writes it.
+   CONDITIONAL (counterexamples found); a failed rule check → NOT CERTIFIED. No model writes it.
 
 ![Before and after the repair: the same failing case judged by both rules](docs/media/before_after.png)
 
@@ -102,6 +106,7 @@ crossings and violations exactly in only 11/25. [pooled](benchmark/real/traffic_
 | Test | Result |
 |---|---|
 | **New domains, same engine** — pedestrians on a zebra crossing and cyclists on a bike lane (Pexels), one-way rules typed in plain English | Muse Spark compiled both to NOT CROSSES(wrong direction), stating how it mapped "left to right". **7/8 labelled objects right, 0 wrong verdicts** (1 person got no matching track). [findings](benchmark/real/domains/FINDINGS.md) |
+| **New country, same rule shape** — a bike path in Santos, Brazil, 2 clips, 8 labelled crossings: *"Cyclists may cross the line on the bike path only toward the camera"* | **0/8.** Muse Spark got the direction right but silently measured each rider at the box centre. The camera looks along the path, so no centre ever reached the line drawn at the wheels, and every rider passed. EventProof now checks this against the tracks (a deterministic rule check). The studio says "the rule cannot see what it judges" and the certificate refuses. The check fires on these 2 runs and on no other recorded real run. [findings](benchmark/real/santos/FINDINGS.md) |
 | **Two-object rule on real footage** — *"Every pedestrian in the crossing zone must hold an umbrella over their head"* (Pexels, rainy crossing seen from above, 4 labelled people) | Muse Spark escalated to the WITH schema and SAM 3.1 tracked pedestrians and umbrellas separately. Overall FAIL as labelled; **2/4 right, 1 wrong, 1 not tracked**. The wrong one: a neighbour's umbrella touched a bare-headed man's box for 0.4 s, and Muse had chosen no minimum duration, a gap in the sentence that a model filled silently. [findings](benchmark/real/with_umbrella/FINDINGS.md) |
 | **Field repair** — repair from real failures (Novi Sad), accept only with 0 regressions on another city (Wroclaw, 22 cars) **and** on the 200 synthetic hidden scenes | Muse Spark's 4 patches all fixed the real footage (Wroclaw **9 → 19/22**) but also moved "1.5 s" to "1.0 s", breaking 7 synthetic cases → all rejected. A grid patch (stillness ≤ 0.04/s, ≥ 0.8 s): Wroclaw 9 → 19/22, synthetic 164 → 166/200, 0 regressions in both → accepted. [findings](benchmark/field_repair/FINDINGS.md) |
 | **Zones drafted by Muse Spark** from the first frame + rule text (5 real clips, 30 labelled cars) | Same verdicts as the hand-drawn zones on the drone view (8/8); on the footbridge view, with no painted stop line in frame, Muse placed a proxy line elsewhere (and once read the direction backwards): **20/30** vs 27/30 by hand. So the draft is shown with Muse's assumptions and the user confirms it. [findings](benchmark/layout/FINDINGS.md) |

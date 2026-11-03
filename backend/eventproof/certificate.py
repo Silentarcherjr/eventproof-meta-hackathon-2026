@@ -6,7 +6,8 @@ pre-registered final test, real-footage reports whose labels use the same rule t
 recomputed or called; a section with no data says so. The status is a fixed function of those results:
 
 - NOT CERTIFIED     Challenge Mode found failures and no repair passed the hidden holdout, or the field check has a
-                    wrong verdict.
+                    wrong verdict, or a rule check on the run's own tracks shows the rule cannot see what it judges
+                    (engine.lint: no object ever crosses a line at the rule's anchor point).
 - REPAIR CERTIFIED (synthetic) / CONDITIONAL  the accepted repair passed the hidden holdout, but no labelled footage of a
                     deployment scene checked it yet, or footage checked it and it failed there (then: REJECTED IN THE FIELD).
 - CONDITIONAL: PERCEPTION GAPS  no wrong verdict on the labelled footage, but some labelled object was never tracked.
@@ -23,7 +24,10 @@ import json
 from pathlib import Path
 
 from eventproof import ledger, studio
+from eventproof.engine.lint import anchor_check
 from eventproof.pipeline import RUNS_DIR, Evidence
+from eventproof.schemas.rules import VisualRule
+from eventproof.schemas.tracks import TrackSet
 
 ROOT = Path(__file__).resolve().parents[2]
 REAL_DIR = ROOT / "benchmark" / "real"
@@ -146,11 +150,22 @@ def build(run_id: str, runs_dir: Path | None = None, chosen: str | None = None) 
     cert["field"] = field_checks(ev.rule.text)
     seen = {x["clip_sha256"] for x in cert["field"]}
     cert["field"] += [x for x in clip_check(run_dir, ev) if x["clip_sha256"] not in seen]
+    cert["checks"] = run_checks(run_dir, ev)
     cert["status"] = status(cert)
     return cert
 
 
+def run_checks(run_dir: Path, ev: Evidence) -> list[dict]:
+    """Deterministic checks of the compiled rule against this run's own tracks (engine.lint)."""
+    tracks = run_dir / "tracks.json"
+    if ev.status != "completed" or not ev.rule.compiled_rule or not tracks.is_file():
+        return []
+    return anchor_check(VisualRule.model_validate(ev.rule.compiled_rule), TrackSet.model_validate_json(tracks.read_text()))
+
+
 def status(c: dict) -> dict:
+    if c.get("checks"):
+        return {"label": "NOT CERTIFIED", "reasons": [f"rule check: {x['message']}" for x in c["checks"]]}
     f = c["field"]
     n = sum(x["labelled"] for x in f)
     right = sum(x["rule"]["right"] for x in f)

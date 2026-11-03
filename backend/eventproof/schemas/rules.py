@@ -71,8 +71,8 @@ class Crosses(BaseModel):
 
 class With(BaseModel):
     """A relation to an object of ANOTHER tracked concept, held continuously for >= min_ms (frame-by-frame, same frame):
-    'near' = anchor-to-anchor distance <= max_dist (frame units); 'on_top' = the other object's center lies over the
-    object's box, in its top part (e.g. a hard hat on a person)."""
+    'near' = anchor-to-anchor distance <= max_dist (frame units); 'on_top' = the other object's box overlaps the object's
+    head band, from 15 % of its height above the box to 35 % into it (e.g. a hard hat, or an umbrella seen from above)."""
 
     op: Literal["WITH"] = "WITH"
     concept: str = Field(min_length=1, max_length=60, description="SAM text prompt of the other object, e.g. 'forklift'")

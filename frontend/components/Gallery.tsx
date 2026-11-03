@@ -4,7 +4,8 @@ const NAMES: Record<string, string> = {
   novisad_approach_a: "Stop line, drone view (Novi Sad)", novisad_approach_b: "Stop line, drone view (Novi Sad), clip 2",
   wroclaw_w1: "Queue at a light (Wroclaw)", wroclaw_w2: "Green light (Wroclaw)", wroclaw_w3: "Footbridge view (Wroclaw)",
   crosswalk_oneway: "Zebra crossing from above", bike_oneway_a: "Bike lane on a bridge", bike_oneway_b: "Bike lane, other direction",
-  umbrella_crossing: "Rainy crossing: umbrellas", "tailgate-7": "Warehouse belt (synthetic)",
+  umbrella_crossing: "Rainy crossing: umbrellas", santos_away: "Bike path, Santos (Brazil)",
+  santos_toward: "Bike path, Santos, other end", "tailgate-7": "Warehouse belt (synthetic)",
 };
 
 /** Real clips a visitor can open and write their own rule over (hosted mode). */

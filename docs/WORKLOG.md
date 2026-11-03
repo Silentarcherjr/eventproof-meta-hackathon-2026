@@ -180,3 +180,8 @@
   bypass secret kept outside the repo. Hosted mode: gallery of 10 real/recorded clips; a new rule on a clip compiles live
   (Muse), SAM from cache. Verified on production: live rule 30 s, Challenge, certificate. Certificate fix: right on
   labelled footage but fooled by synthetic scenes -> CONDITIONAL: COUNTEREXAMPLES FOUND (was CERTIFIED).
+- 2026-11-03 P1-19 more real footage: 159 more Pexels clips screened (subagent); only the Santos (Brazil) bike path
+  passed (2 clips, 8 crossings), pre-registered (2eae88a). Result 0/8: Muse picked anchor=center, the line was at the
+  wheels, no centre ever crossed. New deterministic rule check engine/lint.py (anchor_check): studio warning +
+  certificate NOT CERTIFIED; fires on both Santos runs, on no other real run (CI test). Post-hoc bottom anchor 5/8, not
+  counted. README pitch rewritten; e2e for the hosted gallery.
