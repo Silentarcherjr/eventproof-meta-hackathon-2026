@@ -1244,7 +1244,7 @@
       "title": "Private hosted studio on Vercel (studio + API container), gallery of real clips, live rule; certificate counterexample status",
       "priority": "P1",
       "gate": "G6",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "P1-17"
       ],
@@ -1255,15 +1255,16 @@
         "cd backend && uv run pytest tests/test_api.py tests/test_certificate.py"
       ],
       "evidence_paths": [
+        "GitHub Actions run 41732481178 success",
         "deploy/vercel/README.md",
         "https://eventproof-studio.vercel.app (private)"
       ],
-      "commit_sha": "417f4a9",
+      "commit_sha": "3181ef4",
       "pr_url": null,
       "started_at": "2026-11-03T21:00:00Z",
       "updated_at": "2026-11-03T22:40:00Z",
       "blocker": null,
-      "next_action": "mark DONE_VERIFIED when CI is green",
+      "next_action": "none",
       "cost_note": "≈ $0.04 Meta; Vercel $0"
     }
   ]
