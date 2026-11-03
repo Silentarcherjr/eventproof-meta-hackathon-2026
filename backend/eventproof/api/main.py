@@ -5,6 +5,10 @@ Credit and abuse guards (all per server process, read at start-up):
   cached results only. Each Muse request (rule compile attempt, repair round) and each SAM video counts as one.
 - EVENTPROOF_MODE=showcase: no uploads and both allowances forced to 0, so only cached model outputs are served;
   recorded runs can be opened, challenged and repaired (Muse from its cache, baseline is free). Default "local".
+  EVENTPROOF_MODE=hosted: like local (the allowances above apply), and the studio opens with the gallery of
+  EVENTPROOF_DEMO_RUNS so a visitor picks a real clip and types a rule over it.
+- EVENTPROOF_PATH_PREFIX=/api: also serve every route under that prefix (when a platform router forwards
+  /api/* unchanged instead of stripping it).
 - EVENTPROOF_RATE_LIMIT="<n>/<seconds>" per client IP for POST requests (default 30/600), and one heavy job at a
   time (others get 429). EVENTPROOF_TRUST_PROXY=1 takes the client IP from X-Forwarded-For (set it only behind
   your own proxy).
@@ -61,6 +65,9 @@ def _client_ip(request: Request) -> str:
     return (fwd.split(",")[0].strip() if fwd else None) or (request.client.host if request.client else "?")
 
 
+PATH_PREFIX = os.environ.get("EVENTPROOF_PATH_PREFIX", "").rstrip("/")
+
+
 @app.middleware("http")
 async def guards(request: Request, call_next):
     if request.method != "POST":
@@ -83,6 +90,15 @@ async def guards(request: Request, call_next):
         _heavy.release()
 
 
+# registered after `guards`, so it runs first (Starlette: last added = outermost)
+@app.middleware("http")
+async def strip_prefix(request: Request, call_next):
+    path = request.scope["path"]
+    if PATH_PREFIX and (path == PATH_PREFIX or path.startswith(PATH_PREFIX + "/")):
+        request.scope["path"] = path[len(PATH_PREFIX):] or "/"
+    return await call_next(request)
+
+
 def _no_live_in_showcase(what: str) -> None:
     if MODE == "showcase":
         raise HTTPException(403, f"{what} is off in showcase mode (this server serves recorded runs only)")
@@ -95,7 +111,19 @@ def health() -> dict:
     return {"status": "ok", "mode": MODE, "meta_api_key_configured": bool(s.api_key), "muse_model": s.muse_model,
             "sam_model": s.sam_model, "live_calls_remaining": {"muse": MUSE_BUDGET.remaining,
                                                                "sam": max(0, t.max_live_calls - t.live_calls)},
-            "rate_limit": f"{RATE_N}/{RATE_WINDOW:.0f}s", "demo_runs": DEMO_RUNS}
+            "rate_limit": f"{RATE_N}/{RATE_WINDOW:.0f}s", "demo_runs": DEMO_RUNS, "demo_clips": _demo_clips()}
+
+
+def _demo_clips() -> list[dict]:
+    """The gallery: clip name and rule text of each demo run that exists on this server."""
+    out = []
+    for r in DEMO_RUNS:
+        p = pipeline.RUNS_DIR / r / "evidence.json"
+        if p.is_file():
+            e = json.loads(p.read_text())
+            out.append({"run_id": r, "clip": e["video"].get("filename"), "rule": e["rule"]["text"],
+                        "overall": (e.get("result") or {}).get("overall")})
+    return out
 
 
 class EvaluateRequest(BaseModel):

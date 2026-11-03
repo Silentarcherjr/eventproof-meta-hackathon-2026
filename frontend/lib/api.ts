@@ -66,9 +66,12 @@ export async function getFinalReport(): Promise<FinalReport | null> {
   return res.ok ? (res.json() as Promise<FinalReport>) : null;
 }
 
+export interface DemoClip { run_id: string; clip: string | null; rule: string; overall: string | null }
+
 export interface Health {
-  status: string; mode: "local" | "showcase"; meta_api_key_configured: boolean;
+  status: string; mode: "local" | "showcase" | "hosted"; meta_api_key_configured: boolean;
   live_calls_remaining: { muse: number; sam: number }; rate_limit: string; demo_runs: string[];
+  demo_clips?: DemoClip[];
 }
 
 export async function getHealth(): Promise<Health | null> {

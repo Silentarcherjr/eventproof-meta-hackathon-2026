@@ -8,6 +8,7 @@ import Results from "@/components/Results";
 import Stepper from "@/components/Stepper";
 import Timeline from "@/components/Timeline";
 import VideoStage, { type Tool } from "@/components/VideoStage";
+import Gallery from "@/components/Gallery";
 import { certificateUrl, createRun, getFinalReport, type LayoutProposal, proposeLayout, rerunWithRule, getHealth, getRun, getTracks, type Health, videoUrl } from "@/lib/api";
 import { DEFAULT_LAYOUT, EXAMPLE_RULES } from "@/lib/defaults";
 import type { BeforeAfter, Evidence, FinalReport, Layout, ObjectVerdict, TrackFrame, TrackSet } from "@/lib/types";
@@ -37,8 +38,9 @@ export default function Studio() {
     (async () => {
       const h = await getHealth();
       setHealth(h);
-      // a showcase server opens its first recorded run when no run is asked for
-      const id = new URLSearchParams(window.location.search).get("run") ?? (h?.mode === "showcase" ? h.demo_runs[0] : null);
+      // a showcase or hosted server opens its first recorded run when no run is asked for
+      const id = new URLSearchParams(window.location.search).get("run")
+        ?? (h?.mode === "showcase" || h?.mode === "hosted" ? h.demo_runs[0] ?? null : null);
       if (!id) return;
       try {
         const e = await getRun(id);
@@ -135,6 +137,16 @@ export default function Studio() {
           )}
         </div>
       )}
+
+      {health?.mode === "hosted" && (
+        <div className="mb-4 rounded-lg bg-sky-500/10 p-3 text-sm text-sky-200 ring-1 ring-sky-500/40" data-testid="hosted-banner">
+          Live studio: open a real clip below, change the rule text (or write a new one) and press the check button. Muse Spark
+          compiles your sentence live and the engine judges every tracked object; SAM 3.1 is called again only when your rule
+          names a new kind of object. Live Meta calls on this server are capped
+          (left: Muse {health.live_calls_remaining.muse}, SAM {health.live_calls_remaining.sam}).
+        </div>
+      )}
+      {health?.mode === "hosted" && !!health.demo_clips?.length && <Gallery clips={health.demo_clips} current={ev?.run_id} />}
 
       {ev?.status === "completed" && !stale && <Stepper key={`st-${ev.run_id}`} ev={ev} />}
 

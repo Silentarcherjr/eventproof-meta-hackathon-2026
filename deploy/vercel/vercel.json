@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "studio": { "root": "frontend/" },
+    "api": { "runtime": "container", "root": "./", "entrypoint": "deploy/vercel/Dockerfile.api" }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": { "service": "api" } },
+    { "source": "/(.*)", "destination": { "service": "studio" } }
+  ]
+}
