@@ -34,7 +34,8 @@ def test_warns_when_only_the_other_anchor_crosses():
 
 
 def test_recorded_real_runs():
-    """Fires on both Santos runs (0/8 crossings seen with the centre), silent on the earlier real runs."""
+    """Fires on the Santos runs whose box centres never reach the line (v1 both clips, v2 santos_away), silent on every
+    other recorded real run (v2 santos_toward tracked 'bicycle': short boxes, centres do cross)."""
     fired = {}
     for ev in sorted(ROOT.glob("benchmark/real/*/runs/*/evidence.json")):
         e = json.loads(ev.read_text())
@@ -43,5 +44,5 @@ def test_recorded_real_runs():
         r = VisualRule.model_validate(e["rule"]["compiled_rule"])
         fired[f"{ev.parts[-4]}/{ev.parts[-2]}"] = bool(anchor_check(
             r, TrackSet.model_validate_json((ev.parent / "tracks.json").read_text())))
-    assert {k for k, v in fired.items() if v} == {k for k in fired if k.startswith("santos/")}
-    assert len([k for k in fired if k.startswith("santos/")]) == 2
+    assert {k for k, v in fired.items() if v} == {"santos/20261103T231056Z-2fdf0faa", "santos/20261103T231135Z-aa354fe9",
+                                                  "santos/20261103T233625Z-e1540bd3"}
