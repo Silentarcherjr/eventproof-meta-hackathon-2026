@@ -175,3 +175,8 @@
   (disclosed), labels frozen and pre-registered (291009f) before any call. Run: Muse escalated to WITH, SAM tracked
   pedestrians + umbrellas; overall FAIL as labelled, 2/4 right, 1 wrong (neighbour's umbrella, min_ms 0), 1 not tracked.
   `with_pilot report` recomputes with 0 calls (CI test). ≈ $0.05.
+- 2026-11-03 P1-18 private hosted studio: Vercel project eventproof-studio (team HACKS, Hobby) with two services, studio
+  (Next.js) + API container (FastAPI + ffmpeg); Vercel Authentication on all deployments (team members only), automation
+  bypass secret kept outside the repo. Hosted mode: gallery of 10 real/recorded clips; a new rule on a clip compiles live
+  (Muse), SAM from cache. Verified on production: live rule 30 s, Challenge, certificate. Certificate fix: right on
+  labelled footage but fooled by synthetic scenes -> CONDITIONAL: COUNTEREXAMPLES FOUND (was CERTIFIED).

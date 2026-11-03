@@ -1238,6 +1238,33 @@
       "updated_at": "2026-11-02T21:30:00Z",
       "cost_note": "≈ $0.05 (estimate)",
       "next_action": "none"
+    },
+    {
+      "id": "P1-18",
+      "title": "Private hosted studio on Vercel (studio + API container), gallery of real clips, live rule; certificate counterexample status",
+      "priority": "P1",
+      "gate": "G6",
+      "state": "IN_REVIEW",
+      "dependencies": [
+        "P1-17"
+      ],
+      "owner": "agentic-eval",
+      "branch": null,
+      "definition_of_done": "Deployed privately, verified via bypass header: live rule, Challenge, certificate; tests green",
+      "test_commands": [
+        "cd backend && uv run pytest tests/test_api.py tests/test_certificate.py"
+      ],
+      "evidence_paths": [
+        "deploy/vercel/README.md",
+        "https://eventproof-studio.vercel.app (private)"
+      ],
+      "commit_sha": "417f4a9",
+      "pr_url": null,
+      "started_at": "2026-11-03T21:00:00Z",
+      "updated_at": "2026-11-03T22:40:00Z",
+      "blocker": null,
+      "next_action": "mark DONE_VERIFIED when CI is green",
+      "cost_note": "≈ $0.04 Meta; Vercel $0"
     }
   ]
 }
