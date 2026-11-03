@@ -1272,7 +1272,7 @@
       "title": "Santos bike path (Brazil) real footage: 0/8 (anchor), deterministic anchor check in studio + certificate",
       "priority": "P1",
       "gate": "G6",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "P1-18"
       ],
@@ -1283,15 +1283,16 @@
         "cd backend && uv run pytest tests/engine/test_lint.py tests/test_certificate.py"
       ],
       "evidence_paths": [
+        "GitHub Actions success on d6d379a",
         "benchmark/real/santos/FINDINGS.md",
         "benchmark/real/santos/PREREGISTRATION.md (2eae88a)"
       ],
-      "commit_sha": null,
+      "commit_sha": "d6d379a",
       "pr_url": null,
       "started_at": "2026-11-03T23:00:00Z",
       "updated_at": "2026-11-03T23:40:00Z",
       "blocker": null,
-      "next_action": "mark DONE_VERIFIED when CI is green",
+      "next_action": "none",
       "cost_note": "≈ $0.12"
     }
   ]
