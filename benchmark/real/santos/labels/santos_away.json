@@ -1,0 +1,81 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "packing_line": "packing_entry",
+  "labeled_by": "EventProof developer (hand labels from 1 fps frame sheets with the line drawn, before any model run)",
+  "labeled_at": "2026-11-03T19:30:00-05:00",
+  "rule_text": "Cyclists may cross the line on the bike path only toward the camera (from the far end of the path to the near end).",
+  "expected_overall": "FAIL",
+  "clip": "santos_away.mp4",
+  "clip_sha256": "0907db49a03d22c382831c2a8f0443e3982d3611fbf2ec6f4b68c9febbc10890",
+  "layout": {
+    "zones": [
+      {
+        "zone": {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.21999999999999997,
+              0.45
+            ],
+            [
+              0.7799999999999999,
+              0.45
+            ],
+            [
+              0.82,
+              0.87
+            ],
+            [
+              0.18,
+              0.87
+            ]
+          ]
+        },
+        "description": "the bike path around the line"
+      }
+    ],
+    "lines": [
+      {
+        "line": {
+          "id": "packing_entry",
+          "a": [
+            0.3,
+            0.65
+          ],
+          "b": [
+            0.7,
+            0.65
+          ]
+        },
+        "description": "across the bike path; the camera stands at the near end, so riding toward the camera means moving down the image"
+      }
+    ]
+  },
+  "notes": "Pexels video 39044387 (Pexels License; not redistributed), bike path beside an avenue in Santos, Brazil; 640x360 preview, source t 18-38 s, 10 fps, metadata stripped. Fixed camera (0 px shift). Direction rule: riding away from the camera across the line is the violation. Riders far up the path that never reach the line are not labelled (reported as extra if tracked).",
+  "objects": [
+    {
+      "description": "man in black shirt with a basket, rides away from the camera, crosses ~1 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "rider in red helmet with backpack, enters at the right edge, rides away, crosses ~8.5 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "man in orange shirt, rides toward the camera, crosses ~13.5 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "PASS"
+    },
+    {
+      "description": "girl in black with a basket, behind the orange man, rides toward the camera, crosses ~14.5 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "frozen_at": "2026-11-03T23:10:38+00:00",
+  "labels": {
+    "santos_away.json": "d0a2a6c1cd5e7092bc5d9fa74e9ffd04312a4df3b1f57345288ac2cbbcd42383",
+    "santos_toward.json": "eee0db52d86d9eab7bbf17c6d48b1dd1d76111a89d50af32255857a0288127e0"
+  },
+  "clips": {
+    "santos_away.mp4": "0907db49a03d22c382831c2a8f0443e3982d3611fbf2ec6f4b68c9febbc10890",
+    "santos_toward.mp4": "c62f0afcc38ec75f48e1b13323f7507dc1343c8d9380ae15c8b275fc651f22aa"
+  }
+}

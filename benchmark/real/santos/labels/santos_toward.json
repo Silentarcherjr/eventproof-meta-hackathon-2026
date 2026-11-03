@@ -1,0 +1,81 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "packing_line": "packing_entry",
+  "labeled_by": "EventProof developer (hand labels from 1 fps frame sheets with the line drawn, before any model run)",
+  "labeled_at": "2026-11-03T19:30:00-05:00",
+  "rule_text": "Cyclists may cross the line on the bike path only toward the camera (from the far end of the path to the near end).",
+  "expected_overall": "FAIL",
+  "clip": "santos_toward.mp4",
+  "clip_sha256": "c62f0afcc38ec75f48e1b13323f7507dc1343c8d9380ae15c8b275fc651f22aa",
+  "layout": {
+    "zones": [
+      {
+        "zone": {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.3,
+              0.55
+            ],
+            [
+              0.76,
+              0.55
+            ],
+            [
+              0.8,
+              0.97
+            ],
+            [
+              0.26,
+              0.97
+            ]
+          ]
+        },
+        "description": "the bike path around the line"
+      }
+    ],
+    "lines": [
+      {
+        "line": {
+          "id": "packing_entry",
+          "a": [
+            0.38,
+            0.75
+          ],
+          "b": [
+            0.68,
+            0.75
+          ]
+        },
+        "description": "across the bike path; the camera stands at the near end, so riding toward the camera means moving down the image"
+      }
+    ]
+  },
+  "notes": "Pexels video 39026834 (Pexels License; not redistributed), the same Santos bike path from the other end; 640x360 preview, source t 3-23 s, 10 fps, metadata stripped. Fixed camera (0 px shift). Riders far up the path that never reach the line are not labelled.",
+  "objects": [
+    {
+      "description": "man in brown jacket with a red crate, rides away from the camera, crosses ~1.5 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    },
+    {
+      "description": "woman in white helmet with a basket, rides toward the camera, crosses ~3.5 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "PASS"
+    },
+    {
+      "description": "man in a 'BANNED' t-shirt with a basket, rides toward the camera, crosses ~11.5 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "PASS"
+    },
+    {
+      "description": "woman in lavender, enters at the bottom ~13 s, rides away, crosses ~17.5 s",
+      "crosses_packing": true,
+      "stood_still_s": 0.0,
+      "intended": "VIOLATION"
+    }
+  ]
+}
