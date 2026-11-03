@@ -1,24 +1,38 @@
 # EventProof
 
-**AI-generated vision software that doesn't just claim to work, but actively searches for evidence that it might be
-wrong.** Say a rule in plain English over a video. Muse Spark builds the vision check, SAM 3.1 tracks the objects, Muse
-Wonder independently re-reads the rule. Then EventProof attacks its own check, finds the smallest scene that fools it,
-repairs it, and only trusts the repair if it holds on unseen scenes and on labelled real footage. Every rule ends with a
-one-page **certificate** a reviewer can sign, or refuse.
+**Unit tests for the rules AI cameras enforce.** A city writes "every car must come to a full stop at the line", and an
+AI camera starts issuing $40 tickets. EventProof checks that sentence before it goes live:
+- **Muse Spark** turns the sentence into a video check.
+- **SAM 3.1** tracks every car.
+- **Muse Wonder** re-reads the sentence independently.
+- **EventProof** then hunts for the cars the rule would judge wrong. It repairs the rule and keeps the fix only if the
+  fix holds on scenes it has never seen and on labelled real footage.
+- Every rule ends with a one-page **certificate** that a reviewer signs, or refuses.
 
-**Who needs it now.** Cities have started issuing stop-sign tickets from AI cameras: Takoma Park, Maryland issues $40
-citations from automated stop-sign cameras since January 8, 2026 (a four-year state pilot; a city study found violation
-rates up to 87% at some intersections), and Virginia passed a law in April 2026 allowing AI cameras to cite flagrant
-stop-sign and crosswalk violations. What counts as a "full stop" is a rule someone writes; a privacy expert told IEEE
-Spectrum that such systems' claims are *"rarely backed up by independent studies that validate what these AI technologies
-can really do."* EventProof is that check, before deployment, for the **traffic-safety program manager** who signs off
-on the rule and the **staff reviewer** who approves every citation. A false PASS is a dangerous driver who is never
-cited; a false FAIL is a $40 ticket for a resident who did stop. The same loop applies to any zone-and-time rule a camera
-enforces (inspection steps on a line, waiting zones, restricted areas).
+**One example, on real footage.** A van crawls through a stop line without ever stopping. A rule repair that passed
+every synthetic test let it through. EventProof caught this on labelled real footage and refused the repair.
+- On 30 labelled cars in two cities, the rule Muse Spark compiled judged 27 right, with **0 wrong verdicts**.
+- The "repaired" rule judged only 16 right.
 
-**What it caught, on real footage (labels frozen before any model call):**
-- A repair that passed every synthetic test **missed a real rolling stop and every car that never stopped** far from the
-  camera: 16/30 labelled cars, against 27/30 (0 wrong verdicts) for the rule Muse Spark compiled.
+**Who needs it now.** Takoma Park, Maryland, has issued $40 citations from AI stop-sign cameras since January 8, 2026,
+as part of a four-year state pilot. A city study found violation rates of up to 87% at some intersections. In April
+2026, Virginia allowed AI cameras to cite flagrant stop-sign and crosswalk violations.
+
+Someone writes down what "full stop" means. A privacy expert told IEEE Spectrum that the claims of such systems are
+*"rarely backed up by independent studies that validate what these AI technologies can really do."* EventProof is that
+check, before deployment. It is built for two people:
+- the **traffic-safety program manager**, who signs off on the rule;
+- the **staff reviewer**, who approves every citation.
+
+A false PASS is a dangerous driver who is never cited; a false FAIL is a $40 ticket for a resident who did stop. The
+same loop works for any zone, time or two-object rule a camera checks: inspection steps on a line, waiting zones, a
+pedestrian who must hold an umbrella, a worker near a forklift.
+
+**Live studio.** It is deployed on Vercel and private during the hackathon. You pick a real clip, type your own rule,
+and within about 30 s see each object's verdict over the video. From there you can attack the rule, repair it and
+print its certificate. To run it locally with no API key: `docker compose up`.
+
+**What else it caught, on real footage (labels frozen before any model call):**
 - A new rule typed in the studio, *"Every car must remain behind the stop line for at least 2 seconds"*: **both Muse Spark
   and Muse Wonder read it as "be present", not "stop"**, so the two cars on the clip that never stopped pass. Two models
   agreeing is not proof; the certificate checks the rule against the clip's labels and says **NOT CERTIFIED (3/5)**.
