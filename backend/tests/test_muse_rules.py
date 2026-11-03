@@ -166,3 +166,17 @@ def test_real_muse_outputs_still_convert():
         rule = to_visual_rule(item["raw_output"], LAYOUT)
         assert rule.entity.concept == "blue box"
         assert rule.check.op == "IMPLIES"
+
+
+def test_anchor_schema_lets_the_model_pick_the_point():
+    from eventproof.meta.muse_rules import Layout, build_schema, to_visual_rule
+
+    lay = Layout.model_validate({"lines": [{"line": {"id": "l", "a": [0, 0.5], "b": [1, 0.5]}}]})
+    assert "anchor" not in build_schema(lay)["properties"]  # recorded compiles: schemas 2/3 unchanged
+    s = build_schema(lay, anchor=True)
+    assert s["properties"]["anchor"]["enum"] == ["center", "bottom_center"] and "anchor" in s["required"]
+    out = {"supported": True, "rule_id": "r", "entity_name": "c", "entity_concept": "cyclist", "root": 1,
+           "nodes": [{"op": "OCCURS", "children": [], "event": {"op": "CROSSES", "line": "l", "direction": "any"}},
+                     {"op": "NOT", "children": [0], "event": None}], "anchor": "bottom_center"}
+    assert to_visual_rule(out, lay).params.anchor == "bottom_center"
+    assert to_visual_rule({k: v for k, v in out.items() if k != "anchor"}, lay).params.anchor == "center"

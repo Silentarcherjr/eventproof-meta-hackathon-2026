@@ -36,7 +36,7 @@ from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, ValidationErro
 
 from eventproof import __version__, pipeline
 from eventproof.engine.evaluator import build_tracks, eval_event, evaluate
-from eventproof.meta.muse_rules import Layout, MuseRuleCompiler
+from eventproof.meta.muse_rules import SCHEMA_VERSION, SCHEMA_VERSION_ANCHOR, Layout, MuseRuleCompiler
 from eventproof.perception.sam import LiveCallLimit, SamTracker
 from eventproof.repair.patch import PatchError, RulePatch, apply_patch
 from eventproof.schemas.evidence import RuleReport
@@ -264,7 +264,8 @@ class LimitedMuseCompiler(MuseRuleCompiler):
         return super()._call(messages, schema)
 
     def is_cached(self, text: str, layout: Layout) -> bool:
-        return (self.cache_dir / f"{self._key(text, layout)}.json").exists()
+        version = SCHEMA_VERSION_ANCHOR if self.anchor_field else SCHEMA_VERSION
+        return (self.cache_dir / f"{self._key(text, layout, version)}.json").exists()
 
 
 def _side(report: RuleReport | None, label: ClipLabel, m: Match | None, error: str | None = None) -> dict:
@@ -383,6 +384,7 @@ def run(labels_dir: Path, videos_dir: Path, out: Path, max_live_sam_calls: int, 
               "code_commit": _git_head(), "labels_manifest_sha256": manifest_sha,
               "matching": "crossing objects paired in crossing order; others in first-frame order; leftovers reported",
               "repair": repair.model_dump(mode="json"),
+              "compiler_schema": SCHEMA_VERSION_ANCHOR if compiler.anchor_field else SCHEMA_VERSION,
               "allowances": {"muse": max_live_muse_calls, "sam": max_live_sam_calls},
               "live_calls": {"muse": compiler.live_calls, "sam": tracker.live_calls},
               "summary": _summary(clips), "clips": clips}
@@ -485,6 +487,8 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--max-live-muse-calls", type=int, required=True)
     r.add_argument("--out", type=Path, required=True)
     r.add_argument("--runs-dir", type=Path)
+    r.add_argument("--anchor-schema", action="store_true",
+                   help="compile with the schema that lets the model pick the anchor (rule-schema/4-anchor)")
     a = ap.parse_args(argv)
     try:
         if a.cmd == "hash":
@@ -502,7 +506,9 @@ def main(argv: list[str] | None = None) -> int:
             if a.freeze:
                 print(f"frozen: {freeze(a.labels, rows)}")
         else:
-            rep = run(a.labels, a.videos, a.out, a.max_live_sam_calls, a.max_live_muse_calls, runs_dir=a.runs_dir)
+            comp = LimitedMuseCompiler(max_live_calls=a.max_live_muse_calls, anchor_field=a.anchor_schema)
+            rep = run(a.labels, a.videos, a.out, a.max_live_sam_calls, a.max_live_muse_calls, compiler=comp,
+                      runs_dir=a.runs_dir)
             print(json.dumps({"written": str(a.out), "markdown": str(a.out.with_suffix(".md")), **rep["summary"],
                               "live_calls": rep["live_calls"]}, indent=2))
     except (RealVideoError, LiveCallLimit, ValueError) as e:

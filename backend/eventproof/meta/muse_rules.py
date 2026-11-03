@@ -27,6 +27,14 @@ from eventproof.schemas.rules import Line, VisualRule, Zone
 
 SCHEMA_VERSION = "rule-schema/2-nodes"
 SCHEMA_VERSION_WITH = "rule-schema/3-with"  # adds WITH (relations to a second tracked concept); used on escalation
+# The same two schemas plus a top-level `anchor`: which point of each box zones and lines are tested at. Added after the
+# Santos field test (benchmark/real/santos/FINDINGS.md): without it every rule silently used the box centre, even when
+# the model's own assumptions said "where the wheels touch the path". Recorded compiles keep their schema version.
+SCHEMA_VERSION_ANCHOR = "rule-schema/4-anchor"
+SCHEMA_VERSION_WITH_ANCHOR = "rule-schema/5-with-anchor"
+ANCHOR_FIELD = {"type": "string", "enum": ["center", "bottom_center"],
+                "description": "point of each box tested against zones and lines: 'bottom_center' = where the object "
+                               "touches the ground (wheels, feet), 'center' = middle of the box"}
 CACHE_DIR = Path(__file__).resolve().parents[3] / "artifacts" / "muse_cache"
 
 
@@ -82,7 +90,7 @@ def _nullable(schema: dict) -> dict:
     return {"anyOf": [schema, {"type": "null"}]}
 
 
-def build_schema(layout: Layout, with_events: bool = False) -> dict:
+def build_schema(layout: Layout, with_events: bool = False, anchor: bool = False) -> dict:
     """Constant-size schema: the expression is a flat list of nodes whose children are indices into the
     list. Muse expands `$ref`s, so a recursive grammar unrolled by depth costs exponentially many prompt
     tokens (~195k for 3 levels, measured 2026-10-27); a node list stays small at any depth."""
@@ -123,7 +131,7 @@ def build_schema(layout: Layout, with_events: bool = False) -> dict:
         "normalized_explanation": {"type": "string", "description": "one sentence, what exactly is checked"},
         "assumptions": {"type": "array", "items": {"type": "string"},
                         "description": "every interpretation choice not literally stated in the rule"},
-    })
+    } | ({"anchor": ANCHOR_FIELD} if anchor else {}))
 
 
 # ---- prompt ---------------------------------------------------------------------------------------
@@ -163,6 +171,12 @@ SYSTEM_WITH = SYSTEM.replace(
     "of this object's box (e.g. a hard hat on a person); it must hold continuously for min_ms. Use it for rules about "
     "wearing or carrying something visible, or keeping distance from another kind of object.\n"
     "If the rule needs anything else (counting, colours, speed limits, identity...)")
+
+
+ANCHOR_NOTE = ("\nBefore zones and lines are tested, each object's box is reduced to one point, the anchor: "
+               "'bottom_center' is where the object touches the ground (wheels, feet), 'center' is the middle of the box. "
+               "Pick the point the zones and lines were drawn for, from their descriptions and the rule, and state the "
+               "choice in assumptions.")
 
 
 def user_prompt(text: str, layout: Layout) -> str:
@@ -234,7 +248,7 @@ def to_visual_rule(out: dict, layout: Layout) -> VisualRule:
         "lines": [ln.line.model_dump() for ln in layout.lines],
         "check": _strip_nulls(nodes_to_expr(out["nodes"], out["root"])),
         "normalized_explanation": out.get("normalized_explanation", "")[:600],
-    })
+    } | ({"params": {"anchor": out["anchor"]}} if out.get("anchor") else {}))
 
 
 # ---- compiler -------------------------------------------------------------------------------------
@@ -242,11 +256,12 @@ def to_visual_rule(out: dict, layout: Layout) -> VisualRule:
 
 class MuseRuleCompiler:
     def __init__(self, settings: MetaSettings | None = None, cache_dir: Path | None = None, max_attempts: int = 2,
-                 budget: LiveBudget | None = None, allow_with: bool = True):
+                 budget: LiveBudget | None = None, allow_with: bool = True, anchor_field: bool = False):
         self.settings = settings or MetaSettings.from_env()
         self.cache_dir, self.max_attempts = cache_dir or CACHE_DIR, max_attempts
         self.budget = budget  # None: no cap (CLI/bench runs by the participant); the API always passes one
         self.allow_with = allow_with  # escalate to the WITH schema when the base schema cannot express the rule
+        self.anchor_field = anchor_field  # schemas 4/5: the model also picks the anchor (new compiles only)
         self.live_calls = 0
 
     def _key(self, text: str, layout: Layout, version: str = SCHEMA_VERSION) -> str:
@@ -273,12 +288,14 @@ class MuseRuleCompiler:
     def compile(self, text: str, layout: Layout) -> CompiledRule:
         """Base schema first (keeps every recorded compile valid); if the model says the rule is not expressible
         there and `allow_with`, one escalation to the schema with WITH events."""
+        base, wide = ((SCHEMA_VERSION_ANCHOR, SCHEMA_VERSION_WITH_ANCHOR) if self.anchor_field
+                      else (SCHEMA_VERSION, SCHEMA_VERSION_WITH))
         try:
-            return self._compile(text, layout, SCHEMA_VERSION)
+            return self._compile(text, layout, base)
         except UnsupportedRule:
             if not self.allow_with:
                 raise
-            return self._compile(text, layout, SCHEMA_VERSION_WITH)
+            return self._compile(text, layout, wide)
 
     def _compile(self, text: str, layout: Layout, version: str) -> CompiledRule:
         cpath = self.cache_dir / f"{self._key(text, layout, version)}.json"
@@ -290,9 +307,11 @@ class MuseRuleCompiler:
         refusal = self.cache_dir / f"{self._key(text, layout, version)}.unsupported.json"
         if refusal.exists():  # a recorded "not expressible" answer is also replayed (it decides the escalation)
             raise UnsupportedRule(json.loads(refusal.read_text())["reason"])
-        with_events = version == SCHEMA_VERSION_WITH
-        schema = build_schema(layout, with_events)
-        messages = [{"role": "system", "content": SYSTEM_WITH if with_events else SYSTEM},
+        with_events = version in (SCHEMA_VERSION_WITH, SCHEMA_VERSION_WITH_ANCHOR)
+        anchor = version in (SCHEMA_VERSION_ANCHOR, SCHEMA_VERSION_WITH_ANCHOR)
+        schema = build_schema(layout, with_events, anchor)
+        system = (SYSTEM_WITH if with_events else SYSTEM) + (ANCHOR_NOTE if anchor else "")
+        messages = [{"role": "system", "content": system},
                     {"role": "user", "content": user_prompt(text, layout)}]
         ids, usage, t0 = [], [], time.monotonic()
         for attempt in range(1, self.max_attempts + 1):

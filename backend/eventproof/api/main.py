@@ -151,7 +151,7 @@ def get_tracker() -> SamTracker:
 def get_compiler() -> MuseRuleCompiler:
     global _compiler
     if _compiler is None:
-        _compiler = MuseRuleCompiler(budget=MUSE_BUDGET)
+        _compiler = MuseRuleCompiler(budget=MUSE_BUDGET, anchor_field=True)  # new compiles also pick the anchor
     return _compiler
 
 
