@@ -1,11 +1,29 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "services": {
-    "studio": { "root": "frontend/" },
-    "api": { "runtime": "container", "root": "./", "entrypoint": "deploy/vercel/Dockerfile.api" }
+    "studio": {
+      "root": "frontend/",
+      "framework": "nextjs"
+    },
+    "api": {
+      "runtime": "container",
+      "root": "./",
+      "entrypoint": "Dockerfile",
+      "framework": "container"
+    }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": { "service": "api" } },
-    { "source": "/(.*)", "destination": { "service": "studio" } }
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "api"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "studio"
+      }
+    }
   ]
 }

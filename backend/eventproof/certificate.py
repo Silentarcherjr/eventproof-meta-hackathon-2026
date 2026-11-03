@@ -9,7 +9,11 @@ recomputed or called; a section with no data says so. The status is a fixed func
                     wrong verdict.
 - REPAIR CERTIFIED (synthetic) / CONDITIONAL  the accepted repair passed the hidden holdout, but no labelled footage of a
                     deployment scene checked it yet, or footage checked it and it failed there (then: REJECTED IN THE FIELD).
-- CERTIFIED FOR CHECKED SCENES  labelled real footage of this rule text exists and the rule made no wrong verdict on it.
+- CONDITIONAL: PERCEPTION GAPS  no wrong verdict on the labelled footage, but some labelled object was never tracked.
+- CONDITIONAL: COUNTEREXAMPLES FOUND  the labelled footage is judged right, but Challenge Mode found synthetic scenes
+                    that fool the rule (the clips may not contain those scene types).
+- CERTIFIED FOR CHECKED SCENES  labelled real footage of this rule text exists, the rule made no wrong verdict on it,
+                    and Challenge Mode (if run) found no failing scene.
 """
 
 from __future__ import annotations
@@ -171,10 +175,18 @@ def status(c: dict) -> dict:
                 reasons.append(f"{x['clip']}: {w}")
         if wrong:
             return {"label": "NOT CERTIFIED", "reasons": reasons}
+        ch = c["challenge"]
+        if ch and ch["failures"]:
+            reasons.append(f"Challenge Mode: {ch['failures']}/{ch['scenes']} synthetic scenes fool the rule as written, "
+                           "although the labelled footage is judged right")
         if missed:
             reasons.append(f"{missed} labelled object(s) never got a track: the rule cannot judge what perception misses; "
                            "fix the camera view or crop before certifying those scenes")
             return {"label": "CONDITIONAL: PERCEPTION GAPS", "reasons": reasons}
+        if ch and ch["failures"]:
+            reasons.append("the labelled clips may not contain the scene types that fool it: review the counterexamples "
+                           "before certifying")
+            return {"label": "CONDITIONAL: COUNTEREXAMPLES FOUND", "reasons": reasons}
         return {"label": "CERTIFIED FOR CHECKED SCENES", "reasons": reasons}
     if c["challenge"] and c["challenge"]["failures"]:
         reasons.append(f"Challenge Mode: {c['challenge']['failures']}/{c['challenge']['scenes']} synthetic scenes fail "
@@ -200,7 +212,8 @@ def _e(x) -> str:
 def render_html(c: dict) -> str:
     s = c["status"]
     colour = {"CERTIFIED FOR CHECKED SCENES": "#15803d", "REPAIR CONDITIONAL": "#b45309",
-              "CONDITIONAL: PERCEPTION GAPS": "#b45309"}.get(s["label"], "#b91c1c")
+              "CONDITIONAL: PERCEPTION GAPS": "#b45309",
+              "CONDITIONAL: COUNTEREXAMPLES FOUND": "#b45309"}.get(s["label"], "#b91c1c")
     rows = []
 
     def section(title: str, body: str) -> None:

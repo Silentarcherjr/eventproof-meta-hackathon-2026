@@ -16,9 +16,10 @@ for c in muse_cache sam_cache muse_layout_cache; do test -d "artifacts/$c" && cp
 cp -R artifacts/runs/. "$OUT/artifacts/runs/"
 for r in benchmark/real/*/runs/*/; do cp -R "${r%/}" "$OUT/artifacts/runs/"; done
 for r in docs/evidence/runs/*/; do test -e "$OUT/artifacts/runs/$(basename "$r")" || cp -R "${r%/}" "$OUT/artifacts/runs/"; done
-mkdir -p "$OUT/deploy/vercel"
-cp deploy/vercel/Dockerfile.api "$OUT/deploy/vercel/"
+
+cp deploy/vercel/Dockerfile.api "$OUT/Dockerfile"
 cp deploy/vercel/vercel.json "$OUT/vercel.json"
 touch "$OUT/.vercel-staged"
+printf ".env*\n" > "$OUT/.vercelignore"
 test ! -e "$OUT/backend/.env" || { echo "refusing: .env in stage" >&2; exit 1; }
 echo "$OUT: $(du -sh "$OUT" | cut -f1), runs: $(ls "$OUT/artifacts/runs" | wc -l | tr -d ' ')"

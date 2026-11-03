@@ -49,3 +49,11 @@ def test_a_new_rule_typed_on_a_labelled_clip_is_checked_against_its_labels():
     (f,) = c["field"]
     assert (f["clip"], f["labelled"], f["rule"]["right"], len(f["rule"]["wrong"])) == ("novisad_approach_a.mp4", 5, 3, 2)
     assert c["status"]["label"] == "NOT CERTIFIED"
+
+
+def test_field_clean_rule_with_synthetic_counterexamples_is_only_conditional():
+    field = [{"clip": "c.mp4", "labelled": 5, "rule": {"right": 5, "abstained": 0, "not_tracked": 0}, "repair": None}]
+    base = {"field": field, "repair": None}
+    assert certificate.status(base | {"challenge": None})["label"] == "CERTIFIED FOR CHECKED SCENES"
+    st = certificate.status(base | {"challenge": {"failures": 36, "scenes": 150}})
+    assert st["label"] == "CONDITIONAL: COUNTEREXAMPLES FOUND" and any("36/150" in r for r in st["reasons"])

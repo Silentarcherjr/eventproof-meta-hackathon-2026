@@ -73,7 +73,8 @@ Sources for the deployment facts above: [MoCo Show, 2026-01-07](https://mocoshow
    both readings and the one the reviewer chose, the counterexamples, hidden-holdout and final-test results, every
    labelled real clip it was checked on, model request ids and file hashes. Its status follows fixed rules: a wrong
    verdict on labelled footage → NOT CERTIFIED; an object perception never tracked → CONDITIONAL (perception gap); a
-   repair with no field check yet → REPAIR CONDITIONAL. No model writes it.
+   repair with no field check yet → REPAIR CONDITIONAL; right on the labelled footage but fooled by synthetic scenes →
+   CONDITIONAL (counterexamples found). No model writes it.
 
 ![Before and after the repair: the same failing case judged by both rules](docs/media/before_after.png)
 
