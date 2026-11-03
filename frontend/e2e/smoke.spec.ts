@@ -161,3 +161,22 @@ test("a new rule on the open run's video posts to /runs/{id}/rule", async ({ pag
   await expect(page.getByTestId("stale")).toHaveCount(0);
   expect(body.rule_text).toBe("Every blue box must stand still 2 s at inspection.");
 });
+
+test("hosted server: gallery of real clips, first clip opened, live caps shown", async ({ page }) => {
+  const id = evidence.run_id;
+  await page.route("http://api.test/health", (r) => r.fulfill({ json: {
+    status: "ok", mode: "hosted", meta_api_key_configured: true, muse_model: "muse-spark-1.3", sam_model: "sam-3.1",
+    live_calls_remaining: { muse: 40, sam: 6 }, rate_limit: "20/600s", demo_runs: [id, "20261102T040830Z-37064c4a"],
+    demo_clips: [{ run_id: id, clip: "tailgate-7.mp4", rule: evidence.rule.text, overall: "FAIL" },
+                 { run_id: "20261102T040830Z-37064c4a", clip: "novisad_approach_a.mp4", rule: "Every car must wait", overall: "FAIL" }] } }));
+  await page.route(`http://api.test/runs/${id}`, (r) => r.fulfill({ json: evidence }));
+  await page.route(`http://api.test/runs/${id}/tracks`, (r) => r.fulfill({ path: fx("tracks.json") }));
+  await page.route(`http://api.test/runs/${id}/video`, (r) => r.fulfill({ path: fx("tailgate-7.mp4"), contentType: "video/mp4" }));
+  await page.route(`http://api.test/runs/${id}/stored/*`, (r) => r.fulfill({ status: 404, json: { detail: "not computed yet" } }));
+
+  await page.goto("/");
+  await expect(page.getByTestId("hosted-banner")).toContainText("Muse 40, SAM 6");
+  await expect(page.getByTestId("gallery")).toContainText("Stop line, drone view (Novi Sad)");
+  await expect(page.getByTestId(`clip-${id}`)).toHaveAttribute("href", `/?run=${id}`);
+  await expect(page.getByTestId("overall")).toContainText("FAIL");  // the first demo run opens by itself
+});
