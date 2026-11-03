@@ -4,7 +4,8 @@ anchor_check: a CROSSES event is judged on one point of each box, the rule's anc
 set without knowing where the line was drawn (the compiler's schema has no anchor field; the default is the box
 centre). If no tracked object's anchor ever crosses a line the rule depends on, while the other anchor crosses it for
 some objects, the line was most likely drawn for the other point (e.g. at the wheels or feet of tall objects while the
-rule anchors at the box centre) and every verdict about that line is vacuous. Found on real footage (benchmark/real/santos/FINDINGS.md): 0/8 crossings seen with the centre.
+rule anchors at the box centre) and every verdict about that line is vacuous. Found on real footage
+(benchmark/real/santos/FINDINGS.md): 0/8 crossings seen with the centre.
 """
 
 from __future__ import annotations
