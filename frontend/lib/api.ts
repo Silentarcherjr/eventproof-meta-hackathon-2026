@@ -124,3 +124,28 @@ export async function getRobustness(runId: string): Promise<ObjectRobustness[]> 
 export async function askDefense(runId: string, objectId: number): Promise<Defense> {
   return json<Defense>(await fetch(`${run(runId)}/objects/${objectId}/defense`, { method: "POST" }));
 }
+
+export interface GridCell { min_s: number; speed: number | null; verdicts: string; tickets: number; right: number; false_tickets: number; missed: number; abstained: number; untracked: number }
+export interface LawGrid {
+  times_s: number[]; speeds: (number | null)[];
+  cars: { clip: string; object_id: number | null; description: string; truth: string }[];
+  statutes: { id: string; citation: string; text: string; spark_values: { min_s: number; speed: number } | null; cells: GridCell[] }[];
+}
+export async function getLawGrid(): Promise<LawGrid> { return json<LawGrid>(await fetch(`${API_URL}/law/grid`)); }
+
+export interface CourtCase {
+  set: string; clip: string; object_id: number; description: string; intended: string; verdict: string; correct: string;
+  status: string; smallest_flip: string | null; flipping: string[]; run_id: string; rule_text: string; explanation: string;
+  anchor: string; first_frame: number; last_frame: number;
+  events: { op: string; target: string; status: string; frame: number | null; timestamp_ms: number | null; reason: string }[];
+  defense: { chosen: string[]; strongest: string; concede: boolean; concession: string; strongest_overturns: boolean; any_overturns: boolean;
+             arguments: { id: string; argument: string }[]; request_id?: string };
+}
+export interface Court {
+  summary: Record<string, unknown>; cases: CourtCase[];
+  contract: { policy: string; all_tickets: { tickets: number; false_tickets: number; upper_95: number };
+              auto_issued: { tickets: number; false_tickets: number; upper_95: number };
+              held_for_review: { tickets: number; false_tickets: number; by_status: Record<string, number> };
+              labels_needed_error_free: Record<string, number> };
+}
+export async function getCourt(): Promise<Court> { return json<Court>(await fetch(`${API_URL}/tickets/court`)); }

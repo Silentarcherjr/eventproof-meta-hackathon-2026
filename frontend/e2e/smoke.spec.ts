@@ -204,3 +204,37 @@ test("tickets panel: robustness per object and Muse Spark's defense of a ticket"
   await expect(page.getByTestId("defense-1")).toContainText("overturns the ticket");
   expect(posted).toBe(true);
 });
+
+test("drag the law: sliders change tickets issued on the 30 real cars", async ({ page }) => {
+  const cell = (min_s: number, speed: number | null, verdicts: string, tickets: number) =>
+    ({ min_s, speed, verdicts, tickets, right: 1, false_tickets: 0, missed: 0, abstained: 0, untracked: 0 });
+  await page.route("http://api.test/law/grid", (r) => r.fulfill({ json: {
+    times_s: [0, 1], speeds: [0.05, null], cars: [{ clip: "a.mp4", object_id: 1, description: "car", truth: "VIOLATION" }],
+    statutes: [{ id: "md", citation: "Md. Code § 21-707(a)", text: "shall stop at a clearly marked stop line.", spark_values: { min_s: 1, speed: 0.05 },
+                 cells: [cell(0, 0.05, "V", 1), cell(0, null, "P", 0), cell(1, 0.05, "V", 1), cell(1, null, "P", 0)] }] } }));
+  await page.goto("/law");
+  await expect(page.getByTestId("statute")).toContainText("shall stop");
+  await expect(page.getByTestId("counters")).toContainText("1tickets issued");
+  await page.getByTestId("speed").fill("1");
+  await expect(page.getByTestId("counters")).toContainText("0tickets issued");
+});
+
+test("ticket court: scoreboard, the wrongly issued ticket opens first, contract block", async ({ page }) => {
+  const base = { set: "s", description: "d", intended: "VIOLATION", verdict: "VIOLATION", smallest_flip: null, flipping: [],
+                 rule_text: "rule", explanation: "x", anchor: "bottom_center", first_frame: 0, last_frame: 9,
+                 events: [{ op: "CROSSES", target: "line", status: "TRUE", frame: 5, timestamp_ms: 500, reason: "" }],
+                 defense: { chosen: [], strongest: "none", concede: true, concession: "nothing credible", strongest_overturns: false, any_overturns: false, arguments: [] } };
+  await page.route("http://api.test/tickets/court", (r) => r.fulfill({ json: {
+    summary: {}, cases: [
+      { ...base, clip: "a.mp4", object_id: 1, run_id: "r1", correct: "right", status: "ROBUST" },
+      { ...base, clip: "b.mp4", object_id: 2, run_id: "r2", correct: "wrong", intended: "PASS", status: "FRAGILE",
+        smallest_flip: "measured at its center -> PASS", flipping: ["anchor:center"] }],
+    contract: { policy: "auto-issue only ROBUST", all_tickets: { tickets: 2, false_tickets: 1, upper_95: 0.9 },
+                auto_issued: { tickets: 1, false_tickets: 0, upper_95: 0.79 }, held_for_review: { tickets: 1, false_tickets: 1, by_status: {} },
+                labels_needed_error_free: { "2%": 188, "5%": 73 } } } }));
+  await page.goto("/court");
+  await expect(page.getByTestId("headline")).toContainText("1 of 2 hold up");
+  await expect(page.getByTestId("case")).toContainText("wrongly issued");
+  await expect(page.getByTestId("case")).toContainText("concedes");
+  await expect(page.getByTestId("contract")).toContainText("188");
+});
