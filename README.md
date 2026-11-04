@@ -2,6 +2,11 @@
 
 **Before an AI camera fines anyone, EventProof tests whether the rule would hold up.**
 
+A driver who came to a full stop can still be fined, and one who rolled through can drive away: it depends on two
+numbers the law never wrote.
+
+![Drag the law: the verbatim Maryland statute on the same 30 real cars, 0 to 17 tickets as the two unwritten numbers move](docs/media/drag-the-law.gif)
+
 The law says "shall stop". It never says for how long, or how slow counts as stopped. A camera has to pick both
 numbers, and nobody checks them. **Same law, same 30 real cars, same model: anywhere from 0 to 17 tickets**, depending
 only on those two numbers. At scale it is the same: on **1,268 real STOP-sign approaches at US intersections**
@@ -34,21 +39,13 @@ same loop runs on other real footage: one-way rules on a zebra crossing and a bi
 (*a pedestrian with an umbrella*), and a warehouse conveyor (synthetic, known truth). Every number is pre-registered
 and recomputed in CI.
 
-## How it works
-1. **Compile.** Muse Spark turns the sentence, or the statute, into a typed rule. It never writes code, and every value
-   is either quoted from the text or marked as assumed. SAM 3.1 tracks the objects, and a deterministic engine judges
-   each one. Muse Wonder reads the sentence a second time; if the two readings differ, EventProof shows the scene that
-   separates them.
-2. **Attack.** Every ticket is judged again with the line a few pixels away, another measured point, thresholds ±20 %
-   and another meaning of "stop". Muse Spark argues the defense from a closed menu, and the engine decides. Synthetic
-   scenes with known truth find the smallest case that fools the rule, and a repair is kept only with zero regressions.
-3. **Withhold, then issue only what survives.** While a ticket turns on a choice nobody approved, the rule issues
-   **nothing**. On the 20 real tickets: *"Rule withheld: where the rule may run (it says nothing about traffic signals),
-   20 tickets; how slow counts as standing still, 11; whether the wait must be standing still, 13"*. Once a person signs
-   those three, 17 issue automatically (0 wrong under the rule) and 3 go to a human, because where the car is measured
-   still changes them.
-   Every held ticket comes with the smallest change that would overturn it. Each rule gets a one-page certificate and a contract block a city can hand
-   to its vendor; no model writes either.
+## For judges: the four criteria
+| Criterion | What to look at |
+|---|---|
+| **Impact (30 %)** | Cities already fine people from AI cameras (Takoma Park, MD: $40 stop-sign tickets; New York's AI bus-lane cameras issued about 3,800 mistaken violations). A stop law has no number, so the same law on the same 30 real cars issues 0 to 17 tickets, and 9 % to 85 % of 1,268 real US approaches. EventProof is the acceptance test before a rule goes live: for the vendor that ships it, the city that signs it and the driver who contests it. |
+| **Use of Meta AI (25 %)** | Muse Spark compiles the sentence or statute into a typed rule (never code, every value quoted or marked assumed), drafts the zones, argues each driver's defense and proposes repairs. Muse Wonder is the independent second reading (it disagrees with Spark on 45 of 150 scenes for "wait" vs "remain"). SAM 3.1 tracks every car (10/10 tailgating scenes kept apart, against 2/10 for a naive tracker). Measured: Spark's compiled rule gets 27/30 real cars right; Spark alone watching the video counts them right in 11 of 25 runs. |
+| **Technical depth (20 %)** | A deterministic engine judges every object with its frames; every ticket is re-judged under a menu of reasonable changes; an approval gate withholds the rule while a ticket rests on an unsigned choice; repairs are kept only with zero regressions on hidden scenes. Every test is pre-registered before any model call and recomputed in CI (420 tests); limits are stated, including the small labelled sets. |
+| **Demo (25 %)** | The live studio, no sign-in: **Ticket court** (20 real tickets on trial, then sign the open numbers and watch 17 issue with 0 wrong), **Drag the law** (two sliders, 0 to 17 tickets), **Traffic lab** (scenes with known truth, flip one choice). The 3-minute video walks the same path. |
 
 ## Why Meta models
 - **Muse Spark** compiles rules through a small strict schema (about 1.4k prompt tokens). It escalates to a
