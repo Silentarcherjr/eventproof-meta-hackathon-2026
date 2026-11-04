@@ -14,35 +14,52 @@ every synthetic test let it through. EventProof caught this on labelled real foo
 - On 30 labelled cars in two cities, the rule Muse Spark compiled judged 27 right, with **0 wrong verdicts**.
 - The "repaired" rule judged only 16 right.
 
-**Who needs it now.** Takoma Park, Maryland, has issued $40 citations from AI stop-sign cameras since January 8, 2026,
-as part of a four-year state pilot. A city study found violation rates of up to 87% at some intersections. In April
-2026, Virginia allowed AI cameras to cite flagrant stop-sign and crosswalk violations.
+**Who needs it now.** Takoma Park, Maryland, has issued $40 citations from AI stop-sign cameras since January 2026 (a
+city study found violation rates up to 87% at some intersections); Virginia allowed AI cameras to cite stop-sign and
+crosswalk violations in April 2026. Someone writes down what "full stop" means, and such systems' claims are *"rarely
+backed up by independent studies"* (NYCLU, in IEEE Spectrum). EventProof is that independent check, before deployment,
+for the **program manager** who signs off on the rule and the **reviewer** who approves every citation. A false PASS is
+a dangerous driver never cited; a false FAIL is a $40 ticket for a resident who stopped. The same loop works for any
+zone, time, direction or two-object rule a camera checks (inspection steps on a line, restricted areas, a worker near a
+forklift).
 
-Someone writes down what "full stop" means. A privacy expert told IEEE Spectrum that the claims of such systems are
-*"rarely backed up by independent studies that validate what these AI technologies can really do."* EventProof is that
-check, before deployment. It is built for two people:
-- the **traffic-safety program manager**, who signs off on the rule;
-- the **staff reviewer**, who approves every citation.
+## How it works
+1. **Build.** Muse Spark compiles the sentence into a typed rule (strict JSON schema, never executed as code) and lists
+   its assumptions; SAM 3.1 tracks every object; a deterministic engine gives a verdict per object with its frames.
+2. **Check the rule itself.** Muse Wonder reads the sentence independently; if the two rules behave differently,
+   EventProof shows the smallest pair of scenes that separates them and the user picks the meaning. A rule check tests
+   the compiled rule against the clip's own tracks (e.g. "no object is ever measured crossing this line").
+3. **Break.** Challenge Mode searches synthetic scenes with known truth for the smallest one that fools the rule, and
+   re-checks it with real SAM 3.1 tracks to separate a wrong rule from wrong perception.
+4. **Repair.** Muse Spark proposes bounded patches (thresholds and conditions, no code). A patch is kept only with zero
+   regressions on a hidden holdout, then checked on labelled real footage.
+5. **Certify.** One printable page per rule; its status follows fixed rules (a wrong verdict on labelled footage, or a
+   failed rule check → NOT CERTIFIED). No model writes it.
 
-A false PASS is a dangerous driver who is never cited; a false FAIL is a $40 ticket for a resident who did stop. The
-same loop works for any zone, time or two-object rule a camera checks: inspection steps on a line, waiting zones, a
-pedestrian who must hold an umbrella, a worker near a forklift.
+## Evidence (labels frozen and pushed before any model call; CI recomputes every number)
+| What was tested | Result |
+|---|---|
+| Real traffic, 5 clips from 2 cities (Novi Sad, Wroclaw), 30 labelled cars | Rule compiled by Muse Spark: **27/30 right, 0 wrong verdicts**. A repair that passed every synthetic test: **16/30**, it lets real rolling stops through. |
+| Same clips, **Muse Spark alone** judging the video directly (5 runs per clip) | Clip verdicts right, but crossings and violations counted exactly in only **11/25** runs. |
+| Every frozen real set with the current compiler: 10 clips, 46 objects (cars, pedestrians, cyclists; Serbia, Poland, Brazil, plus two clips of unstated location) | **38/46 right**, 3 wrong, 2 abstained, 3 never judged. |
+| A bug found in the field: bike path in Santos, Brazil | First run **0/8**: the compiler measured riders at the box centre, which never reaches a line at the wheels. The new rule check flagged it; the schema now lets Muse pick the point; re-run **5/8**. All runs pre-registered and kept. |
+| A rule typed live: *"remain behind the stop line for at least 2 seconds"* | Muse Spark **and** Muse Wonder both read it as "be present", not "stop". Certificate against the clip's labels: **NOT CERTIFIED (3/5)**. |
+| Two readings, 8 phrasings of one rule (Spark vs Wonder, 150 scenes) | "wait" and "remain" are read differently (standing still vs just inside): verdicts differ on **45/150** scenes; the separating pair is found automatically. |
+| Repair on synthetic scenes with known truth (hidden holdout 200, final test 320, evaluated once) | Holdout **144 → 164**, false PASS 40 → 21, 0 regressions; final test 141 → 158/200 and 109 → 117/120 on never-seen scene types; with real SAM 3.1 tracks (80 scenes) **71 → 76**, false PASS 5 → 0. |
+| Two-object rule: *"every pedestrian … must hold an umbrella over their head"* (rainy crossing seen from above) | Muse escalated to the WITH event and SAM 3.1 tracked people and umbrellas separately: **2/4** (a neighbour's umbrella counted for a bare head). |
 
-**Live studio.** It is deployed on Vercel and private during the hackathon. You pick a real clip, type your own rule,
-and within about 30 s see each object's verdict over the video. From there you can attack the rule, repair it and
-print its certificate. To run it locally with no API key: `docker compose up`.
+## Why Meta models
+- **Muse Spark** compiles the rule through a constant-size strict schema (~1.4k prompt tokens), escalates to a
+  two-concept schema only when the sentence needs a second object type, picks where objects are measured, drafts zones
+  from the first frame, and diagnoses failures and proposes repairs.
+- **Muse Wonder** gives the independent second reading that exposes ambiguous sentences.
+- **SAM 3.1** gives text-prompted video tracks with stable ids; one extra prompt per second concept (umbrella, hard hat).
+  It keeps overlapping boxes apart where a naive tracker merges them (10/10 tailgating scenes vs 2/10).
+- Meta spend for the whole build: about $12 of the $150 credits ($11.09 read from Billing on Nov 2, plus logged
+  estimates since). Live calls need explicit allowances; everything else replays from recorded responses.
 
-**What else it caught, on real footage (labels frozen before any model call):**
-- A new rule typed in the studio, *"Every car must remain behind the stop line for at least 2 seconds"*: **both Muse Spark
-  and Muse Wonder read it as "be present", not "stop"**, so the two cars on the clip that never stopped pass. Two models
-  agreeing is not proof; the certificate checks the rule against the clip's labels and says **NOT CERTIFIED (3/5)**.
-- Asked to judge the same clips directly from video, **Muse Spark alone** got every clip verdict right but counted
-  crossings and violations exactly in only 11/25 runs.
-
-**At a glance:** 3 Meta models (Muse Spark, Muse Wonder, SAM 3.1) · real footage from Serbia, Poland, Hong Kong and
-Brazil in 3 domains (cars, pedestrians, cyclists), including a two-object rule (umbrellas): 36/50 labelled objects right, 1 wrong verdict,
-8 never judged (the anchor failure below) · per-rule certificate · one-command replay with no API key (`docker compose`) · 250+ backend tests,
-CI recomputes every published number · MIT licensed.
+**Try it.** A live studio runs on Vercel: pick a real clip, type a rule, see each object's verdict over the video in
+about 30 s, then attack, repair and print the certificate. Locally, with no API key: `docker compose up`.
 
 ![Real footage: the same SAM 3.1 tracks judged by two readings of "wait"](docs/media/real_traffic.png)
 
@@ -65,7 +82,7 @@ Sources for the deployment facts above: [MoCo Show, 2026-01-07](https://mocoshow
 (87% violation rates in the city study); [WTVR](https://www.wtvr.com/news/local-news/ai-cameras-virginia-stop-signs-june-17-2026)
 (Virginia SB84); [IEEE Spectrum, 2025-07-05](https://spectrum.ieee.org/ai-intersection-monitoring) (quote: Daniel Schwarz, NYCLU).
 
-## What it does
+## What it does (details)
 1. **Build.** Muse Spark compiles the sentence into a typed temporal rule (strict JSON schema, validated by Pydantic,
    never executed as code) and lists its assumptions. SAM 3.1 tracks every object in the video. A deterministic engine
    returns a verdict per object, with the decisive frames. Events: being in a zone, dwelling there (optionally only while
@@ -96,7 +113,7 @@ Sources for the deployment facts above: [MoCo Show, 2026-01-07](https://mocoshow
 
 ![Before and after the repair: the same failing case judged by both rules](docs/media/before_after.png)
 
-## Results on real footage (labels frozen and pushed before any model call)
+## All results on real footage
 **Pooled over 5 real traffic clips (30 hand-labelled cars, 2 cities):** Muse Spark's rule → SAM 3.1 → engine judged
 **27/30 cars right** (2 abstained, 1 car SAM 3.1 never tracked, **0 wrong verdicts**; Wilson 95 % 0.74–0.97). The repair
 that passed every synthetic test: **16/30**. Muse Spark alone from the video: right clip verdict 25/25 runs, but counted
@@ -149,16 +166,16 @@ can re-verify, and CI recomputes every number above from committed files (no vid
   everything else is served from a cache of recorded responses.
 
 ## Honest limits
-- Real footage is small: 4 traffic clips (24 labelled cars, 2 cities) and 1 conveyor clip (8 crossings), labelled by one
-  person from frame sheets. It shows concrete failures and fixes; it is not an accuracy benchmark. Crops are a setup step.
-- The large-scale evidence is synthetic (a conveyor world with scripted truth). Holdout and primary final scoring use a
-  deterministic mock tracker (n = 200–320); an 80-scene subset re-run with real SAM 3.1 tracks gives the same conclusion
-  (the mock is pessimistic on tailgating and occlusion).
-- A repair that passes synthetic holdouts can still be too permissive on real footage (the traffic van above): repairs
-  should be re-graded on labelled footage of the target scene before deployment.
-- On one never-seen synthetic scene type (slow belt with a stop) Muse's patches leave 2–3 errors that a deterministic
-  grid search fixes. Reported, not tuned away.
-- A protocol for clips recorded by the user is ready ([`docs/REAL_VIDEO_PROTOCOL.md`](docs/REAL_VIDEO_PROTOCOL.md)).
+- Real footage is small: 46 labelled objects in 10 clips with the current compiler (plus 4 people in the umbrella pilot
+  and 8 parcels in a perception check), labelled by one person from frame sheets. It shows concrete failures and fixes;
+  it is not an accuracy benchmark.
+- The compiler fix that lets Muse pick where objects are measured judges more objects (never judged 10 → 3) but added 3
+  wrong verdicts (0 → 3). That is why the certificate checks each rule on labelled footage of its own scene.
+- The large-scale evidence is synthetic (a conveyor world with scripted truth). Holdout and final scoring use a
+  deterministic mock tracker; an 80-scene subset re-run with real SAM 3.1 tracks gives the same conclusion.
+- Challenge Mode and two readings do not yet cover two-concept (WITH) rules; the studio says so.
+- Labels are hand-matched to tracks in crossing order; two objects crossing close together in opposite directions can
+  be swapped (seen once in Santos).
 
 ## Run it
 ```
@@ -172,7 +189,7 @@ calls explicitly: `EVENTPROOF_MAX_LIVE_MUSE_CALLS=6 EVENTPROOF_MAX_LIVE_SAM_CALL
 Without Docker: `cd backend && uv sync && uv run pytest && uv run uvicorn eventproof.api.main:app` and
 `cd frontend && npm ci && npm run dev`.
 
-Engineering: FastAPI + Pydantic backend, Next.js studio, 245 backend tests + Playwright end-to-end tests in CI,
+Engineering: FastAPI + Pydantic backend, Next.js studio, 289 backend tests + Playwright end-to-end tests in CI,
 regression tests that recompute every published number, images pinned by digest. Showcase deployment (no key, no
 uploads, rate-limited) in [`deploy/`](deploy/).
 
