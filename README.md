@@ -21,8 +21,18 @@ EventProof is the check before a camera rule goes live:
 3. **Withhold.** While a ticket rests on a choice nobody approved, the rule issues nothing. A person signs the open
    numbers; then 17 of 20 issue automatically (0 wrong) and 3 go to a human.
 
-The same engine judges any camera rule built from zones, times, crossings and "with" relations (a worker with a hard
-hat, a box on a conveyor). Every number below is pre-registered and recomputed in CI.
+**Who it is for.**
+- **Camera vendors:** test a rule before it ships, and hand the city a one-page certificate plus a contract block that
+  says how many labelled tickets back each promise.
+- **Cities and auditors:** sign the numbers the law left open; until they do, the rule issues nothing.
+- **Drivers and their lawyers:** see whether a ticket rests on an unwritten number. 16 of our 20 real tickets have a
+  reasonable change that overturns them, and Ticket court shows which one.
+
+**Not just stop lines.** The engine judges any rule built from zones, times, directions and "with" relations; the
+same loop runs on other real footage: one-way rules on a zebra crossing and a bike lane (7/8 labelled objects right,
+0 wrong), a bike path in Santos, Brazil (7/8 after a compiler fix and a label audit), a two-object rule
+(*a pedestrian with an umbrella*), and a warehouse conveyor (synthetic, known truth). Every number is pre-registered
+and recomputed in CI.
 
 ## How it works
 1. **Compile.** Muse Spark turns the sentence, or the statute, into a typed rule. It never writes code, and every value
@@ -39,10 +49,6 @@ hat, a box on a conveyor). Every number below is pre-registered and recomputed i
    still changes them.
    Every held ticket comes with the smallest change that would overturn it. Each rule gets a one-page certificate and a contract block a city can hand
    to its vendor; no model writes either.
-
-The flagship is a stop line, because the law is short and the footage is public. Nothing in the loop is about stop
-lines: it judges any zone, dwell, direction or two-object rule (a car in a bus lane, a pedestrian on a crossing, a
-person *with* a hard hat, a box on a conveyor).
 
 ## Why Meta models
 - **Muse Spark** compiles rules through a small strict schema (about 1.4k prompt tokens). It escalates to a
