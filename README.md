@@ -84,7 +84,7 @@ Both are the dangerous kind of error for compliance, safety and quality checks, 
 something. The same loop serves anyone who deploys a visual rule (traffic enforcement, warehouse and production-line QA,
 site safety): before a rule goes live, it shows where the rule is wrong, why, and whether a fix really generalizes.
 
-Sources for the deployment facts above: [NBC New York, 2024-11-26](https://www.nbcnewyork.com/investigations/mta-bus-camera-issue-mistake-parking-violations/6020986/)
+Sources for the deployment facts in this README (New York, Takoma Park, Virginia, NYCLU): [NBC New York, 2024-11-26](https://www.nbcnewyork.com/investigations/mta-bus-camera-issue-mistake-parking-violations/6020986/)
 (New York bus-lane cameras: about 3,800 mistaken violations, more than 870 legally parked, cause, reversal and refunds,
 about 1,020 buses); [Jalopnik, 2024-12-04](https://jalopnik.com/new-york-citys-83-million-ai-bus-cameras-issued-nearly-1851712879)
 (Hayden AI, $83 million contract); [MoCo Show, 2026-01-07](https://mocoshow.com/?p=121089) and
