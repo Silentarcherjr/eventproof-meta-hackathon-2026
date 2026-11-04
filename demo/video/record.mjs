@@ -42,7 +42,7 @@ const LIVE_RUN = "20261102T080747Z-6b0ae7d4"; // recorded run of that rule (read
 const NOVI_CSS = `.lg\\:grid-cols-\\[minmax\\(0\\,3fr\\)_minmax\\(0\\,2fr\\)\\] { grid-template-columns: minmax(0,1.25fr) minmax(0,2fr) !important; }
           [data-testid=results] { display: flex; flex-direction: column; }
           [data-testid=overall] { order: -2; } [data-testid=assumptions] { order: -1; }
-          [data-testid=challenge-panel] { display: none; }
+          [data-testid=challenge-panel], [data-testid=hero], section > div:has(label[for=video]), section > div:has([data-testid=suggest-layout]) { display: none; }
           html { zoom: 1.12; }`;
 
 // each scene: url, extra CSS, ready selector, optional pre-scroll target, and a script of [at_seconds, action]
@@ -56,7 +56,7 @@ const sweep = (sel, from, to, at, every) => Array.from({ length: Math.abs(to - f
 const SCENES = {
   2: {
     url: `${STUDIO}/law`, ready: "[data-testid=statute]",
-    css: "html { zoom: 1.15 !important; } a[href='/'] { display: none; }",
+    css: "html { zoom: 1.32 !important; } a[href='/'] { display: none; } #ep-caption { top: auto !important; bottom: 16px; }",
     steps: [
       [0, (p) => caption(p, "Verbatim Maryland statute · Muse Spark's compiled rule · 30 labelled real cars · no model call on this page")],
       // stillness speed from Spark's 0.05 down to 0.01 (more tickets), then up to "any motion" (none)
@@ -109,12 +109,22 @@ const SCENES = {
   },
 };
 
-const browser = await chromium.launch({ channel: "chrome", args: ["--window-size=1920,1080"] });
+// Early recorded runs kept the form's default ids on street footage; show the studio's readable names (display only).
+const ALIAS = () => {
+  const swap = (n) => { if (n.nodeType === 3) { const t = n.nodeValue.replace(/packing_entry/g, "stop_line").replace(/\binspection\b/g, "waiting_zone"); if (t !== n.nodeValue) n.nodeValue = t; } else n.childNodes.forEach(swap); };
+  new MutationObserver((ms) => ms.forEach((m) => { m.addedNodes.forEach(swap); if (m.type === "characterData") swap(m.target); }))
+    .observe(document, { subtree: true, childList: true, characterData: true });
+  document.addEventListener("DOMContentLoaded", () => swap(document.body));
+};
+const ALIASED = new Set(["3", "6"]);
+
+const browser = await chromium.launch({ channel: "chrome", args: ["--window-size=1920,1080", "--lang=en-US"] });
 const meta = {};
 for (const [id, sc] of Object.entries(SCENES)) {
   if (!(id in dur)) continue;
-  const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 }, screen: { width: 1920, height: 1080 },
+  const ctx = await browser.newContext({ locale: "en-US", viewport: { width: 1920, height: 1080 }, screen: { width: 1920, height: 1080 },
     recordVideo: { dir: path.join(out, `raw_${id}`), size: { width: 1920, height: 1080 } } });
+  if (ALIASED.has(id)) await ctx.addInitScript(ALIAS);
   const page = await ctx.newPage();
   const t0 = Date.now();
   await page.goto(sc.url);

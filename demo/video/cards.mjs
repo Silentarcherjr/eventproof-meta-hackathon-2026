@@ -12,6 +12,8 @@ const pooled = JSON.parse(fs.readFileSync(new URL("benchmark/real/POOLED_v2.json
 const tickets = JSON.parse(fs.readFileSync(new URL("benchmark/tickets/report.json", root), "utf8")).summary;
 const grid = JSON.parse(fs.readFileSync(new URL("benchmark/law/grid.json", root), "utf8"));
 const gt = grid.statutes[0].cells.map((x) => x.tickets);
+const scale = JSON.parse(fs.readFileSync(new URL("benchmark/interaction/report.json", root), "utf8"));
+const sp = scale.pooled.numeric_only_spread, pc = (x) => `${Math.round(x * 100)} %`;
 
 const r = pooled.readings, sa = pooled.muse_spark_alone_from_video, n = pooled.labelled_cars, c = pooled.clips;
 const STYLE = `
@@ -22,7 +24,7 @@ const STYLE = `
   h1 { font-size: 132px; margin: 12px 0 8px; letter-spacing: -0.03em; } h2 { font-size: 58px; margin: 0 0 36px; line-height: 1.15; }
   .sub { font-size: 44px; color: #d4d4d8; } .note { position: absolute; bottom: 48px; left: 160px; right: 160px;
     font-size: 24px; color: #a1a1aa; }
-  table { border-collapse: collapse; font-size: 40px; width: 100%; } td { padding: 22px 16px; border-bottom: 1px solid #27272a; }
+  table { border-collapse: collapse; font-size: 36px; width: 100%; } td { padding: 18px 16px; border-bottom: 1px solid #27272a; }
   td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
   .good { color: #4ade80; } .bad { color: #f87171; } .muted { color: #a1a1aa; font-size: 30px; }
   .models { margin-top: 40px; font-size: 34px; color: #a1a1aa; }`;
@@ -41,11 +43,12 @@ const CARDS = {
     <table>
       <tr><td>Real tickets (all correct under the rule) unchanged under every challenge</td><td class="num good">${tickets.tickets - tickets.tickets_beatable_by_menu} of ${tickets.tickets}</td></tr>
       <tr><td>Tickets the same law issues on the same ${grid.cars.length} cars, depending on two unwritten numbers</td><td class="num">${Math.min(...gt)} to ${Math.max(...gt)}</td></tr>
+      <tr><td>California statute on ${scale.vehicle_ids.length.toLocaleString("en-US")} real STOP approaches (drone trajectories, no labels): drivers ticketed</td><td class="num">${pc(sp.min_share)} to ${pc(sp.max_share)}</td></tr>
       <tr><td>Cars right: Muse Spark's rule → SAM 3.1 → engine</td><td class="num good">${r.muse_spark_rule.objects_right}/${n}</td></tr>
       <tr><td>Cars right: the repair that passed every synthetic test</td><td class="num bad">${r.muse_spark_rule_plus_synthetic_repair.objects_right}/${n}</td></tr>
       <tr><td>Muse Spark alone, watching the video: runs that count the cars right</td><td class="num">${sa.counts_exact}/${sa.runs}</td></tr>
     </table>
-    <div class="note">Pexels-licensed footage (Novi Sad, Wroclaw, Santos); statutes copied verbatim · labelled sets are small · sources: benchmark/</div>`,
+    <div class="note">Pexels-licensed footage (Novi Sad, Wroclaw, Santos); INTERACTION trajectories (CC BY 4.0) · statutes copied verbatim · labelled sets are small · sources: benchmark/</div>`,
   "card_8": `<div class="kicker">EventProof</div>
     <h2 style="font-size:84px">Compile the rule.<br>Attack it, and every ticket.<br>Issue only what survives.</h2>
     <div class="models">Built with Muse Spark · Muse Wonder · SAM 3.1 · MIT licensed</div>`,
