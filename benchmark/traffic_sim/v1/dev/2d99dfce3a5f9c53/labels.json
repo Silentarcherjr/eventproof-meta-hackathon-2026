@@ -1,0 +1,18 @@
+{
+  "cars": [
+    {
+      "crossed_line": true,
+      "crossing_frame": 53,
+      "direction": "forward",
+      "intended": "PASS",
+      "label": "car",
+      "object_id": 0,
+      "standing_still_seconds": 2.2,
+      "stationary_seconds": 2.5
+    }
+  ],
+  "rule": "Every car must wait at least 1.5 seconds in the waiting zone before crossing the stop line.",
+  "scene_sha256": "2d99dfce3a5f9c53bd54a649794cdb7527a56e456952d69bd0da92a5079b8ab9",
+  "source": "synthetic",
+  "truth_version": "traffic-truth/1"
+}

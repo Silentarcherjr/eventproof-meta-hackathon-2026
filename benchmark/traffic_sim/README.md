@@ -68,8 +68,18 @@ Generated approach cars cross at most once and do not park on the line; the shar
 event occurrences, so this is not a benchmark of arbitrary repeated crossings or long line contact.
 No holdout score or SAM score is claimed. No real-world performance or human annotation is claimed.
 
-Implementation validation: `uv run pytest -q -p no:cacheprovider`: **336 passed, 2 skipped**
-(one skip is the not-yet-frozen release check); `uv run ruff check . --no-cache`: passed.
-The CLI replay was rendered with `source: synthetic`, 31 evaluations, a one-frame crawl change,
-and a real PASS→FAIL detector flip while both truth labels remain VIOLATION.
-Release generation/validation is recorded separately below. No merge performed.
+Final session validation (2026-11-04, completed before 13:00 America/Panama):
+`uv run pytest -q`: **337 passed, 1 skipped**; `uv run ruff check .`: passed.
+Tests used the existing installed environment offline, with caches redirected/disabled.
+All 520 local MP4s and associated JSON passed `traffic_export verify`.
+Development only: **320/320 scenes correct** with perfect synthetic tracks (`dev_results.jsonl`);
+no holdout evaluation was run. The CLI replay used 31 evaluations and changed only one crawl
+frame to flip the naive detector PASS→FAIL, while both physical truth labels remain VIOLATION.
+
+Generator/search implementation was committed as `f6e98a8` before this release was frozen.
+Release SHA-256: `fd9f6567d5859796ea87bd0d6fe92cb71bbf5a5119aef1e862efa2594036bb7b`.
+The release manifest seals the separate development and holdout manifests and every case's files.
+Remaining: studio UI integration, model-perception evaluation and real-world validation are outside
+this change; no SAM or holdout score is claimed. The branch awaits separate review/merge.
+Only the requested challenge/test/benchmark paths were changed; shared trackers/docs were left
+untouched to respect that scope. Meta API calls: 0; Meta spend: $0. No merge performed.

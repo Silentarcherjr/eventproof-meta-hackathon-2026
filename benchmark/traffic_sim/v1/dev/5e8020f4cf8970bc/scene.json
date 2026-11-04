@@ -1,0 +1,74 @@
+{
+  "seed": 23,
+  "generator": "traffic-gen/1",
+  "width": 480,
+  "height": 270,
+  "fps": 10.0,
+  "n_frames": 50,
+  "zones": [
+    {
+      "id": "waiting",
+      "polygon": [
+        [
+          0.54,
+          0.36
+        ],
+        [
+          0.7,
+          0.36
+        ],
+        [
+          0.7,
+          0.72
+        ],
+        [
+          0.54,
+          0.72
+        ]
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "id": "stop_line",
+      "a": [
+        0.72,
+        0.34
+      ],
+      "b": [
+        0.72,
+        0.74
+      ]
+    }
+  ],
+  "objects": [
+    {
+      "object_id": 0,
+      "color": "blue",
+      "size": [
+        0.065,
+        0.075
+      ],
+      "waypoints": [
+        {
+          "frame": 0,
+          "x": 0.1,
+          "y": 0.45
+        },
+        {
+          "frame": 27,
+          "x": 0.651584,
+          "y": 0.45
+        },
+        {
+          "frame": 45,
+          "x": 0.92,
+          "y": 0.45
+        }
+      ]
+    }
+  ],
+  "occluders": [],
+  "family": "no_stop",
+  "notes": "{\"box_jitter\":0.000542,\"camera_tilt\":0.158515,\"cross_traffic\":false,\"lanes\":2}"
+}

@@ -1,0 +1,26 @@
+{
+  "family": "tailgate",
+  "files_sha256": {
+    "ground_truth.json": "109dcb1460b930d894bc7b46f92332e701a7f79f72297dd31f726583eab71d5e",
+    "labels.json": "ec0e035ae3b7108de432acfca5624eaa6ddf5c6212027db06a1feb7346c6369e",
+    "scene.json": "9bace964bffbc4c923e92fc3682b94088dd794c3c73f10c5cbf6107e11e573db",
+    "tracks.json": "0807580292407d7486c66045a4263893c16b797fef000e692be568473448afb6",
+    "video.mp4": "fe538e68b3244a53d283e68aa76f7f4f75ff211d7f5c5ca88012ead127844c6c"
+  },
+  "fps": 10.0,
+  "frames_sha256": "6b450796221ac371a028c1a3e46e672b872089109a124bea0dd8e56f603a99b5",
+  "generator": "traffic-gen/1",
+  "ground_truth_frames": 207,
+  "mp4_sha256": "fe538e68b3244a53d283e68aa76f7f4f75ff211d7f5c5ca88012ead127844c6c",
+  "n_frames": 72,
+  "objects": 3,
+  "origin": "synthetic, own work",
+  "scene_sha256": "654df92b5e15316f4c889b4afaaa0e1375e19629956553f1e090ee994533ddd3",
+  "seed": 100015,
+  "size": [
+    480,
+    270
+  ],
+  "source": "synthetic",
+  "truth_version": "traffic-truth/1"
+}

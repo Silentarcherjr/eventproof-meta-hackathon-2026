@@ -1,0 +1,109 @@
+{
+  "seed": 100014,
+  "generator": "traffic-gen/1",
+  "width": 480,
+  "height": 270,
+  "fps": 10.0,
+  "n_frames": 75,
+  "zones": [
+    {
+      "id": "waiting",
+      "polygon": [
+        [
+          0.54,
+          0.36
+        ],
+        [
+          0.7,
+          0.36
+        ],
+        [
+          0.7,
+          0.72
+        ],
+        [
+          0.54,
+          0.72
+        ]
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "id": "stop_line",
+      "a": [
+        0.72,
+        0.34
+      ],
+      "b": [
+        0.72,
+        0.74
+      ]
+    }
+  ],
+  "objects": [
+    {
+      "object_id": 0,
+      "color": "blue",
+      "size": [
+        0.065,
+        0.075
+      ],
+      "waypoints": [
+        {
+          "frame": 0,
+          "x": 0.1,
+          "y": 0.53
+        },
+        {
+          "frame": 26,
+          "x": 0.656613,
+          "y": 0.53
+        },
+        {
+          "frame": 50,
+          "x": 0.656613,
+          "y": 0.53
+        },
+        {
+          "frame": 71,
+          "x": 0.92,
+          "y": 0.53
+        }
+      ]
+    },
+    {
+      "object_id": 1,
+      "color": "blue",
+      "size": [
+        0.065,
+        0.075
+      ],
+      "waypoints": [
+        {
+          "frame": 0,
+          "x": 0.01987,
+          "y": 0.53
+        },
+        {
+          "frame": 26,
+          "x": 0.576483,
+          "y": 0.53
+        },
+        {
+          "frame": 50,
+          "x": 0.576483,
+          "y": 0.53
+        },
+        {
+          "frame": 71,
+          "x": 0.83987,
+          "y": 0.53
+        }
+      ]
+    }
+  ],
+  "occluders": [],
+  "family": "tailgate",
+  "notes": "{\"box_jitter\":0.001727,\"camera_tilt\":-0.078798,\"cross_traffic\":false,\"lanes\":1}"
+}

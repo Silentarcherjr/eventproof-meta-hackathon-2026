@@ -1,0 +1,16 @@
+{
+  "encoded_video": true,
+  "engine_evaluation": "not run",
+  "generator": "traffic-gen/1",
+  "source": "synthetic",
+  "splits": {
+    "dev": {
+      "cases": 320,
+      "manifest_sha256": "12380827fe6ea572f83dc841fa02b03fe3d22014798dd19ae345ca2a474a2ab8"
+    },
+    "holdout": {
+      "cases": 200,
+      "manifest_sha256": "e0a217c2a77943a3912037685f17fa5a21d2e5bee0df5aebc0c952a61fe188a5"
+    }
+  }
+}
