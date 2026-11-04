@@ -32,6 +32,26 @@ SCHEMA_VERSION_WITH = "rule-schema/3-with"  # adds WITH (relations to a second t
 # the model's own assumptions said "where the wheels touch the path". Recorded compiles keep their schema version.
 SCHEMA_VERSION_ANCHOR = "rule-schema/4-anchor"
 SCHEMA_VERSION_WITH_ANCHOR = "rule-schema/5-with-anchor"
+# Law mode (schemas 6/7 = 4/5 + provenance): the rule text is a statute quoted verbatim, and every concrete value the
+# model puts in the rule must cite an exact quote from it or be declared ASSUMED. Quotes are checked as substrings.
+SCHEMA_VERSION_LAW = "rule-schema/6-law"
+SCHEMA_VERSION_LAW_WITH = "rule-schema/7-law-with"
+PROVENANCE_FIELD = {"type": "array", "description": "one entry per concrete value in the rule", "items": {
+    "type": "object", "additionalProperties": False, "required": ["param", "value", "source", "quote", "reason"],
+    "properties": {
+        "param": {"type": "string", "description": "which value, e.g. 'DWELL.min_ms', 'DWELL.max_speed', 'CROSSES.line', "
+                                                   "'CROSSES.direction', 'anchor', 'entity'"},
+        "value": {"type": "string"},
+        "source": {"type": "string", "enum": ["QUOTED", "ASSUMED"]},
+        "quote": {"type": "string", "description": "QUOTED: the exact words of the statute that state this value, "
+                                                   "copied verbatim; ASSUMED: empty"},
+        "reason": {"type": "string", "description": "ASSUMED: why this value was chosen although the text does not "
+                                                    "state it"}}}}
+LAW_NOTE = ("\nThe rule text is a statute quoted verbatim. For EVERY concrete value you put in the rule (times, speed "
+            "limits for 'still', which line or zone, direction, the measured point, the entity) add a provenance entry: "
+            "source QUOTED with the exact words of the statute that state it (copied character for character), or "
+            "source ASSUMED with the reason. Never present an assumption as quoted. Behaviour the camera cannot see "
+            "(e.g. 'unless directed by a police officer') is listed in assumptions and left out of the rule.")
 ANCHOR_FIELD = {"type": "string", "enum": ["center", "bottom_center"],
                 "description": "point of each box tested against zones and lines: 'bottom_center' = where the object "
                                "touches the ground (wheels, feet), 'center' = middle of the box"}
@@ -90,7 +110,7 @@ def _nullable(schema: dict) -> dict:
     return {"anyOf": [schema, {"type": "null"}]}
 
 
-def build_schema(layout: Layout, with_events: bool = False, anchor: bool = False) -> dict:
+def build_schema(layout: Layout, with_events: bool = False, anchor: bool = False, law: bool = False) -> dict:
     """Constant-size schema: the expression is a flat list of nodes whose children are indices into the
     list. Muse expands `$ref`s, so a recursive grammar unrolled by depth costs exponentially many prompt
     tokens (~195k for 3 levels, measured 2026-10-27); a node list stays small at any depth."""
@@ -131,7 +151,7 @@ def build_schema(layout: Layout, with_events: bool = False, anchor: bool = False
         "normalized_explanation": {"type": "string", "description": "one sentence, what exactly is checked"},
         "assumptions": {"type": "array", "items": {"type": "string"},
                         "description": "every interpretation choice not literally stated in the rule"},
-    } | ({"anchor": ANCHOR_FIELD} if anchor else {}))
+    } | ({"anchor": ANCHOR_FIELD} if anchor else {}) | ({"provenance": PROVENANCE_FIELD} if law else {}))
 
 
 # ---- prompt ---------------------------------------------------------------------------------------
@@ -237,6 +257,19 @@ def nodes_to_expr(nodes: list[dict], root: int) -> dict:
     return tree
 
 
+def _norm(t: str) -> str:
+    return " ".join(t.replace("\u2013", "-").replace("\u2014", "-").split()).lower()
+
+
+def check_quotes(out: dict, statute: str) -> None:
+    """Law mode: every QUOTED provenance entry must be an exact (whitespace- and case-normalised) substring of the
+    statute; otherwise the compile is rejected (the model may not invent law)."""
+    bad = [p["param"] for p in out.get("provenance", [])
+           if p.get("source") == "QUOTED" and (not p.get("quote", "").strip() or _norm(p["quote"]) not in _norm(statute))]
+    if bad:
+        raise RuleCompileError(f"provenance quotes not found verbatim in the statute for: {', '.join(bad)}")
+
+
 def to_visual_rule(out: dict, layout: Layout) -> VisualRule:
     """Muse output -> VisualRule. Raises UnsupportedRule, RuleCompileError or pydantic ValidationError."""
     if not out.get("supported", False):
@@ -256,12 +289,14 @@ def to_visual_rule(out: dict, layout: Layout) -> VisualRule:
 
 class MuseRuleCompiler:
     def __init__(self, settings: MetaSettings | None = None, cache_dir: Path | None = None, max_attempts: int = 2,
-                 budget: LiveBudget | None = None, allow_with: bool = True, anchor_field: bool = False):
+                 budget: LiveBudget | None = None, allow_with: bool = True, anchor_field: bool = False,
+                 law: bool = False):
         self.settings = settings or MetaSettings.from_env()
         self.cache_dir, self.max_attempts = cache_dir or CACHE_DIR, max_attempts
         self.budget = budget  # None: no cap (CLI/bench runs by the participant); the API always passes one
         self.allow_with = allow_with  # escalate to the WITH schema when the base schema cannot express the rule
         self.anchor_field = anchor_field  # schemas 4/5: the model also picks the anchor (new compiles only)
+        self.law = law  # schemas 6/7: statute text, every value QUOTED (verified substring) or ASSUMED
         self.live_calls = 0
 
     def _key(self, text: str, layout: Layout, version: str = SCHEMA_VERSION) -> str:
@@ -288,7 +323,8 @@ class MuseRuleCompiler:
     def compile(self, text: str, layout: Layout) -> CompiledRule:
         """Base schema first (keeps every recorded compile valid); if the model says the rule is not expressible
         there and `allow_with`, one escalation to the schema with WITH events."""
-        base, wide = ((SCHEMA_VERSION_ANCHOR, SCHEMA_VERSION_WITH_ANCHOR) if self.anchor_field
+        base, wide = ((SCHEMA_VERSION_LAW, SCHEMA_VERSION_LAW_WITH) if self.law
+                      else (SCHEMA_VERSION_ANCHOR, SCHEMA_VERSION_WITH_ANCHOR) if self.anchor_field
                       else (SCHEMA_VERSION, SCHEMA_VERSION_WITH))
         try:
             return self._compile(text, layout, base)
@@ -307,10 +343,11 @@ class MuseRuleCompiler:
         refusal = self.cache_dir / f"{self._key(text, layout, version)}.unsupported.json"
         if refusal.exists():  # a recorded "not expressible" answer is also replayed (it decides the escalation)
             raise UnsupportedRule(json.loads(refusal.read_text())["reason"])
-        with_events = version in (SCHEMA_VERSION_WITH, SCHEMA_VERSION_WITH_ANCHOR)
-        anchor = version in (SCHEMA_VERSION_ANCHOR, SCHEMA_VERSION_WITH_ANCHOR)
-        schema = build_schema(layout, with_events, anchor)
-        system = (SYSTEM_WITH if with_events else SYSTEM) + (ANCHOR_NOTE if anchor else "")
+        with_events = version in (SCHEMA_VERSION_WITH, SCHEMA_VERSION_WITH_ANCHOR, SCHEMA_VERSION_LAW_WITH)
+        law = version in (SCHEMA_VERSION_LAW, SCHEMA_VERSION_LAW_WITH)
+        anchor = law or version in (SCHEMA_VERSION_ANCHOR, SCHEMA_VERSION_WITH_ANCHOR)
+        schema = build_schema(layout, with_events, anchor, law)
+        system = (SYSTEM_WITH if with_events else SYSTEM) + (ANCHOR_NOTE if anchor else "") + (LAW_NOTE if law else "")
         messages = [{"role": "system", "content": system},
                     {"role": "user", "content": user_prompt(text, layout)}]
         ids, usage, t0 = [], [], time.monotonic()
@@ -320,6 +357,8 @@ class MuseRuleCompiler:
             usage.append(u)
             try:
                 rule = to_visual_rule(out, layout)
+                if law:
+                    check_quotes(out, text)
             except UnsupportedRule as e:
                 self.cache_dir.mkdir(parents=True, exist_ok=True)
                 refusal.write_text(json.dumps({"reason": str(e), "request_ids": ids, "model": self.settings.muse_model,

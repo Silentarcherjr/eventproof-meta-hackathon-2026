@@ -1,0 +1,24 @@
+{
+  "schema": "eventproof-statutes/1",
+  "note": "Verbatim statute text copied from the official legislature pages on the retrieval date (government edicts are not subject to copyright in the US). Only the operative clause is used; nothing is reworded.",
+  "statutes": [
+    {
+      "id": "md-tr-21-707a",
+      "jurisdiction": "Maryland, USA",
+      "citation": "Md. Code, Transportation \u00a7 21-707(a)",
+      "url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtr&section=21-707&enactments=false",
+      "retrieved": "2026-11-04",
+      "text": "Unless otherwise directed by a police officer or traffic control signal, the driver of a vehicle approaching a stop sign at an intersection shall stop at the near side of the intersection at a clearly marked stop line.",
+      "why": "Maryland's statute; Takoma Park (MD) issues automated stop-sign citations"
+    },
+    {
+      "id": "ca-veh-22450a",
+      "jurisdiction": "California, USA",
+      "citation": "Cal. Vehicle Code \u00a7 22450(a)",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=22450",
+      "retrieved": "2026-11-04",
+      "text": "The driver of any vehicle approaching a stop sign at the entrance to, or within, an intersection shall stop at a limit line, if marked, otherwise before entering the crosswalk on the near side of the intersection.\n\nIf there is no limit line or crosswalk, the driver shall stop at the entrance to the intersecting roadway.",
+      "why": "a second, independently worded stop-line statute"
+    }
+  ]
+}
