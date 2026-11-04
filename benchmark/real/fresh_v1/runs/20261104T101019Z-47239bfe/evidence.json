@@ -1,0 +1,317 @@
+{
+  "schema_version": "eventproof-evidence/2",
+  "run_id": "20261104T101019Z-47239bfe",
+  "created_at": "2026-11-04T10:10:19+00:00",
+  "eventproof_version": "0.1.0",
+  "status": "completed",
+  "video": {
+    "filename": "drone_north_2.mp4",
+    "sha256": "0ab686bc8cd52457dd071425471923d5c592fa8dc10f751d0ba65f8cd45bbd33",
+    "original_sha256": "0ab686bc8cd52457dd071425471923d5c592fa8dc10f751d0ba65f8cd45bbd33",
+    "info": {
+      "width": 320,
+      "height": 580,
+      "fps": 10.0,
+      "frame_count": 187
+    },
+    "duration_s": 18.7,
+    "codec": "h264",
+    "reencoded": false,
+    "reencode_reasons": []
+  },
+  "rule": {
+    "text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+    "text_sha256": "e9f344d1874d02fe6538a5d36846d1021183552d6c3792d80ac983cb64502873",
+    "layout": {
+      "zones": [
+        {
+          "zone": {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.4313,
+                0.1552
+              ],
+              [
+                0.7375,
+                0.2241
+              ],
+              [
+                0.5469,
+                0.9828
+              ],
+              [
+                0.125,
+                0.9828
+              ]
+            ]
+          },
+          "description": "waiting zone: the northbound approach lanes just before the stop line (top-down drone view; cars come from the bottom of the frame)"
+        }
+      ],
+      "lines": [
+        {
+          "line": {
+            "id": "packing_entry",
+            "a": [
+              0.4313,
+              0.1552
+            ],
+            "b": [
+              0.7375,
+              0.2241
+            ]
+          },
+          "description": "stop line across the northbound approach lanes; cars travel from bottom to top of the frame"
+        }
+      ]
+    },
+    "model": "muse-spark-1.3",
+    "request_ids": [
+      "chatcmpl-01a1a609-84e4-75ed-a965-9fac2d0932b7"
+    ],
+    "cached": true,
+    "attempts": 1,
+    "usage": [
+      {
+        "completion_tokens": 3782,
+        "prompt_tokens": 1595,
+        "total_tokens": 5377,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3429,
+          "rejected_prediction_tokens": null,
+          "text_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cache_write_tokens": null,
+          "cached_tokens": 0,
+          "image_tokens": null,
+          "text_tokens": null
+        }
+      }
+    ],
+    "compiled_rule": {
+      "check": {
+        "conclusion": {
+          "first": {
+            "max_speed": 0.05,
+            "min_ms": 1500.0,
+            "op": "DWELL",
+            "zone": "inspection"
+          },
+          "op": "BEFORE",
+          "then": {
+            "direction": "to_left",
+            "line": "packing_entry",
+            "op": "CROSSES"
+          },
+          "within_ms": null
+        },
+        "op": "IMPLIES",
+        "premise": {
+          "event": {
+            "direction": "to_left",
+            "line": "packing_entry",
+            "op": "CROSSES"
+          },
+          "op": "OCCURS"
+        }
+      },
+      "entity": {
+        "concept": "car",
+        "name": "car"
+      },
+      "lines": [
+        {
+          "a": [
+            0.4313,
+            0.1552
+          ],
+          "b": [
+            0.7375,
+            0.2241
+          ],
+          "id": "packing_entry"
+        }
+      ],
+      "normalized_explanation": "Every car that crosses packing_entry northbound must first dwell stopped in inspection for at least 1500 ms.",
+      "params": {
+        "anchor": "center",
+        "max_gap_frames": 3,
+        "min_confidence": 0.0
+      },
+      "rule_id": "car-wait-before-stop-line",
+      "version": 1,
+      "zones": [
+        {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.4313,
+              0.1552
+            ],
+            [
+              0.7375,
+              0.2241
+            ],
+            [
+              0.5469,
+              0.9828
+            ],
+            [
+              0.125,
+              0.9828
+            ]
+          ]
+        }
+      ]
+    },
+    "rule_hash": "0bdbe795167eeb59d737f1e06c98b297c8beb9e2f40e012017b67dd9350332fc",
+    "assumptions": [
+      "'waiting zone' maps to zone 'inspection'",
+      "'crosses the stop line' maps to CROSSES line 'packing_entry' northbound; per line mapping moving upwards (-y) = to_left, so direction is to_left",
+      "'wait at least 1.5 seconds' interpreted as stopped dwell: DWELL continuously inside for 1500 ms with max_speed 0.05",
+      "no maximum gap is imposed between the wait and the crossing, so within_ms is null",
+      "cars that never cross the stop line pass vacuously via IMPLIES(OCCURS(cross), BEFORE(wait, cross))",
+      "anchor 'center' chosen because top-down drone view represents vehicle position by box middle, not ground-contact bottom edge"
+    ],
+    "error": null
+  },
+  "perception": {
+    "model": "sam-3.1",
+    "prompt": "car",
+    "source_ref": "sam-3.1:resp_6aeb04925d0e71d8476f44ba:video=0ab686bc8cd52457:prompt='car'",
+    "cached": false,
+    "tracks_sha256": "ff5da5ea06cc6fcca1eb443f2aa3d4bbe1e32ed767ffbe8fec0fda76bb49b2d1",
+    "frames_with_detections": 187,
+    "boxes": 435,
+    "track_ids": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "error": null,
+    "context": []
+  },
+  "result": {
+    "rule_id": "car-wait-before-stop-line",
+    "rule_version": 1,
+    "rule_hash": "0bdbe795167eeb59d737f1e06c98b297c8beb9e2f40e012017b67dd9350332fc",
+    "track_source": "sam-3.1",
+    "track_source_ref": "sam-3.1:resp_6aeb04925d0e71d8476f44ba:video=0ab686bc8cd52457:prompt='car'",
+    "overall": "PASS",
+    "objects": [
+      {
+        "object_id": 0,
+        "verdict": "PASS",
+        "first_frame": 0,
+        "last_frame": 186,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 175,
+            "timestamp_ms": 17500.0,
+            "reason": "crossed packing_entry (to_left) at frame 175"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "TRUE",
+            "frame": 15,
+            "timestamp_ms": 1500.0,
+            "reason": "dwelled 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 0: PASS — CROSSES packing_entry: crossed packing_entry (to_left) at frame 175; DWELL inspection: dwelled 1500 ms still in inspection"
+      },
+      {
+        "object_id": 1,
+        "verdict": "PASS",
+        "first_frame": 46,
+        "last_frame": 186,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "TRUE",
+            "frame": 116,
+            "timestamp_ms": 11600.0,
+            "reason": "dwelled 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 1: PASS — CROSSES packing_entry: never crossed packing_entry; DWELL inspection: dwelled 1500 ms still in inspection"
+      },
+      {
+        "object_id": 2,
+        "verdict": "PASS",
+        "first_frame": 122,
+        "last_frame": 186,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "TRUE",
+            "frame": 173,
+            "timestamp_ms": 17300.0,
+            "reason": "dwelled 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 2: PASS — CROSSES packing_entry: never crossed packing_entry; DWELL inspection: dwelled 1500 ms still in inspection"
+      },
+      {
+        "object_id": 3,
+        "verdict": "PASS",
+        "first_frame": 145,
+        "last_frame": 186,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "TRUE",
+            "frame": 180,
+            "timestamp_ms": 18000.0,
+            "reason": "dwelled 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 3: PASS — CROSSES packing_entry: never crossed packing_entry; DWELL inspection: dwelled 1500 ms still in inspection"
+      }
+    ]
+  },
+  "files": {
+    "rule": "rule.json",
+    "tracks": "tracks.json",
+    "evidence": "evidence.json",
+    "video": "video.mp4"
+  },
+  "evidence_sha256": "4d63035c85fd55fc0a4b7ee830790bb37622781d1b84d7bd3759362634a93aa1"
+}

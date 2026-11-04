@@ -1,0 +1,941 @@
+{
+  "schema_version": "eventproof-real-report/1",
+  "title": "EventProof real-video validation (n=6 clips)",
+  "data": "real-world",
+  "n_clips": 6,
+  "disclaimer": "Real-world videos (the participant's own recordings or licensed public footage; source in each label's notes), labelled by hand and frozen before any model ran. Reported separately from the synthetic results; never used to tune rules, thresholds, repairs or the grader.",
+  "created_at": "2026-11-04T10:12:07+00:00",
+  "eventproof_version": "0.1.0",
+  "code_commit": "59cacdd9fcc5a355d53c8da67edd5816db035779",
+  "labels_manifest_sha256": "721c60e787c2c91be17f760ca663ec5ccd7053d1e11ece98b882e97ce60f40b0",
+  "matching": "crossing objects paired in crossing order; others in first-frame order; leftovers reported",
+  "repair": {
+    "source": "docs/evidence/runs/20261028T023754Z-a922b5bb/challenge/repair_muse.json",
+    "source_sha256": "8031f8f43d3b6a1913ae84e84c7e6d2938c24c038dda94e328e37b61bc978a10",
+    "run_id": "20261028T023754Z-a922b5bb",
+    "proposer": "muse-spark-1.3",
+    "proposal_id": "muse-spark-1.3-r3-0",
+    "patch": {
+      "ops": [
+        {
+          "op": "set_dwell_min_ms",
+          "zone": "inspection",
+          "value": 800.0
+        },
+        {
+          "op": "set_dwell_max_speed",
+          "zone": "inspection",
+          "max_speed": 0.08
+        }
+      ]
+    },
+    "description": "DWELL(inspection) >= 0.80 s; DWELL(inspection) counts only while speed <= 0.08/s",
+    "choice": "first accepted proposal in the proposer's order"
+  },
+  "compiler_schema": "rule-schema/4-anchor",
+  "allowances": {
+    "muse": 6,
+    "sam": 6
+  },
+  "live_calls": {
+    "muse": 2,
+    "sam": 6
+  },
+  "summary": {
+    "clips": 6,
+    "before": {
+      "evaluated": 6,
+      "overall_agree": 5,
+      "objects_agree": 7,
+      "objects_labeled": 10
+    },
+    "after": {
+      "evaluated": 6,
+      "overall_agree": 5,
+      "objects_agree": 6,
+      "objects_labeled": 10
+    },
+    "missed": 2,
+    "extra": 46
+  },
+  "clips": [
+    {
+      "label_file": "drone_north_1.json",
+      "label_sha256": "4db1786482431911ee352c9ca988c1134ee235ce41834d3b2799a47697857976",
+      "clip": "drone_north_1.mp4",
+      "clip_sha256": "8101c819af72ab7aa6753783a3c2dc6a4fa7640859a436a0a163941a32f45118",
+      "run_id": "20261104T100932Z-337cfde2",
+      "status": "completed",
+      "evidence_sha256": "3115082e06b059c80f9d1e94b521f4509b32c1e5e75bd353fe8f78e438104860",
+      "ingested_sha256": "8101c819af72ab7aa6753783a3c2dc6a4fa7640859a436a0a163941a32f45118",
+      "reencoded": false,
+      "muse": "live",
+      "sam": "live",
+      "rule_hash": "0bdbe795167eeb59d737f1e06c98b297c8beb9e2f40e012017b67dd9350332fc",
+      "concept": "car",
+      "expected_overall": "PASS",
+      "n_labeled": 1,
+      "n_perceived": 7,
+      "before": {
+        "overall": "PASS",
+        "agrees_overall": true,
+        "rule_hash": "0bdbe795167eeb59d737f1e06c98b297c8beb9e2f40e012017b67dd9350332fc",
+        "objects_agree": 1,
+        "objects": {
+          "0": "PASS",
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS",
+          "6": "PASS"
+        },
+        "error": null
+      },
+      "after": {
+        "overall": "PASS",
+        "agrees_overall": true,
+        "rule_hash": "cc50eca719dcf69ec3907622edcbeb7fc9f14c1e682a5887e5d7d9e7359280c8",
+        "objects_agree": 1,
+        "objects": {
+          "0": "PASS",
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS",
+          "6": "PASS"
+        },
+        "error": null
+      },
+      "objects": {
+        "labeled": [
+          {
+            "label_index": 0,
+            "description": "red car with white roof, northbound; stops in the zone well before the line and never crosses (from Muse Spark's note)",
+            "crosses_packing": false,
+            "stood_still_s": 8.0,
+            "intended": "PASS",
+            "matched_object_id": 0,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "before": "PASS",
+            "after": "PASS",
+            "agree_before": true,
+            "agree_after": true
+          }
+        ],
+        "missed": [],
+        "extra": [
+          {
+            "object_id": 1,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 43,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 2,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 62,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 3,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 62,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 4,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 75,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 5,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 86,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 6,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 128,
+            "before": "PASS",
+            "after": "PASS"
+          }
+        ]
+      }
+    },
+    {
+      "label_file": "drone_north_2.json",
+      "label_sha256": "ab34b0cc7a1bd216654f4ae1ac23b4f139879f9e41f3891cf6f1165bb9d89426",
+      "clip": "drone_north_2.mp4",
+      "clip_sha256": "0ab686bc8cd52457dd071425471923d5c592fa8dc10f751d0ba65f8cd45bbd33",
+      "run_id": "20261104T101019Z-47239bfe",
+      "status": "completed",
+      "evidence_sha256": "4d63035c85fd55fc0a4b7ee830790bb37622781d1b84d7bd3759362634a93aa1",
+      "ingested_sha256": "0ab686bc8cd52457dd071425471923d5c592fa8dc10f751d0ba65f8cd45bbd33",
+      "reencoded": false,
+      "muse": "cached",
+      "sam": "live",
+      "rule_hash": "0bdbe795167eeb59d737f1e06c98b297c8beb9e2f40e012017b67dd9350332fc",
+      "concept": "car",
+      "expected_overall": "PASS",
+      "n_labeled": 1,
+      "n_perceived": 4,
+      "before": {
+        "overall": "PASS",
+        "agrees_overall": true,
+        "rule_hash": "0bdbe795167eeb59d737f1e06c98b297c8beb9e2f40e012017b67dd9350332fc",
+        "objects_agree": 1,
+        "objects": {
+          "0": "PASS",
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS"
+        },
+        "error": null
+      },
+      "after": {
+        "overall": "PASS",
+        "agrees_overall": true,
+        "rule_hash": "cc50eca719dcf69ec3907622edcbeb7fc9f14c1e682a5887e5d7d9e7359280c8",
+        "objects_agree": 1,
+        "objects": {
+          "0": "PASS",
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS"
+        },
+        "error": null
+      },
+      "objects": {
+        "labeled": [
+          {
+            "label_index": 0,
+            "description": "red car with white roof, small hatchback in right northbound lane",
+            "crosses_packing": true,
+            "stood_still_s": 17.0,
+            "intended": "PASS",
+            "matched_object_id": 0,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 175,
+            "before": "PASS",
+            "after": "PASS",
+            "agree_before": true,
+            "agree_after": true
+          }
+        ],
+        "missed": [],
+        "extra": [
+          {
+            "object_id": 1,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 46,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 2,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 122,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 3,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 145,
+            "before": "PASS",
+            "after": "PASS"
+          }
+        ]
+      }
+    },
+    {
+      "label_file": "drone_north_3.json",
+      "label_sha256": "a56293a13e1ccf75a05b1a845d576a81f339adbc6183b7a55e9be13a3c7eeae8",
+      "clip": "drone_north_3.mp4",
+      "clip_sha256": "0fac432542ab33ece9a9d5db057c4a7ef0d9f7a15346af6589df6b2015255df1",
+      "run_id": "20261104T101034Z-47b94894",
+      "status": "completed",
+      "evidence_sha256": "9e2d1d16fe3459ccdfaec335d84730e60aa1ed7b638a0ddec55dee02761b0737",
+      "ingested_sha256": "0fac432542ab33ece9a9d5db057c4a7ef0d9f7a15346af6589df6b2015255df1",
+      "reencoded": false,
+      "muse": "cached",
+      "sam": "live",
+      "rule_hash": "0bdbe795167eeb59d737f1e06c98b297c8beb9e2f40e012017b67dd9350332fc",
+      "concept": "car",
+      "expected_overall": "FAIL",
+      "n_labeled": 4,
+      "n_perceived": 7,
+      "before": {
+        "overall": "FAIL",
+        "agrees_overall": true,
+        "rule_hash": "0bdbe795167eeb59d737f1e06c98b297c8beb9e2f40e012017b67dd9350332fc",
+        "objects_agree": 3,
+        "objects": {
+          "0": "VIOLATION",
+          "1": "VIOLATION",
+          "2": "UNKNOWN",
+          "3": "PASS",
+          "4": "VIOLATION",
+          "5": "PASS",
+          "6": "PASS"
+        },
+        "error": null
+      },
+      "after": {
+        "overall": "FAIL",
+        "agrees_overall": true,
+        "rule_hash": "cc50eca719dcf69ec3907622edcbeb7fc9f14c1e682a5887e5d7d9e7359280c8",
+        "objects_agree": 3,
+        "objects": {
+          "0": "VIOLATION",
+          "1": "VIOLATION",
+          "2": "UNKNOWN",
+          "3": "PASS",
+          "4": "VIOLATION",
+          "5": "PASS",
+          "6": "PASS"
+        },
+        "error": null
+      },
+      "objects": {
+        "labeled": [
+          {
+            "label_index": 0,
+            "description": "silver van/pickup, middle lane",
+            "crosses_packing": true,
+            "stood_still_s": 0.0,
+            "intended": "VIOLATION",
+            "matched_object_id": 1,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 18,
+            "before": "VIOLATION",
+            "after": "VIOLATION",
+            "agree_before": true,
+            "agree_after": true
+          },
+          {
+            "label_index": 1,
+            "description": "dark gray/black pickup, right-center lane",
+            "crosses_packing": true,
+            "stood_still_s": 0.0,
+            "intended": "VIOLATION",
+            "matched_object_id": 0,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 31,
+            "before": "VIOLATION",
+            "after": "VIOLATION",
+            "agree_before": true,
+            "agree_after": true
+          },
+          {
+            "label_index": 2,
+            "description": "dark blue sedan, middle lane",
+            "crosses_packing": true,
+            "stood_still_s": 0.0,
+            "intended": "VIOLATION",
+            "matched_object_id": 2,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 50,
+            "before": "UNKNOWN",
+            "after": "UNKNOWN",
+            "agree_before": false,
+            "agree_after": false
+          },
+          {
+            "label_index": 3,
+            "description": "black SUV/sedan, middle lane",
+            "crosses_packing": true,
+            "stood_still_s": 0.0,
+            "intended": "VIOLATION",
+            "matched_object_id": 4,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 74,
+            "before": "VIOLATION",
+            "after": "VIOLATION",
+            "agree_before": true,
+            "agree_after": true
+          }
+        ],
+        "missed": [],
+        "extra": [
+          {
+            "object_id": 3,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 0,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 5,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 30,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 6,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 77,
+            "before": "PASS",
+            "after": "PASS"
+          }
+        ]
+      }
+    },
+    {
+      "label_file": "drone_south_1.json",
+      "label_sha256": "15a40250ea767553ed9964f68e4c6e7c1ae9ef6e50d301010d3b4379c45267ea",
+      "clip": "drone_south_1.mp4",
+      "clip_sha256": "7d09d1aa8f0fceb5380b6f1653348e10ed088a6dcd945ec0c9980f95d75f5e32",
+      "run_id": "20261104T101049Z-87a1271a",
+      "status": "completed",
+      "evidence_sha256": "0060049c5cfd636b1a4c958b6922be882763189245ad9b44c81feb664981909b",
+      "ingested_sha256": "7d09d1aa8f0fceb5380b6f1653348e10ed088a6dcd945ec0c9980f95d75f5e32",
+      "reencoded": false,
+      "muse": "live",
+      "sam": "live",
+      "rule_hash": "167228314eb5db6ff12e0ce13f83de2e05f5aee3ff771ffdfd0696b82ecac11d",
+      "concept": "car",
+      "expected_overall": "FAIL",
+      "n_labeled": 1,
+      "n_perceived": 14,
+      "before": {
+        "overall": "FAIL",
+        "agrees_overall": true,
+        "rule_hash": "167228314eb5db6ff12e0ce13f83de2e05f5aee3ff771ffdfd0696b82ecac11d",
+        "objects_agree": 1,
+        "objects": {
+          "0": "PASS",
+          "1": "VIOLATION",
+          "2": "PASS",
+          "3": "VIOLATION",
+          "4": "VIOLATION",
+          "5": "VIOLATION",
+          "7": "VIOLATION",
+          "8": "PASS",
+          "9": "PASS",
+          "10": "PASS",
+          "11": "PASS",
+          "12": "PASS",
+          "13": "PASS",
+          "14": "PASS"
+        },
+        "error": null
+      },
+      "after": {
+        "overall": "FAIL",
+        "agrees_overall": true,
+        "rule_hash": "9509aa205c978017f7b7aeb7f1690598b21e7e878351f39fd414394dde2a8704",
+        "objects_agree": 0,
+        "objects": {
+          "0": "PASS",
+          "1": "PASS",
+          "2": "PASS",
+          "3": "VIOLATION",
+          "4": "VIOLATION",
+          "5": "VIOLATION",
+          "7": "VIOLATION",
+          "8": "PASS",
+          "9": "PASS",
+          "10": "PASS",
+          "11": "PASS",
+          "12": "PASS",
+          "13": "PASS",
+          "14": "PASS"
+        },
+        "error": null
+      },
+      "objects": {
+        "labeled": [
+          {
+            "label_index": 0,
+            "description": "black SUV in southbound left lane",
+            "crosses_packing": true,
+            "stood_still_s": 0.0,
+            "intended": "VIOLATION",
+            "matched_object_id": 1,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 29,
+            "before": "VIOLATION",
+            "after": "PASS",
+            "agree_before": true,
+            "agree_after": false
+          }
+        ],
+        "missed": [],
+        "extra": [
+          {
+            "object_id": 0,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 0,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 2,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 0,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 3,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 47,
+            "first_frame": 24,
+            "before": "VIOLATION",
+            "after": "VIOLATION"
+          },
+          {
+            "object_id": 4,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 61,
+            "first_frame": 38,
+            "before": "VIOLATION",
+            "after": "VIOLATION"
+          },
+          {
+            "object_id": 5,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 67,
+            "first_frame": 44,
+            "before": "VIOLATION",
+            "after": "VIOLATION"
+          },
+          {
+            "object_id": 7,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 108,
+            "first_frame": 81,
+            "before": "VIOLATION",
+            "after": "VIOLATION"
+          },
+          {
+            "object_id": 8,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 90,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 9,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 93,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 10,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 111,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 11,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 127,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 12,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 133,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 13,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 133,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 14,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 158,
+            "before": "PASS",
+            "after": "PASS"
+          }
+        ]
+      }
+    },
+    {
+      "label_file": "drone_south_2.json",
+      "label_sha256": "4d95ac87af68cd5e4fa4270fb52bb28ef0c9fa685d2c8a7f605866d13dc4f806",
+      "clip": "drone_south_2.mp4",
+      "clip_sha256": "08b8be35905664865c37dac985c4f3f9cfef8e87be67d095c61af3261f54a7df",
+      "run_id": "20261104T101133Z-87c253d6",
+      "status": "completed",
+      "evidence_sha256": "30dc2998136bac8a946995a72bd88c92a1ea99726485dff18e74eb5d20be4722",
+      "ingested_sha256": "08b8be35905664865c37dac985c4f3f9cfef8e87be67d095c61af3261f54a7df",
+      "reencoded": false,
+      "muse": "cached",
+      "sam": "live",
+      "rule_hash": "167228314eb5db6ff12e0ce13f83de2e05f5aee3ff771ffdfd0696b82ecac11d",
+      "concept": "car",
+      "expected_overall": "PASS",
+      "n_labeled": 1,
+      "n_perceived": 11,
+      "before": {
+        "overall": "PASS",
+        "agrees_overall": true,
+        "rule_hash": "167228314eb5db6ff12e0ce13f83de2e05f5aee3ff771ffdfd0696b82ecac11d",
+        "objects_agree": 0,
+        "objects": {
+          "0": "PASS",
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS",
+          "6": "PASS",
+          "8": "PASS",
+          "9": "PASS",
+          "10": "PASS",
+          "11": "PASS"
+        },
+        "error": null
+      },
+      "after": {
+        "overall": "PASS",
+        "agrees_overall": true,
+        "rule_hash": "9509aa205c978017f7b7aeb7f1690598b21e7e878351f39fd414394dde2a8704",
+        "objects_agree": 0,
+        "objects": {
+          "0": "PASS",
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS",
+          "6": "PASS",
+          "8": "PASS",
+          "9": "PASS",
+          "10": "PASS",
+          "11": "PASS"
+        },
+        "error": null
+      },
+      "objects": {
+        "labeled": [
+          {
+            "label_index": 0,
+            "description": "dark grey sedan in left southbound lane",
+            "crosses_packing": true,
+            "stood_still_s": 3.2,
+            "intended": "PASS",
+            "matched_object_id": null,
+            "perceived_crossing": null,
+            "perceived_cross_frame": null,
+            "before": null,
+            "after": null,
+            "agree_before": false,
+            "agree_after": false
+          }
+        ],
+        "missed": [
+          0
+        ],
+        "extra": [
+          {
+            "object_id": 0,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 0,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 1,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 0,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 2,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 0,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 3,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 0,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 4,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 26,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 5,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 42,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 6,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 60,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 8,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 186,
+            "first_frame": 89,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 9,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 95,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 10,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 96,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 11,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 165,
+            "before": "PASS",
+            "after": "PASS"
+          }
+        ]
+      }
+    },
+    {
+      "label_file": "drone_south_3.json",
+      "label_sha256": "91385ec06092054bb1837b9d9535dc921364e0948890c970bd80ec2ef709487a",
+      "clip": "drone_south_3.mp4",
+      "clip_sha256": "d2c0fe42ce7b48aef2ff0c22b2cb42553984df987373762865625164a23d2498",
+      "run_id": "20261104T101149Z-b95f4e13",
+      "status": "completed",
+      "evidence_sha256": "4a87c5ed40f66c2b1013fa2c09d5c19f4e15eb77ba7e097c7b1f229883680423",
+      "ingested_sha256": "d2c0fe42ce7b48aef2ff0c22b2cb42553984df987373762865625164a23d2498",
+      "reencoded": false,
+      "muse": "cached",
+      "sam": "live",
+      "rule_hash": "167228314eb5db6ff12e0ce13f83de2e05f5aee3ff771ffdfd0696b82ecac11d",
+      "concept": "car",
+      "expected_overall": "PASS",
+      "n_labeled": 2,
+      "n_perceived": 11,
+      "before": {
+        "overall": "FAIL",
+        "agrees_overall": false,
+        "rule_hash": "167228314eb5db6ff12e0ce13f83de2e05f5aee3ff771ffdfd0696b82ecac11d",
+        "objects_agree": 1,
+        "objects": {
+          "0": "PASS",
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS",
+          "6": "PASS",
+          "7": "PASS",
+          "8": "VIOLATION",
+          "9": "PASS",
+          "10": "PASS"
+        },
+        "error": null
+      },
+      "after": {
+        "overall": "FAIL",
+        "agrees_overall": false,
+        "rule_hash": "9509aa205c978017f7b7aeb7f1690598b21e7e878351f39fd414394dde2a8704",
+        "objects_agree": 1,
+        "objects": {
+          "0": "PASS",
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS",
+          "6": "PASS",
+          "7": "PASS",
+          "8": "VIOLATION",
+          "9": "PASS",
+          "10": "PASS"
+        },
+        "error": null
+      },
+      "objects": {
+        "labeled": [
+          {
+            "label_index": 0,
+            "description": "blue SUV in left southbound lane",
+            "crosses_packing": true,
+            "stood_still_s": 14.0,
+            "intended": "PASS",
+            "matched_object_id": null,
+            "perceived_crossing": null,
+            "perceived_cross_frame": null,
+            "before": null,
+            "after": null,
+            "agree_before": false,
+            "agree_after": false
+          },
+          {
+            "label_index": 1,
+            "description": "white SUV in right southbound lane",
+            "crosses_packing": true,
+            "stood_still_s": 14.5,
+            "intended": "PASS",
+            "matched_object_id": 1,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 180,
+            "before": "PASS",
+            "after": "PASS",
+            "agree_before": true,
+            "agree_after": true
+          }
+        ],
+        "missed": [
+          0
+        ],
+        "extra": [
+          {
+            "object_id": 0,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 0,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 2,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 154,
+            "first_frame": 0,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 3,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 1,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 4,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 3,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 5,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 23,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 6,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 42,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 7,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 52,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 8,
+            "perceived_crossing": "TRUE",
+            "perceived_cross_frame": 68,
+            "first_frame": 54,
+            "before": "VIOLATION",
+            "after": "VIOLATION"
+          },
+          {
+            "object_id": 9,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 67,
+            "before": "PASS",
+            "after": "PASS"
+          },
+          {
+            "object_id": 10,
+            "perceived_crossing": "FALSE",
+            "perceived_cross_frame": null,
+            "first_frame": 89,
+            "before": "PASS",
+            "after": "PASS"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "rule_id": "car-wait-before-stop-line",
+  "version": 1,
+  "entity": {
+    "name": "car",
+    "concept": "car"
+  },
+  "zones": [
+    {
+      "id": "inspection",
+      "polygon": [
+        [
+          0.4313,
+          0.1552
+        ],
+        [
+          0.7375,
+          0.2241
+        ],
+        [
+          0.5469,
+          0.9828
+        ],
+        [
+          0.125,
+          0.9828
+        ]
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "id": "packing_entry",
+      "a": [
+        0.4313,
+        0.1552
+      ],
+      "b": [
+        0.7375,
+        0.2241
+      ]
+    }
+  ],
+  "check": {
+    "op": "IMPLIES",
+    "premise": {
+      "op": "OCCURS",
+      "event": {
+        "op": "CROSSES",
+        "line": "packing_entry",
+        "direction": "to_left"
+      }
+    },
+    "conclusion": {
+      "op": "BEFORE",
+      "first": {
+        "op": "DWELL",
+        "zone": "inspection",
+        "min_ms": 1500.0,
+        "max_speed": 0.05
+      },
+      "then": {
+        "op": "CROSSES",
+        "line": "packing_entry",
+        "direction": "to_left"
+      },
+      "within_ms": null
+    }
+  },
+  "params": {
+    "anchor": "center",
+    "max_gap_frames": 3,
+    "min_confidence": 0.0
+  },
+  "normalized_explanation": "Every car that crosses packing_entry northbound must first dwell stopped in inspection for at least 1500 ms."
+}

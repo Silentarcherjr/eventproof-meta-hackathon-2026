@@ -86,7 +86,11 @@ const SCENES = {
     css: "html { zoom: 1.05 !important; } a[href='/'] { display: none; } #ep-caption { top: auto !important; bottom: 16px; }",
     steps: [
       [0, (p) => caption(p, "All 20 real tickets from labelled footage")],
-      [18.8, (p) => scrollTo(p, "[data-testid=contract]", 60)],
+      [11.8, (p) => scrollTo(p, "[data-testid=gate]", 60)],
+      [13.4, (p) => p.click("[data-testid=approve-scope]")],
+      [14.2, (p) => p.click("[data-testid=approve-stillness]")],
+      [15.0, (p) => p.click("[data-testid=approve-stillness_meaning]")],
+      [19.6, (p) => scrollTo(p, "[data-testid=contract]", 60)],
     ],
   },
   6: {

@@ -1,0 +1,69 @@
+{
+ "schema": "eventproof-label-assist/1",
+ "preregistration": "benchmark/real/fresh_v1/PREREGISTRATION.md",
+ "match_window_s": 1.0,
+ "total": {
+  "proposed": 9,
+  "labelled": 9,
+  "accepted": 9,
+  "corrected": 0,
+  "deleted": 0,
+  "missed": 0
+ },
+ "clips": [
+  {
+   "clip": "drone_north_1.mp4",
+   "proposed": 0,
+   "labelled": 0,
+   "accepted": 0,
+   "corrected": 0,
+   "deleted": 0,
+   "missed": 0
+  },
+  {
+   "clip": "drone_north_2.mp4",
+   "proposed": 1,
+   "labelled": 1,
+   "accepted": 1,
+   "corrected": 0,
+   "deleted": 0,
+   "missed": 0
+  },
+  {
+   "clip": "drone_north_3.mp4",
+   "proposed": 4,
+   "labelled": 4,
+   "accepted": 4,
+   "corrected": 0,
+   "deleted": 0,
+   "missed": 0
+  },
+  {
+   "clip": "drone_south_1.mp4",
+   "proposed": 1,
+   "labelled": 1,
+   "accepted": 1,
+   "corrected": 0,
+   "deleted": 0,
+   "missed": 0
+  },
+  {
+   "clip": "drone_south_2.mp4",
+   "proposed": 1,
+   "labelled": 1,
+   "accepted": 1,
+   "corrected": 0,
+   "deleted": 0,
+   "missed": 0
+  },
+  {
+   "clip": "drone_south_3.mp4",
+   "proposed": 2,
+   "labelled": 2,
+   "accepted": 2,
+   "corrected": 0,
+   "deleted": 0,
+   "missed": 0
+  }
+ ]
+}

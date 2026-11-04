@@ -39,7 +39,7 @@ const CARDS = {
   "card_7": `<div class="kicker">Real footage · labels frozen and pre-registered before any model call</div>
     <h2>The numbers, all recomputed in CI</h2>
     <table>
-      <tr><td>Real tickets that survive every challenge</td><td class="num good">${tickets.tickets - tickets.tickets_beatable_by_menu} of ${tickets.tickets}</td></tr>
+      <tr><td>Real tickets (all correct under the rule) unchanged under every challenge</td><td class="num good">${tickets.tickets - tickets.tickets_beatable_by_menu} of ${tickets.tickets}</td></tr>
       <tr><td>Tickets the same law issues on the same ${grid.cars.length} cars, depending on two unwritten numbers</td><td class="num">${Math.min(...gt)} to ${Math.max(...gt)}</td></tr>
       <tr><td>Cars right: Muse Spark's rule → SAM 3.1 → engine</td><td class="num good">${r.muse_spark_rule.objects_right}/${n}</td></tr>
       <tr><td>Cars right: the repair that passed every synthetic test</td><td class="num bad">${r.muse_spark_rule_plus_synthetic_repair.objects_right}/${n}</td></tr>
