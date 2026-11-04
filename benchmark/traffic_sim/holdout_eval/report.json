@@ -1,0 +1,2967 @@
+{
+ "schema": "eventproof-traffic-holdout/1",
+ "preregistration": "benchmark/traffic_sim/HOLDOUT_PREREGISTRATION.md",
+ "perception": "synthetic perfect tracks (NOT SAM)",
+ "scenes": 200,
+ "rule_text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+ "muse_rule": {
+  "check": {
+   "conclusion": {
+    "first": {
+     "max_speed": 0.05,
+     "min_ms": 1500.0,
+     "op": "DWELL",
+     "zone": "waiting"
+    },
+    "op": "BEFORE",
+    "then": {
+     "direction": "to_left",
+     "line": "stop_line",
+     "op": "CROSSES"
+    },
+    "within_ms": null
+   },
+   "op": "IMPLIES",
+   "premise": {
+    "event": {
+     "direction": "to_left",
+     "line": "stop_line",
+     "op": "CROSSES"
+    },
+    "op": "OCCURS"
+   }
+  },
+  "entity": {
+   "concept": "car",
+   "name": "car"
+  },
+  "lines": [
+   {
+    "a": [
+     0.72,
+     0.34
+    ],
+    "b": [
+     0.72,
+     0.74
+    ],
+    "id": "stop_line"
+   }
+  ],
+  "normalized_explanation": "Every car that crosses the stop line to_left must have first dwelled stopped at least 1500 ms continuously in the waiting zone.",
+  "params": {
+   "anchor": "center",
+   "max_gap_frames": 3,
+   "min_confidence": 0.0
+  },
+  "rule_id": "car-wait-before-stop-line",
+  "version": 1,
+  "zones": [
+   {
+    "id": "waiting",
+    "polygon": [
+     [
+      0.54,
+      0.36
+     ],
+     [
+      0.7,
+      0.36
+     ],
+     [
+      0.7,
+      0.72
+     ],
+     [
+      0.54,
+      0.72
+     ]
+    ]
+   }
+  ]
+ },
+ "assumptions": [
+  "'wait' interpreted as stopped still dwell, so DWELL max_speed 0.05",
+  "crossing means travel direction left-to-right, which per line mapping is direction to_left",
+  "BEFORE has no time limit, any earlier qualifying dwell satisfies",
+  "objects that never cross pass vacuously",
+  "anchor center chosen because top-down waiting zone and stop line are drawn for object centers"
+ ],
+ "request_ids": [
+  "chatcmpl-01a1a627-92aa-7330-9ad5-20a5fcb571d5"
+ ],
+ "cached": false,
+ "live_calls": 1,
+ "summary": {
+  "muse_spark": {
+   "total": {
+    "spec_error": 50,
+    "correct": 150
+   },
+   "by_family": {
+    "rolling_stop": {
+     "spec_error": 25
+    },
+    "tailgate": {
+     "correct": 25
+    },
+    "full_stop": {
+     "correct": 25
+    },
+    "wrong_way": {
+     "spec_error": 25
+    },
+    "no_stop": {
+     "correct": 25
+    },
+    "brief_stop": {
+     "correct": 25
+    },
+    "occluded": {
+     "correct": 25
+    },
+    "queue": {
+     "correct": 25
+    }
+   }
+  },
+  "contract_rule": {
+   "total": {
+    "correct": 200
+   },
+   "by_family": {
+    "rolling_stop": {
+     "correct": 25
+    },
+    "tailgate": {
+     "correct": 25
+    },
+    "full_stop": {
+     "correct": 25
+    },
+    "wrong_way": {
+     "correct": 25
+    },
+    "no_stop": {
+     "correct": 25
+    },
+    "brief_stop": {
+     "correct": 25
+    },
+    "occluded": {
+     "correct": 25
+    },
+    "queue": {
+     "correct": 25
+    }
+   }
+  }
+ },
+ "rows": {
+  "muse_spark": [
+   {
+    "family": "rolling_stop",
+    "seed": 100000,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100013,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100007,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100012,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100019,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100002,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100013,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100010,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100001,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100012,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100003,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100022,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100016,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100018,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100019,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100020,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100005,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100021,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100014,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100012,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100018,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100011,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100004,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100012,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100007,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100008,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100014,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100006,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100021,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100024,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100020,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100003,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100011,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100009,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100023,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100017,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100012,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100006,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100001,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100014,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100019,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100006,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100000,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100014,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100005,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100005,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100023,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100003,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100008,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100006,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100001,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100003,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "occluded",
+    "seed": 100001,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100003,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100001,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100020,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100011,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100015,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100016,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100004,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100007,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100016,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100021,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100011,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100008,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100022,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100004,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100014,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100024,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100005,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100017,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100022,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100011,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100017,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100003,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100024,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100001,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100021,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100022,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100022,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100015,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100013,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100006,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100009,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100007,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100007,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100023,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100010,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100010,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100005,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100000,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100000,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100024,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100020,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100020,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "occluded",
+    "seed": 100005,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100000,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100007,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100023,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100011,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100005,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100020,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "queue",
+    "seed": 100011,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100009,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100009,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100017,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100000,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100009,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100009,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100024,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "queue",
+    "seed": 100022,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100019,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100018,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100022,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100016,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100002,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100016,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100002,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100024,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100023,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100008,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "occluded",
+    "seed": 100015,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100016,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100008,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100019,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100002,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100018,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100021,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100017,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100012,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "occluded",
+    "seed": 100003,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100004,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100009,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "queue",
+    "seed": 100023,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100010,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100014,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100002,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100016,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100015,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100009,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100010,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100015,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100006,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100010,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100018,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "queue",
+    "seed": 100021,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100017,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100024,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100022,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100019,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100018,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100021,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100017,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100013,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100004,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100012,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100007,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100006,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100007,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100013,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100002,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100015,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100015,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100004,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100024,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100008,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "occluded",
+    "seed": 100019,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100019,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "queue",
+    "seed": 100012,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100016,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100000,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100023,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100004,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100014,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "occluded",
+    "seed": 100002,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100015,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100011,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100020,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100003,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100013,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100008,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100018,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100006,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100013,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100010,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100020,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100010,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "occluded",
+    "seed": 100018,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100001,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100001,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100002,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "occluded",
+    "seed": 100017,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100021,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100014,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100005,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100008,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100004,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100000,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100023,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100013,
+    "intended": "FAIL",
+    "verdict": "PASS",
+    "outcome": "spec_error"
+   }
+  ],
+  "contract_rule": [
+   {
+    "family": "rolling_stop",
+    "seed": 100000,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100013,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100007,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100012,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100019,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100002,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100013,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100010,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100001,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100012,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100003,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100022,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100016,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100018,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100019,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100020,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100005,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100021,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100014,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100012,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100018,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100011,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100004,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100012,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100007,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100008,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100014,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100006,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100021,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100024,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100020,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100003,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100011,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100009,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100023,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100017,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100012,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100006,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100001,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100014,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100019,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100006,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100000,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100014,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100005,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100005,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100023,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100003,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100008,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100006,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100001,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100003,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100001,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100003,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100001,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100020,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100011,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100015,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100016,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100004,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100007,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100016,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100021,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100011,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100008,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100022,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100004,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100014,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100024,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100005,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100017,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100022,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100011,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100017,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100003,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100024,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100001,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100021,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100022,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100022,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100015,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100013,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100006,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100009,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100007,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100007,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100023,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100010,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100010,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100005,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100000,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100000,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100024,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100020,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100020,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100005,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100000,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100007,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100023,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100011,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100005,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100020,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100011,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100009,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100009,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100017,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100000,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100009,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100009,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100024,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100022,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100019,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100018,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100022,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100016,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100002,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100016,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100002,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100024,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100023,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100008,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100015,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100016,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100008,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100019,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100002,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100018,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100021,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100017,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100012,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100003,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100004,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100009,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100023,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100010,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100014,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100002,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100016,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100015,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100009,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100010,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100015,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100006,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100010,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100018,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100021,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100017,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100024,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100022,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100019,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100018,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100021,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100017,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100013,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100004,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100012,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100007,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100006,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100007,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100013,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100002,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100015,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100015,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100004,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100024,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100008,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100019,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100019,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "queue",
+    "seed": 100012,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100016,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "no_stop",
+    "seed": 100000,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100023,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100004,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100014,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100002,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100015,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100011,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100020,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100003,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100013,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100008,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100018,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "rolling_stop",
+    "seed": 100006,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100013,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100010,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100020,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100010,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100018,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "full_stop",
+    "seed": 100001,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100001,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100002,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100017,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100021,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100014,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100005,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "tailgate",
+    "seed": 100008,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "occluded",
+    "seed": 100004,
+    "intended": "PASS",
+    "verdict": "PASS",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100000,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "brief_stop",
+    "seed": 100023,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   },
+   {
+    "family": "wrong_way",
+    "seed": 100013,
+    "intended": "FAIL",
+    "verdict": "FAIL",
+    "outcome": "correct"
+   }
+  ]
+ },
+ "code_commit": "bfa3a71c658814936f57e564176e01bc94f0f343"
+}

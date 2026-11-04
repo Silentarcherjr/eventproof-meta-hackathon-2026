@@ -1,0 +1,90 @@
+{
+  "raw_output": {
+    "anchor": "center",
+    "assumptions": [
+      "'wait' interpreted as stopped still dwell, so DWELL max_speed 0.05",
+      "crossing means travel direction left-to-right, which per line mapping is direction to_left",
+      "BEFORE has no time limit, any earlier qualifying dwell satisfies",
+      "objects that never cross pass vacuously",
+      "anchor center chosen because top-down waiting zone and stop line are drawn for object centers"
+    ],
+    "entity_concept": "car",
+    "entity_name": "car",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_left",
+          "line": "stop_line",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": 0.05,
+          "min_ms": 1500,
+          "op": "DWELL",
+          "zone": "waiting"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_left",
+          "line": "stop_line",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every car that crosses the stop line to_left must have first dwelled stopped at least 1500 ms continuously in the waiting zone.",
+    "root": 2,
+    "rule_id": "car-wait-before-stop-line",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-spark-1.3",
+  "request_ids": [
+    "chatcmpl-01a1a627-92aa-7330-9ad5-20a5fcb571d5"
+  ],
+  "schema": "rule-schema/4-anchor",
+  "attempts": 1,
+  "usage": [
+    {
+      "completion_tokens": 3252,
+      "prompt_tokens": 1558,
+      "total_tokens": 4810,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 2967,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+  "latency_s": 26.69
+}
