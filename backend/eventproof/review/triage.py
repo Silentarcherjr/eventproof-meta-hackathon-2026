@@ -11,7 +11,19 @@ Deterministic; no model. This states what the evidence supports, not a certifica
 
 from __future__ import annotations
 
-from eventproof.validation.evaluate import wilson
+import math
+
+
+def wilson(k: int, n: int, z: float = 1.959964) -> tuple[float, float]:
+    """Wilson 95 % interval (same formula as validation.evaluate.wilson; the API may not import the validation package,
+    which keeps selection code away from the final test set)."""
+    if n == 0:
+        return (0.0, 1.0)
+    p = k / n
+    d = 1 + z * z / n
+    c = (p + z * z / (2 * n)) / d
+    h = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d
+    return (round(c - h, 4), round(c + h, 4))
 
 
 def labels_needed(target: float, limit: int = 100_000) -> int:
