@@ -1382,7 +1382,7 @@
       "title": "Drag the law (threshold grid: 0-17 tickets), Ticket court (20 cases), contract block; README rebuilt around one ticket",
       "priority": "P1",
       "gate": "G6",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "P1-21",
         "P1-22"
@@ -1395,15 +1395,16 @@
         "cd frontend && npx playwright test"
       ],
       "evidence_paths": [
+        "GitHub Actions success on ca2493e",
         "benchmark/law/grid.json",
         "benchmark/law/PREREGISTRATION.md (398f05a)"
       ],
-      "commit_sha": null,
+      "commit_sha": "ca2493e",
       "pr_url": null,
       "started_at": "2026-11-04T03:00:00Z",
       "updated_at": "2026-11-04T04:30:00Z",
       "blocker": null,
-      "next_action": "mark DONE_VERIFIED when CI is green",
+      "next_action": "none",
       "cost_note": "$0 (deterministic)"
     }
   ]
