@@ -51,7 +51,7 @@ person *with* a hard hat, a box on a conveyor).
   from recorded responses.
 
 **Try it.** A live studio runs on Vercel: pick a real clip, type a rule, see each object's verdict over the video in
-about 30 s, then attack, repair and print the certificate; open **Ticket court** (20 real cases) and **Drag the law**. Locally, with no API key: `docker compose up`.
+about 30 s, then attack, repair and print the certificate; open **Ticket court** (20 real cases), **Drag the law**, and the **Traffic lab** (synthetic scenes with known truth: move the two open choices and watch verdicts flip, see the one-frame minimal pair, or type your own rule for Muse Spark to compile). Locally, with no API key: `docker compose up`.
 
 ![Real footage: the same SAM 3.1 tracks judged by two readings of "wait"](docs/media/real_traffic.png)
 

@@ -102,8 +102,6 @@ showcase scenes. A rule for another entity is reported as having no evaluable ca
 Validation: **377 passed, 1 skipped** (`uv run pytest -q`), Ruff, `npx tsc --noEmit` and
 `npx next build` passed. Browser verification covered navigation, video playback, both verdict flips,
 any-motion mode and the recorded compile. See `showcase/VERIFICATION.md` and `showcase/lab-browser.png`.
-The participant selected ports **8001/3001** to preserve the existing servers on 8000/3000:
-[open Traffic lab locally](http://localhost:3001/lab). The verification backend runs in local mode
-with both model allowances zero. No live Meta calls or spend in this session; live compilation
+No live Meta calls or spend in this session; live compilation
 was tested only through a fake compiler and an exhausted-budget test. Branch `traffic-lab` awaits
 separate review/merge; `main` was not changed.
