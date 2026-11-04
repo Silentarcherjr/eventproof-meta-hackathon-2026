@@ -1,0 +1,166 @@
+{
+  "raw_output": {
+    "anchor": "center",
+    "assumptions": [
+      "Anchor is 'center' because the boxes are vehicles viewed from above and the line description states that their centre is the metric position, while bottom_center is the downstream AABB edge rather than wheels.",
+      "The exceptions for direction by a police officer or a traffic control signal are left out because that behaviour is not represented by the provided zones, lines, or tracked vehicle events.",
+      "The presence of the stop sign and intersection is taken from the binding of stop_zone and stop_line to this approach; the rule does not separately detect a stop sign.",
+      "A stop is operationalised as dwelling continuously in stop_zone while still, using max_speed 0.05 as the DSL still threshold.",
+      "The statute states no minimum stopped duration, so a 1000 ms still dwell is assumed as evidence of a complete stop rather than slow rolling.",
+      "There is no assumed time limit between stopping and crossing stop_line, so BEFORE uses within_ms null.",
+      "Direction 'to_right' is the inbound crossing of stop_line, corresponding to movement in the +y direction as described for the line; the statute itself does not state an image direction.",
+      "Each tracked vehicle is checked independently and its motion is used as the proxy for its driver, who is not tracked separately.",
+      "Under the IMPLIES idiom, a vehicle that never crosses stop_line passes; crossing is the event that triggers the requirement to have stopped first.",
+      "Stopping with the vehicle centre in stop_zone, the last 10 metres before the stop line, counts as stopping at the near side at the marked stop line."
+    ],
+    "entity_concept": "vehicle",
+    "entity_name": "vehicle",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_right",
+          "line": "stop_line",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": 0.05,
+          "min_ms": 1000,
+          "op": "DWELL",
+          "zone": "stop_zone"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_right",
+          "line": "stop_line",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every vehicle that crosses stop_line inbound must first stop, dwelling still in stop_zone, before that crossing.",
+    "provenance": [
+      {
+        "param": "anchor",
+        "quote": "",
+        "reason": "Boxes are top-down vehicles and the line description states the centre is the metric position, whereas bottom_center is the downstream AABB edge and not wheels.",
+        "source": "ASSUMED",
+        "value": "center"
+      },
+      {
+        "param": "entity_tracked",
+        "quote": "vehicle",
+        "reason": "",
+        "source": "QUOTED",
+        "value": "vehicle"
+      },
+      {
+        "param": "stop_zone (zone)",
+        "quote": "at the near side of the intersection at a clearly marked stop line",
+        "reason": "",
+        "source": "QUOTED",
+        "value": "DWELL@stop_zone"
+      },
+      {
+        "param": "dwell_min_ms",
+        "quote": "",
+        "reason": "Statute requires a stop but gives no hold duration; 1000 ms of still dwell is the operational threshold assumed to evidence a complete stop.",
+        "source": "ASSUMED",
+        "value": "1000"
+      },
+      {
+        "param": "still_max_speed",
+        "quote": "",
+        "reason": "Statute says 'shall stop' but gives no numeric speed; 0.05 is the DSL threshold supplied for stopped/still.",
+        "source": "ASSUMED",
+        "value": "max_speed=0.05"
+      },
+      {
+        "param": "stop_line (line)",
+        "quote": "clearly marked stop line",
+        "reason": "",
+        "source": "QUOTED",
+        "value": "CROSSES@stop_line"
+      },
+      {
+        "param": "crossing_direction",
+        "quote": "",
+        "reason": "Statute gives no image direction; line description says inbound vehicles approach from y<0.6 toward y>0.6, and moving downwards (+y) across it is defined as to_right.",
+        "source": "ASSUMED",
+        "value": "to_right"
+      }
+    ],
+    "root": 2,
+    "rule_id": "",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-wonder-1.0",
+  "request_ids": [
+    "chatcmpl-01a1a6e8-c389-7708-9a80-f72c09d0bfe4",
+    "chatcmpl-01a1a6f3-2b8a-72d5-935b-4c33db6a4bec"
+  ],
+  "schema": "rule-schema/6-law",
+  "attempts": 2,
+  "usage": [
+    {
+      "completion_tokens": 8078,
+      "prompt_tokens": 678,
+      "total_tokens": 8756,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 7279,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 628,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    },
+    {
+      "completion_tokens": 10063,
+      "prompt_tokens": 1636,
+      "total_tokens": 11699,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 9115,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Unless otherwise directed by a police officer or traffic control signal, the driver of a vehicle approaching a stop sign at an intersection shall stop at the near side of the intersection at a clearly marked stop line.",
+  "latency_s": 740.25
+}

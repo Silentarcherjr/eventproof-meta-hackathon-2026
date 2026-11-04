@@ -1,0 +1,149 @@
+{
+  "raw_output": {
+    "anchor": "center",
+    "assumptions": [
+      "Police-officer or traffic-control-signal direction exception is ignored because the camera cannot see it.",
+      "Stop is interpreted as a full stop (max_speed 0.05) continuously inside stop_zone for at least 1000 ms, although no duration is stated.",
+      "The near side at a clearly marked stop line is interpreted as stop_zone, the last 10 m before stop_line.",
+      "Crossing stop_line inbound triggers the stop obligation; vehicles that never cross pass.",
+      "Any prior dwell in stop_zone before the first inbound crossing satisfies the rule; no maximum interval is enforced.",
+      "Anchor center is used because boxes are top-down vehicles whose centre is metric position, while bottom_center is downstream AABB edge, not wheels."
+    ],
+    "entity_concept": "vehicle",
+    "entity_name": "vehicle",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_right",
+          "line": "stop_line",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": 0.05,
+          "min_ms": 1000,
+          "op": "DWELL",
+          "zone": "stop_zone"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_right",
+          "line": "stop_line",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every vehicle that crosses the stop line inbound must have first come to a full stop inside the approach waiting zone before crossing.",
+    "provenance": [
+      {
+        "param": "entity",
+        "quote": "driver of a vehicle",
+        "reason": "",
+        "source": "QUOTED",
+        "value": "vehicle"
+      },
+      {
+        "param": "CROSSES.line",
+        "quote": "at a clearly marked stop line",
+        "reason": "",
+        "source": "QUOTED",
+        "value": "stop_line"
+      },
+      {
+        "param": "DWELL.zone",
+        "quote": "stop at the near side of the intersection at a clearly marked stop line",
+        "reason": "",
+        "source": "QUOTED",
+        "value": "stop_zone"
+      },
+      {
+        "param": "DWELL.max_speed",
+        "quote": "",
+        "reason": "Rule says 'shall stop' but gives no speed threshold; 0.05 interprets stop as fully stopped/still.",
+        "source": "ASSUMED",
+        "value": "0.05"
+      },
+      {
+        "param": "DWELL.min_ms",
+        "quote": "",
+        "reason": "Rule gives no stop duration; 1000 ms is assumed minimal measurable stop to distinguish a stop from a slow roll.",
+        "source": "ASSUMED",
+        "value": "1000"
+      },
+      {
+        "param": "CROSSES.direction",
+        "quote": "",
+        "reason": "Rule does not state crossing direction; to_right is inbound (+y) direction per line description vehicles approach from y<0.6 toward y>0.6.",
+        "source": "ASSUMED",
+        "value": "to_right"
+      },
+      {
+        "param": "anchor",
+        "quote": "",
+        "reason": "Boxes are vehicles viewed from above; centre is metric position per line description, bottom_center is downstream AABB edge not wheels.",
+        "source": "ASSUMED",
+        "value": "center"
+      },
+      {
+        "param": "BEFORE.within_ms",
+        "quote": "",
+        "reason": "Rule states no maximum interval between stop and crossing; no time limit is enforced.",
+        "source": "ASSUMED",
+        "value": "null"
+      }
+    ],
+    "root": 2,
+    "rule_id": "stop-at-stop-line",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-spark-1.3",
+  "request_ids": [
+    "chatcmpl-01a1a6e4-aafd-717d-9a91-2b4650077bab"
+  ],
+  "schema": "rule-schema/6-law",
+  "attempts": 1,
+  "usage": [
+    {
+      "completion_tokens": 5697,
+      "prompt_tokens": 1942,
+      "total_tokens": 7639,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 4884,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 1905,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Unless otherwise directed by a police officer or traffic control signal, the driver of a vehicle approaching a stop sign at an intersection shall stop at the near side of the intersection at a clearly marked stop line.",
+  "latency_s": 49.54
+}

@@ -1,0 +1,3640 @@
+{
+  "schema": "eventproof-interaction-repeats-compiles/1",
+  "preregistration": "benchmark/interaction/REPEATS_PREREGISTRATION.md",
+  "preregistration_sha256": "3ca91ac08e28a3ad70a522f4dab413906511618ef96d17dcda672efe97db1443",
+  "layout": {
+    "zones": [
+      {
+        "zone": {
+          "id": "stop_zone",
+          "polygon": [
+            [
+              0.45,
+              0.5
+            ],
+            [
+              0.55,
+              0.5
+            ],
+            [
+              0.55,
+              0.6
+            ],
+            [
+              0.45,
+              0.6
+            ]
+          ]
+        },
+        "description": "Approach lane waiting zone: last 10 metres before marked STOP limit line. Top-down metric square, 100 metres wide/high. Zone drawn 10 m wide for compilation; actual mapped approach-lane polygon is bound for evaluation. +y is inbound/downstream."
+      }
+    ],
+    "lines": [
+      {
+        "line": {
+          "id": "stop_line",
+          "a": [
+            0.45,
+            0.6
+          ],
+          "b": [
+            0.55,
+            0.6
+          ]
+        },
+        "description": "Marked STOP limit line across inbound approach, left to right; vehicles approach from y<0.6 and cross towards y>0.6. Frame width = 100 metres. Boxes represent vehicles viewed from above; their centre is metric position, bottom_center is downstream AABB edge, not wheels."
+      }
+    ]
+  },
+  "live_calls": 61,
+  "code_commit": "9cc0a6baf6ad074c2c633f19086370b2d3df5d7c",
+  "runs": [
+    {
+      "run": "ca-veh-22450a__muse-spark-1.3__00",
+      "model": "muse-spark-1.3",
+      "statute": "ca-veh-22450a",
+      "index": 0,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must have first come to a stop inside the stop zone.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-limit-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Limit line is assumed marked in this scene, so the 'if marked' branch applies.",
+        "Crosswalk and intersecting-roadway entrance alternatives have no geometry and are omitted; only limit-line compliance is checked.",
+        "'shall stop' is interpreted as remaining stationary continuously for 1000 ms inside the stop_zone.",
+        "Inbound approach crossing is mapped to direction to_right per line description.",
+        "Stop must precede crossing with no maximum time between stop and crossing.",
+        "Anchor center is used because top-down vehicle centre is metric position; bottom_center is downstream AABB edge, not wheels.",
+        "Stop-sign presence and intersection context are not visible to the camera and are not checked; all vehicles are checked."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6db-798c-742f-9781-1a570d568c81"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 6730,
+          "prompt_tokens": 1967,
+          "total_tokens": 8697,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5946,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 0,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "ca-veh-22450a__muse-spark-1.3__01",
+      "model": "muse-spark-1.3",
+      "statute": "ca-veh-22450a",
+      "index": 1,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 500.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must have first stopped stationary in the stop zone.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-limit-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "A marked limit line is present as stop_line, so the 'if marked' branch applies; the 'otherwise before entering the crosswalk' and 'if there is no limit line or crosswalk at the entrance' alternatives are out of scope with no geometry and are not checked.",
+        "'shall stop' with no stated duration is interpreted as dwelling continuously stationary at max_speed 0.05 for 500 ms inside stop_zone.",
+        "The required stop must occur in stop_zone, the last 10 metres before the limit line, and precede the first inbound crossing of stop_line.",
+        "Only inbound approach crossings mapped to to_right (+y) trigger the obligation; vehicles never crossing inbound pass vacuously.",
+        "Stop-sign presence and intersection context are not detectable, so the check is applied to every vehicle that crosses stop_line inbound.",
+        "Anchor is center because top-down box centre is metric position while bottom_center is only the downstream AABB edge, not wheels."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6db-5189-74b7-91cc-62bb48cefea6"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 5362,
+          "prompt_tokens": 1967,
+          "total_tokens": 7329,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 4550,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 0,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "ca-veh-22450a__muse-spark-1.3__02",
+      "model": "muse-spark-1.3",
+      "statute": "ca-veh-22450a",
+      "index": 2,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must first stop in the stop zone before crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-limit-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Limit line is assumed marked in this scene, so only the 'stop at a limit line, if marked' branch is checked.",
+        "Crosswalk and entrance to the intersecting roadway alternative stop positions are omitted because no geometry for them is provided.",
+        "Stop-sign presence is not detected; every tracked vehicle is treated as approaching a stop sign.",
+        "Stop is interpreted as continuously inside stop_zone while stopped for 1000 ms; the statute states no duration.",
+        "stop_zone, the last 10 metres before the limit line, is used as proxy for 'at a limit line'.",
+        "Inbound approach in +y direction is mapped to CROSSES direction to_right per line definition.",
+        "Anchor center is used because boxes are top-down and centre is defined as metric position, while bottom_center is downstream AABB edge.",
+        "Vehicles that never cross the stop line inbound pass vacuously; only crossing vehicles must have stopped before.",
+        "No maximum time is imposed between the stop and the crossing."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6db-77cd-735e-b94a-f8744bbd8b45"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 6632,
+          "prompt_tokens": 1967,
+          "total_tokens": 8599,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5789,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 0,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "ca-veh-22450a__muse-spark-1.3__03",
+      "model": "muse-spark-1.3",
+      "statute": "ca-veh-22450a",
+      "index": 3,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line must first come to a stop in the stop zone.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-limit-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Assume a marked limit line is present; the statute's otherwise cases of stopping before the crosswalk or at the entrance to the intersecting roadway when there is no limit line or crosswalk have no geometry and are omitted.",
+        "Assume every vehicle evaluated is approaching a stop sign at the entrance to, or within, an intersection; stop-sign presence cannot be seen by the camera.",
+        "Assume stop at a limit line means a stopped dwell inside stop_zone, the last 10 metres before the stop line, before crossing the stop line.",
+        "Assume stop means continuously stopped with max_speed 0.05 for 1000 ms; the statute states stop with no duration.",
+        "Assume inbound crossing over stop_line towards +y corresponds to direction to_right per the line definition.",
+        "Assume anchor center is the measured point because boxes are viewed from above and centre is metric position, while bottom_center is only the downstream AABB edge.",
+        "BEFORE is checked with no time limit between stop and crossing."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6db-78e2-732f-97ca-6b8a119e6e7e"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 6687,
+          "prompt_tokens": 1967,
+          "total_tokens": 8654,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5894,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 0,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "ca-veh-22450a__muse-spark-1.3__04",
+      "model": "muse-spark-1.3",
+      "statute": "ca-veh-22450a",
+      "index": 4,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must have first stopped stationary inside the approach waiting zone.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-limit-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Limit line is assumed marked at this site so only the 'if marked' branch is checked; crosswalk and entrance-to-roadway alternatives are out of scope and have no geometry.",
+        "All tracked vehicles in the approach are assumed subject as approaching a stop sign; sign presence is not detectable.",
+        "'Stop' is interpreted as remaining effectively stationary continuously for at least 1000 ms inside stop_zone; statute states no duration.",
+        "Stopping 'at' the limit line is interpreted as stopping anywhere inside stop_zone, the last 10 m before the line.",
+        "Only inbound crossings from y<0.6 to y>0.6, encoded as to_right, trigger the requirement; vehicles that never cross pass vacuously."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6dc-74cb-75e5-9760-3cf8cedea85c"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 8094,
+          "prompt_tokens": 1967,
+          "total_tokens": 10061,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 7291,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "ca-veh-22450a__muse-spark-1.3__05",
+      "model": "muse-spark-1.3",
+      "statute": "ca-veh-22450a",
+      "index": 5,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must have first stopped still inside the approach waiting zone.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-limit-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Stop-sign presence and 'approaching a stop sign at the entrance to, or within, an intersection' cannot be seen by the camera, so every tracked vehicle is checked as if subject to the rule.",
+        "The limit line is assumed marked at this location so the 'if marked' branch applies; the 'otherwise before entering the crosswalk' and 'entrance to the intersecting roadway' branches are omitted because no crosswalk or entrance geometry is provided.",
+        "'Stop at a limit line' is interpreted as coming to a complete stop inside stop_zone, defined as the last 10 metres before the marked STOP limit line, before crossing stop_line.",
+        "The statute states 'shall stop' with no hold duration, so a minimum continuously-stopped dwell of 1000 ms is assumed to count as a stop.",
+        "'Stop' is interpreted as only while stopped/still, encoded as max_speed 0.05, although the statute states no speed threshold.",
+        "Inbound travel (+y, from y<0.6 towards y>0.6) is encoded as direction to_right per line metadata.",
+        "Anchor center is used because boxes are top-down vehicles whose centre is metric position, while bottom_center is only the downstream AABB edge per line notes.",
+        "Objects that never cross the stop line inbound vacuously pass, per 'every X must do A before B' idiom."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6dc-75f1-7300-9e8d-1c967f52fd0f"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 7212,
+          "prompt_tokens": 1967,
+          "total_tokens": 9179,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 6292,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "ca-veh-22450a__muse-spark-1.3__06",
+      "model": "muse-spark-1.3",
+      "statute": "ca-veh-22450a",
+      "index": 6,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must have first stopped continuously in the approach waiting zone before crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-limit-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Anchor is center because boxes are top-down vehicles whose centre is metric position; bottom_center is downstream AABB edge, not ground contact.",
+        "Stop-sign presence cannot be seen; every tracked vehicle in the approach is treated as subject to the stop-sign rule.",
+        "Limit line is assumed marked in this deployment (stop_line/stop_zone provided), so the 'otherwise before entering the crosswalk' and 'if there is no limit line or crosswalk' branches are out of scope and not checked.",
+        "Approaching is interpreted as inbound (+y) motion, encoded as to_right per line geometry.",
+        "Statute specifies stop without duration; 1000 ms continuous stopped dwell is required as minimum observable stop.",
+        "Stop must occur in stop_zone (last 10 m before line) to count as 'at' the limit line.",
+        "Objects that never cross the stop line inbound pass; only the first inbound crossing is checked for a preceding stop."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6dc-5fef-77ab-9be9-086517127c32"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 6330,
+          "prompt_tokens": 1967,
+          "total_tokens": 8297,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5576,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "ca-veh-22450a__muse-spark-1.3__07",
+      "model": "muse-spark-1.3",
+      "statute": "ca-veh-22450a",
+      "index": 7,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must first stop in the approach waiting zone before crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-limit-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Limit line is assumed marked so stop_line/stop_zone apply; crosswalk and intersecting-roadway-entrance branches are omitted because no geometry is listed for them.",
+        "Stop is interpreted as remaining continuously inside stop_zone while stopped for 1000 ms; the statute states only 'shall stop' with no duration.",
+        "Stopped is interpreted as max_speed 0.05; the statute gives no speed value.",
+        "Inbound crossing toward the intersection (+y) is interpreted as direction to_right per the stop_line definition.",
+        "Anchor center is used because boxes are top-down vehicles whose centre is metric position.",
+        "Objects that never cross the stop line pass vacuously via IMPLIES."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6dd-9b2a-7176-afc4-657c935b573c"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 6382,
+          "prompt_tokens": 2399,
+          "total_tokens": 8781,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5599,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 0,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 2
+    },
+    {
+      "run": "ca-veh-22450a__muse-spark-1.3__08",
+      "model": "muse-spark-1.3",
+      "statute": "ca-veh-22450a",
+      "index": 8,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line must have first stopped continuously for 1000 ms inside the stop zone before crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-limit-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Stop is interpreted as remaining stopped with max_speed 0.05 continuously for 1000 ms inside stop_zone; the statute states 'shall stop' with no duration.",
+        "Only the marked limit-line branch is checked; the 'otherwise before entering the crosswalk' and 'entrance to the intersecting roadway' alternatives have no provided zones or lines and are not checked.",
+        "Vehicles that never cross the stop_line pass vacuously; a stop is required only when crossing occurs.",
+        "Anchor center is used because boxes are top-down vehicles whose centre is metric position while bottom_center is only the downstream AABB edge.",
+        "Inbound approach motion (+y) is encoded as direction to_right per the stop_line definition.",
+        "Presence of a stop sign and intersection entrance is assumed from camera placement; every tracked vehicle is treated as approaching the sign."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6dd-f455-74b7-9487-894886d6933c"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 10437,
+          "prompt_tokens": 1967,
+          "total_tokens": 12404,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 9639,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "ca-veh-22450a__muse-spark-1.3__09",
+      "model": "muse-spark-1.3",
+      "statute": "ca-veh-22450a",
+      "index": 9,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must have first stopped in the approach waiting zone.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-limit-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Anchor is 'center' because boxes are top-down with centre as metric position while bottom_center is only the downstream AABB edge, not ground contact.",
+        "All vehicles evaluated are assumed to be approaching a stop sign with a marked limit line, as stop-sign presence is not detectable; zone/line placement provides that context.",
+        "Only the marked limit-line case is checked; the 'otherwise before entering the crosswalk' and 'if there is no limit line or crosswalk at the entrance' alternatives have no crosswalk/entrance geometry and are excluded.",
+        "Stop is interpreted as remaining continuously stopped (speed <=0.05) inside stop_zone for at least 1000 ms; the statute states no duration.",
+        "Inbound approach across stop_line is encoded as direction 'to_right' per line definition (+y is to_right); the statute only says 'approaching'.",
+        "No maximum time between stop and crossing is enforced (within_ms null); the statute states no time limit.",
+        "Vehicles that never cross the stop line pass vacuously via IMPLIES."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6dd-6cbc-77ae-a3e2-cba4033edb6f"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 6760,
+          "prompt_tokens": 1967,
+          "total_tokens": 8727,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5955,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "ca-veh-22450a__muse-wonder-1.0__00",
+      "model": "muse-wonder-1.0",
+      "statute": "ca-veh-22450a",
+      "index": 0,
+      "transport_errors": [],
+      "status": "invalid",
+      "error": "invalid rule after 2 attempts: BEFORE node 3 must not have children",
+      "live_calls": 2
+    },
+    {
+      "run": "ca-veh-22450a__muse-wonder-1.0__01",
+      "model": "muse-wonder-1.0",
+      "statute": "ca-veh-22450a",
+      "index": 1,
+      "transport_errors": [],
+      "status": "invalid",
+      "error": "invalid rule after 2 attempts: unused nodes [1, 2, 3, 4]",
+      "live_calls": 2
+    },
+    {
+      "run": "ca-veh-22450a__muse-wonder-1.0__02",
+      "model": "muse-wonder-1.0",
+      "statute": "ca-veh-22450a",
+      "index": 2,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle must dwell while still in the approach stop zone before crossing the marked STOP line inbound; vehicles that never cross the line pass.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop_at_limit_line_before_crossing",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Anchor is 'center': the supplied geometry is top-down and states that a vehicle's centre is its metric position, whereas 'bottom_center' is only the downstream AABB edge, not wheels or ground contact.",
+        "The marked-limit-line branch applies: the provided 'stop_line' is the marked STOP limit line and 'stop_zone' is the last 10 metres before it, so the crosswalk and intersecting-roadway fallback branches, for which no geometry is supplied, are not encoded.",
+        "A stop is operationalised as a continuous DWELL in 'stop_zone' for at least 1000 ms at max_speed 0.05, the DSL threshold for being stopped/still; the statute requires a stop but specifies no duration or numeric speed.",
+        "Stopping while still anywhere in the 10-metre approach waiting zone counts as stopping at the limit line for video purposes; exact bumper position on the line is not measured.",
+        "Inbound crossing direction is 'to_right' because the supplied line definition maps movement in +y, from y<0.6 towards y>0.6, to 'to_right'.",
+        "The presence of a stop sign and an intersection approach is taken from the evaluation scene described by the STOP line and zone; stop signs, crosswalks, drivers and the intersecting roadway are not tracked objects or events and are not separately encoded.",
+        "A tracked vehicle represents the driver of that vehicle; each vehicle is assessed independently.",
+        "Following the prescribed idiom, a vehicle that never crosses 'stop_line' passes; no maximum time between stopping and crossing is imposed, so BEFORE within_ms is null."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6de-c0c5-760b-b41c-ed1ba769a8e5",
+        "chatcmpl-01a1a6df-7e24-72e4-950e-0c2aeef8b075"
+      ],
+      "attempts": 2,
+      "usage": [
+        {
+          "completion_tokens": 10411,
+          "prompt_tokens": 703,
+          "total_tokens": 11114,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 9238,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 628,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        },
+        {
+          "completion_tokens": 6626,
+          "prompt_tokens": 1895,
+          "total_tokens": 8521,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5524,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 628,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 2
+    },
+    {
+      "run": "ca-veh-22450a__muse-wonder-1.0__03",
+      "model": "muse-wonder-1.0",
+      "statute": "ca-veh-22450a",
+      "index": 3,
+      "transport_errors": [],
+      "status": "invalid",
+      "error": "invalid rule after 2 attempts: unused nodes [1, 2]",
+      "live_calls": 2
+    },
+    {
+      "run": "ca-veh-22450a__muse-wonder-1.0__04",
+      "model": "muse-wonder-1.0",
+      "statute": "ca-veh-22450a",
+      "index": 4,
+      "transport_errors": [],
+      "status": "invalid",
+      "error": "invalid rule after 2 attempts: unused nodes [1, 2]",
+      "live_calls": 2
+    },
+    {
+      "run": "ca-veh-22450a__muse-wonder-1.0__05",
+      "model": "muse-wonder-1.0",
+      "statute": "ca-veh-22450a",
+      "index": 5,
+      "transport_errors": [],
+      "status": "invalid",
+      "error": "invalid rule after 2 attempts: unused nodes [1, 2]",
+      "live_calls": 2
+    },
+    {
+      "run": "ca-veh-22450a__muse-wonder-1.0__06",
+      "model": "muse-wonder-1.0",
+      "statute": "ca-veh-22450a",
+      "index": 6,
+      "transport_errors": [],
+      "status": "invalid",
+      "error": "invalid rule after 2 attempts: unused nodes [1, 2]",
+      "live_calls": 3
+    },
+    {
+      "run": "ca-veh-22450a__muse-wonder-1.0__07",
+      "model": "muse-wonder-1.0",
+      "statute": "ca-veh-22450a",
+      "index": 7,
+      "transport_errors": [],
+      "status": "invalid",
+      "error": "model returned non-JSON content: Expecting value: line 129376 column 1 (char 389720)",
+      "live_calls": 2
+    },
+    {
+      "run": "ca-veh-22450a__muse-wonder-1.0__08",
+      "model": "muse-wonder-1.0",
+      "statute": "ca-veh-22450a",
+      "index": 8,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "first": {
+            "max_speed": 0.05,
+            "min_ms": 1000.0,
+            "op": "DWELL",
+            "zone": "stop_zone"
+          },
+          "op": "BEFORE",
+          "then": {
+            "direction": "to_right",
+            "line": "stop_line",
+            "op": "CROSSES"
+          },
+          "within_ms": null
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "IMPLIES(OCCURS(CROSSES(stop_line, to_right)), BEFORE(DWELL(stop_zone, min_ms = 1000, max_speed = 0.05), CROSSES(stop_line, to_right), within_ms = null)).",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "rule-",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "The marked-limit-line branch applies in this scene: stop_line is described as a marked STOP limit line and stop_zone as the last 10 metres before it, so the crosswalk and intersecting-roadway-entrance alternatives, for which no zones or lines are provided, are not separately encoded.",
+        "All tracked vehicles crossing stop_line inbound on this approach are treated as vehicles approaching a stop sign; the presence of a stop sign for an individual vehicle is not verified by the expression, because no stop-sign attribute or geometry is provided.",
+        "A stop is operationalised as remaining continuously in stop_zone for at least 1000 ms at max_speed 0.05 (stopped/still); stopping anywhere within that last-10-metre waiting zone before crossing counts as stopping at the limit line.",
+        "The measured point is anchor 'center': boxes represent vehicles viewed from above and their centre is the metric position, while bottom_center is the downstream AABB edge, not wheels.",
+        "Inbound crossing is direction 'to_right': vehicles approach from y<0.6 towards y>0.6, moving downwards (+y), which the line description encodes as to_right.",
+        "Vehicles that never cross stop_line inbound pass under IMPLIES(OCCURS(crossing), BEFORE(stop, crossing)), for example because they do not enter the intersection during the clip.",
+        "No maximum gap is imposed between the stop and the crossing (BEFORE within_ms is null), because the statute specifies none.",
+        "The driver is represented by the motion of the vehicle; no separate driver behaviour is encoded."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e0-ff30-7389-bd2b-37eabf75298c"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 10054,
+          "prompt_tokens": 703,
+          "total_tokens": 10757,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 9015,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 628,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "ca-veh-22450a__muse-wonder-1.0__09",
+      "model": "muse-wonder-1.0",
+      "statute": "ca-veh-22450a",
+      "index": 9,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "A vehicle passes if it never crosses the stop line inbound, or if while in the stop zone it dwells stopped for at least 1000 ms before its first inbound crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop_at_limit_line_2026",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Anchor is 'center': the scene is top-down and the line description states the box centre is the metric position, while 'bottom_center' is the downstream AABB edge, not wheels; the statute does not specify a measured point.",
+        "The marked-limit-line branch applies in this scene: 'stop_line' is described as a marked STOP limit line and 'stop_zone' as the zone before it, so the statute's crosswalk and intersecting-roadway-entrance alternatives, for which no geometry is provided, are not encoded.",
+        "'Stop' is operationalised as a DWELL in 'stop_zone' continuously for at least 1000 ms with max_speed 0.05 (stopped/still); the statute states no duration or speed threshold.",
+        "'stop_zone', the last 10 metres before the line, is used as the available proxy for stopping at the limit line; stopping anywhere in that zone counts because no narrower at-line zone is provided.",
+        "Encoded as IMPLIES(OCCURS(inbound crossing), BEFORE(stop, inbound crossing)): a vehicle that never crosses 'stop_line' inbound passes; the driver is represented by the tracked vehicle, as the driver is not separately tracked.",
+        "Inbound crossing is CROSSES('stop_line', 'to_right') because vehicles approach in the +y direction and the line description maps that crossing to 'to_right'.",
+        "BEFORE has within_ms null (no time limit): the statute requires the stop to precede the crossing but sets no maximum gap between them.",
+        "Presence of a stop sign and approach to an intersection are taken as scene context; sign detection is not separately tested."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e1-a05a-77f8-9d45-03c00b8cd974",
+        "chatcmpl-01a1a6e2-2cc0-771e-9fe0-1d1f0a1f7db9"
+      ],
+      "attempts": 2,
+      "usage": [
+        {
+          "completion_tokens": 10704,
+          "prompt_tokens": 703,
+          "total_tokens": 11407,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 9487,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 628,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        },
+        {
+          "completion_tokens": 5529,
+          "prompt_tokens": 1921,
+          "total_tokens": 7450,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 4767,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 628,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 2
+    },
+    {
+      "run": "md-tr-21-707a__muse-spark-1.3__00",
+      "model": "muse-spark-1.3",
+      "statute": "md-tr-21-707a",
+      "index": 0,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must first dwell stopped in the stop zone for at least 1000 ms.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Anchor 'center' is used because boxes are top-down with centre as metric position, while bottom_center is downstream AABB edge not ground contact.",
+        "'stop_zone' (last 10 m before the line) is taken to represent 'at the near side of the intersection at a clearly marked stop line'.",
+        "Inbound crossing (+y from y<0.6 to y>0.6) is encoded as direction 'to_right' per line definition; only inbound crossings trigger the requirement.",
+        "'shall stop' is interpreted as stopped (max_speed 0.05) for at least 1000 ms; the statute states no duration so 1000 ms is assumed minimum detectable stop.",
+        "'Unless otherwise directed by a police officer or traffic control signal' is omitted because officer direction and signal state are not visible to the camera.",
+        "Vehicles that never cross the stop line inbound vacuously pass."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e1-fefa-766d-aeee-f91ff481adf4"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 6987,
+          "prompt_tokens": 1942,
+          "total_tokens": 8929,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 6340,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 0,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "md-tr-21-707a__muse-spark-1.3__01",
+      "model": "muse-spark-1.3",
+      "statute": "md-tr-21-707a",
+      "index": 1,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must have first stopped inside the approach waiting zone.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "'Unless otherwise directed by a police officer or traffic control signal' cannot be seen by the camera and is excluded; all vehicles are checked as if no such direction exists.",
+        "Stopping is interpreted as remaining continuously inside stop_zone while stopped.",
+        "A minimum stopped dwell of 1000 ms is assumed because the statute states no duration.",
+        "The stop must occur before the first inbound crossing of stop_line; vehicles that never cross pass vacuously.",
+        "Inbound approach (+y from y<0.6 to y>0.6) is encoded as direction to_right per the line definition.",
+        "No maximum time gap is imposed between the stop and the crossing.",
+        "Anchor center is used because boxes are top-down with centre as metric position while bottom_center is defined as downstream AABB edge, not wheels."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e2-8cda-74ef-b1d5-ee4014a085f2"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 5998,
+          "prompt_tokens": 1942,
+          "total_tokens": 7940,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5195,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "md-tr-21-707a__muse-spark-1.3__02",
+      "model": "muse-spark-1.3",
+      "statute": "md-tr-21-707a",
+      "index": 2,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line must first stop stopped in the stop zone before that crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "vehicle-stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Exception 'Unless otherwise directed by a police officer or traffic control signal' is ignored as not camera-visible.",
+        "Stop with no stated duration is interpreted as continuously stopped at max_speed 0.05 for 1000 ms.",
+        "Near-side position 'at the near side of the intersection at a clearly marked stop line' is interpreted as stop_zone, the last 10 metres before the stop line.",
+        "Inbound approach across stop_line is interpreted as direction to_right because approach from y<0.6 to y>0.6 is +y which the line defines as to_right.",
+        "Centre anchor is used because boxes are vehicles viewed from above whose centre is metric position, while bottom_center is downstream AABB edge.",
+        "Vehicles that never cross the stop line vacuously pass; only the first crossing is checked.",
+        "No maximum time between the stop and the crossing is imposed."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e2-e253-7232-9f12-d56ec8fa3dba"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 5845,
+          "prompt_tokens": 1942,
+          "total_tokens": 7787,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5021,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "md-tr-21-707a__muse-spark-1.3__03",
+      "model": "muse-spark-1.3",
+      "statute": "md-tr-21-707a",
+      "index": 3,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must have first stopped still inside the approach waiting zone.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Exception for direction by a police officer or traffic control signal is ignored because the camera cannot see it.",
+        "Stop is interpreted as remaining stationary inside stop_zone continuously for at least 1000 ms; the statute gives no duration.",
+        "stop_zone is taken as the near-side waiting position before the stop line.",
+        "Inbound approaching crossing from y<0.6 to y>0.6 (+y) is encoded as direction to_right per line definition.",
+        "No maximum time limit is enforced between the stop and the crossing.",
+        "Vehicles that never cross the stop line inbound pass vacuously.",
+        "Anchor center is used because boxes are top-down with centre as metric position while bottom_center is only the downstream AABB edge."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e3-05f8-77b9-85a4-76eef71698f4"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 5904,
+          "prompt_tokens": 1942,
+          "total_tokens": 7846,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5140,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 0,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "md-tr-21-707a__muse-spark-1.3__04",
+      "model": "muse-spark-1.3",
+      "statute": "md-tr-21-707a",
+      "index": 4,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must have first stopped still in the stop zone before crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "'Unless otherwise directed by a police officer or traffic control signal' is not observable by the camera and is excluded from the check.",
+        "'shall stop' interpreted as DWELL stopped still with max_speed 0.05 continuously for at least 1000 ms inside stop_zone; duration is not stated in statute.",
+        "stop_zone (last 10 m before stop_line) taken as 'the near side of the intersection at a clearly marked stop line'.",
+        "Only inbound crossings from y<0.6 to y>0.6 (to_right per line definition) trigger the requirement, taken as 'approaching'.",
+        "Stop must precede the first inbound crossing; vehicles that never cross pass vacuously.",
+        "Anchor 'center' used because boxes are top-down with centre as metric position and bottom_center is downstream AABB edge, not wheels."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e3-270d-7518-ab11-d0506066f189"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 4313,
+          "prompt_tokens": 1942,
+          "total_tokens": 6255,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 3679,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "md-tr-21-707a__muse-spark-1.3__05",
+      "model": "muse-spark-1.3",
+      "statute": "md-tr-21-707a",
+      "index": 5,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must first come to a complete stop inside the approach waiting zone.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "'Unless otherwise directed by a police officer or traffic control signal' cannot be seen by the camera and is excluded from the check.",
+        "'shall stop' is interpreted as continuously stopped with speed <=0.05 for at least 1000 ms, as no duration is stated.",
+        "'at the near side of the intersection at a clearly marked stop line' is interpreted as inside stop_zone, the last 10 metres before the stop line.",
+        "Inbound approach direction is interpreted as to_right per the stop_line definition (y<0.6 to y>0.6, +y = to_right).",
+        "Anchor center is used because boxes are vehicles viewed from above where centre is metric position and bottom_center is downstream AABB edge, not wheels.",
+        "Vehicles that never cross the stop line pass vacuously; only vehicles that cross are required to have stopped before.",
+        "No maximum time limit is imposed between the stop and the crossing."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e3-e9c4-735e-8cb8-3fedcd28543f"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 7375,
+          "prompt_tokens": 1942,
+          "total_tokens": 9317,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 6519,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "md-tr-21-707a__muse-spark-1.3__06",
+      "model": "muse-spark-1.3",
+      "statute": "md-tr-21-707a",
+      "index": 6,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must first come to a complete stop inside the approach waiting zone.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Anchor is 'center' because boxes are top-down vehicles whose centre is metric position; bottom_center is only the downstream AABB edge, not wheels.",
+        "'shall stop' is encoded as DWELL with max_speed 0.05, i.e. continuously inside while fully stopped.",
+        "Minimum stopped time 1000 ms is assumed because the statute states no duration.",
+        "stop_zone, the last 10 metres before the line, is used as proxy for 'at the near side of the intersection at a clearly marked stop line'.",
+        "Only inbound crossings trigger the rule; per line geometry approaching from y<0.6 to y>0.6 (+y) is encoded as to_right.",
+        "No maximum gap between stop and crossing is enforced.",
+        "Objects that never cross the stop line vacuously pass, per 'must do A before B' idiom.",
+        "Exception 'Unless otherwise directed by a police officer or traffic control signal' cannot be seen by the camera and is omitted."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e4-01a5-71ff-b561-abbd1df1ab11"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 6868,
+          "prompt_tokens": 1942,
+          "total_tokens": 8810,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 6154,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "md-tr-21-707a__muse-spark-1.3__07",
+      "model": "muse-spark-1.3",
+      "statute": "md-tr-21-707a",
+      "index": 7,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 500.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Any vehicle that crosses the stop line inbound must have first remained stopped in the approach waiting zone for at least 500 ms.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Anchor is 'center' because top-down boxes use centre as metric position; bottom_center is only the downstream AABB edge, not ground contact.",
+        "Stop is interpreted as DWELL in stop_zone with max_speed 0.05; statute gives no stop duration so 500 ms is assumed as minimum detectable stopped dwell.",
+        "stop_zone represents 'near side' and 'clearly marked stop line' as the last 10 metres before the stop line.",
+        "Inbound approach direction is encoded as CROSSES to_right per line definition (+y = to_right); vehicles that never cross inbound pass vacuously.",
+        "No time limit between stop and crossing is enforced; within_ms is null.",
+        "'Unless otherwise directed by a police officer or traffic control signal' cannot be seen by the camera and is excluded from the check."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e4-164c-71f6-b72a-3732c2492b5f"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 6448,
+          "prompt_tokens": 1942,
+          "total_tokens": 8390,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5693,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "md-tr-21-707a__muse-spark-1.3__08",
+      "model": "muse-spark-1.3",
+      "statute": "md-tr-21-707a",
+      "index": 8,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must have first come to a full stop inside the approach waiting zone before crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Police-officer or traffic-control-signal direction exception is ignored because the camera cannot see it.",
+        "Stop is interpreted as a full stop (max_speed 0.05) continuously inside stop_zone for at least 1000 ms, although no duration is stated.",
+        "The near side at a clearly marked stop line is interpreted as stop_zone, the last 10 m before stop_line.",
+        "Crossing stop_line inbound triggers the stop obligation; vehicles that never cross pass.",
+        "Any prior dwell in stop_zone before the first inbound crossing satisfies the rule; no maximum interval is enforced.",
+        "Anchor center is used because boxes are top-down vehicles whose centre is metric position, while bottom_center is downstream AABB edge, not wheels."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e4-aafd-717d-9a91-2b4650077bab"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 5697,
+          "prompt_tokens": 1942,
+          "total_tokens": 7639,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 4884,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "md-tr-21-707a__muse-spark-1.3__09",
+      "model": "muse-spark-1.3",
+      "statute": "md-tr-21-707a",
+      "index": 9,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line inbound must have first stopped still for at least 1000 ms inside the approach stop zone.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "'Unless otherwise directed by a police officer or traffic control signal' is excluded because the camera cannot see it.",
+        "Stop is interpreted as remaining still (max_speed 0.05) continuously inside stop_zone, the near-side waiting area before stop_line.",
+        "No stop duration is stated, so 1000 ms of continuous still time is assumed to count as a stop.",
+        "Approaching is enforced only for vehicles that cross stop_line inbound; vehicles that never cross pass vacuously.",
+        "Inbound crossing from y<0.6 to y>0.6 (+y) is mapped to direction to_right per line definition.",
+        "No maximum time between stop and crossing is stated, so any prior stop before first crossing satisfies.",
+        "Anchor centre is used because top-down boxes use centre as metric position while bottom_center is downstream AABB edge."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e4-ec7a-769e-be89-9ca950d8174a"
+      ],
+      "attempts": 1,
+      "usage": [
+        {
+          "completion_tokens": 6775,
+          "prompt_tokens": 1942,
+          "total_tokens": 8717,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5956,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 1905,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 1
+    },
+    {
+      "run": "md-tr-21-707a__muse-wonder-1.0__00",
+      "model": "muse-wonder-1.0",
+      "statute": "md-tr-21-707a",
+      "index": 0,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "A vehicle may cross the stop line only if it has dwelled (stopped) in the stop zone before that first crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop_at_marked_stop_line_before_crossing",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Anchor is 'center' because the boxes are viewed from above and their centre is the metric position; 'bottom_center' is only the downstream AABB edge, not a wheel or ground-contact point.",
+        "Each tracked vehicle is treated as representing its driver and is assessed independently.",
+        "The mapped stop_zone and stop_line are assumed to belong to the approach to the stop-sign intersection in the rule; no separate stop-sign detection is available.",
+        "Inbound travel is the crossing from y<0.6 towards y>0.6, which the line description defines as direction 'to_right'.",
+        "Stopping is operationalised as remaining still in stop_zone for at least 1000 ms at a speed no greater than 0.05, using the DSL threshold for stopped/still, before the first crossing of stop_line.",
+        "A stop anywhere within stop_zone is treated as stopping at the near side of the intersection at the marked stop line.",
+        "No maximum interval is imposed between the stop and the subsequent crossing because the statute specifies none.",
+        "A vehicle that never crosses stop_line passes under the prescribed IMPLIES idiom.",
+        "The exception for directions from a police officer or traffic control signal is omitted because such directions are not encoded in the rule; the compiled rule covers the ordinary case."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e5-4cfa-7286-87d8-b21fdb220b0e",
+        "chatcmpl-01a1a6e6-0b67-725d-ab81-3c69bf29d797"
+      ],
+      "attempts": 2,
+      "usage": [
+        {
+          "completion_tokens": 11043,
+          "prompt_tokens": 678,
+          "total_tokens": 11721,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 10000,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 0,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        },
+        {
+          "completion_tokens": 7315,
+          "prompt_tokens": 1739,
+          "total_tokens": 9054,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 6366,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 628,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 2
+    },
+    {
+      "run": "md-tr-21-707a__muse-wonder-1.0__01",
+      "model": "muse-wonder-1.0",
+      "statute": "md-tr-21-707a",
+      "index": 1,
+      "transport_errors": [],
+      "status": "invalid",
+      "error": "invalid rule after 2 attempts: unused nodes [1, 2]",
+      "live_calls": 2
+    },
+    {
+      "run": "md-tr-21-707a__muse-wonder-1.0__02",
+      "model": "muse-wonder-1.0",
+      "statute": "md-tr-21-707a",
+      "index": 2,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle must stop in stop_zone before first crossing stop_line inbound; vehicles that never cross pass.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "unknown_0003_rule_a_stop_sign_stop_line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Anchor is 'center': boxes are vehicles viewed from above, their centre is the metric position, and 'bottom_center' is the downstream AABB edge rather than wheels or a ground-contact point.",
+        "The tracked entity is the vehicle; the driver is not tracked separately from the vehicle.",
+        "A stop is operationalised as a continuous DWELL in stop_zone for at least 1000 ms with max_speed 0.05, the DSL value for still/stopped.",
+        "stop_zone, described as the last 10 metres before the marked STOP limit line, operationalises stopping at the near side of the intersection at the stop line.",
+        "Inbound travel is +y/downstream; per the line description, crossing stop_line in that direction is 'to_right'.",
+        "within_ms for BEFORE is null (unbounded): the statute specifies no maximum interval between the stop and the crossing.",
+        "The IMPLIES idiom is used so vehicles that never cross stop_line pass; the required stop must precede the first inbound crossing.",
+        "The exception for directions from a police officer or traffic control signal is omitted because it cannot be observed from the tracked vehicle behaviour.",
+        "The provided stop_zone and stop_line are taken to represent the stop-sign intersection approach described by the rule; the stop sign itself is not separately tested."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e6-1822-7153-90cf-d958aa5eed9a",
+        "chatcmpl-01a1a6e7-66ed-718f-830e-07049067c018"
+      ],
+      "attempts": 2,
+      "usage": [
+        {
+          "completion_tokens": 10472,
+          "prompt_tokens": 678,
+          "total_tokens": 11150,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 9374,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 628,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        },
+        {
+          "completion_tokens": 11015,
+          "prompt_tokens": 1788,
+          "total_tokens": 12803,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 10045,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 628,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 2
+    },
+    {
+      "run": "md-tr-21-707a__muse-wonder-1.0__03",
+      "model": "muse-wonder-1.0",
+      "statute": "md-tr-21-707a",
+      "index": 3,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the marked STOP line inbound must first have stopped still for at least 1000 ms in the approach waiting zone before that crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "The exception for being otherwise directed by a police officer or traffic control signal is left out because that behaviour cannot be seen from vehicle tracks and the provided geometry.",
+        "The presence of a stop sign and an intersection is taken as given by the provided stop_zone and stop_line; the rule does not separately detect a stop sign or an intersection.",
+        "The driver's duty is evaluated from the tracked vehicle, so entity_name is vehicle.",
+        "A stop is interpreted as DWELL in stop_zone: continuously inside stop_zone for at least 1000 ms with max_speed 0.05, the DSL encoding for stopped/still; the statute states no minimum stop duration, so 1000 ms is assumed.",
+        "Stopping at the near side at the stop line is interpreted as the measured point being stopped in stop_zone, the last 10 metres before stop_line, rather than the measured point being exactly on stop_line.",
+        "The anchor is center because the line description states boxes represent vehicles viewed from above, their centre is the metric position, and bottom_center is the downstream AABB edge, not wheels.",
+        "Only the inbound crossing of stop_line, encoded as direction to_right for movement in +y from y<0.6 towards y>0.6, triggers the requirement; a vehicle that never crosses stop_line passes under the IMPLIES idiom.",
+        "within_ms is null because the statute states no maximum time between stopping and crossing."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e7-0260-7266-abe6-c3799113240e",
+        "chatcmpl-01a1a6e7-dfef-7269-90b6-3d4144eadabe"
+      ],
+      "attempts": 2,
+      "usage": [
+        {
+          "completion_tokens": 8683,
+          "prompt_tokens": 678,
+          "total_tokens": 9361,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 8059,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 628,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        },
+        {
+          "completion_tokens": 7981,
+          "prompt_tokens": 1315,
+          "total_tokens": 9296,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 7095,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 628,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 2
+    },
+    {
+      "run": "md-tr-21-707a__muse-wonder-1.0__04",
+      "model": "muse-wonder-1.0",
+      "statute": "md-tr-21-707a",
+      "index": 4,
+      "transport_errors": [],
+      "status": "invalid",
+      "error": "invalid rule after 2 attempts: check.IMPLIES.conclusion.BEFORE.then: Field required",
+      "live_calls": 2
+    },
+    {
+      "run": "md-tr-21-707a__muse-wonder-1.0__05",
+      "model": "muse-wonder-1.0",
+      "statute": "md-tr-21-707a",
+      "index": 5,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "A vehicle crossing the marked stop line inbound must first have stopped still in the approach waiting zone before the line.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop_at_marked_stop_line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "The exception for directions by a police officer or traffic control signal is left out of the rule because that behaviour cannot be determined from the vehicle track alone; the rule is applied as though no contrary direction applies.",
+        "Anchor is 'center' because the boxes are vehicles viewed from above and their centre is stated to be their metric position, while 'bottom_center' is the downstream AABB edge rather than wheels or ground contact.",
+        "A stop is operationalised as a continuous DWELL in stop_zone for at least 1000 ms with max_speed 0.05 (still); the statute gives no minimum stop duration or numeric speed threshold.",
+        "Stopping anywhere continuously within stop_zone, the last 10 metres before the stop line, counts as stopping at the near side at the marked stop line.",
+        "BEFORE has within_ms null (no maximum interval) because the statute gives no time limit between stopping and subsequently crossing.",
+        "The inbound crossing direction is +y across stop_line, which the line description maps to 'to_right'.",
+        "Each tracked vehicle is checked independently; a vehicle that never crosses stop_line inbound passes under the IMPLIES idiom."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e8-1c08-70f7-bd5e-80e6d958aa3f",
+        "chatcmpl-01a1a6e8-c2db-7309-abdc-7a57efe37e36"
+      ],
+      "attempts": 2,
+      "usage": [
+        {
+          "completion_tokens": 6717,
+          "prompt_tokens": 678,
+          "total_tokens": 7395,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5775,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 628,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        },
+        {
+          "completion_tokens": 6023,
+          "prompt_tokens": 1636,
+          "total_tokens": 7659,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 5156,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 0,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 2
+    },
+    {
+      "run": "md-tr-21-707a__muse-wonder-1.0__06",
+      "model": "muse-wonder-1.0",
+      "statute": "md-tr-21-707a",
+      "index": 6,
+      "transport_errors": [],
+      "status": "ok",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "stop_zone"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "stop_line",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.45,
+              0.6
+            ],
+            "b": [
+              0.55,
+              0.6
+            ],
+            "id": "stop_line"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses stop_line inbound must first stop, dwelling still in stop_zone, before that crossing.",
+        "params": {
+          "anchor": "center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "rule-",
+        "version": 1,
+        "zones": [
+          {
+            "id": "stop_zone",
+            "polygon": [
+              [
+                0.45,
+                0.5
+              ],
+              [
+                0.55,
+                0.5
+              ],
+              [
+                0.55,
+                0.6
+              ],
+              [
+                0.45,
+                0.6
+              ]
+            ]
+          }
+        ]
+      },
+      "assumptions": [
+        "Anchor is 'center' because the boxes are vehicles viewed from above and the line description states that their centre is the metric position, while bottom_center is the downstream AABB edge rather than wheels.",
+        "The exceptions for direction by a police officer or a traffic control signal are left out because that behaviour is not represented by the provided zones, lines, or tracked vehicle events.",
+        "The presence of the stop sign and intersection is taken from the binding of stop_zone and stop_line to this approach; the rule does not separately detect a stop sign.",
+        "A stop is operationalised as dwelling continuously in stop_zone while still, using max_speed 0.05 as the DSL still threshold.",
+        "The statute states no minimum stopped duration, so a 1000 ms still dwell is assumed as evidence of a complete stop rather than slow rolling.",
+        "There is no assumed time limit between stopping and crossing stop_line, so BEFORE uses within_ms null.",
+        "Direction 'to_right' is the inbound crossing of stop_line, corresponding to movement in the +y direction as described for the line; the statute itself does not state an image direction.",
+        "Each tracked vehicle is checked independently and its motion is used as the proxy for its driver, who is not tracked separately.",
+        "Under the IMPLIES idiom, a vehicle that never crosses stop_line passes; crossing is the event that triggers the requirement to have stopped first.",
+        "Stopping with the vehicle centre in stop_zone, the last 10 metres before the stop line, counts as stopping at the near side at the marked stop line."
+      ],
+      "request_ids": [
+        "chatcmpl-01a1a6e8-c389-7708-9a80-f72c09d0bfe4",
+        "chatcmpl-01a1a6f3-2b8a-72d5-935b-4c33db6a4bec"
+      ],
+      "attempts": 2,
+      "usage": [
+        {
+          "completion_tokens": 8078,
+          "prompt_tokens": 678,
+          "total_tokens": 8756,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 7279,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 628,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        },
+        {
+          "completion_tokens": 10063,
+          "prompt_tokens": 1636,
+          "total_tokens": 11699,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 9115,
+            "rejected_prediction_tokens": null,
+            "text_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cache_write_tokens": null,
+            "cached_tokens": 0,
+            "image_tokens": null,
+            "text_tokens": null
+          }
+        }
+      ],
+      "live_calls": 2
+    },
+    {
+      "run": "md-tr-21-707a__muse-wonder-1.0__07",
+      "model": "muse-wonder-1.0",
+      "statute": "md-tr-21-707a",
+      "index": 7,
+      "transport_errors": [],
+      "status": "invalid",
+      "error": "invalid rule after 2 attempts: BEFORE node 2 must not have children",
+      "live_calls": 2
+    },
+    {
+      "run": "md-tr-21-707a__muse-wonder-1.0__08",
+      "model": "muse-wonder-1.0",
+      "statute": "md-tr-21-707a",
+      "index": 8,
+      "transport_errors": [],
+      "status": "invalid",
+      "error": "invalid rule after 2 attempts: check.OCCURS.event: Field required",
+      "live_calls": 2
+    },
+    {
+      "run": "md-tr-21-707a__muse-wonder-1.0__09",
+      "model": "muse-wonder-1.0",
+      "statute": "md-tr-21-707a",
+      "index": 9,
+      "transport_errors": [],
+      "status": "invalid",
+      "error": "invalid rule after 2 attempts: provenance quotes not found verbatim in the statute for: zone=stop_zone",
+      "live_calls": 2
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "reason": "PLACEHOLDER",
+  "request_ids": [
+    "chatcmpl-01a1a6e0-802c-7502-8bea-550db1a12558"
+  ],
+  "model": "muse-wonder-1.0",
+  "text": "The driver of any vehicle approaching a stop sign at the entrance to, or within, an intersection shall stop at a limit line, if marked, otherwise before entering the crosswalk on the near side of the intersection.\n\nIf there is no limit line or crosswalk, the driver shall stop at the entrance to the intersecting roadway.",
+  "schema": "rule-schema/6-law"
+}

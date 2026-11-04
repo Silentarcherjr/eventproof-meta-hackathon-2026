@@ -1,0 +1,9 @@
+{
+  "reason": "Rule requires alternative stop positions 'before entering the crosswalk on the near side of the intersection' and 'at the entrance to the intersecting roadway' when no limit line is present, but no crosswalk or entrance zone/line is provided and geometry cannot be invented, so the full disjunction cannot be expressed; only the marked-limit-line branch is encoded.",
+  "request_ids": [
+    "chatcmpl-01a1a6dc-a659-72e1-a3c3-4f12d113ba67"
+  ],
+  "model": "muse-spark-1.3",
+  "text": "The driver of any vehicle approaching a stop sign at the entrance to, or within, an intersection shall stop at a limit line, if marked, otherwise before entering the crosswalk on the near side of the intersection.\n\nIf there is no limit line or crosswalk, the driver shall stop at the entrance to the intersecting roadway.",
+  "schema": "rule-schema/6-law"
+}
