@@ -14,6 +14,13 @@ every synthetic test let it through. EventProof caught this on labelled real foo
 - On 30 labelled cars in two cities, the rule Muse Spark compiled judged 27 right, with **0 wrong verdicts**.
 - The "repaired" rule judged only 16 right.
 
+**The law, compiled as written.** We gave Muse Spark the verbatim text of two real stop-line statutes (Maryland, where
+Takoma Park tickets, and California). Neither contains a single number. To run on video, a rule still needs one: Muse
+chose "still for at least 1.0 s". **14 of 30 real verdicts flip when those unwritten numbers move**, and **only 4 of 20
+real tickets survive every challenge** EventProof throws at them. Muse Spark, acting as the driver's lawyer, won 8 of
+the 16 tickets that can be beaten. It conceded the one ticket that was wrongly issued; the deterministic sweep is what
+overturned it.
+
 **Who needs it now.** Takoma Park, Maryland, has issued $40 citations from AI stop-sign cameras since January 2026 (a
 city study found violation rates up to 87% at some intersections); Virginia allowed AI cameras to cite stop-sign and
 crosswalk violations in April 2026. Someone writes down what "full stop" means, and such systems' claims are *"rarely
@@ -33,8 +40,9 @@ forklift).
    re-checks it with real SAM 3.1 tracks to separate a wrong rule from wrong perception.
 4. **Repair.** Muse Spark proposes bounded patches (thresholds and conditions, no code). A patch is kept only with zero
    regressions on a hidden holdout, then checked on labelled real footage.
-5. **Certify.** One printable page per rule; its status follows fixed rules (a wrong verdict on labelled footage, or a
-   failed rule check → NOT CERTIFIED). No model writes it.
+5. **Contest and certify.** Every ticket is re-judged with the line a few pixels away, another measured point,
+   thresholds ±20 % and another meaning of "stop": ROBUST, FRAGILE, or hanging on an unwritten number. Muse Spark can
+   argue the defense from a closed menu, and the engine decides. One printable page per rule; no model writes it.
 
 ## Evidence (labels frozen and pushed before any model call; CI recomputes every number)
 | What was tested | Result |
@@ -44,6 +52,8 @@ forklift).
 | Every frozen real set with the current compiler: 10 clips, 46 objects (cars, pedestrians, cyclists; Serbia, Poland, Brazil, plus two clips of unstated location) | **38/46 right**, 3 wrong, 2 abstained, 3 never judged. |
 | A bug found in the field: bike path in Santos, Brazil | First run **0/8**: the compiler measured riders at the box centre, which never reaches a line at the wheels. The new rule check flagged it; the schema now lets Muse pick the point; re-run **5/8**. All runs pre-registered and kept. |
 | A rule typed live: *"remain behind the stop line for at least 2 seconds"* | Muse Spark **and** Muse Wonder both read it as "be present", not "stop". Certificate against the clip's labels: **NOT CERTIFIED (3/5)**. |
+| **The statute itself** (Md. Transp. § 21-707(a), Cal. Veh. Code § 22450(a), verbatim; every value QUOTED or ASSUMED, quotes verified) | Spark: **25/30 cars right** on both. The statutes contain no number, yet **14/30 verdicts hang on the stop time and "still" speed the model had to assume**; Spark even labelled 0.05 as "quoted" from the words "shall stop". Wonder failed 2/4 compiles. [findings](benchmark/law/FINDINGS.md) |
+| **Would the tickets hold up?** 20 real tickets, each re-judged under about a dozen typed changes; Muse Spark as the defense | **4/20 survive everything**; 11 hang on the unwritten "stopped" threshold. Muse's defense won 8 of 16 beatable tickets, conceded 3 of 4 robust ones, and missed the one wrongly issued ticket, which the sweep overturns. [findings](benchmark/tickets/FINDINGS.md) |
 | Two readings, 8 phrasings of one rule (Spark vs Wonder, 150 scenes) | "wait" and "remain" are read differently (standing still vs just inside): verdicts differ on **45/150** scenes; the separating pair is found automatically. |
 | Repair on synthetic scenes with known truth (hidden holdout 200, final test 320, evaluated once) | Holdout **144 → 164**, false PASS 40 → 21, 0 regressions; final test 141 → 158/200 and 109 → 117/120 on never-seen scene types; with real SAM 3.1 tracks (80 scenes) **71 → 76**, false PASS 5 → 0. |
 | Two-object rule: *"every pedestrian … must hold an umbrella over their head"* (rainy crossing seen from above) | Muse escalated to the WITH event and SAM 3.1 tracked people and umbrellas separately: **2/4** (a neighbour's umbrella counted for a bare head). |
