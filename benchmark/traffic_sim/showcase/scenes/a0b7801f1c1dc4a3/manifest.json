@@ -1,0 +1,17 @@
+{
+  "family": "full_stop",
+  "fps": 10.0,
+  "frames_sha256": "8abb93de9ce15b020f0297605f864b057cce8d84a739165eec3951081c5cccbb",
+  "generator": "traffic-gen/1",
+  "ground_truth_frames": 148,
+  "mp4_sha256": "94f8c20a9a7a132952e8ec28b3aef0f091c09c0a5df9328abdf78974c5691c22",
+  "n_frames": 77,
+  "objects": 2,
+  "origin": "synthetic, own work",
+  "scene_sha256": "a0b7801f1c1dc4a3cf1753d5c0d9781eb2eaaab884662ecd460b2a8c550f54cd",
+  "seed": 0,
+  "size": [
+    480,
+    270
+  ]
+}

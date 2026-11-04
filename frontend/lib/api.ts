@@ -158,3 +158,47 @@ export interface Gate {
   held_for_review: { tickets: number; false_tickets: number; because: string[] };
 }
 export async function getCourt(): Promise<Court> { return json<Court>(await fetch(`${API_URL}/tickets/court`)); }
+
+export interface LabTruth {
+  object_id: number; crossed_line: boolean; crossing_frame: number | null; direction: string;
+  standing_still_seconds: number; stationary_seconds: number; intended: string;
+}
+export interface LabVerdict {
+  verdict: string; explanation: string;
+  events: { op: string; target: string; status: string; frame: number | null; timestamp_ms: number | null; reason: string }[];
+}
+export interface LabCar { object_id: number; truth: LabTruth; spark: LabVerdict; your: LabVerdict }
+export interface LabScenes {
+  source: string; rule_text: string; assumptions: string[];
+  defaults: { max_speed: number | null; any_direction: boolean; travel_direction: string;
+              contract_max_speed: number; contract_any_direction: boolean; wait_seconds: number };
+  summary: { scenes: number; correct: number; disagreements: number; two_choices_explain_all: boolean;
+             by_family: Record<string, number> };
+  scenes: { family: string; seed: number; truths: LabTruth[]; video_url: string }[];
+}
+export interface LabJudgment {
+  family: string; seed: number; source: string; cars: LabCar[]; explanation: string;
+  controls: { max_speed: number | null; any_direction: boolean };
+}
+export interface LabPair {
+  knob: string; motion_frame_difference: number; source: string;
+  sides: Record<"fail" | "pass", { video_url: string; t: number; cars: { truth: LabTruth; naive: LabVerdict }[] }>;
+}
+export interface LabCompiled {
+  provenance: string; cached: boolean; model: string; request_ids: string[]; assumptions: string[];
+  wrong_scenes: string[]; scope: string;
+  scenes: { family: string; seed: number; correct: boolean;
+            cars: { object_id: number; truth: LabTruth; your: LabVerdict | null; correct: boolean; why: string }[] }[];
+}
+export const labMediaUrl = (path: string) => `${API_URL}${path}`;
+export async function getLabScenes(): Promise<LabScenes> { return json<LabScenes>(await fetch(`${API_URL}/lab/scenes`)); }
+export async function getLabPair(): Promise<LabPair> { return json<LabPair>(await fetch(`${API_URL}/lab/pair`)); }
+export async function judgeLab(family: string, speed: number | null, direction: boolean, signal?: AbortSignal): Promise<LabJudgment> {
+  const query = new URLSearchParams({ max_speed: speed === null ? "none" : String(speed), any_direction: String(direction) });
+  return json<LabJudgment>(await fetch(`${API_URL}/lab/${encodeURIComponent(family)}/0/judge?${query}`, { signal }));
+}
+export async function compileLab(ruleText: string): Promise<LabCompiled> {
+  return json<LabCompiled>(await fetch(`${API_URL}/lab/compile`, {
+    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ rule_text: ruleText }),
+  }));
+}

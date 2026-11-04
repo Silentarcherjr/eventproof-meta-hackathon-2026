@@ -1,0 +1,17 @@
+{
+  "family": "wrong_way",
+  "fps": 10.0,
+  "frames_sha256": "a95ca8e382b0629f4f948f48dddb3a36c31d9c219ef923f7bd9ab07d95532c82",
+  "generator": "traffic-gen/1",
+  "ground_truth_frames": 96,
+  "mp4_sha256": "90608d80d1e2388c9154102263affa611bcbb889eb72e69d3298720a49736fdf",
+  "n_frames": 51,
+  "objects": 2,
+  "origin": "synthetic, own work",
+  "scene_sha256": "5a69fec38bd44bd82638525254bf0322919120369fbf580271435b8dd5aaac6a",
+  "seed": 0,
+  "size": [
+    480,
+    270
+  ]
+}

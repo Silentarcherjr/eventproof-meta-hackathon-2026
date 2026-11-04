@@ -501,6 +501,85 @@ def label_save(set_id: str, clip: str, body: LabelSave) -> dict:
     return {"saved": clip, "objects": len(objs)}
 
 
+# Traffic lab: fixed synthetic showcase and one budgeted text compiler, no evaluation-tool imports.
+@app.get("/lab/scenes")
+def lab_scenes() -> dict:
+    from eventproof.challenge import lab
+
+    return lab.scene_list()
+
+
+@app.get("/lab/pair")
+def lab_pair() -> dict:
+    from eventproof.challenge import lab
+
+    return lab.pair()
+
+
+@app.get("/lab/pair/{side}/video")
+def lab_pair_video(side: str) -> FileResponse:
+    from eventproof.challenge import lab
+
+    try:
+        path = lab.pair_video(side)
+    except lab.UnknownScene as e:
+        raise HTTPException(404, str(e)) from None
+    if not path.is_file():
+        raise HTTPException(404, "showcase video not found")
+    return FileResponse(path, media_type="video/mp4")
+
+
+@app.get("/lab/{family}/{seed}/video")
+def lab_video(family: str, seed: int) -> FileResponse:
+    from eventproof.challenge import lab
+
+    try:
+        path = lab.video(family, seed)
+    except lab.UnknownScene as e:
+        raise HTTPException(404, str(e)) from None
+    if not path.is_file():
+        raise HTTPException(404, "showcase video not found")
+    return FileResponse(path, media_type="video/mp4")
+
+
+@app.get("/lab/{family}/{seed}/judge")
+def lab_judge(family: str, seed: int, max_speed: str | None = None, any_direction: str | None = None) -> dict:
+    from eventproof.challenge import lab
+
+    try:
+        defaults = lab.choices()
+        speed = defaults["max_speed"] if max_speed is None else lab.parse_speed(max_speed)
+        direction = defaults["any_direction"] if any_direction is None else lab.parse_direction(any_direction)
+        return lab.judge(family, seed, speed, direction)
+    except lab.UnknownScene as e:
+        raise HTTPException(404, str(e)) from None
+    except ValueError as e:
+        raise HTTPException(422, str(e)) from None
+
+
+class LabCompileRequest(BaseModel):
+    model_config = {"extra": "forbid"}
+    rule_text: str
+
+
+@app.post("/lab/compile")
+def lab_compile(req: LabCompileRequest) -> dict:
+    from eventproof.challenge import lab
+    from eventproof.meta.muse_rules import RuleCompileError
+
+    # Global POST IP limits already apply. Share the same heavy-job lock as studio compiles.
+    if not _heavy.acquire(blocking=False):
+        raise HTTPException(429, "another job is running; try again in a moment")
+    try:
+        return lab.compile_rule(req.rule_text, get_compiler())
+    except (MetaApiUnavailable, LiveCallLimit) as e:
+        raise HTTPException(503, str(e)) from None
+    except (ValueError, RuleCompileError) as e:
+        raise HTTPException(422, str(e)) from None
+    finally:
+        _heavy.release()
+
+
 @app.get("/runs/{run_id}/ledger")
 def run_ledger(run_id: str) -> dict:
     """Build (or rebuild) the run's evidence ledger: every file hash, model/request ids, holdout manifests."""

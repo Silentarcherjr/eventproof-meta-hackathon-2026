@@ -1,0 +1,17 @@
+{
+  "family": "queue",
+  "fps": 10.0,
+  "frames_sha256": "ebbec2306b0cc4d6f4bdb663136e8d94f2a028bc122e2f1455d21c7b48671f2a",
+  "generator": "traffic-gen/1",
+  "ground_truth_frames": 254,
+  "mp4_sha256": "700bcb27f963423aed33d1fa2fb45aa4a4e55b6dd95421ee02b86d9f0ede4502",
+  "n_frames": 93,
+  "objects": 3,
+  "origin": "synthetic, own work",
+  "scene_sha256": "d0b4339061e8f672c4258a7cd7f1d58a8dc8ce185c8d2990f0360a7284e87ad0",
+  "seed": 0,
+  "size": [
+    480,
+    270
+  ]
+}
