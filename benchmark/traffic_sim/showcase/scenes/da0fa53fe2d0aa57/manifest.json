@@ -1,13 +1,15 @@
 {
   "family": "occluded",
   "fps": 10.0,
-  "frames_sha256": "99f2dc83aad2c4c0e77661e450f9d2156e6ea45aa10f04abb2b57a751ae0b421",
+  "frames_sha256": "0dd66aae275ab2c1994cb9a06bfb11a8d1766b2daa492fbe2e93abb871a2309a",
   "generator": "traffic-gen/1",
   "ground_truth_frames": 148,
-  "mp4_sha256": "9035a7253b479f59942fb7cd30553072e48a99ca35928561f6ef32f99b8d2794",
+  "mp4_sha256": "32130ee3f13bb3333a1dfda90932756d2319a7be75236792e671206bc8af6655",
   "n_frames": 77,
   "objects": 2,
   "origin": "synthetic, own work",
+  "overlay": true,
+  "render_style": "street/1",
   "scene_sha256": "da0fa53fe2d0aa5710bf7643382e561797891e4ffd2c555096c3e2679e34b1da",
   "seed": 0,
   "size": [

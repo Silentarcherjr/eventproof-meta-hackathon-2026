@@ -1,0 +1,120 @@
+{
+  "base_commit": "fac447cfc9b476455cb07da94470491f3034c013",
+  "byte_identical": true,
+  "ground_truth_function_sha256": "bdd8d0157cbe2bf0fbaa67cc4ae484024b1d762cf6452a90affa8ca84a452989",
+  "media": [
+    {
+      "bytes": 49078,
+      "fps": 10.0,
+      "frames": 82,
+      "path": "pair/65460d1086e53e0c/video.mp4",
+      "size": [
+        480,
+        270
+      ]
+    },
+    {
+      "bytes": 49134,
+      "fps": 10.0,
+      "frames": 82,
+      "path": "pair/a00bdc4a8beb4d82/video.mp4",
+      "size": [
+        480,
+        270
+      ]
+    },
+    {
+      "bytes": 63026,
+      "fps": 10.0,
+      "frames": 77,
+      "path": "scenes/311574a3b41bf11e/video.mp4",
+      "size": [
+        480,
+        270
+      ]
+    },
+    {
+      "bytes": 45992,
+      "fps": 10.0,
+      "frames": 60,
+      "path": "scenes/33f587208802d55d/video.mp4",
+      "size": [
+        480,
+        270
+      ]
+    },
+    {
+      "bytes": 48474,
+      "fps": 10.0,
+      "frames": 51,
+      "path": "scenes/5a69fec38bd44bd8/video.mp4",
+      "size": [
+        480,
+        270
+      ]
+    },
+    {
+      "bytes": 53664,
+      "fps": 10.0,
+      "frames": 77,
+      "path": "scenes/a0b7801f1c1dc4a3/video.mp4",
+      "size": [
+        480,
+        270
+      ]
+    },
+    {
+      "bytes": 49771,
+      "fps": 10.0,
+      "frames": 83,
+      "path": "scenes/c4b45177bd2ff3a2/video.mp4",
+      "size": [
+        480,
+        270
+      ]
+    },
+    {
+      "bytes": 74196,
+      "fps": 10.0,
+      "frames": 93,
+      "path": "scenes/d0b4339061e8f672/video.mp4",
+      "size": [
+        480,
+        270
+      ]
+    },
+    {
+      "bytes": 54846,
+      "fps": 10.0,
+      "frames": 77,
+      "path": "scenes/da0fa53fe2d0aa57/video.mp4",
+      "size": [
+        480,
+        270
+      ]
+    },
+    {
+      "bytes": 46909,
+      "fps": 10.0,
+      "frames": 51,
+      "path": "scenes/eaf28145e808ac24/video.mp4",
+      "size": [
+        480,
+        270
+      ]
+    }
+  ],
+  "meta_api_calls": 0,
+  "protected_after_sha256": "8d23daa75d707961865f5f9075ba7b5ad7e127c905ab8dd7e0012c94c555af34",
+  "protected_before_sha256": "8d23daa75d707961865f5f9075ba7b5ad7e127c905ab8dd7e0012c94c555af34",
+  "protected_files": 2634,
+  "render_style": "street/1",
+  "validation": {
+    "backend": "407 passed, 1 skipped",
+    "browser": "all eight scenes and two pair videos play; full_stop 2.3S PASS and rolling_stop 0.0S VIOLATION match contract table; no warning/error logs",
+    "frozen_v1_verify": "passed --allow-missing-video",
+    "next_build": "passed",
+    "ruff": "passed",
+    "typescript": "passed"
+  }
+}

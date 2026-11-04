@@ -103,8 +103,23 @@ def _static_layer(scene: SceneSpec) -> np.ndarray:
     return img
 
 
-def render_frames(scene: SceneSpec):
+def _check_style(scene: SceneSpec, style: str, overlay: bool) -> None:
+    if style not in ("default", "street"):
+        raise ValueError(f"unknown render style {style!r}")
+    if style == "street" and not is_traffic(scene):
+        raise ValueError("street style requires a traffic scene")
+    if overlay and style != "street":
+        raise ValueError("contract overlays require street style; default pixels are frozen")
+
+
+def render_frames(scene: SceneSpec, *, style: str = "default", overlay: bool = False):
     """Yield (frame_index, HxWx3 uint8 frame, visible boxes) for each frame."""
+    _check_style(scene, style, overlay)
+    if style == "street":
+        from eventproof.challenge.street import render_street_frames
+
+        yield from render_street_frames(scene, overlay=overlay)
+        return
     base = _static_layer(scene)
     for f in range(scene.n_frames):
         img = base.copy()
@@ -210,13 +225,14 @@ def encode_frames(frames, width: int, height: int, fps: float, out: Path) -> str
     return h.hexdigest()
 
 
-def encode_mp4(scene: SceneSpec, out: Path) -> str:
-    return encode_frames((img for _, img in render_frames(scene)), scene.width, scene.height, scene.fps, out)
+def encode_mp4(scene: SceneSpec, out: Path, *, style: str = "default", overlay: bool = False) -> str:
+    return encode_frames((img for _, img in render_frames(scene, style=style, overlay=overlay)),
+                         scene.width, scene.height, scene.fps, out)
 
 
-def frames_digest(scene: SceneSpec) -> str:
+def frames_digest(scene: SceneSpec, *, style: str = "default", overlay: bool = False) -> str:
     h = hashlib.sha256()
-    for _, img in render_frames(scene):
+    for _, img in render_frames(scene, style=style, overlay=overlay):
         h.update(img.tobytes())
     return h.hexdigest()
 
@@ -229,24 +245,31 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
-def render_scene(scene: SceneSpec, out_root: Path, encode: bool = True) -> RenderResult:
+def render_scene(scene: SceneSpec, out_root: Path, encode: bool = True, *,
+                 style: str = "default", overlay: bool = False) -> RenderResult:
     """Write scene.json, ground_truth.json, video.mp4 and manifest.json under out_root/<scene_hash[:16]>/."""
+    _check_style(scene, style, overlay)
     sh = scene.scene_hash()
     d = out_root / sh[:16]
+    existing = d / "manifest.json"
+    if style != "default" and existing.is_file() and "files_sha256" in json.loads(existing.read_text()):
+        raise ValueError("a frozen traffic export cannot be restyled; use the showcase directory")
     d.mkdir(parents=True, exist_ok=True)
     (d / "scene.json").write_text(scene.model_dump_json(indent=2))
     gt = ground_truth(scene)
     (d / "ground_truth.json").write_text(gt.model_dump_json())
     mp4_hash = None
     if encode:
-        frames_hash = encode_mp4(scene, d / "video.mp4")
+        frames_hash = encode_mp4(scene, d / "video.mp4", style=style, overlay=overlay)
         mp4_hash = sha256_file(d / "video.mp4")
     else:
-        frames_hash = frames_digest(scene)
+        frames_hash = frames_digest(scene, style=style, overlay=overlay)
     manifest = {"scene_sha256": sh, "frames_sha256": frames_hash, "mp4_sha256": mp4_hash,
                 "generator": scene.generator, "seed": scene.seed, "family": scene.family,
                 "n_frames": scene.n_frames, "fps": scene.fps, "size": [scene.width, scene.height],
                 "objects": len(scene.objects), "ground_truth_frames": len(gt.frames), "origin": "synthetic, own work"}
+    if style != "default":
+        manifest.update(render_style="street/1", overlay=overlay)
     (d / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True))
     return RenderResult(d, sh, frames_hash, mp4_hash)
 

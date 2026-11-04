@@ -45,6 +45,18 @@
 - [x] **P1-10** (G6, DONE_VERIFIED) Baseline: Muse Spark alone judging from video vs EventProof on the same real clips — DoD: Pre-registered before calls; raw answers committed; CI recomputes metrics
 - [x] **P1-11** (G4, DONE_VERIFIED) Ambiguity finder: Muse Spark vs Muse Wonder readings of the same rule + minimal pair to ask the user — DoD: Pre-registered before calls; raw outputs committed; CI recomputes the report
 - [x] **P1-12** (G6, DONE_VERIFIED) Real traffic v2 (Wroclaw, 16 cars) + pooled real-traffic result across 4 clips — DoD: Labels frozen + pre-registered before calls; CI recomputes pooled numbers
+- [x] **P1-13** (G6, DONE_VERIFIED) Live rule typed in the studio on a recorded clip; certificate checks a run against its clip's frozen labels — DoD: Pre-registered before calls; CI recomputes the published numbers
+- [x] **P1-14** (G6, DONE_VERIFIED) Muse Spark drafts zone + line from the first frame; evaluated on 5 real clips (hand 27/30 vs proposed 20/30) — DoD: Pre-registered before calls; CI recomputes the published numbers
+- [x] **P1-15** (G6, DONE_VERIFIED) Field repair: Muse patches 0/4 accepted (synthetic regressions); grid 3/16 accepted — DoD: Pre-registered before calls; CI recomputes the published numbers
+- [x] **P1-16** (G6, DONE_VERIFIED) New domains on real footage (zebra one-way, bike lane one-way): 7/8, 0 wrong verdicts — DoD: Pre-registered before calls; CI recomputes the published numbers
+- [x] **P1-17** (G6, DONE_VERIFIED) Two-object rules (WITH event, compiler escalation, multi-concept SAM) + umbrella pilot on real footage: 2/4 right, 1 wrong, 1 not tracked — DoD: Pre-registered before calls; CI recomputes the published numbers
+- [x] **P1-18** (G6, DONE_VERIFIED) Private hosted studio on Vercel (studio + API container), gallery of real clips, live rule; certificate counterexample status — DoD: Deployed privately, verified via bypass header: live rule, Challenge, certificate; tests green
+- [x] **P1-19** (G6, DONE_VERIFIED) Santos bike path (Brazil) real footage: 0/8 (anchor), deterministic anchor check in studio + certificate — DoD: Labels frozen + pre-registered before calls; lint tested on all recorded real runs
+- [x] **P1-20** (G6, DONE_VERIFIED) Compiler anchor field (schemas 4/5) + pre-registered re-run of all real sets: 34->38/46, wrong 0->3 — DoD: Pre-registered before calls; CI recomputes (test_anchor_v4)
+- [x] **P1-21** (G6, DONE_VERIFIED) Would these tickets hold up? Robustness tiers + Muse Spark defense: 4/20 real tickets robust; defense 8/16 — DoD: Pre-registered; CI recomputes (test_ticket_study)
+- [x] **P1-22** (G6, DONE_VERIFIED) Compile the law as written (MD, CA statutes, quote-or-assumed): Spark 25/30; 14/30 hang on unwritten numbers — DoD: Pre-registered; CI recomputes (test_law_study)
+- [x] **P1-23** (G6, DONE_VERIFIED) Drag the law (threshold grid: 0-17 tickets), Ticket court (20 cases), contract block; README rebuilt around one ticket — DoD: Grid pre-registered (addendum 1) and recomputed in CI; pages e2e-tested; deployed
+- [ ] **P1-TRAFFIC-VISUALS** (G5, IN_REVIEW) Optional street render style for Traffic lab; frozen measurements preserved — DoD: Street showcase verified in browser; all tests/build pass; protected bytes unchanged; reviewed and merged SHA
 
 ## P2
 

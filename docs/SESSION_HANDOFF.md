@@ -1,32 +1,24 @@
 # Session handoff
 
-Written: 2026-10-28 ~10:45 Panama (session 1 cont., local). Overwrite at the end of every session, after push.
+Written: 2026-11-04 11:40 UTC (America/Panama: UTC-5).
 
-## State
-- Repo `Silentarcherjr/eventproof-meta-hackathon-2026` (private). HEAD 11fb83d + docs commit; CI run 40717424645 green
-  (backend 221 tests, frontend lint/tsc/4 Playwright, docker, tracker). P0 19/27, P1 3/7.
-- Commit identity: Anthony Morell <153972162+Silentarcherjr@users.noreply.github.com>. No assistant attribution in commits or files.
-- Product loop complete and verified: Build (Muse Spark → DSL, SAM 3.1 → tracks) → Break (Challenge Mode, SAM confirm) →
-  Repair (Muse Spark, graded on hidden holdout_v2) → Before/after view → final_v1 independent test → evidence ledger.
-- Demo run: `20261028T023754Z-a922b5bb` (open with `/?run=<id>`; committed copy in docs/evidence/runs/, full copy with video in
-  artifacts/runs/ — gitignored; `deploy/export_showcase.sh` packages it).
-- Three data tiers: dev seeds 0–29 (search + proposers), holdout_v2 20000–20039 (grader accept/reject), final_v1 40000–40039 +
-  3 shift families (report-only, pre-registered, evaluated once). Never regenerate a frozen manifest in place.
-- Live Meta calls need allowances everywhere: API env `EVENTPROOF_MAX_LIVE_MUSE_CALLS` / `EVENTPROOF_MAX_LIVE_SAM_CALLS`
-  (default 0), CLI flags `--max-live-calls`, real-video `--max-live-*-calls`. Key only in `backend/.env` (local).
+## Current branch and scope
+- `traffic-visuals`, created from origin/main fac447c. P1-TRAFFIC-VISUALS: IN_REVIEW; separate merge review required.
+- Optional `style="street"` / `overlay=True` in challenge/render.py, implemented in challenge/street.py.
+- Ten lab showcase videos restyled; only the lab legend changed in the frontend. Original default renderer retained.
+- Frozen v1, holdout_eval, counterexamples, scene/waypoint/track/truth/verdict code and measured files stayed
+  byte-identical: 2,634-file before/after snapshot in benchmark/traffic_sim/showcase/street-verification.json.
 
-## Next exact task (no human decision needed)
-1. P1-07 done 2026-11-01 (80 live SAM calls on final_v1 subset, `benchmark/final/sam_v1/`); DONE_VERIFIED (CI 41379950836); ask the participant to re-read Billing for the exact charge.
-2. P1-02: studio interaction polish (object select, synced scrub between timeline and before/after chart).
-3. Keep PROGRESS/TASKS/HANDOFF/COSTS in sync after every change (`python scripts/progress.py render`).
+## Verification
+- Backend: 407 passed, 1 skipped; Ruff passed. Frontend: TypeScript and Next build passed.
+- Frozen v1 `traffic_export verify --allow-missing-video` passed. Existing tests unchanged; 30 new street tests.
+- Browser verified eight scenes and two pair videos. Full stop overlay 2.3S PASS and rolling stop overlay
+  0.0S VIOLATION match the contract table; occluding truck inspected. Screenshot in showcase/street-browser.png.
+- Local preview http://localhost:3002/lab, API http://127.0.0.1:8002 (local mode, empty key, both allowances zero).
+  Other studio servers were preserved. No Meta calls/spend, deployment or repo-visibility change.
 
-## Waiting on the participant
-- G6-02: record 2–3 clips per `docs/REAL_VIDEO_PROTOCOL.md`, label blind, `check --freeze`; approve ~1 Muse + 1 SAM call per clip.
-- G7-01: record the 3-minute video from `docs/DEMO_SCRIPT.md` (every number sourced); add section 5b only with real-clip results.
-- G6-01: approve a host (options/prices in `docs/DEPLOY_PROPOSAL.md`; runbook `deploy/README.md`). No infrastructure without approval.
-- C-03 spend alert + read Billing; C-02 Discord questions; C-04 license; repo visibility (only after approval + audit).
-
-## Run
-`docker compose up --build` (studio :3000, API :8000; `EVENTPROOF_ARTIFACTS=./artifacts` reuses local caches).
-Without Docker: `cd backend && EVENTPROOF_MAX_LIVE_SAM_CALLS=0 EVENTPROOF_MAX_LIVE_MUSE_CALLS=0 uv run uvicorn eventproof.api.main:app`;
-`cd frontend && npm run dev`. Known nit: a run aborted by a Meta error leaves a run folder with only video.mp4.
+## Next step
+Review the traffic-visuals diff and evidence, then merge separately if approved. Do not regenerate frozen v1;
+only `python -m eventproof.challenge.street --showcase ../benchmark/traffic_sim/showcase` restyles lab media.
+The task registry remains IN_REVIEW until a reviewed merged SHA exists. Broader project/human decisions remain
+in .progress/tasks.json and docs/DECISIONS.md; no final submission or merge was performed in this session.

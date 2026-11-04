@@ -62,3 +62,8 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
   Muse Wonder 1.0 $4 / $20. Earlier "≤ $X (bound)" entries used a cost-per-frame bound derived from the $0.74 total and
   overstate SAM spend: at list price all ~10,500 SAM frames so far cost about $2.1.
 - Muse Spark pricing: not yet read from the account's Billing page — fill in once credits are active.
+
+## 2026-11-04 — Traffic visual presentation
+- P1-TRAFFIC-VISUALS / traffic-visuals: deterministic Pillow/numpy drawing and local H.264 encoding only.
+- Meta requests: 0; additional Meta spend: $0. Both verification-server allowances were zero, key empty.
+- No hosting deployment, paid API, dataset download or Billing read; existing account totals are unchanged/unknown.

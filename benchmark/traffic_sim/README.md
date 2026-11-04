@@ -105,3 +105,33 @@ any-motion mode and the recorded compile. See `showcase/VERIFICATION.md` and `sh
 No live Meta calls or spend in this session; live compilation
 was tested only through a fake compiler and an exhausted-budget test. Branch `traffic-lab` awaits
 separate review/merge; `main` was not changed.
+
+## Street render style
+
+`render_scene(scene, out, style="street", overlay=True)` adds a deterministic presentation layer:
+textured asphalt, curbs and dashed dividers, the unchanged stop line, zebra crossing, STOP paint/sign,
+tinted waiting polygon, coloured top-down cars with windows/mirrors/shadows, and a box truck.
+Car bodies/mirrors use the exact existing boxes; only decorative shadows extend beyond them.
+`style="default"` remains the original renderer, including its frozen pixels and manifests.
+
+Lab video badges are **contract truth**, not Spark's or the adjustable rule's verdict. The live
+counter reads the longest qualifying wait observed so far through the existing traffic-truth
+routine on a transient prefix view; final PASS/VIOLATION appears only at the recorded crossing.
+No new speed/verdict logic, model call, trajectory, track, geometry or label is introduced.
+
+Regenerate **only** the indexed lab media, from `backend/`:
+
+```sh
+uv run python -m eventproof.challenge.street --showcase ../benchmark/traffic_sim/showcase
+uv run python -m eventproof.challenge.traffic_export verify --out ../benchmark/traffic_sim/v1 --allow-missing-video
+```
+
+All 2,634 protected files (frozen v1, evaluation/counterexample artifacts, measurement code and
+showcase scene/ground-truth files) stayed byte-identical. The ten new MP4s are 46–75 KB each,
+with unchanged dimensions, fps and frame counts. Tests: **407 passed, 1 skipped**; Ruff,
+TypeScript and Next build passed. New tests check default frozen hashes, street determinism,
+box/track/truth invariance and every showcase hash. Existing tests were not changed.
+Browser verification: all eight scenes and both pair clips play; 2.3S/PASS and 0.0S/VIOLATION
+badges match the contract table. See `showcase/street-browser.png` and `street-verification.json`.
+Preview: [Traffic lab](http://localhost:3002/lab), backend local mode on :8002 with zero model
+allowances. No Meta calls/spend; separate branch `traffic-visuals`, awaiting review/merge.
