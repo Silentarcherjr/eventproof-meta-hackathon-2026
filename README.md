@@ -53,8 +53,7 @@ reviewer who approves each citation, and the vendor who must prove its rule befo
 
 The flagship is a stop line, because the law is short and the footage is public. Nothing in the loop is about stop
 lines: it judges any zone, dwell, direction or two-object rule (a car in a bus lane, a pedestrian on a crossing, a
-person *with* a hard hat, a box on a conveyor), and the two-object rule is piloted on real footage (an umbrella over a
-person: 2 of 4 right, the miss explained in the findings).
+person *with* a hard hat, a box on a conveyor).
 
 ## Why Meta models
 - **Muse Spark** compiles rules through a small strict schema (about 1.4k prompt tokens). It escalates to a
