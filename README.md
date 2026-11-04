@@ -16,9 +16,9 @@ easy half. EventProof checks the half that failed in New York, **the rule the ca
 - **EventProof** then attacks the rule and every ticket it issues, and keeps only what survives.
 
 **One ticket.** A grey hatchback in Wroclaw drives through the stop line without ever stopping, and the camera tickets
-it. The ticket is correct. Muse Spark, acting as the driver's lawyer, finds the one argument that wins: the rule never
+it. Under the rule as written, the ticket is correct. Muse Spark, acting as the driver's lawyer, finds the one argument that wins: the rule never
 says how slow counts as "stopped". Double that threshold and the ticket disappears. Across **20 real tickets from
-labelled footage, all 20 were right** (after a label audit), yet **only 4 stay the same under every challenge**: 11 of
+labelled footage, all 20 were right under the rule as written** (after a label audit), yet **only 4 stay the same under every challenge**: 11 of
 the others turn on a number nobody wrote down. A correct ticket that rests on an unwritten choice is not one a city
 should issue automatically.
 
@@ -31,7 +31,7 @@ no digit. A camera still needs two numbers: how long to stand still, and how slo
 
 | | |
 |---|---|
-| Real tickets (all 20 correct) that stay the same under every challenge | **4 of 20** |
+| Real tickets (all 20 correct under the rule) that stay the same under every challenge | **4 of 20** |
 | Tickets the same law issues on the same 30 cars, depending on two unwritten numbers | **0 to 17** |
 | Cars judged right by the rule Muse Spark compiled; by a repair that passed every synthetic test | **27/30 vs 16/30** |
 
@@ -49,10 +49,11 @@ reviewer who approves each citation, and the vendor who must prove its rule befo
 2. **Attack.** Every ticket is judged again with the line a few pixels away, another measured point, thresholds ±20 %
    and another meaning of "stop". Muse Spark argues the defense from a closed menu, and the engine decides. Synthetic
    scenes with known truth find the smallest case that fools the rule, and a repair is kept only with zero regressions.
-3. **Withhold, then issue only what survives.** While a ticket turns on a choice nobody approved (how slow counts as
-   standing still, whether "wait" means standing still), the rule issues **nothing**: on the 20 real tickets, *"Rule
-   withheld: 11 tickets depend on the stillness threshold, 13 on what 'wait' means"*. Once a person signs those two
-   values, 17 issue automatically (0 wrong) and 3 go to a human, because where the car is measured still changes them.
+3. **Withhold, then issue only what survives.** While a ticket turns on a choice nobody approved, the rule issues
+   **nothing**. On the 20 real tickets: *"Rule withheld: where the rule may run (it says nothing about traffic signals),
+   20 tickets; how slow counts as standing still, 11; whether the wait must be standing still, 13"*. Once a person signs
+   those three, 17 issue automatically (0 wrong under the rule) and 3 go to a human, because where the car is measured
+   still changes them.
    Every held ticket comes with the smallest change that would overturn it. Each rule gets a one-page certificate and a contract block a city can hand
    to its vendor; no model writes either.
 
@@ -198,6 +199,11 @@ can re-verify, and CI recomputes every number above from committed files (no vid
   everything else is served from a cache of recorded responses.
 
 ## Honest limits
+- The traffic footage shows intersections with traffic lights the camera cannot see (Wroclaw, the new drone view; in
+  Novi Sad the control is not visible either). Labels judge each car against the rule as written ("wait 1.5 s in the
+  zone before the line", a stop-sign rule used as a test bench), so a "correct" ticket is correct under that rule, not
+  proof that a driver broke the law: a car that rolls through on green would be ticketed. A rule blind to its context
+  is the New York failure; the approval gate therefore withholds the rule until a person states where it may run.
 - Real footage is small: 46 labelled objects in 10 clips with the current compiler (plus 4 people in the umbrella pilot
   and 8 parcels in a perception check), labelled by one person from frame sheets. It shows concrete failures and fixes;
   it is not an accuracy benchmark.

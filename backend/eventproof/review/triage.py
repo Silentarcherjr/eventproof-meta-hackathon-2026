@@ -62,11 +62,13 @@ def contract(rows: list[dict]) -> dict:
 # The choices a sentence or statute leaves open. A person can sign a value for each (a contract parameter); measurement
 # changes (line position, measured point, frame rate) are evidence quality and cannot be signed away.
 APPROVABLE = {"min_ms": "how long counts as waiting", "stillness": "how slow counts as standing still",
-              "stillness_meaning": "whether the wait must be standing still", "reading": "which reading of the sentence"}
+              "stillness_meaning": "whether the wait must be standing still", "reading": "which reading of the sentence",
+              "scope": "where the rule may run (it says nothing about traffic signals)"}
+SCOPE = "scope"  # context the rule ignores: every ticket depends on it until a person states where the rule may run
 
 
 def _families(r: dict) -> set[str]:
-    return {f.split(":")[0] for f in r.get("flipping", [])}
+    return {f.split(":")[0] for f in r.get("flipping", [])} | {SCOPE}
 
 
 def gate(rows: list[dict], approved: set[str]) -> dict:

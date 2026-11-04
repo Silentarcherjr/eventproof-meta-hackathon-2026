@@ -50,8 +50,8 @@ function Case({ c }: { c: CourtCase }) {
         <p className="text-sm text-zinc-200">This ticket <b>{WORDS[c.status] ?? c.status}</b>.</p>
         {c.smallest_flip && <p className="mt-1 text-sm text-zinc-400">Smallest change that overturns it: {c.smallest_flip}</p>}
         <p className="mt-2 text-sm text-zinc-400">{c.flipping.length} of the challenges in the menu overturn it.</p>
-        <p className="mt-3 text-sm">Frozen label (truth): <b>{c.intended}</b>{c.audited ? " (after the label audit)" : ""} — the ticket was <b className={c.correct === "wrong" ? "text-red-300" : "text-green-300"}>{c.correct === "wrong" ? "wrongly issued" : "correctly issued"}</b>.</p>
-        {c.status !== "ROBUST" && c.correct !== "wrong" && <p className="mt-1 text-sm text-amber-200">A correct ticket that still would not hold up: it rests on a choice nobody wrote down.</p>}
+        <p className="mt-3 text-sm">Frozen label (truth under the rule as written): <b>{c.intended}</b>{c.audited ? " (after the label audit)" : ""} — the ticket was <b className={c.correct === "wrong" ? "text-red-300" : "text-green-300"}>{c.correct === "wrong" ? "wrongly issued" : "correctly issued"}</b>.</p>
+        {c.status !== "ROBUST" && c.correct !== "wrong" && <p className="mt-1 text-sm text-amber-200">Correct under the rule, yet it would not hold up: it rests on a choice nobody wrote down (and the rule cannot see the traffic signal).</p>}
         <p className="mt-1 text-sm text-zinc-400">Policy: {c.status === "ROBUST" ? "auto-issue" : "hold for a human reviewer"}.</p>
       </div>
     </div>

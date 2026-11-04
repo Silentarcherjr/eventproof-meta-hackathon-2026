@@ -22,23 +22,24 @@ def test_withheld_until_every_open_choice_is_approved():
             _t("FRAGILE", ["anchor:center", "stillness:0.5"]), {"verdict": "PASS", "status": "ROBUST"}]
     g = gate(rows, set())
     assert g["decision"] == "WITHHELD" and g["auto_issued"]["tickets"] == 0
-    assert g["missing"] == [{"family": "stillness", "label": "how slow counts as standing still", "tickets": 2}]
-    g = gate(rows, {"stillness"})
+    assert [m["family"] for m in g["missing"]] == ["scope", "stillness"] and g["missing"][1]["tickets"] == 2
+    assert gate(rows, {"stillness"})["decision"] == "WITHHELD"  # nobody said where the rule may run
+    g = gate(rows, {"scope", "stillness"})
     assert g["decision"] == "DEPLOYABLE"
     assert g["auto_issued"]["tickets"] == 2 and g["held_for_review"] == {"tickets": 1, "false_tickets": 0,
                                                                          "because": ["anchor"]}
 
 
 def test_measurement_cannot_be_approved():
-    assert set(gates([_t("FRAGILE", ["anchor:center", "line_shift:0.01"])])) == {""}
+    assert set(gates([_t("FRAGILE", ["anchor:center", "line_shift:0.01"])])) == {"", "scope"}
 
 
 def test_real_tickets():
     rep = json.loads((BENCH / "tickets" / "report.json").read_text())
     rows = apply_audit(rep["rows"], json.loads((BENCH / "real" / "santos" / "label_audit.json").read_text()))
     g = gates(rows)
-    assert g[""]["decision"] == "WITHHELD" and g["stillness"]["decision"] == "WITHHELD"
-    both = g["stillness,stillness_meaning"]
+    assert g[""]["decision"] == "WITHHELD" and g["stillness,stillness_meaning"]["decision"] == "WITHHELD"
+    both = g["scope,stillness,stillness_meaning"]
     assert both["decision"] == "DEPLOYABLE"
     assert (both["auto_issued"], both["held_for_review"]["tickets"]) == ({"tickets": 17, "false_tickets": 0}, 3)
 
