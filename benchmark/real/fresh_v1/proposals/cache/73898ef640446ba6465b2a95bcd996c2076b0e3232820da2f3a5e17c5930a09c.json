@@ -1,0 +1,40 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6aeae83bfb52e1b7ce714d63",
+ "video_sha256": "d2c0fe42ce7b48aef2ff0c22b2cb42553984df987373762865625164a23d2498",
+ "run": 0,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 16.5, \"description\": \"blue SUV in left southbound lane\", \"verdict\": \"PASS\", \"waited_s\": 14.0}, {\"approx_cross_time_s\": 17.9, \"description\": \"white SUV in right southbound lane\", \"verdict\": \"PASS\", \"waited_s\": 14.5}], \"notes\": \"Only two southbound cars cross packing_entry during video. Both were stationary in inspection zone from start until ~14-15s, then crept forward and crossed. Wait >1.5s so PASS. Northbound traffic on east lane does not cross the line.\", \"overall\": \"PASS\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 16.5,
+    "description": "blue SUV in left southbound lane",
+    "verdict": "PASS",
+    "waited_s": 14.0
+   },
+   {
+    "approx_cross_time_s": 17.9,
+    "description": "white SUV in right southbound lane",
+    "verdict": "PASS",
+    "waited_s": 14.5
+   }
+  ],
+  "notes": "Only two southbound cars cross packing_entry during video. Both were stationary in inspection zone from start until ~14-15s, then crept forward and crossed. Wait >1.5s so PASS. Northbound traffic on east lane does not cross the line.",
+  "overall": "PASS"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 4429,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 0
+  },
+  "output_tokens": 3695,
+  "output_tokens_details": {
+   "reasoning_tokens": 3538
+  },
+  "total_tokens": 8124
+ },
+ "latency_s": 32.07
+}

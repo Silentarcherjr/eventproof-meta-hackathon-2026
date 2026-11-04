@@ -1,0 +1,10 @@
+{
+ "schema": "eventproof-label-proposal/1",
+ "clip": "drone_north_1.mp4",
+ "clip_sha256": "8101c819af72ab7aa6753783a3c2dc6a4fa7640859a436a0a163941a32f45118",
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6aeae787d15b075d61f94c53",
+ "error": null,
+ "crossings": [],
+ "notes": "One red car with white roof enters the inspection zone from the bottom (~2s), moves north and stops completely still in the northbound lane well south of packing_entry from ~10s to end of video (~18.7s) and never crosses the line. Other visible vehicles are southbound or east-west cross traffic north of the line and do not cross packing_entry south-to-north. Hence zero packing_entry crossings in the video."
+}

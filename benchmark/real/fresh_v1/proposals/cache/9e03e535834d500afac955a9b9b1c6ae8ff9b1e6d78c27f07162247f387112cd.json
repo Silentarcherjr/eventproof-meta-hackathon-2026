@@ -1,0 +1,27 @@
+{
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6aeae787d15b075d61f94c53",
+ "video_sha256": "8101c819af72ab7aa6753783a3c2dc6a4fa7640859a436a0a163941a32f45118",
+ "run": 0,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\":[],\"notes\":\"One red car with white roof enters the inspection zone from the bottom (~2s), moves north and stops completely still in the northbound lane well south of packing_entry from ~10s to end of video (~18.7s) and never crosses the line. Other visible vehicles are southbound or east-west cross traffic north of the line and do not cross packing_entry south-to-north. Hence zero packing_entry crossings in the video.\",\"overall\":\"PASS\"}",
+ "parsed": {
+  "crossings": [],
+  "notes": "One red car with white roof enters the inspection zone from the bottom (~2s), moves north and stops completely still in the northbound lane well south of packing_entry from ~10s to end of video (~18.7s) and never crosses the line. Other visible vehicles are southbound or east-west cross traffic north of the line and do not cross packing_entry south-to-north. Hence zero packing_entry crossings in the video.",
+  "overall": "PASS"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 4430,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 0
+  },
+  "output_tokens": 2875,
+  "output_tokens_details": {
+   "reasoning_tokens": 2768
+  },
+  "total_tokens": 7305
+ },
+ "latency_s": 25.54
+}

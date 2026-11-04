@@ -1,0 +1,17 @@
+{
+ "schema": "eventproof-label-proposal/1",
+ "clip": "drone_north_2.mp4",
+ "clip_sha256": "0ab686bc8cd52457dd071425471923d5c592fa8dc10f751d0ba65f8cd45bbd33",
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6aeae7abc6c5b612fac7435d",
+ "error": null,
+ "crossings": [
+  {
+   "approx_cross_time_s": 17.5,
+   "description": "red car with white roof, small hatchback in right northbound lane",
+   "verdict": "PASS",
+   "waited_s": 17.0
+  }
+ ],
+ "notes": "Only the lead red-white car crosses the stop line during the 18.7s clip, after remaining completely still in the waiting zone from 0.0s until moving. Following silver SUV, dark car and blue car enter from bottom and queue in the zone but do not reach the line before end."
+}

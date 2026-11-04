@@ -1,0 +1,17 @@
+{
+ "schema": "eventproof-label-proposal/1",
+ "clip": "drone_south_2.mp4",
+ "clip_sha256": "08b8be35905664865c37dac985c4f3f9cfef8e87be67d095c61af3261f54a7df",
+ "model": "muse-spark-1.3",
+ "response_id": "resp_6aeae81bccb16df44e184730",
+ "error": null,
+ "crossings": [
+  {
+   "approx_cross_time_s": 17.5,
+   "description": "dark grey sedan in left southbound lane",
+   "verdict": "PASS",
+   "waited_s": 3.2
+  }
+ ],
+ "notes": "Only one southbound crossing of packing_entry occurs in 18.7s. Dark grey sedan travels top to bottom, stops in inspection zone alongside blue car for ~3s, then crosses. Blue sedan and white sedan wait in zone but never cross. Northbound vehicles on east side travel bottom to top and do not count as southbound crossings."
+}

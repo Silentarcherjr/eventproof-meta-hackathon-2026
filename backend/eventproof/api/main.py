@@ -436,6 +436,71 @@ def ticket_court() -> dict:
             "audit": audit["finding"], "approvable": APPROVABLE, "gates": gates(rows), "cases": cases}
 
 
+LABEL_SETS = {"fresh_v1": BENCH / "real" / "fresh_v1"}
+_CLIP = re.compile(r"^[a-z0-9_]+\.mp4$")
+
+
+def _label_set(set_id: str) -> Path:
+    if set_id not in LABEL_SETS:
+        raise HTTPException(404, "unknown label set")
+    return LABEL_SETS[set_id]
+
+
+@app.get("/label/{set_id}")
+def label_set(set_id: str) -> dict:
+    """Label review: each clip's draft (rule, layout), Muse Spark's proposed labels and the person's saved labels."""
+    d = _label_set(set_id)
+    clips = []
+    for p in sorted((d / "drafts").glob("*.json")):
+        prop, saved = d / "proposals" / p.name, d / "labels" / p.name
+        clips.append({"draft": json.loads(p.read_text()),
+                      "proposal": json.loads(prop.read_text()) if prop.is_file() else None,
+                      "saved": json.loads(saved.read_text()) if saved.is_file() else None})
+    return {"set": set_id, "frozen": (d / "labels" / "MANIFEST.json").is_file(), "writable": MODE == "local",
+            "clips": clips}
+
+
+@app.get("/label/{set_id}/video/{clip}")
+def label_video(set_id: str, clip: str) -> FileResponse:
+    if not _CLIP.match(clip):
+        raise HTTPException(404, "no such clip")
+    f = _label_set(set_id) / "videos" / clip
+    if not f.is_file():
+        raise HTTPException(404, "no such clip")
+    return FileResponse(f, media_type="video/mp4")
+
+
+class LabelSave(BaseModel):
+    objects: list[dict]
+    reviewer: str
+
+
+@app.post("/label/{set_id}/{clip}")
+def label_save(set_id: str, clip: str, body: LabelSave) -> dict:
+    """Save the person's labels for one clip (local mode only, refused once the set is frozen). Checked again by
+    `real_video check --freeze` before any model runs on the clip."""
+    if MODE != "local":
+        raise HTTPException(403, "labels can only be saved in local mode")
+    d = _label_set(set_id)
+    if not _CLIP.match(clip) or not (d / "drafts" / clip.replace(".mp4", ".json")).is_file():
+        raise HTTPException(404, "no such clip")
+    if (d / "labels" / "MANIFEST.json").is_file():
+        raise HTTPException(409, "labels are frozen")
+    keys = {"description", "crosses_packing", "stood_still_s", "intended", "cross_s", "cross_dir"}
+    objs = [{k: o[k] for k in keys if k in o} for o in body.objects]
+    if not objs or any(not str(o.get("description", "")).strip() for o in objs):
+        raise HTTPException(422, "every clip needs at least one described object")
+    objs.sort(key=lambda o: (not o.get("crosses_packing"), o.get("cross_s") or 0))
+    draft = json.loads((d / "drafts" / clip.replace(".mp4", ".json")).read_text())
+    lab = draft | {"objects": objs,
+                   "expected_overall": "FAIL" if any(o.get("intended") == "VIOLATION" for o in objs) else "PASS",
+                   "labeled_by": body.reviewer, "labeled_at": time.strftime("%Y-%m-%dT%H:%M:%S%z")}
+    lab["labeled_at"] = lab["labeled_at"][:-2] + ":" + lab["labeled_at"][-2:]
+    (d / "labels").mkdir(exist_ok=True)
+    (d / "labels" / clip.replace(".mp4", ".json")).write_text(json.dumps(lab, indent=1) + "\n")
+    return {"saved": clip, "objects": len(objs)}
+
+
 @app.get("/runs/{run_id}/ledger")
 def run_ledger(run_id: str) -> dict:
     """Build (or rebuild) the run's evidence ledger: every file hash, model/request ids, holdout manifests."""
