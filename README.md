@@ -6,7 +6,9 @@ The law says "shall stop". It never says for how long, or how slow counts as sto
 numbers, and nobody checks them. **Same law, same 30 real cars, same model: anywhere from 0 to 17 tickets**, depending
 only on those two numbers. At scale it is the same: on **1,268 real STOP-sign approaches at US intersections**
 (drone trajectories from the public INTERACTION dataset), the verbatim California statute tickets **anywhere from 9 % to
-85 % of drivers**, again only by those two numbers. New York learned this the hard way: its AI bus-lane cameras issued about 3,800 mistaken
+85 % of drivers**, again only by those two numbers. Even human coders have to pick them: a Minnesota DOT study of
+20,825 stop-sign events counted a "complete stop" as 10+ video frames (about 0.7 s at its 15 fps) and a car slowed to
+3 mph or less as a roll ([MnDOT report 2020-17](https://www.lrl.mn.gov/docs/2021/other/210035.pdf), Table 3.9). New York learned this the hard way: its AI bus-lane cameras issued about 3,800 mistaken
 violations in 2024 because the *rule* was wrong, not the detection.
 
 EventProof is the check before a camera rule goes live:
