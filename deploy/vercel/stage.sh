@@ -9,7 +9,7 @@ cd "$(dirname "$0")/../.."
 OUT=${1:?out dir}
 test ! -e "$OUT" || { echo "$OUT exists" >&2; exit 1; }
 mkdir -p "$OUT"
-git ls-files -z backend frontend benchmark/holdout benchmark/final/report_final_v1.json benchmark/ambiguity/cache benchmark/real \
+git ls-files -z backend frontend benchmark/holdout benchmark/final/report_final_v1.json benchmark/ambiguity/cache benchmark/real benchmark/law benchmark/tickets \
   | grep -zv -e '^backend/tests/' -e '^frontend/e2e/' | xargs -0 -I{} sh -c 'mkdir -p "$1/$(dirname "$2")" && cp "$2" "$1/$2"' _ "$OUT" {}
 mkdir -p "$OUT/artifacts/runs"
 for c in muse_cache sam_cache muse_layout_cache; do test -d "artifacts/$c" && cp -R "artifacts/$c" "$OUT/artifacts/"; done

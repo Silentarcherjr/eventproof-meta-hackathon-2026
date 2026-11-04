@@ -394,6 +394,45 @@ def run_defense(run_id: str, object_id: int) -> dict:
             "request_id": d.get("request_id"), "cached": d["cached"]}
 
 
+BENCH = Path(__file__).resolve().parents[3] / "benchmark"
+
+
+@app.get("/law/grid")
+def law_grid() -> dict:
+    """The numbers the statutes never wrote, as a grid over the 30 labelled real cars (benchmark/law/grid.json)."""
+    p = BENCH / "law" / "grid.json"
+    if not p.is_file():
+        raise HTTPException(404, "grid not computed")
+    return json.loads(p.read_text())
+
+
+@app.get("/tickets/court")
+def ticket_court() -> dict:
+    """Every real ticket of the ticket study as a case file: prosecution (rule, decisive events), defense (Muse Spark,
+    from its closed menu), ruling (the deterministic sweep), plus the contract-acceptance block."""
+    from eventproof.review.triage import contract
+
+    rep = json.loads((BENCH / "tickets" / "report.json").read_text())
+    runs = {}
+    for s in ("novisad", "traffic_v2", "traffic_v3", "domains", "santos"):
+        for c in json.loads((BENCH / "real" / "anchor_v4" / f"report_{s}.json").read_text())["clips"]:
+            runs[(s, c["clip"])] = c["run_id"]
+    cases = []
+    for r in rep["rows"]:
+        if "defense" not in r:
+            continue
+        run_id = runs[(r["set"], r["clip"])]
+        run = BENCH / "real" / "anchor_v4" / "runs" / run_id
+        ev = pipeline.Evidence.model_validate_json((run / "evidence.json").read_text())
+        rule = VisualRule.model_validate(ev.rule.compiled_rule)
+        tracks = TrackSet.model_validate_json((run / "tracks.json").read_text())
+        obj = next(o for o in evaluate(rule, tracks).objects if o.object_id == r["object_id"])
+        cases.append(r | {"run_id": run_id, "rule_text": ev.rule.text, "explanation": rule.normalized_explanation,
+                          "anchor": rule.params.anchor, "events": [e.model_dump() for e in obj.events],
+                          "first_frame": obj.first_frame, "last_frame": obj.last_frame})
+    return {"summary": rep["summary"], "contract": contract(rep["rows"]), "cases": cases}
+
+
 @app.get("/runs/{run_id}/ledger")
 def run_ledger(run_id: str) -> dict:
     """Build (or rebuild) the run's evidence ledger: every file hash, model/request ids, holdout manifests."""
