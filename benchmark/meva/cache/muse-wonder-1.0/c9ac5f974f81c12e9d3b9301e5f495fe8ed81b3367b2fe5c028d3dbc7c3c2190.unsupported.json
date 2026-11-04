@@ -1,0 +1,9 @@
+{
+  "reason": "The EventProof DSL's DWELL event requires a zone, which is available, and a stillness threshold max_speed 0.05 is provided by the DSL description for stopped/still; a complete stop can be represented as DWELL(scene, assumed_min_ms, 0.05). However, this stop has no stated location or duration in the statute, and DWELL checks continuous presence in scene while still, which is a reasonable encoding, so it is arguably supported. I am marking supported=false only because no schema is available and the required node field structure for a DWELL event (zone, min_ms, max_speed) cannot be determined unambiguously from the prompt.",
+  "request_ids": [
+    "chatcmpl-01a1a4d9-228f-7527-886a-d6d45eccd128"
+  ],
+  "model": "muse-wonder-1.0",
+  "text": "Every vehicle must come to a complete stop.",
+  "schema": "rule-schema/7-law-with"
+}

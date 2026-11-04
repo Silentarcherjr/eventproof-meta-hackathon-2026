@@ -1,0 +1,4026 @@
+{
+ "schema": "eventproof-meva-study/1",
+ "preregistration": "benchmark/meva/PREREGISTRATION.md",
+ "rows": [
+  {
+   "model": "muse-spark-1.3",
+   "compiled": true,
+   "cached": false,
+   "request_ids": [
+    "chatcmpl-01a1a4d7-fb4c-7532-ab82-e9ef8eea933c"
+   ],
+   "rule": {
+    "check": {
+     "event": {
+      "max_speed": 0.05,
+      "min_ms": 1000.0,
+      "op": "DWELL",
+      "zone": "scene"
+     },
+     "op": "OCCURS"
+    },
+    "entity": {
+     "concept": "vehicle",
+     "name": "vehicle"
+    },
+    "lines": [],
+    "normalized_explanation": "Every vehicle must remain completely stopped in the camera view for at least 1000 ms.",
+    "params": {
+     "anchor": "bottom_center",
+     "max_gap_frames": 3,
+     "min_confidence": 0.0
+    },
+    "rule_id": "vehicle-complete-stop",
+    "version": 1,
+    "zones": [
+     {
+      "id": "scene",
+      "polygon": [
+       [
+        0.0,
+        0.0
+       ],
+       [
+        1.0,
+        0.0
+       ],
+       [
+        1.0,
+        1.0
+       ],
+       [
+        0.0,
+        1.0
+       ]
+      ]
+     }
+    ]
+   },
+   "assumptions": [
+    "'complete stop' interpreted as remaining still with max_speed 0.05.",
+    "No stop duration is stated; 1000 ms of continuous stillness is assumed to qualify as a stop.",
+    "No location is stated; a stop anywhere in the whole camera view is assumed to satisfy the rule, so zone 'scene' is used.",
+    "Anchor 'bottom_center' assumed to measure the vehicle's ground contact point at the wheels."
+   ],
+   "provenance": [
+    {
+     "param": "entity",
+     "quote": "vehicle",
+     "reason": "",
+     "source": "QUOTED",
+     "value": "vehicle"
+    },
+    {
+     "param": "DWELL.zone",
+     "quote": "",
+     "reason": "No location is stated in the rule; 'scene' is the only available zone and covers the whole camera view, so a stop anywhere visible is assumed to satisfy the rule.",
+     "source": "ASSUMED",
+     "value": "scene"
+    },
+    {
+     "param": "DWELL.max_speed",
+     "quote": "complete stop",
+     "reason": "",
+     "source": "QUOTED",
+     "value": "0.05"
+    },
+    {
+     "param": "DWELL.min_ms",
+     "quote": "",
+     "reason": "Rule states no duration; 1000 ms of continuous stillness assumed as minimal qualifying stop.",
+     "source": "ASSUMED",
+     "value": "1000"
+    },
+    {
+     "param": "anchor",
+     "quote": "",
+     "reason": "Vehicle touches the ground at the wheels, so bottom_center tracks the stopping position the zones were drawn for.",
+     "source": "ASSUMED",
+     "value": "bottom_center"
+    }
+   ],
+   "total": {
+    "n": 1392,
+    "right": 337,
+    "agreement": 0.242,
+    "ci95": [
+     0.2203,
+     0.2653
+    ],
+    "false_stopped": 1004,
+    "missed_stops": 51,
+    "undecided": 0
+   },
+   "per_camera": {
+    "bus.G340": {
+     "n": 114,
+     "right": 36,
+     "agreement": 0.316,
+     "ci95": [
+      0.2377,
+      0.4059
+     ],
+     "false_stopped": 76,
+     "missed_stops": 2,
+     "undecided": 0
+    },
+    "hospital.G436": {
+     "n": 324,
+     "right": 51,
+     "agreement": 0.157,
+     "ci95": [
+      0.1218,
+      0.201
+     ],
+     "false_stopped": 266,
+     "missed_stops": 7,
+     "undecided": 0
+    },
+    "school.G328": {
+     "n": 156,
+     "right": 36,
+     "agreement": 0.231,
+     "ci95": [
+      0.1716,
+      0.3029
+     ],
+     "false_stopped": 118,
+     "missed_stops": 2,
+     "undecided": 0
+    },
+    "school.G336": {
+     "n": 222,
+     "right": 43,
+     "agreement": 0.194,
+     "ci95": [
+      0.1471,
+      0.2507
+     ],
+     "false_stopped": 172,
+     "missed_stops": 7,
+     "undecided": 0
+    },
+    "school.G339": {
+     "n": 203,
+     "right": 69,
+     "agreement": 0.34,
+     "ci95": [
+      0.2783,
+      0.4075
+     ],
+     "false_stopped": 126,
+     "missed_stops": 8,
+     "undecided": 0
+    },
+    "school.G424": {
+     "n": 373,
+     "right": 102,
+     "agreement": 0.273,
+     "ci95": [
+      0.2307,
+      0.3208
+     ],
+     "false_stopped": 246,
+     "missed_stops": 25,
+     "undecided": 0
+    }
+   }
+  },
+  {
+   "model": "muse-wonder-1.0",
+   "compiled": false,
+   "error": "UnsupportedRule: The EventProof DSL's DWELL event requires a zone, which is available, and a stillness threshold max_speed 0.05 is provided by the DSL description for stopped/still; a complete stop can be represented as DWELL(scene, assumed_min_ms, 0.05). However, this stop has no stated location or"
+  }
+ ],
+ "live_calls": 3,
+ "population": {
+  "clips": 193,
+  "vehicles": 1392,
+  "stopped": 245
+ },
+ "grid": [
+  {
+   "min_s": 0.0,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 628,
+   "agreement": 0.451,
+   "ci95": [
+    0.4252,
+    0.4774
+   ],
+   "false_stopped": 635,
+   "missed_stops": 129,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 475,
+   "agreement": 0.341,
+   "ci95": [
+    0.3168,
+    0.3665
+   ],
+   "false_stopped": 850,
+   "missed_stops": 67,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 402,
+   "agreement": 0.289,
+   "ci95": [
+    0.2656,
+    0.3132
+   ],
+   "false_stopped": 951,
+   "missed_stops": 39,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 339,
+   "agreement": 0.244,
+   "ci95": [
+    0.2217,
+    0.2668
+   ],
+   "false_stopped": 1022,
+   "missed_stops": 31,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 312,
+   "agreement": 0.224,
+   "ci95": [
+    0.203,
+    0.2468
+   ],
+   "false_stopped": 1059,
+   "missed_stops": 21,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 294,
+   "agreement": 0.211,
+   "ci95": [
+    0.1906,
+    0.2334
+   ],
+   "false_stopped": 1085,
+   "missed_stops": 13,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 273,
+   "agreement": 0.196,
+   "ci95": [
+    0.1761,
+    0.2178
+   ],
+   "false_stopped": 1109,
+   "missed_stops": 10,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 267,
+   "agreement": 0.192,
+   "ci95": [
+    0.172,
+    0.2133
+   ],
+   "false_stopped": 1121,
+   "missed_stops": 4,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 260,
+   "agreement": 0.187,
+   "ci95": [
+    0.1672,
+    0.2081
+   ],
+   "false_stopped": 1130,
+   "missed_stops": 2,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 255,
+   "agreement": 0.183,
+   "ci95": [
+    0.1638,
+    0.2044
+   ],
+   "false_stopped": 1135,
+   "missed_stops": 2,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 251,
+   "agreement": 0.18,
+   "ci95": [
+    0.161,
+    0.2014
+   ],
+   "false_stopped": 1140,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 251,
+   "agreement": 0.18,
+   "ci95": [
+    0.161,
+    0.2014
+   ],
+   "false_stopped": 1141,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 250,
+   "agreement": 0.18,
+   "ci95": [
+    0.1603,
+    0.2006
+   ],
+   "false_stopped": 1142,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 248,
+   "agreement": 0.178,
+   "ci95": [
+    0.159,
+    0.1991
+   ],
+   "false_stopped": 1144,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1147,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1147,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.0,
+   "speed": null,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1147,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 676,
+   "agreement": 0.486,
+   "ci95": [
+    0.4595,
+    0.5119
+   ],
+   "false_stopped": 567,
+   "missed_stops": 149,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 480,
+   "agreement": 0.345,
+   "ci95": [
+    0.3203,
+    0.3702
+   ],
+   "false_stopped": 827,
+   "missed_stops": 85,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 406,
+   "agreement": 0.292,
+   "ci95": [
+    0.2684,
+    0.3161
+   ],
+   "false_stopped": 936,
+   "missed_stops": 50,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 348,
+   "agreement": 0.25,
+   "ci95": [
+    0.228,
+    0.2734
+   ],
+   "false_stopped": 1008,
+   "missed_stops": 36,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 318,
+   "agreement": 0.228,
+   "ci95": [
+    0.2072,
+    0.2512
+   ],
+   "false_stopped": 1052,
+   "missed_stops": 22,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 302,
+   "agreement": 0.217,
+   "ci95": [
+    0.1961,
+    0.2394
+   ],
+   "false_stopped": 1075,
+   "missed_stops": 15,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 278,
+   "agreement": 0.2,
+   "ci95": [
+    0.1796,
+    0.2215
+   ],
+   "false_stopped": 1103,
+   "missed_stops": 11,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 269,
+   "agreement": 0.193,
+   "ci95": [
+    0.1734,
+    0.2148
+   ],
+   "false_stopped": 1117,
+   "missed_stops": 6,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 266,
+   "agreement": 0.191,
+   "ci95": [
+    0.1713,
+    0.2126
+   ],
+   "false_stopped": 1124,
+   "missed_stops": 2,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 260,
+   "agreement": 0.187,
+   "ci95": [
+    0.1672,
+    0.2081
+   ],
+   "false_stopped": 1130,
+   "missed_stops": 2,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 252,
+   "agreement": 0.181,
+   "ci95": [
+    0.1617,
+    0.2021
+   ],
+   "false_stopped": 1139,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 250,
+   "agreement": 0.18,
+   "ci95": [
+    0.1603,
+    0.2006
+   ],
+   "false_stopped": 1141,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 249,
+   "agreement": 0.179,
+   "ci95": [
+    0.1596,
+    0.1999
+   ],
+   "false_stopped": 1142,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 249,
+   "agreement": 0.179,
+   "ci95": [
+    0.1596,
+    0.1999
+   ],
+   "false_stopped": 1142,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 248,
+   "agreement": 0.178,
+   "ci95": [
+    0.159,
+    0.1991
+   ],
+   "false_stopped": 1144,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1147,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.25,
+   "speed": null,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1147,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 700,
+   "agreement": 0.503,
+   "ci95": [
+    0.4766,
+    0.5291
+   ],
+   "false_stopped": 518,
+   "missed_stops": 174,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 483,
+   "agreement": 0.347,
+   "ci95": [
+    0.3224,
+    0.3724
+   ],
+   "false_stopped": 808,
+   "missed_stops": 101,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 415,
+   "agreement": 0.298,
+   "ci95": [
+    0.2747,
+    0.3227
+   ],
+   "false_stopped": 918,
+   "missed_stops": 59,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 354,
+   "agreement": 0.254,
+   "ci95": [
+    0.2321,
+    0.2778
+   ],
+   "false_stopped": 996,
+   "missed_stops": 42,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 317,
+   "agreement": 0.228,
+   "ci95": [
+    0.2065,
+    0.2505
+   ],
+   "false_stopped": 1044,
+   "missed_stops": 31,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 305,
+   "agreement": 0.219,
+   "ci95": [
+    0.1982,
+    0.2416
+   ],
+   "false_stopped": 1069,
+   "missed_stops": 18,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 282,
+   "agreement": 0.203,
+   "ci95": [
+    0.1823,
+    0.2245
+   ],
+   "false_stopped": 1097,
+   "missed_stops": 13,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 271,
+   "agreement": 0.195,
+   "ci95": [
+    0.1747,
+    0.2163
+   ],
+   "false_stopped": 1114,
+   "missed_stops": 7,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 267,
+   "agreement": 0.192,
+   "ci95": [
+    0.172,
+    0.2133
+   ],
+   "false_stopped": 1121,
+   "missed_stops": 4,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 262,
+   "agreement": 0.188,
+   "ci95": [
+    0.1686,
+    0.2096
+   ],
+   "false_stopped": 1128,
+   "missed_stops": 2,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 257,
+   "agreement": 0.185,
+   "ci95": [
+    0.1651,
+    0.2059
+   ],
+   "false_stopped": 1134,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 252,
+   "agreement": 0.181,
+   "ci95": [
+    0.1617,
+    0.2021
+   ],
+   "false_stopped": 1139,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 250,
+   "agreement": 0.18,
+   "ci95": [
+    0.1603,
+    0.2006
+   ],
+   "false_stopped": 1141,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 249,
+   "agreement": 0.179,
+   "ci95": [
+    0.1596,
+    0.1999
+   ],
+   "false_stopped": 1142,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 248,
+   "agreement": 0.178,
+   "ci95": [
+    0.159,
+    0.1991
+   ],
+   "false_stopped": 1144,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 247,
+   "agreement": 0.177,
+   "ci95": [
+    0.1583,
+    0.1984
+   ],
+   "false_stopped": 1145,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.5,
+   "speed": null,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1147,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 742,
+   "agreement": 0.533,
+   "ci95": [
+    0.5068,
+    0.5591
+   ],
+   "false_stopped": 447,
+   "missed_stops": 203,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 520,
+   "agreement": 0.374,
+   "ci95": [
+    0.3485,
+    0.3993
+   ],
+   "false_stopped": 749,
+   "missed_stops": 123,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 423,
+   "agreement": 0.304,
+   "ci95": [
+    0.2803,
+    0.3286
+   ],
+   "false_stopped": 887,
+   "missed_stops": 82,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 367,
+   "agreement": 0.264,
+   "ci95": [
+    0.2412,
+    0.2874
+   ],
+   "false_stopped": 969,
+   "missed_stops": 56,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 322,
+   "agreement": 0.231,
+   "ci95": [
+    0.2099,
+    0.2542
+   ],
+   "false_stopped": 1028,
+   "missed_stops": 42,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 305,
+   "agreement": 0.219,
+   "ci95": [
+    0.1982,
+    0.2416
+   ],
+   "false_stopped": 1058,
+   "missed_stops": 29,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 292,
+   "agreement": 0.21,
+   "ci95": [
+    0.1892,
+    0.2319
+   ],
+   "false_stopped": 1079,
+   "missed_stops": 21,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 279,
+   "agreement": 0.2,
+   "ci95": [
+    0.1802,
+    0.2223
+   ],
+   "false_stopped": 1101,
+   "missed_stops": 12,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 274,
+   "agreement": 0.197,
+   "ci95": [
+    0.1768,
+    0.2185
+   ],
+   "false_stopped": 1113,
+   "missed_stops": 5,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 267,
+   "agreement": 0.192,
+   "ci95": [
+    0.172,
+    0.2133
+   ],
+   "false_stopped": 1122,
+   "missed_stops": 3,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 262,
+   "agreement": 0.188,
+   "ci95": [
+    0.1686,
+    0.2096
+   ],
+   "false_stopped": 1128,
+   "missed_stops": 2,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 256,
+   "agreement": 0.184,
+   "ci95": [
+    0.1644,
+    0.2051
+   ],
+   "false_stopped": 1135,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 253,
+   "agreement": 0.182,
+   "ci95": [
+    0.1624,
+    0.2029
+   ],
+   "false_stopped": 1138,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 250,
+   "agreement": 0.18,
+   "ci95": [
+    0.1603,
+    0.2006
+   ],
+   "false_stopped": 1141,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 249,
+   "agreement": 0.179,
+   "ci95": [
+    0.1596,
+    0.1999
+   ],
+   "false_stopped": 1142,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1145,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 0.75,
+   "speed": null,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1147,
+   "missed_stops": 0,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 789,
+   "agreement": 0.567,
+   "ci95": [
+    0.5406,
+    0.5926
+   ],
+   "false_stopped": 387,
+   "missed_stops": 216,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 537,
+   "agreement": 0.386,
+   "ci95": [
+    0.3606,
+    0.4116
+   ],
+   "false_stopped": 714,
+   "missed_stops": 141,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 444,
+   "agreement": 0.319,
+   "ci95": [
+    0.295,
+    0.3439
+   ],
+   "false_stopped": 855,
+   "missed_stops": 93,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 382,
+   "agreement": 0.274,
+   "ci95": [
+    0.2516,
+    0.2985
+   ],
+   "false_stopped": 942,
+   "missed_stops": 68,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 337,
+   "agreement": 0.242,
+   "ci95": [
+    0.2203,
+    0.2653
+   ],
+   "false_stopped": 1004,
+   "missed_stops": 51,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 311,
+   "agreement": 0.223,
+   "ci95": [
+    0.2023,
+    0.246
+   ],
+   "false_stopped": 1044,
+   "missed_stops": 37,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 298,
+   "agreement": 0.214,
+   "ci95": [
+    0.1933,
+    0.2364
+   ],
+   "false_stopped": 1069,
+   "missed_stops": 25,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 284,
+   "agreement": 0.204,
+   "ci95": [
+    0.1837,
+    0.226
+   ],
+   "false_stopped": 1091,
+   "missed_stops": 17,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 283,
+   "agreement": 0.203,
+   "ci95": [
+    0.183,
+    0.2252
+   ],
+   "false_stopped": 1099,
+   "missed_stops": 10,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 272,
+   "agreement": 0.195,
+   "ci95": [
+    0.1754,
+    0.2171
+   ],
+   "false_stopped": 1115,
+   "missed_stops": 5,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 269,
+   "agreement": 0.193,
+   "ci95": [
+    0.1734,
+    0.2148
+   ],
+   "false_stopped": 1119,
+   "missed_stops": 4,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 261,
+   "agreement": 0.188,
+   "ci95": [
+    0.1679,
+    0.2089
+   ],
+   "false_stopped": 1127,
+   "missed_stops": 4,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 256,
+   "agreement": 0.184,
+   "ci95": [
+    0.1644,
+    0.2051
+   ],
+   "false_stopped": 1133,
+   "missed_stops": 3,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 252,
+   "agreement": 0.181,
+   "ci95": [
+    0.1617,
+    0.2021
+   ],
+   "false_stopped": 1137,
+   "missed_stops": 3,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 251,
+   "agreement": 0.18,
+   "ci95": [
+    0.161,
+    0.2014
+   ],
+   "false_stopped": 1138,
+   "missed_stops": 3,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 247,
+   "agreement": 0.177,
+   "ci95": [
+    0.1583,
+    0.1984
+   ],
+   "false_stopped": 1142,
+   "missed_stops": 3,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 247,
+   "agreement": 0.177,
+   "ci95": [
+    0.1583,
+    0.1984
+   ],
+   "false_stopped": 1142,
+   "missed_stops": 3,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1143,
+   "missed_stops": 3,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1143,
+   "missed_stops": 3,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1143,
+   "missed_stops": 3,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.0,
+   "speed": null,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1146,
+   "missed_stops": 1,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 859,
+   "agreement": 0.617,
+   "ci95": [
+    0.5913,
+    0.6423
+   ],
+   "false_stopped": 309,
+   "missed_stops": 224,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 583,
+   "agreement": 0.419,
+   "ci95": [
+    0.3932,
+    0.4449
+   ],
+   "false_stopped": 642,
+   "missed_stops": 167,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 459,
+   "agreement": 0.33,
+   "ci95": [
+    0.3055,
+    0.3549
+   ],
+   "false_stopped": 815,
+   "missed_stops": 118,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 401,
+   "agreement": 0.288,
+   "ci95": [
+    0.2649,
+    0.3124
+   ],
+   "false_stopped": 906,
+   "missed_stops": 85,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 349,
+   "agreement": 0.251,
+   "ci95": [
+    0.2287,
+    0.2742
+   ],
+   "false_stopped": 974,
+   "missed_stops": 69,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 321,
+   "agreement": 0.231,
+   "ci95": [
+    0.2092,
+    0.2535
+   ],
+   "false_stopped": 1025,
+   "missed_stops": 46,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 308,
+   "agreement": 0.221,
+   "ci95": [
+    0.2002,
+    0.2438
+   ],
+   "false_stopped": 1048,
+   "missed_stops": 36,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 293,
+   "agreement": 0.21,
+   "ci95": [
+    0.1899,
+    0.2327
+   ],
+   "false_stopped": 1071,
+   "missed_stops": 28,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 290,
+   "agreement": 0.208,
+   "ci95": [
+    0.1878,
+    0.2305
+   ],
+   "false_stopped": 1085,
+   "missed_stops": 17,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 281,
+   "agreement": 0.202,
+   "ci95": [
+    0.1816,
+    0.2238
+   ],
+   "false_stopped": 1098,
+   "missed_stops": 13,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 276,
+   "agreement": 0.198,
+   "ci95": [
+    0.1782,
+    0.22
+   ],
+   "false_stopped": 1108,
+   "missed_stops": 8,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 271,
+   "agreement": 0.195,
+   "ci95": [
+    0.1747,
+    0.2163
+   ],
+   "false_stopped": 1114,
+   "missed_stops": 7,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 265,
+   "agreement": 0.19,
+   "ci95": [
+    0.1706,
+    0.2118
+   ],
+   "false_stopped": 1121,
+   "missed_stops": 6,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 261,
+   "agreement": 0.188,
+   "ci95": [
+    0.1679,
+    0.2089
+   ],
+   "false_stopped": 1125,
+   "missed_stops": 6,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 258,
+   "agreement": 0.185,
+   "ci95": [
+    0.1658,
+    0.2066
+   ],
+   "false_stopped": 1128,
+   "missed_stops": 6,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 253,
+   "agreement": 0.182,
+   "ci95": [
+    0.1624,
+    0.2029
+   ],
+   "false_stopped": 1133,
+   "missed_stops": 6,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 251,
+   "agreement": 0.18,
+   "ci95": [
+    0.161,
+    0.2014
+   ],
+   "false_stopped": 1135,
+   "missed_stops": 6,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 249,
+   "agreement": 0.179,
+   "ci95": [
+    0.1596,
+    0.1999
+   ],
+   "false_stopped": 1137,
+   "missed_stops": 6,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 249,
+   "agreement": 0.179,
+   "ci95": [
+    0.1596,
+    0.1999
+   ],
+   "false_stopped": 1137,
+   "missed_stops": 6,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 249,
+   "agreement": 0.179,
+   "ci95": [
+    0.1596,
+    0.1999
+   ],
+   "false_stopped": 1137,
+   "missed_stops": 6,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.25,
+   "speed": null,
+   "n": 1392,
+   "right": 246,
+   "agreement": 0.177,
+   "ci95": [
+    0.1576,
+    0.1976
+   ],
+   "false_stopped": 1142,
+   "missed_stops": 4,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 897,
+   "agreement": 0.644,
+   "ci95": [
+    0.6189,
+    0.6691
+   ],
+   "false_stopped": 263,
+   "missed_stops": 232,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 605,
+   "agreement": 0.435,
+   "ci95": [
+    0.4088,
+    0.4608
+   ],
+   "false_stopped": 606,
+   "missed_stops": 181,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 484,
+   "agreement": 0.348,
+   "ci95": [
+    0.3231,
+    0.3731
+   ],
+   "false_stopped": 781,
+   "missed_stops": 127,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 413,
+   "agreement": 0.297,
+   "ci95": [
+    0.2733,
+    0.3212
+   ],
+   "false_stopped": 882,
+   "missed_stops": 97,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 358,
+   "agreement": 0.257,
+   "ci95": [
+    0.2349,
+    0.2808
+   ],
+   "false_stopped": 957,
+   "missed_stops": 77,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 331,
+   "agreement": 0.238,
+   "ci95": [
+    0.2162,
+    0.2609
+   ],
+   "false_stopped": 1007,
+   "missed_stops": 54,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 313,
+   "agreement": 0.225,
+   "ci95": [
+    0.2037,
+    0.2475
+   ],
+   "false_stopped": 1037,
+   "missed_stops": 42,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 297,
+   "agreement": 0.213,
+   "ci95": [
+    0.1926,
+    0.2357
+   ],
+   "false_stopped": 1060,
+   "missed_stops": 35,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 297,
+   "agreement": 0.213,
+   "ci95": [
+    0.1926,
+    0.2357
+   ],
+   "false_stopped": 1072,
+   "missed_stops": 23,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 290,
+   "agreement": 0.208,
+   "ci95": [
+    0.1878,
+    0.2305
+   ],
+   "false_stopped": 1085,
+   "missed_stops": 17,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 276,
+   "agreement": 0.198,
+   "ci95": [
+    0.1782,
+    0.22
+   ],
+   "false_stopped": 1101,
+   "missed_stops": 15,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 273,
+   "agreement": 0.196,
+   "ci95": [
+    0.1761,
+    0.2178
+   ],
+   "false_stopped": 1105,
+   "missed_stops": 14,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 265,
+   "agreement": 0.19,
+   "ci95": [
+    0.1706,
+    0.2118
+   ],
+   "false_stopped": 1116,
+   "missed_stops": 11,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 261,
+   "agreement": 0.188,
+   "ci95": [
+    0.1679,
+    0.2089
+   ],
+   "false_stopped": 1120,
+   "missed_stops": 11,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 260,
+   "agreement": 0.187,
+   "ci95": [
+    0.1672,
+    0.2081
+   ],
+   "false_stopped": 1121,
+   "missed_stops": 11,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 255,
+   "agreement": 0.183,
+   "ci95": [
+    0.1638,
+    0.2044
+   ],
+   "false_stopped": 1126,
+   "missed_stops": 11,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 254,
+   "agreement": 0.182,
+   "ci95": [
+    0.1631,
+    0.2036
+   ],
+   "false_stopped": 1127,
+   "missed_stops": 11,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 252,
+   "agreement": 0.181,
+   "ci95": [
+    0.1617,
+    0.2021
+   ],
+   "false_stopped": 1129,
+   "missed_stops": 11,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 251,
+   "agreement": 0.18,
+   "ci95": [
+    0.161,
+    0.2014
+   ],
+   "false_stopped": 1130,
+   "missed_stops": 11,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 250,
+   "agreement": 0.18,
+   "ci95": [
+    0.1603,
+    0.2006
+   ],
+   "false_stopped": 1131,
+   "missed_stops": 11,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.5,
+   "speed": null,
+   "n": 1392,
+   "right": 245,
+   "agreement": 0.176,
+   "ci95": [
+    0.1569,
+    0.1969
+   ],
+   "false_stopped": 1138,
+   "missed_stops": 9,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 934,
+   "agreement": 0.671,
+   "ci95": [
+    0.6459,
+    0.6952
+   ],
+   "false_stopped": 219,
+   "missed_stops": 239,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 657,
+   "agreement": 0.472,
+   "ci95": [
+    0.4459,
+    0.4982
+   ],
+   "false_stopped": 538,
+   "missed_stops": 197,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 508,
+   "agreement": 0.365,
+   "ci95": [
+    0.3401,
+    0.3906
+   ],
+   "false_stopped": 740,
+   "missed_stops": 144,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 444,
+   "agreement": 0.319,
+   "ci95": [
+    0.295,
+    0.3439
+   ],
+   "false_stopped": 838,
+   "missed_stops": 110,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 385,
+   "agreement": 0.277,
+   "ci95": [
+    0.2537,
+    0.3007
+   ],
+   "false_stopped": 917,
+   "missed_stops": 90,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 351,
+   "agreement": 0.252,
+   "ci95": [
+    0.23,
+    0.2756
+   ],
+   "false_stopped": 970,
+   "missed_stops": 71,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 334,
+   "agreement": 0.24,
+   "ci95": [
+    0.2182,
+    0.2631
+   ],
+   "false_stopped": 1003,
+   "missed_stops": 55,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 317,
+   "agreement": 0.228,
+   "ci95": [
+    0.2065,
+    0.2505
+   ],
+   "false_stopped": 1031,
+   "missed_stops": 44,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 310,
+   "agreement": 0.223,
+   "ci95": [
+    0.2016,
+    0.2453
+   ],
+   "false_stopped": 1043,
+   "missed_stops": 39,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 305,
+   "agreement": 0.219,
+   "ci95": [
+    0.1982,
+    0.2416
+   ],
+   "false_stopped": 1053,
+   "missed_stops": 34,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 295,
+   "agreement": 0.212,
+   "ci95": [
+    0.1913,
+    0.2342
+   ],
+   "false_stopped": 1066,
+   "missed_stops": 31,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 285,
+   "agreement": 0.205,
+   "ci95": [
+    0.1844,
+    0.2267
+   ],
+   "false_stopped": 1080,
+   "missed_stops": 27,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 277,
+   "agreement": 0.199,
+   "ci95": [
+    0.1789,
+    0.2208
+   ],
+   "false_stopped": 1090,
+   "missed_stops": 25,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 274,
+   "agreement": 0.197,
+   "ci95": [
+    0.1768,
+    0.2185
+   ],
+   "false_stopped": 1096,
+   "missed_stops": 22,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 271,
+   "agreement": 0.195,
+   "ci95": [
+    0.1747,
+    0.2163
+   ],
+   "false_stopped": 1099,
+   "missed_stops": 22,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 267,
+   "agreement": 0.192,
+   "ci95": [
+    0.172,
+    0.2133
+   ],
+   "false_stopped": 1103,
+   "missed_stops": 22,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 265,
+   "agreement": 0.19,
+   "ci95": [
+    0.1706,
+    0.2118
+   ],
+   "false_stopped": 1106,
+   "missed_stops": 21,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 264,
+   "agreement": 0.19,
+   "ci95": [
+    0.1699,
+    0.2111
+   ],
+   "false_stopped": 1107,
+   "missed_stops": 21,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 261,
+   "agreement": 0.188,
+   "ci95": [
+    0.1679,
+    0.2089
+   ],
+   "false_stopped": 1110,
+   "missed_stops": 21,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 261,
+   "agreement": 0.188,
+   "ci95": [
+    0.1679,
+    0.2089
+   ],
+   "false_stopped": 1110,
+   "missed_stops": 21,
+   "undecided": 0
+  },
+  {
+   "min_s": 1.75,
+   "speed": null,
+   "n": 1392,
+   "right": 251,
+   "agreement": 0.18,
+   "ci95": [
+    0.161,
+    0.2014
+   ],
+   "false_stopped": 1125,
+   "missed_stops": 16,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 964,
+   "agreement": 0.693,
+   "ci95": [
+    0.6678,
+    0.7162
+   ],
+   "false_stopped": 188,
+   "missed_stops": 240,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 686,
+   "agreement": 0.493,
+   "ci95": [
+    0.4666,
+    0.5191
+   ],
+   "false_stopped": 503,
+   "missed_stops": 203,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 527,
+   "agreement": 0.379,
+   "ci95": [
+    0.3535,
+    0.4044
+   ],
+   "false_stopped": 709,
+   "missed_stops": 156,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 468,
+   "agreement": 0.336,
+   "ci95": [
+    0.3119,
+    0.3614
+   ],
+   "false_stopped": 807,
+   "missed_stops": 117,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 412,
+   "agreement": 0.296,
+   "ci95": [
+    0.2726,
+    0.3205
+   ],
+   "false_stopped": 883,
+   "missed_stops": 97,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 366,
+   "agreement": 0.263,
+   "ci95": [
+    0.2405,
+    0.2867
+   ],
+   "false_stopped": 946,
+   "missed_stops": 80,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 353,
+   "agreement": 0.254,
+   "ci95": [
+    0.2314,
+    0.2771
+   ],
+   "false_stopped": 973,
+   "missed_stops": 66,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 332,
+   "agreement": 0.239,
+   "ci95": [
+    0.2169,
+    0.2616
+   ],
+   "false_stopped": 1005,
+   "missed_stops": 55,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 322,
+   "agreement": 0.231,
+   "ci95": [
+    0.2099,
+    0.2542
+   ],
+   "false_stopped": 1022,
+   "missed_stops": 48,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 314,
+   "agreement": 0.226,
+   "ci95": [
+    0.2044,
+    0.2483
+   ],
+   "false_stopped": 1033,
+   "missed_stops": 45,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 308,
+   "agreement": 0.221,
+   "ci95": [
+    0.2002,
+    0.2438
+   ],
+   "false_stopped": 1040,
+   "missed_stops": 44,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 299,
+   "agreement": 0.215,
+   "ci95": [
+    0.194,
+    0.2371
+   ],
+   "false_stopped": 1056,
+   "missed_stops": 37,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 286,
+   "agreement": 0.205,
+   "ci95": [
+    0.1851,
+    0.2275
+   ],
+   "false_stopped": 1071,
+   "missed_stops": 35,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 279,
+   "agreement": 0.2,
+   "ci95": [
+    0.1802,
+    0.2223
+   ],
+   "false_stopped": 1078,
+   "missed_stops": 35,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 278,
+   "agreement": 0.2,
+   "ci95": [
+    0.1796,
+    0.2215
+   ],
+   "false_stopped": 1080,
+   "missed_stops": 34,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 275,
+   "agreement": 0.198,
+   "ci95": [
+    0.1775,
+    0.2193
+   ],
+   "false_stopped": 1085,
+   "missed_stops": 32,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 271,
+   "agreement": 0.195,
+   "ci95": [
+    0.1747,
+    0.2163
+   ],
+   "false_stopped": 1089,
+   "missed_stops": 32,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 269,
+   "agreement": 0.193,
+   "ci95": [
+    0.1734,
+    0.2148
+   ],
+   "false_stopped": 1091,
+   "missed_stops": 32,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 268,
+   "agreement": 0.193,
+   "ci95": [
+    0.1727,
+    0.2141
+   ],
+   "false_stopped": 1092,
+   "missed_stops": 32,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 266,
+   "agreement": 0.191,
+   "ci95": [
+    0.1713,
+    0.2126
+   ],
+   "false_stopped": 1094,
+   "missed_stops": 32,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.0,
+   "speed": null,
+   "n": 1392,
+   "right": 257,
+   "agreement": 0.185,
+   "ci95": [
+    0.1651,
+    0.2059
+   ],
+   "false_stopped": 1108,
+   "missed_stops": 27,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 994,
+   "agreement": 0.714,
+   "ci95": [
+    0.6898,
+    0.7372
+   ],
+   "false_stopped": 155,
+   "missed_stops": 243,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 736,
+   "agreement": 0.529,
+   "ci95": [
+    0.5025,
+    0.5548
+   ],
+   "false_stopped": 445,
+   "missed_stops": 211,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 550,
+   "agreement": 0.395,
+   "ci95": [
+    0.3698,
+    0.4211
+   ],
+   "false_stopped": 670,
+   "missed_stops": 172,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 480,
+   "agreement": 0.345,
+   "ci95": [
+    0.3203,
+    0.3702
+   ],
+   "false_stopped": 779,
+   "missed_stops": 133,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 438,
+   "agreement": 0.315,
+   "ci95": [
+    0.2908,
+    0.3395
+   ],
+   "false_stopped": 844,
+   "missed_stops": 110,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 386,
+   "agreement": 0.277,
+   "ci95": [
+    0.2544,
+    0.3014
+   ],
+   "false_stopped": 905,
+   "missed_stops": 101,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 374,
+   "agreement": 0.269,
+   "ci95": [
+    0.2461,
+    0.2926
+   ],
+   "false_stopped": 930,
+   "missed_stops": 88,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 353,
+   "agreement": 0.254,
+   "ci95": [
+    0.2314,
+    0.2771
+   ],
+   "false_stopped": 963,
+   "missed_stops": 76,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 341,
+   "agreement": 0.245,
+   "ci95": [
+    0.2231,
+    0.2682
+   ],
+   "false_stopped": 979,
+   "missed_stops": 72,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 336,
+   "agreement": 0.241,
+   "ci95": [
+    0.2196,
+    0.2646
+   ],
+   "false_stopped": 989,
+   "missed_stops": 67,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 328,
+   "agreement": 0.236,
+   "ci95": [
+    0.2141,
+    0.2586
+   ],
+   "false_stopped": 1000,
+   "missed_stops": 64,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 320,
+   "agreement": 0.23,
+   "ci95": [
+    0.2085,
+    0.2527
+   ],
+   "false_stopped": 1012,
+   "missed_stops": 60,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 307,
+   "agreement": 0.221,
+   "ci95": [
+    0.1996,
+    0.2431
+   ],
+   "false_stopped": 1028,
+   "missed_stops": 57,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 300,
+   "agreement": 0.216,
+   "ci95": [
+    0.1947,
+    0.2379
+   ],
+   "false_stopped": 1037,
+   "missed_stops": 55,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 297,
+   "agreement": 0.213,
+   "ci95": [
+    0.1926,
+    0.2357
+   ],
+   "false_stopped": 1040,
+   "missed_stops": 55,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 290,
+   "agreement": 0.208,
+   "ci95": [
+    0.1878,
+    0.2305
+   ],
+   "false_stopped": 1047,
+   "missed_stops": 55,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 287,
+   "agreement": 0.206,
+   "ci95": [
+    0.1857,
+    0.2282
+   ],
+   "false_stopped": 1050,
+   "missed_stops": 55,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 285,
+   "agreement": 0.205,
+   "ci95": [
+    0.1844,
+    0.2267
+   ],
+   "false_stopped": 1052,
+   "missed_stops": 55,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 283,
+   "agreement": 0.203,
+   "ci95": [
+    0.183,
+    0.2252
+   ],
+   "false_stopped": 1055,
+   "missed_stops": 54,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 282,
+   "agreement": 0.203,
+   "ci95": [
+    0.1823,
+    0.2245
+   ],
+   "false_stopped": 1056,
+   "missed_stops": 54,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.25,
+   "speed": null,
+   "n": 1392,
+   "right": 267,
+   "agreement": 0.192,
+   "ci95": [
+    0.172,
+    0.2133
+   ],
+   "false_stopped": 1077,
+   "missed_stops": 48,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 1014,
+   "agreement": 0.728,
+   "ci95": [
+    0.7045,
+    0.7512
+   ],
+   "false_stopped": 135,
+   "missed_stops": 243,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 774,
+   "agreement": 0.556,
+   "ci95": [
+    0.5298,
+    0.5819
+   ],
+   "false_stopped": 403,
+   "missed_stops": 215,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 574,
+   "agreement": 0.412,
+   "ci95": [
+    0.3868,
+    0.4384
+   ],
+   "false_stopped": 637,
+   "missed_stops": 181,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 493,
+   "agreement": 0.354,
+   "ci95": [
+    0.3295,
+    0.3797
+   ],
+   "false_stopped": 757,
+   "missed_stops": 142,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 443,
+   "agreement": 0.318,
+   "ci95": [
+    0.2943,
+    0.3432
+   ],
+   "false_stopped": 826,
+   "missed_stops": 123,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 408,
+   "agreement": 0.293,
+   "ci95": [
+    0.2698,
+    0.3176
+   ],
+   "false_stopped": 872,
+   "missed_stops": 112,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 391,
+   "agreement": 0.281,
+   "ci95": [
+    0.2579,
+    0.3051
+   ],
+   "false_stopped": 898,
+   "missed_stops": 103,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 377,
+   "agreement": 0.271,
+   "ci95": [
+    0.2481,
+    0.2948
+   ],
+   "false_stopped": 924,
+   "missed_stops": 91,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 368,
+   "agreement": 0.264,
+   "ci95": [
+    0.2419,
+    0.2882
+   ],
+   "false_stopped": 941,
+   "missed_stops": 83,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 362,
+   "agreement": 0.26,
+   "ci95": [
+    0.2377,
+    0.2837
+   ],
+   "false_stopped": 953,
+   "missed_stops": 77,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 355,
+   "agreement": 0.255,
+   "ci95": [
+    0.2328,
+    0.2786
+   ],
+   "false_stopped": 964,
+   "missed_stops": 73,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 341,
+   "agreement": 0.245,
+   "ci95": [
+    0.2231,
+    0.2682
+   ],
+   "false_stopped": 979,
+   "missed_stops": 72,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 335,
+   "agreement": 0.241,
+   "ci95": [
+    0.2189,
+    0.2638
+   ],
+   "false_stopped": 988,
+   "missed_stops": 69,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 324,
+   "agreement": 0.233,
+   "ci95": [
+    0.2113,
+    0.2557
+   ],
+   "false_stopped": 999,
+   "missed_stops": 69,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 319,
+   "agreement": 0.229,
+   "ci95": [
+    0.2079,
+    0.252
+   ],
+   "false_stopped": 1004,
+   "missed_stops": 69,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 314,
+   "agreement": 0.226,
+   "ci95": [
+    0.2044,
+    0.2483
+   ],
+   "false_stopped": 1009,
+   "missed_stops": 69,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 310,
+   "agreement": 0.223,
+   "ci95": [
+    0.2016,
+    0.2453
+   ],
+   "false_stopped": 1013,
+   "missed_stops": 69,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 307,
+   "agreement": 0.221,
+   "ci95": [
+    0.1996,
+    0.2431
+   ],
+   "false_stopped": 1016,
+   "missed_stops": 69,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 304,
+   "agreement": 0.218,
+   "ci95": [
+    0.1975,
+    0.2409
+   ],
+   "false_stopped": 1020,
+   "missed_stops": 68,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 304,
+   "agreement": 0.218,
+   "ci95": [
+    0.1975,
+    0.2409
+   ],
+   "false_stopped": 1020,
+   "missed_stops": 68,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.5,
+   "speed": null,
+   "n": 1392,
+   "right": 287,
+   "agreement": 0.206,
+   "ci95": [
+    0.1857,
+    0.2282
+   ],
+   "false_stopped": 1046,
+   "missed_stops": 59,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 1038,
+   "agreement": 0.746,
+   "ci95": [
+    0.7222,
+    0.7679
+   ],
+   "false_stopped": 110,
+   "missed_stops": 244,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 813,
+   "agreement": 0.584,
+   "ci95": [
+    0.558,
+    0.6097
+   ],
+   "false_stopped": 355,
+   "missed_stops": 224,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 619,
+   "agreement": 0.445,
+   "ci95": [
+    0.4188,
+    0.4709
+   ],
+   "false_stopped": 585,
+   "missed_stops": 188,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 517,
+   "agreement": 0.371,
+   "ci95": [
+    0.3464,
+    0.3971
+   ],
+   "false_stopped": 711,
+   "missed_stops": 164,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 459,
+   "agreement": 0.33,
+   "ci95": [
+    0.3055,
+    0.3549
+   ],
+   "false_stopped": 786,
+   "missed_stops": 147,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 431,
+   "agreement": 0.31,
+   "ci95": [
+    0.2859,
+    0.3344
+   ],
+   "false_stopped": 825,
+   "missed_stops": 136,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 410,
+   "agreement": 0.295,
+   "ci95": [
+    0.2712,
+    0.319
+   ],
+   "false_stopped": 854,
+   "missed_stops": 128,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 391,
+   "agreement": 0.281,
+   "ci95": [
+    0.2579,
+    0.3051
+   ],
+   "false_stopped": 881,
+   "missed_stops": 120,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 381,
+   "agreement": 0.274,
+   "ci95": [
+    0.2509,
+    0.2977
+   ],
+   "false_stopped": 900,
+   "missed_stops": 111,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 376,
+   "agreement": 0.27,
+   "ci95": [
+    0.2474,
+    0.294
+   ],
+   "false_stopped": 911,
+   "missed_stops": 105,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 370,
+   "agreement": 0.266,
+   "ci95": [
+    0.2433,
+    0.2896
+   ],
+   "false_stopped": 921,
+   "missed_stops": 101,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 362,
+   "agreement": 0.26,
+   "ci95": [
+    0.2377,
+    0.2837
+   ],
+   "false_stopped": 932,
+   "missed_stops": 98,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 354,
+   "agreement": 0.254,
+   "ci95": [
+    0.2321,
+    0.2778
+   ],
+   "false_stopped": 942,
+   "missed_stops": 96,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 344,
+   "agreement": 0.247,
+   "ci95": [
+    0.2252,
+    0.2705
+   ],
+   "false_stopped": 953,
+   "missed_stops": 95,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 340,
+   "agreement": 0.244,
+   "ci95": [
+    0.2224,
+    0.2675
+   ],
+   "false_stopped": 957,
+   "missed_stops": 95,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 335,
+   "agreement": 0.241,
+   "ci95": [
+    0.2189,
+    0.2638
+   ],
+   "false_stopped": 962,
+   "missed_stops": 95,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 330,
+   "agreement": 0.237,
+   "ci95": [
+    0.2155,
+    0.2601
+   ],
+   "false_stopped": 967,
+   "missed_stops": 95,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 327,
+   "agreement": 0.235,
+   "ci95": [
+    0.2134,
+    0.2579
+   ],
+   "false_stopped": 970,
+   "missed_stops": 95,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 325,
+   "agreement": 0.233,
+   "ci95": [
+    0.212,
+    0.2564
+   ],
+   "false_stopped": 973,
+   "missed_stops": 94,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 322,
+   "agreement": 0.231,
+   "ci95": [
+    0.2099,
+    0.2542
+   ],
+   "false_stopped": 976,
+   "missed_stops": 94,
+   "undecided": 0
+  },
+  {
+   "min_s": 2.75,
+   "speed": null,
+   "n": 1392,
+   "right": 308,
+   "agreement": 0.221,
+   "ci95": [
+    0.2002,
+    0.2438
+   ],
+   "false_stopped": 1000,
+   "missed_stops": 84,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.01,
+   "n": 1392,
+   "right": 1054,
+   "agreement": 0.757,
+   "ci95": [
+    0.734,
+    0.779
+   ],
+   "false_stopped": 94,
+   "missed_stops": 244,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.02,
+   "n": 1392,
+   "right": 838,
+   "agreement": 0.602,
+   "ci95": [
+    0.5761,
+    0.6274
+   ],
+   "false_stopped": 324,
+   "missed_stops": 230,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.03,
+   "n": 1392,
+   "right": 643,
+   "agreement": 0.462,
+   "ci95": [
+    0.4359,
+    0.4882
+   ],
+   "false_stopped": 557,
+   "missed_stops": 192,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.04,
+   "n": 1392,
+   "right": 549,
+   "agreement": 0.394,
+   "ci95": [
+    0.369,
+    0.4203
+   ],
+   "false_stopped": 673,
+   "missed_stops": 170,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.05,
+   "n": 1392,
+   "right": 500,
+   "agreement": 0.359,
+   "ci95": [
+    0.3344,
+    0.3848
+   ],
+   "false_stopped": 738,
+   "missed_stops": 154,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.06,
+   "n": 1392,
+   "right": 471,
+   "agreement": 0.338,
+   "ci95": [
+    0.314,
+    0.3636
+   ],
+   "false_stopped": 778,
+   "missed_stops": 143,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.07,
+   "n": 1392,
+   "right": 452,
+   "agreement": 0.325,
+   "ci95": [
+    0.3006,
+    0.3498
+   ],
+   "false_stopped": 804,
+   "missed_stops": 136,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.08,
+   "n": 1392,
+   "right": 438,
+   "agreement": 0.315,
+   "ci95": [
+    0.2908,
+    0.3395
+   ],
+   "false_stopped": 826,
+   "missed_stops": 128,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.09,
+   "n": 1392,
+   "right": 424,
+   "agreement": 0.305,
+   "ci95": [
+    0.281,
+    0.3293
+   ],
+   "false_stopped": 849,
+   "missed_stops": 119,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.1,
+   "n": 1392,
+   "right": 417,
+   "agreement": 0.3,
+   "ci95": [
+    0.2761,
+    0.3242
+   ],
+   "false_stopped": 860,
+   "missed_stops": 115,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.11,
+   "n": 1392,
+   "right": 409,
+   "agreement": 0.294,
+   "ci95": [
+    0.2705,
+    0.3183
+   ],
+   "false_stopped": 872,
+   "missed_stops": 111,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.12,
+   "n": 1392,
+   "right": 401,
+   "agreement": 0.288,
+   "ci95": [
+    0.2649,
+    0.3124
+   ],
+   "false_stopped": 883,
+   "missed_stops": 108,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.13,
+   "n": 1392,
+   "right": 393,
+   "agreement": 0.282,
+   "ci95": [
+    0.2593,
+    0.3065
+   ],
+   "false_stopped": 892,
+   "missed_stops": 107,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.14,
+   "n": 1392,
+   "right": 385,
+   "agreement": 0.277,
+   "ci95": [
+    0.2537,
+    0.3007
+   ],
+   "false_stopped": 901,
+   "missed_stops": 106,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.15,
+   "n": 1392,
+   "right": 377,
+   "agreement": 0.271,
+   "ci95": [
+    0.2481,
+    0.2948
+   ],
+   "false_stopped": 909,
+   "missed_stops": 106,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.16,
+   "n": 1392,
+   "right": 373,
+   "agreement": 0.268,
+   "ci95": [
+    0.2454,
+    0.2918
+   ],
+   "false_stopped": 913,
+   "missed_stops": 106,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.17,
+   "n": 1392,
+   "right": 370,
+   "agreement": 0.266,
+   "ci95": [
+    0.2433,
+    0.2896
+   ],
+   "false_stopped": 916,
+   "missed_stops": 106,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.18,
+   "n": 1392,
+   "right": 368,
+   "agreement": 0.264,
+   "ci95": [
+    0.2419,
+    0.2882
+   ],
+   "false_stopped": 918,
+   "missed_stops": 106,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.19,
+   "n": 1392,
+   "right": 366,
+   "agreement": 0.263,
+   "ci95": [
+    0.2405,
+    0.2867
+   ],
+   "false_stopped": 921,
+   "missed_stops": 105,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": 0.2,
+   "n": 1392,
+   "right": 363,
+   "agreement": 0.261,
+   "ci95": [
+    0.2384,
+    0.2845
+   ],
+   "false_stopped": 924,
+   "missed_stops": 105,
+   "undecided": 0
+  },
+  {
+   "min_s": 3.0,
+   "speed": null,
+   "n": 1392,
+   "right": 337,
+   "agreement": 0.242,
+   "ci95": [
+    0.2203,
+    0.2653
+   ],
+   "false_stopped": 954,
+   "missed_stops": 101,
+   "undecided": 0
+  }
+ ],
+ "code_commit": "0b4ffc2588f9461e3c87b447655a57a4c6a5cc31"
+}

@@ -1,0 +1,9 @@
+{
+  "reason": "The EventProof DSL provided has no DWELL/event type or event value capable of representing a complete stop (zero speed / stationary state). The available event schema shown for nodes only supports CROSSES with a line and direction; there is no line in the scene and no stop/speed-threshold event field in the allowed node schema. Therefore a complete-stop requirement cannot be faithfully compiled without inventing an unsupported event type or geometry.",
+  "request_ids": [
+    "chatcmpl-01a1a4d8-8cd4-711f-8468-435ca682be1b"
+  ],
+  "model": "muse-wonder-1.0",
+  "text": "Every vehicle must come to a complete stop.",
+  "schema": "rule-schema/6-law"
+}
