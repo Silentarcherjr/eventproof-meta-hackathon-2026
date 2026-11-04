@@ -2,8 +2,14 @@
 
 **Before an AI camera fines anyone, EventProof puts the rule, and every ticket, on trial.**
 
-A city writes "every car must come to a full stop at the line", and an AI camera starts issuing $40 tickets. Detecting
-the event is the easy half. EventProof answers the half nobody checks: **would this ticket hold up?**
+**This already happens.** In 2024, New York's AI bus-lane cameras (Hayden AI, an $83 million contract, about 1,020
+buses) issued about **3,800 mistaken violations**, more than 870 of them to cars parked legally. By the MTA's account
+the problem was the *rule*, not the detection: the cameras "had not been programed to know" about the legal parking zones, and
+the warning period was not respected. Human review did not catch it; the tickets were voided and refunded afterwards.
+
+AI cameras now fine people for stop signs, bus lanes, phones at the wheel and red lights. Detecting the event is the
+easy half. EventProof checks the half that failed in New York, **the rule the camera runs**, and asks of every ticket:
+**would it hold up?**
 - **Muse Spark** compiles the sentence, or the statute itself, into a video check.
 - **SAM 3.1** tracks every car.
 - **Muse Wonder** reads the sentence a second time.
@@ -27,10 +33,11 @@ no digit. A camera still needs two numbers: how long to stand still, and how slo
 | Tickets the same law issues on the same 30 cars, depending on two unwritten numbers | **0 to 17** |
 | Cars judged right by the rule Muse Spark compiled; by a repair that passed every synthetic test | **27/30 vs 16/30** |
 
-**Who it is for.** Takoma Park, Maryland, issues $40 citations from AI stop-sign cameras, and Virginia allowed them in
-April 2026. Such systems' claims are *"rarely backed up by independent studies"* (NYCLU, in IEEE Spectrum).
-EventProof is that independent check, for the program manager who signs off on a camera rule and the reviewer who
-approves each citation.
+**Who it is for.** Every city and transit agency that lets an AI camera issue fines: New York's bus lanes, Takoma
+Park's $40 stop-sign citations, Virginia since April 2026. Such systems' claims are *"rarely backed up by independent
+studies"* (NYCLU, in IEEE Spectrum), and New York shows what a wrong rule costs: thousands of refunds and public trust.
+EventProof is that independent check, for the program manager who signs off on a camera rule before it goes live, the
+reviewer who approves each citation, and the vendor who must prove its rule before the contract pays.
 
 ## How it works
 1. **Compile.** Muse Spark turns the sentence, or the statute, into a typed rule. It never writes code, and every value
@@ -44,8 +51,10 @@ approves each citation.
    smallest change that would overturn it. Each rule gets a one-page certificate and a contract block a city can hand
    to its vendor; no model writes either.
 
-The flagship is traffic, because that is where AI cameras fine people today. The same loop judges any zone, time,
-direction or two-object rule: pedestrians, cyclists, umbrellas over heads, boxes on a conveyor.
+The flagship is a stop line, because the law is short and the footage is public. Nothing in the loop is about stop
+lines: it judges any zone, dwell, direction or two-object rule (a car in a bus lane, a pedestrian on a crossing, a
+person *with* a hard hat, a box on a conveyor), and the two-object rule is piloted on real footage (an umbrella over a
+person: 2 of 4 right, the miss explained in the findings).
 
 ## Why Meta models
 - **Muse Spark** compiles rules through a small strict schema (about 1.4k prompt tokens). It escalates to a
@@ -91,7 +100,10 @@ Both are the dangerous kind of error for compliance, safety and quality checks, 
 something. The same loop serves anyone who deploys a visual rule (traffic enforcement, warehouse and production-line QA,
 site safety): before a rule goes live, it shows where the rule is wrong, why, and whether a fix really generalizes.
 
-Sources for the deployment facts above: [MoCo Show, 2026-01-07](https://mocoshow.com/?p=121089) and
+Sources for the deployment facts above: [NBC New York, 2024-11-26](https://www.nbcnewyork.com/investigations/mta-bus-camera-issue-mistake-parking-violations/6020986/)
+(New York bus-lane cameras: about 3,800 mistaken violations, more than 870 legally parked, cause, reversal and refunds,
+about 1,020 buses); [Jalopnik, 2024-12-04](https://jalopnik.com/new-york-citys-83-million-ai-bus-cameras-issued-nearly-1851712879)
+(Hayden AI, $83 million contract); [MoCo Show, 2026-01-07](https://mocoshow.com/?p=121089) and
 [2025-12-08](https://mocoshow.com/?p=119749) (Takoma Park pilot, $40 fine, staff review of every citation);
 [The Baltimore Banner, 2026-01-07](https://www.thebanner.com/community/transportation/artificial-intelligence-takoma-park-stop-RVZ4ACYBYREI3N2MEQ3IBJM76A/)
 (87% violation rates in the city study); [WTVR](https://www.wtvr.com/news/local-news/ai-cameras-virginia-stop-signs-june-17-2026)
