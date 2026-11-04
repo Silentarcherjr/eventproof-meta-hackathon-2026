@@ -180,3 +180,27 @@ test("hosted server: gallery of real clips, first clip opened, live caps shown",
   await expect(page.getByTestId(`clip-${id}`)).toHaveAttribute("href", `/?run=${id}`);
   await expect(page.getByTestId("overall")).toContainText("FAIL");  // the first demo run opens by itself
 });
+
+test("tickets panel: robustness per object and Muse Spark's defense of a ticket", async ({ page }) => {
+  const id = evidence.run_id;
+  await page.route(`http://api.test/runs/${id}`, (r) => r.fulfill({ json: evidence }));
+  await page.route(`http://api.test/runs/${id}/tracks`, (r) => r.fulfill({ path: fx("tracks.json") }));
+  await page.route(`http://api.test/runs/${id}/video`, (r) => r.fulfill({ path: fx("tailgate-7.mp4"), contentType: "video/mp4" }));
+  await page.route(`http://api.test/runs/${id}/stored/*`, (r) => r.fulfill({ status: 404, json: { detail: "not computed yet" } }));
+  await page.route(`http://api.test/runs/${id}/robustness`, (r) => r.fulfill({ json: [
+    { object_id: 0, verdict: "PASS", status: "ROBUST", flips: [], smallest_flip: null },
+    { object_id: 1, verdict: "VIOLATION", status: "DEPENDS_ON_THRESHOLD", smallest_flip: "'standing still' threshold x2 -> PASS",
+      flips: [{ variant: "'standing still' threshold x2", family: "stillness", tier: "threshold", value: 2, verdict: "PASS" }] }] }));
+  let posted = false;
+  await page.route(`http://api.test/runs/${id}/objects/1/defense`, (r) => { posted = true; return r.fulfill({ json: {
+    object_id: 1, status: "DEPENDS_ON_THRESHOLD", concede: false, concession: "", strongest: "stillness:2.0", cached: false,
+    challenges: [{ id: "stillness:2.0", label: "'standing still' threshold x2", argument: "The car crawled; 'stop' is not defined as a speed.", overturns: true },
+                 { id: "anchor:bottom_center", label: "measured at its bottom", argument: "The line is on the road.", overturns: false }] } }); });
+
+  await page.goto(`/?run=${id}`);
+  await expect(page.getByTestId("ticket-panel")).toContainText("1 ticket(s): 0 hold up");
+  await expect(page.getByTestId("ticket-1")).toContainText("hangs on an unwritten number");
+  await page.getByTestId("defend-1").click();
+  await expect(page.getByTestId("defense-1")).toContainText("overturns the ticket");
+  expect(posted).toBe(true);
+});
