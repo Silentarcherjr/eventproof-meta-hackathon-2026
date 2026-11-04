@@ -128,7 +128,7 @@ export default function Studio() {
       <header className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">EventProof Studio</h1>
-          <nav className="mt-1 flex gap-4 text-sm"><Link href="/court" className="text-sky-300 underline" data-testid="nav-court">Ticket court: would 20 real tickets hold up?</Link><Link href="/law" className="text-sky-300 underline" data-testid="nav-law">Drag the law</Link></nav>
+          <nav className="mt-1 flex gap-4 text-sm"><Link href="/court" className="text-sky-300 underline" data-testid="nav-court">Ticket court: would 20 real tickets hold up?</Link><Link href="/law" className="text-sky-300 underline" data-testid="nav-law">Drag the law</Link><Link href="/lab" className="text-sky-300 underline" data-testid="nav-lab">Traffic lab</Link></nav>
           <p className="text-sm text-zinc-400">Describe a visual rule in plain language. Muse Spark turns it into a checkable rule, SAM 3.1 tracks the objects, and every verdict comes with its frames.</p>
         </div>
       </header>

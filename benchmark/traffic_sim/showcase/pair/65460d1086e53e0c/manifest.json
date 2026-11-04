@@ -1,0 +1,17 @@
+{
+  "family": "rolling_stop",
+  "fps": 10.0,
+  "frames_sha256": "423ea061e98da57765fe6556d338aa943abf1022ce48f09bb77d4c49684b2456",
+  "generator": "traffic-gen/1",
+  "ground_truth_frames": 57,
+  "mp4_sha256": "36b80ccca04ef39f98f4858ec3c43814fb48b0deadb86217faf300e11e918d5d",
+  "n_frames": 82,
+  "objects": 1,
+  "origin": "synthetic, own work",
+  "scene_sha256": "65460d1086e53e0c4e508485d845288d4e6521b71506189408eac8b011e838a4",
+  "seed": 0,
+  "size": [
+    480,
+    270
+  ]
+}

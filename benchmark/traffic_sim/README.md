@@ -83,3 +83,27 @@ Remaining: studio UI integration, model-perception evaluation and real-world val
 this change; no SAM or holdout score is claimed. The branch awaits separate review/merge.
 Only the requested challenge/test/benchmark paths were changed; shared trackers/docs were left
 untouched to respect that scope. Meta API calls: 0; Meta spend: $0. No merge performed.
+
+## Traffic lab
+
+`/lab` is the English, dark-theme judge-facing studio page. It serves eight committed development
+seed-0 videos and a two-video minimal pair from `showcase/`; contract truth, recorded Spark verdicts
+and the adjustable rule are shown per car with decisive events. The sealed summary is read from
+`holdout_eval/report.json`; no sealed scenes are served or re-evaluated by this page.
+
+The speed and direction controls re-run the deterministic engine on perfect synthetic tracks,
+explicitly labelled **not SAM**. “Write your own rule” uses the studio's shared, budgeted
+`get_compiler()` for new wording, the global POST rate limit and the shared heavy-job lock.
+The prefilled sentence uses the original committed compile cache with an additional zero-call
+budget and displays **recorded response**. New uncached successful compiles display **compiled live
+by Muse Spark**; assumptions and disagreements against the contract are shown across all eight
+showcase scenes. A rule for another entity is reported as having no evaluable car verdict.
+
+Validation: **377 passed, 1 skipped** (`uv run pytest -q`), Ruff, `npx tsc --noEmit` and
+`npx next build` passed. Browser verification covered navigation, video playback, both verdict flips,
+any-motion mode and the recorded compile. See `showcase/VERIFICATION.md` and `showcase/lab-browser.png`.
+The participant selected ports **8001/3001** to preserve the existing servers on 8000/3000:
+[open Traffic lab locally](http://localhost:3001/lab). The verification backend runs in local mode
+with both model allowances zero. No live Meta calls or spend in this session; live compilation
+was tested only through a fake compiler and an exhausted-budget test. Branch `traffic-lab` awaits
+separate review/merge; `main` was not changed.

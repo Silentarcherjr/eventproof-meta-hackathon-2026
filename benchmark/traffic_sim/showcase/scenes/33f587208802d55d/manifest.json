@@ -1,0 +1,17 @@
+{
+  "family": "brief_stop",
+  "fps": 10.0,
+  "frames_sha256": "e2b82c2b7329a74de58af108ac62cc3fdb83605147aa64a61fbf71604e5fb243",
+  "generator": "traffic-gen/1",
+  "ground_truth_frames": 57,
+  "mp4_sha256": "1175c28f0ec5f7b7283a4127f110627fd5c20e780747c68ec488370bcfbda42f",
+  "n_frames": 60,
+  "objects": 1,
+  "origin": "synthetic, own work",
+  "scene_sha256": "33f587208802d55d5e396c376e620d61e13abeef30dc872d1eb94f76ca25137d",
+  "seed": 0,
+  "size": [
+    480,
+    270
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "pair": {
+    "fail": {
+      "directory": "pair/65460d1086e53e0c",
+      "scene_sha256": "65460d1086e53e0c4e508485d845288d4e6521b71506189408eac8b011e838a4"
+    },
+    "pass": {
+      "directory": "pair/a00bdc4a8beb4d82",
+      "scene_sha256": "a00bdc4a8beb4d82efce646c7c2f911b19d938f27e2c99f39037a768edb71836"
+    }
+  },
+  "scenes": {
+    "brief_stop": {
+      "directory": "scenes/33f587208802d55d",
+      "scene_sha256": "33f587208802d55d5e396c376e620d61e13abeef30dc872d1eb94f76ca25137d",
+      "seed": 0
+    },
+    "full_stop": {
+      "directory": "scenes/a0b7801f1c1dc4a3",
+      "scene_sha256": "a0b7801f1c1dc4a3cf1753d5c0d9781eb2eaaab884662ecd460b2a8c550f54cd",
+      "seed": 0
+    },
+    "no_stop": {
+      "directory": "scenes/eaf28145e808ac24",
+      "scene_sha256": "eaf28145e808ac2421c1cad9afa427409f16f57482b9da7920e8c8e8d794cc0b",
+      "seed": 0
+    },
+    "occluded": {
+      "directory": "scenes/da0fa53fe2d0aa57",
+      "scene_sha256": "da0fa53fe2d0aa5710bf7643382e561797891e4ffd2c555096c3e2679e34b1da",
+      "seed": 0
+    },
+    "queue": {
+      "directory": "scenes/d0b4339061e8f672",
+      "scene_sha256": "d0b4339061e8f672c4258a7cd7f1d58a8dc8ce185c8d2990f0360a7284e87ad0",
+      "seed": 0
+    },
+    "rolling_stop": {
+      "directory": "scenes/c4b45177bd2ff3a2",
+      "scene_sha256": "c4b45177bd2ff3a2eca2e91003cec255c7e033931d9b59fdc1b2f7d93930fc81",
+      "seed": 0
+    },
+    "tailgate": {
+      "directory": "scenes/311574a3b41bf11e",
+      "scene_sha256": "311574a3b41bf11eab5095f8b566ab7826c8469e6c7f6c956aa56345dc85687a",
+      "seed": 0
+    },
+    "wrong_way": {
+      "directory": "scenes/5a69fec38bd44bd8",
+      "scene_sha256": "5a69fec38bd44bd82638525254bf0322919120369fbf580271435b8dd5aaac6a",
+      "seed": 0
+    }
+  },
+  "source": "synthetic"
+}
