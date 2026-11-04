@@ -59,10 +59,10 @@ const SCENES = {
     steps: [
       [0, (p) => caption(p, "Verbatim Maryland statute · Muse Spark's compiled rule · 30 labelled real cars · no model call on this page")],
       // stillness speed from Spark's 0.05 down to 0.01 (more tickets), then up to "any motion" (none)
-      ...sweep("[data-testid=speed]", 4, 0, 9.0, 0.35),
-      ...sweep("[data-testid=speed]", 0, 20, 11.5, 0.22),
-      [17.0, (p) => setRange(p, "[data-testid=time]", 12)],
-      ...sweep("[data-testid=speed]", 20, 7, 17.5, 0.25),
+      ...sweep("[data-testid=speed]", 4, 0, 18.5, 0.35),
+      ...sweep("[data-testid=speed]", 0, 20, 20.1, 0.18),
+      [23.9, (p) => setRange(p, "[data-testid=time]", 12)],
+      ...sweep("[data-testid=speed]", 20, 7, 24.1, 0.15),
     ],
   },
   3: {
@@ -85,7 +85,7 @@ const SCENES = {
     css: "html { zoom: 1.05 !important; } a[href='/'] { display: none; }",
     steps: [
       [0, (p) => caption(p, "All 20 real tickets from labelled footage")],
-      [13.5, (p) => scrollTo(p, "[data-testid=contract]", 60)],
+      [18.8, (p) => scrollTo(p, "[data-testid=contract]", 60)],
     ],
   },
   6: {
@@ -99,7 +99,7 @@ const SCENES = {
       [6.5, (p) => scrollTo(p, "[data-testid=ambiguity-panel]", 16)],
       [7.2, (p) => p.click("[data-testid=ambiguity-ask]")],
       [8.6, (p) => scrollTo(p, "[data-testid=reading-0]", 110)],
-      [14.5, async (p) => { await p.goto(`${API}/runs/${LIVE_RUN}/certificate`); await p.addStyleTag({ content: BASE_CSS + "html { zoom: 1.0 !important; } body { max-width: 1100px !important; font-size: 19px !important; }" }); await caption(p, "Rule certificate · built from recorded results, no model call"); }],
+      [17.6, async (p) => { await p.goto(`${API}/runs/${LIVE_RUN}/certificate`); await p.addStyleTag({ content: BASE_CSS + "html { zoom: 1.0 !important; } body { max-width: 1100px !important; font-size: 19px !important; }" }); await caption(p, "Rule certificate · built from recorded results, no model call"); }],
     ],
   },
 };

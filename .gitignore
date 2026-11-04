@@ -47,3 +47,4 @@ private/
 
 # recorded demo run shipped with the repo (synthetic clip, own work)
 !demo/showcase/**/*.mp4
+demo/video/voice/

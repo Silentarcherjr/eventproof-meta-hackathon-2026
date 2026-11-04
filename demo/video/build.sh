@@ -8,7 +8,7 @@ W=${1:?work dir}
 mkdir -p "$W"
 VOICE=${VOICE:-Samantha}
 RATE=${RATE:-172}
-GAP=0.6   # silence between scenes
+GAP=${GAP:-0.6}   # silence between scenes
 
 # 1. narration, one file per scene (narration.txt). With AUDIO_DIR set, use recorded voice files instead
 #    (n1..n8 as .wav/.mp3/.m4a, e.g. from Gemini TTS in AI Studio); otherwise the macOS voice is used.
@@ -38,7 +38,7 @@ V="-c:v libx264 -pix_fmt yuv420p -preset medium -crf 20 -r 30"
 A="-c:a aac -b:a 160k -ar 48000 -ac 2"
 seg() {  # seg <n> <video input args...>: picture for the narration length + gap
   n=$1; shift
-  len=$(python3 -c "print(round($(dur "$W/n$n.aiff") + $GAP + 0.6, 2))")
+  len=$(python3 -c "print(round($(dur "$W/n$n.aiff") + $GAP + ${PAD:-0.6}, 2))")
   ffmpeg -loglevel error -y "$@" -i "$W/n$n.aiff" -filter_complex "[1:a]apad[a]" -map 0:v -map "[a]" -t "$len" $V $A "$W/seg$n.mp4"
 }
 card() { echo "-loop 1 -framerate 30 -i $W/$1.png"; }
