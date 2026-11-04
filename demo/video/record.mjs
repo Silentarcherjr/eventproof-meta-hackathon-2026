@@ -37,6 +37,7 @@ const playAll = (page, sel) => page.evaluate((s) => document.querySelectorAll(s)
 // each scene: url, extra CSS, ready selector, and a script of [at_seconds, action]
 const API = "http://localhost:8000";
 const LIVE_RULE = "Every car must remain behind the stop line for at least 2 seconds before it crosses it.";
+const TEMPO = Number(process.env.TEMPO || 1); // narration speed-up (e.g. 1.08): step times were set at 1.0
 const LIVE_RUN = "20261102T080747Z-6b0ae7d4"; // recorded run of that rule (readings, Challenge, certificate)
 const NOVI_CSS = `.lg\\:grid-cols-\\[minmax\\(0\\,3fr\\)_minmax\\(0\\,2fr\\)\\] { grid-template-columns: minmax(0,1.25fr) minmax(0,2fr) !important; }
           [data-testid=results] { display: flex; flex-direction: column; }
@@ -126,7 +127,7 @@ for (const [id, sc] of Object.entries(SCENES)) {
   const lead = (Date.now() - t0) / 1000;
   const start = Date.now();
   for (const [at, act] of sc.steps) {
-    const wait = at * 1000 - (Date.now() - start);
+    const wait = (at * 1000) / TEMPO - (Date.now() - start);
     if (wait > 0) await page.waitForTimeout(wait);
     await act(page);
   }
