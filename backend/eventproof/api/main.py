@@ -57,7 +57,8 @@ TRUST_PROXY = os.environ.get("EVENTPROOF_TRUST_PROXY") == "1"
 _hits: dict[str, deque] = {}
 _hits_lock = threading.Lock()
 _heavy = threading.Semaphore(1)
-HEAVY = re.compile(r"^/runs(/[^/]+/(challenge|challenge/sam-confirm|repair|before-after|ambiguity|rule))?$")
+HEAVY = re.compile(r"^/runs(/[^/]+/(challenge|challenge/sam-confirm|repair|before-after|ambiguity|rule|"
+                   r"objects/\d+/defense))?$")
 
 
 def _client_ip(request: Request) -> str:
@@ -347,6 +348,50 @@ def run_checks(run_id: str) -> list[dict]:
     from eventproof import certificate
 
     return certificate.run_checks(_run_file(run_id, "evidence.json").parent, _evidence(run_id))
+
+
+@app.get("/runs/{run_id}/robustness")
+def run_robustness(run_id: str) -> list[dict]:
+    """Would each verdict hold up? Every object re-judged under the typed variant menu (deterministic, no model)."""
+    from eventproof.review.robustness import robustness
+
+    ev = _evidence(run_id)
+    if ev.status != "completed" or not ev.rule.compiled_rule:
+        raise HTTPException(422, "run has no compiled rule")
+    tracks = TrackSet.model_validate_json(_run_file(run_id, "tracks.json").read_text())
+    return [x.model_dump() for x in robustness(VisualRule.model_validate(ev.rule.compiled_rule), tracks)]
+
+
+_defense = None
+
+
+@app.post("/runs/{run_id}/objects/{object_id}/defense")
+def run_defense(run_id: str, object_id: int) -> dict:
+    """Muse Spark argues against one ticket from the closed challenge menu; the engine says which challenges win."""
+    global _defense
+    from eventproof.meta.muse_defense import MuseDefense
+    from eventproof.review.robustness import robustness, variants
+
+    ev = _evidence(run_id)
+    tracks = TrackSet.model_validate_json(_run_file(run_id, "tracks.json").read_text())
+    rule = VisualRule.model_validate(ev.rule.compiled_rule)
+    obj = next((o for o in evaluate(rule, tracks).objects if o.object_id == object_id), None)
+    if obj is None or obj.verdict != "VIOLATION":
+        raise HTTPException(422, "only a VIOLATION verdict (a ticket) can be defended")
+    menu = [{"id": f"{v.family}:{v.value}", "label": v.label} for v, _, _ in variants(rule, tracks.video.height)]
+    _defense = _defense or MuseDefense(budget=MUSE_BUDGET)
+    try:
+        d = _defense.argue(ev.rule.text, ev.rule.compiled_rule, obj.model_dump(mode="json"), menu)
+    except (MetaApiUnavailable, LiveCallLimit) as e:
+        raise HTTPException(503, str(e)) from None
+    rb = next(x for x in robustness(rule, tracks, only={object_id}))
+    wins = {f"{f['family']}:{f['value']}": f for f in rb.flips if f["verdict"] != "UNKNOWN"}
+    labels = {m["id"]: m["label"] for m in menu}
+    return {"object_id": object_id, "status": rb.status, "concede": d["output"]["concede"],
+            "concession": d["output"]["concession"], "strongest": d["output"]["strongest"],
+            "challenges": [{"id": c["id"], "label": labels.get(c["id"], c["id"]), "argument": c["argument"],
+                            "overturns": c["id"] in wins} for c in d["output"]["challenges"]],
+            "request_id": d.get("request_id"), "cached": d["cached"]}
 
 
 @app.get("/runs/{run_id}/ledger")

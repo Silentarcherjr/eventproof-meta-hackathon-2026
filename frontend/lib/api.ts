@@ -109,3 +109,18 @@ export interface RuleCheck { check: string; line: string; anchor: string; other_
 export async function getChecks(runId: string): Promise<RuleCheck[]> {
   try { const r = await fetch(`${run(runId)}/checks`); return r.ok ? (r.json() as Promise<RuleCheck[]>) : []; } catch { return []; }
 }
+
+export interface Flip { variant: string; family: string; tier: string; value: number | string; verdict: string }
+export interface ObjectRobustness { object_id: number; verdict: string; status: string; flips: Flip[]; smallest_flip: string | null }
+export interface Defense {
+  object_id: number; status: string; concede: boolean; concession: string; strongest: string;
+  challenges: { id: string; label: string; argument: string; overturns: boolean }[]; request_id?: string; cached: boolean;
+}
+
+export async function getRobustness(runId: string): Promise<ObjectRobustness[]> {
+  return json<ObjectRobustness[]>(await fetch(`${run(runId)}/robustness`));
+}
+
+export async function askDefense(runId: string, objectId: number): Promise<Defense> {
+  return json<Defense>(await fetch(`${run(runId)}/objects/${objectId}/defense`, { method: "POST" }));
+}

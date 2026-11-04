@@ -10,6 +10,7 @@ import Timeline from "@/components/Timeline";
 import VideoStage, { type Tool } from "@/components/VideoStage";
 import Gallery from "@/components/Gallery";
 import RuleChecks from "@/components/RuleChecks";
+import TicketPanel from "@/components/TicketPanel";
 import { certificateUrl, createRun, getFinalReport, type LayoutProposal, proposeLayout, rerunWithRule, getHealth, getRun, getTracks, type Health, videoUrl } from "@/lib/api";
 import { DEFAULT_LAYOUT, EXAMPLE_RULES } from "@/lib/defaults";
 import type { BeforeAfter, Evidence, FinalReport, Layout, ObjectVerdict, TrackFrame, TrackSet } from "@/lib/types";
@@ -159,6 +160,7 @@ export default function Studio() {
           {ev?.result && info && (
             <Timeline objects={ev.result.objects} frameCount={info.frame_count} fps={info.fps} frame={frame} onSeek={onSeek} />
           )}
+          {ev?.status === "completed" && !stale && <TicketPanel key={`tp-${ev.run_id}`} runId={ev.run_id} />}
           {ev?.status === "completed" && !stale && <ChallengePanel key={ev.run_id} runId={ev.run_id} onBeforeAfter={setBa} />}
           {ev?.status === "completed" && !stale && <AmbiguityPanel key={`amb-${ev.run_id}`} runId={ev.run_id} defaultText={ev.rule.text} />}
         </section>
