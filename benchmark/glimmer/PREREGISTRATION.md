@@ -33,3 +33,11 @@ Every compile is recorded and committed; reports recompute from the recordings w
   change after seeing any output.
 - This measures the rule the open model writes, not perception (tracks are the committed SAM 3.1 tracks and the
   INTERACTION trajectories).
+
+## Addendum 1 (15:35 ET, before any compile)
+
+The Homebrew llama.cpp build failed to start on this Mac (its Metal shader library did not compile), so the same GGUF
+file (sha256 `4cc57c0f51040a226e5a72cc47b7613f7772950e460a665f7083de89f183f60e`, matching the published file) is served
+by Ollama 0.40.6 instead (`ollama create` from that file, `num_ctx 32768`), through its OpenAI-compatible endpoint with
+`response_format` `json_schema`. Ollama default sampling. Nothing else changes. A smoke test (one call asking for a
+number in a one-field schema) was made to check the server; it is not part of the study.
