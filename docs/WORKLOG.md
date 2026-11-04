@@ -199,3 +199,9 @@
   the one wrongly issued ticket. P1-22 law mode (statute verbatim, every value QUOTED-and-verified or ASSUMED): Spark
   25/30 on MD and CA statutes; 14/30 verdicts hang on numbers the law never wrote; first law report had a concept-label
   scoring bug (kept as report_v0_scoring_bug.json). Both pre-registered; CI recomputes.
+- 2026-11-04 Round-2 workshop (56 agents incl. research on past winners: domain-specific projects win most #1s; frame
+  as a platform shown through one deep flagship; LlamaCon 2025 #3 was plain-language CCTV event detection, so lead with
+  trial-of-the-ticket, not detection). Built P1-23: Drag the law (grid over the two unwritten numbers, pre-registered
+  398f05a: 0-17 tickets on the same 30 cars, Spark's cell reproduces 25/30), Ticket court page (20 cases: prosecution,
+  defense, ruling), contract-acceptance block (auto-issue only ROBUST; 188 labels for <= 2 %). README rebuilt around one
+  ticket and one number.

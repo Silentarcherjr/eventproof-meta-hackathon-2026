@@ -1376,6 +1376,35 @@
       ],
       "commit_sha": "584ab21",
       "cost_note": "≈ $0.3"
+    },
+    {
+      "id": "P1-23",
+      "title": "Drag the law (threshold grid: 0-17 tickets), Ticket court (20 cases), contract block; README rebuilt around one ticket",
+      "priority": "P1",
+      "gate": "G6",
+      "state": "IN_REVIEW",
+      "dependencies": [
+        "P1-21",
+        "P1-22"
+      ],
+      "owner": "agentic-eval",
+      "branch": null,
+      "definition_of_done": "Grid pre-registered (addendum 1) and recomputed in CI; pages e2e-tested; deployed",
+      "test_commands": [
+        "cd backend && uv run pytest tests/validation/test_threshold_grid.py",
+        "cd frontend && npx playwright test"
+      ],
+      "evidence_paths": [
+        "benchmark/law/grid.json",
+        "benchmark/law/PREREGISTRATION.md (398f05a)"
+      ],
+      "commit_sha": null,
+      "pr_url": null,
+      "started_at": "2026-11-04T03:00:00Z",
+      "updated_at": "2026-11-04T04:30:00Z",
+      "blocker": null,
+      "next_action": "mark DONE_VERIFIED when CI is green",
+      "cost_note": "$0 (deterministic)"
     }
   ]
 }

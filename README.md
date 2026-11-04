@@ -1,25 +1,23 @@
 # EventProof
 
-**Unit tests for the rules AI cameras enforce.** A city writes "every car must come to a full stop at the line", and an
-AI camera starts issuing $40 tickets. EventProof checks that sentence before it goes live:
-- **Muse Spark** turns the sentence into a video check.
+**Before an AI camera fines anyone, EventProof puts the rule, and every ticket, on trial.**
+
+A city writes "every car must come to a full stop at the line", and an AI camera starts issuing $40 tickets. Detecting
+the event is the easy half. EventProof answers the half nobody checks: **would this ticket hold up?**
+- **Muse Spark** compiles the sentence, or the statute itself, into a video check.
 - **SAM 3.1** tracks every car.
-- **Muse Wonder** re-reads the sentence independently.
-- **EventProof** then hunts for the cars the rule would judge wrong. It repairs the rule and keeps the fix only if the
-  fix holds on scenes it has never seen and on labelled real footage.
-- Every rule ends with a one-page **certificate** that a reviewer signs, or refuses.
+- **Muse Wonder** reads the sentence a second time.
+- **EventProof** then attacks the rule and every ticket it issues, and keeps only what survives.
 
-**One example, on real footage.** A van crawls through a stop line without ever stopping. A rule repair that passed
-every synthetic test let it through. EventProof caught this on labelled real footage and refused the repair.
-- On 30 labelled cars in two cities, the rule Muse Spark compiled judged 27 right, with **0 wrong verdicts**.
-- The "repaired" rule judged only 16 right.
+**One ticket.** A rider on a bike path rode the allowed way, and the compiled rule still ticketed her. Muse Spark, acting
+as her lawyer, looked at the evidence and conceded. EventProof's deterministic sweep overturned the ticket: measured at
+the box centre instead of the wheels, she never crossed the line the wrong way. Across **20 real tickets from labelled
+footage, only 4 hold up** against every challenge. 11 hang on a number nobody wrote down.
 
-**The law, compiled as written.** We gave Muse Spark the verbatim text of two real stop-line statutes (Maryland, where
-Takoma Park tickets, and California). Neither contains a single number. To run on video, a rule still needs one: Muse
-chose "still for at least 1.0 s". **14 of 30 real verdicts flip when those unwritten numbers move**, and **only 4 of 20
-real tickets survive every challenge** EventProof throws at them. Muse Spark, acting as the driver's lawyer, won 8 of
-the 16 tickets that can be beaten. It conceded the one ticket that was wrongly issued; the deterministic sweep is what
-overturned it.
+**The law, as written.** Maryland's statute (where Takoma Park tickets) and California's say *"shall stop"* and contain
+no digit. A camera still needs two numbers: how long to stand still, and how slow counts as "still". **Same law, same
+30 real cars, same model: anywhere from 0 to 17 tickets**, depending only on those two numbers. Muse Spark picked
+1.0 s at ≤ 0.05 frame widths/s (13 tickets, 25/30 right), and labelled 0.05 as "quoted" from the words "shall stop".
 
 **Who needs it now.** Takoma Park, Maryland, has issued $40 citations from AI stop-sign cameras since January 2026 (a
 city study found violation rates up to 87% at some intersections); Virginia allowed AI cameras to cite stop-sign and
@@ -30,19 +28,24 @@ a dangerous driver never cited; a false FAIL is a $40 ticket for a resident who 
 zone, time, direction or two-object rule a camera checks (inspection steps on a line, restricted areas, a worker near a
 forklift).
 
-## How it works
-1. **Build.** Muse Spark compiles the sentence into a typed rule (strict JSON schema, never executed as code) and lists
-   its assumptions; SAM 3.1 tracks every object; a deterministic engine gives a verdict per object with its frames.
-2. **Check the rule itself.** Muse Wonder reads the sentence independently; if the two rules behave differently,
-   EventProof shows the smallest pair of scenes that separates them and the user picks the meaning. A rule check tests
-   the compiled rule against the clip's own tracks (e.g. "no object is ever measured crossing this line").
-3. **Break.** Challenge Mode searches synthetic scenes with known truth for the smallest one that fools the rule, and
-   re-checks it with real SAM 3.1 tracks to separate a wrong rule from wrong perception.
-4. **Repair.** Muse Spark proposes bounded patches (thresholds and conditions, no code). A patch is kept only with zero
-   regressions on a hidden holdout, then checked on labelled real footage.
-5. **Contest and certify.** Every ticket is re-judged with the line a few pixels away, another measured point,
-   thresholds ±20 % and another meaning of "stop": ROBUST, FRAGILE, or hanging on an unwritten number. Muse Spark can
-   argue the defense from a closed menu, and the engine decides. One printable page per rule; no model writes it.
+## How it works (three beats)
+1. **Compile.** Muse Spark turns the sentence or the verbatim statute into a typed rule (strict JSON schema, never
+   executed as code). Every value is quoted from the text or marked ASSUMED, and quotes are verified. SAM 3.1 tracks the
+   objects, and a deterministic engine gives a verdict per object with its frames. Muse Wonder reads the sentence
+   independently, and if the readings differ, EventProof shows the smallest pair of scenes that separates them.
+2. **Attack.**
+   - Challenge Mode finds the smallest synthetic scene that fools the rule, and Muse Spark proposes bounded repairs
+     that are kept only with zero regressions on a hidden holdout.
+   - On real footage, every ticket is re-judged with the line a few pixels away, another measured point, thresholds
+     ±20 % and another meaning of "stop".
+   - Muse Spark argues each ticket's defense from a closed menu, and the engine decides.
+3. **Issue only what survives.** ROBUST tickets go out; every other ticket is held for a human reviewer, with the
+   smallest change that overturns it. One printable certificate per rule, and a contract-acceptance block a city can
+   hand to its vendor. No model writes either.
+
+The flagship is traffic, because that is where AI cameras issue fines today. The same loop judges any zone, time,
+direction or two-object rule: pedestrians on a crossing, cyclists on a path, umbrellas over heads, a box on a
+conveyor.
 
 ## Evidence (labels frozen and pushed before any model call; CI recomputes every number)
 | What was tested | Result |
@@ -52,6 +55,8 @@ forklift).
 | Every frozen real set with the current compiler: 10 clips, 46 objects (cars, pedestrians, cyclists; Serbia, Poland, Brazil, plus two clips of unstated location) | **38/46 right**, 3 wrong, 2 abstained, 3 never judged. |
 | A bug found in the field: bike path in Santos, Brazil | First run **0/8**: the compiler measured riders at the box centre, which never reaches a line at the wheels. The new rule check flagged it; the schema now lets Muse pick the point; re-run **5/8**. All runs pre-registered and kept. |
 | A rule typed live: *"remain behind the stop line for at least 2 seconds"* | Muse Spark **and** Muse Wonder both read it as "be present", not "stop". Certificate against the clip's labels: **NOT CERTIFIED (3/5)**. |
+| **Drag the law** (same statutes, same 30 cars; every stop time 0–3 s × every "still" speed, 273 combinations, deterministic) | **0 to 17 tickets** depending only on the two unwritten numbers; Muse Spark's choice issues 13 (25/30 right); the best combinations reach 26/30. Studio page with sliders. [grid](benchmark/law/grid.json) |
+| **Contract acceptance block** (policy: auto-issue only ROBUST tickets) | All 20 tickets: 1 wrongly issued (95 % upper bound 24 %). Auto-issued: 4, none wrong, but too few to promise anything (upper bound 49 %). The wrongly issued ticket is held for review. To promise ≤ 2 % false tickets a city needs **188** labelled error-free tickets; ≤ 5 %: 73. |
 | **The statute itself** (Md. Transp. § 21-707(a), Cal. Veh. Code § 22450(a), verbatim; every value QUOTED or ASSUMED, quotes verified) | Spark: **25/30 cars right** on both. The statutes contain no number, yet **14/30 verdicts hang on the stop time and "still" speed the model had to assume**; Spark even labelled 0.05 as "quoted" from the words "shall stop". Wonder failed 2/4 compiles. [findings](benchmark/law/FINDINGS.md) |
 | **Would the tickets hold up?** 20 real tickets, each re-judged under about a dozen typed changes; Muse Spark as the defense | **4/20 survive everything**; 11 hang on the unwritten "stopped" threshold. Muse's defense won 8 of 16 beatable tickets, conceded 3 of 4 robust ones, and missed the one wrongly issued ticket, which the sweep overturns. [findings](benchmark/tickets/FINDINGS.md) |
 | Two readings, 8 phrasings of one rule (Spark vs Wonder, 150 scenes) | "wait" and "remain" are read differently (standing still vs just inside): verdicts differ on **45/150** scenes; the separating pair is found automatically. |
@@ -69,7 +74,7 @@ forklift).
   estimates since). Live calls need explicit allowances; everything else replays from recorded responses.
 
 **Try it.** A live studio runs on Vercel: pick a real clip, type a rule, see each object's verdict over the video in
-about 30 s, then attack, repair and print the certificate. Locally, with no API key: `docker compose up`.
+about 30 s, then attack, repair and print the certificate; open **Ticket court** (20 real cases) and **Drag the law**. Locally, with no API key: `docker compose up`.
 
 ![Real footage: the same SAM 3.1 tracks judged by two readings of "wait"](docs/media/real_traffic.png)
 
