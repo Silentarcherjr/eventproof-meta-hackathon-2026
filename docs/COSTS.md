@@ -18,6 +18,7 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 | fecha (Panamá) | plataforma | sesión/tarea | tipo de crédito | saldo confirmado | consumo confirmado | estimado | límite acordado | alerta | fuente |
 |---|---|---|---|---|---|---|---|---|---|
 | 2026-11-02 | Meta Model API | balance read (participant) | hackathon $150 | **$138.91 remaining** | $11.09 total to date | - | participant: use the remaining credits for product work | - | participant message |
+| 2026-11-04 | Meta Model API | MEVA study (P1-24) | hackathon $150 | - | 2 Muse compiles (Spark compiled, Wonder declined) | ≈ $0.05 (estimate) | participant approved MEVA (CC BY 4.0) | - | benchmark/meva/report.json |
 | 2026-11-04 | Meta Model API | Statute study, law mode (P1-22) | hackathon $150 | - | 12 Muse compiles (8 Spark/Wonder + retries) | ≈ $0.3 (estimate) | participant: build both ideas | - | benchmark/law/report.json |
 | 2026-11-04 | Meta Model API | Ticket defense (P1-21) + production checks | hackathon $150 | - | 20 + 2 Muse Spark defense calls | ≈ $0.6 (estimate) | participant: build both ideas | - | benchmark/tickets/report.json |
 | 2026-11-04 | Meta Model API | Anchor-field compiler, all real sets re-run (P1-20) | hackathon $150 | - | 6 Muse compiles, 0 SAM (cached) | ≈ $0.12 (estimate) | participant: continue product work | - | benchmark/real/anchor_v4/ |

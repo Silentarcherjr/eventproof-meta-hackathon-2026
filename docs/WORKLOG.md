@@ -205,3 +205,6 @@
   398f05a: 0-17 tickets on the same 30 cars, Spark's cell reproduces 25/30), Ticket court page (20 cases: prosecution,
   defense, ruling), contract-acceptance block (auto-issue only ROBUST; 188 labels for <= 2 %). README rebuilt around one
   ticket and one number.
+- 2026-11-04 P1-24 MEVA (CC BY 4.0, participant-approved): 1,392 moving vehicle tracks with Kitware 'vehicle_stops'
+  labels, pre-registered (c3fdf67). Muse rule agrees 24 %; design invalid (tracks span only their activity: stop tracks
+  end at rest, start tracks begin at rest). Documented in benchmark/meva/FINDINGS.md; not used as an accuracy result.

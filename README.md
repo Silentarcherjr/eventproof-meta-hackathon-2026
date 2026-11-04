@@ -189,6 +189,9 @@ can re-verify, and CI recomputes every number above from committed files (no vid
 - The large-scale evidence is synthetic (a conveyor world with scripted truth). Holdout and final scoring use a
   deterministic mock tracker; an 80-scene subset re-run with real SAM 3.1 tracks gives the same conclusion.
 - Challenge Mode and two readings do not yet cover two-concept (WITH) rules; the studio says so.
+- We tried to scale the evaluation with independent labels from MEVA (CC BY 4.0, 1,392 vehicle tracks). The design was
+  invalid, because MEVA tracks span only each activity, so a 'start' track begins at rest. It is documented in
+  [`benchmark/meva/FINDINGS.md`](benchmark/meva/FINDINGS.md) and not counted anywhere.
 - Labels are hand-matched to tracks in crossing order; two objects crossing close together in opposite directions can
   be swapped (seen once in Santos).
 
