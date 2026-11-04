@@ -11,7 +11,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, model_validator
 
-TrackSource = Literal["sam-3.1", "synthetic_ground_truth", "human_annotation", "fixture", "mock"]
+TrackSource = Literal["sam-3.1", "synthetic_ground_truth", "human_annotation", "fixture", "mock",
+                      "dataset trajectory (INTERACTION, drone)"]
 
 
 class Box(BaseModel):

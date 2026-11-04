@@ -1,24 +1,40 @@
 # Session handoff
 
-Written: 2026-11-04 11:40 UTC (America/Panama: UTC-5).
+Written: 2026-11-04, America/Panama (UTC-5).
 
 ## Current branch and scope
-- `traffic-visuals`, created from origin/main fac447c. P1-TRAFFIC-VISUALS: IN_REVIEW; separate merge review required.
-- Optional `style="street"` / `overlay=True` in challenge/render.py, implemented in challenge/street.py.
-- Ten lab showcase videos restyled; only the lab legend changed in the frontend. Original default renderer retained.
-- Frozen v1, holdout_eval, counterexamples, scene/waypoint/track/truth/verdict code and measured files stayed
-  byte-identical: 2,634-file before/after snapshot in benchmark/traffic_sim/showcase/street-verification.json.
+- `interaction-stops`, isolated worktree `/Users/anthonymorell/Desktop/eventproof-interaction`,
+  created from origin/main **5fc1310** (parent main CI verified green before work).
+- P1-INTERACTION-STOPS: IN_REVIEW; no merge requested or performed. Do not push main.
+- Preregistration **6a9329f** was pushed before any outcome analysis or live call.
+- Main evidence: benchmark/interaction/FINDINGS.md, report.json, compile.json, maps.json, population.json,
+  derived.json.gz (3.2 MiB), ATTRIBUTION.md. Raw archive/CSVs outside Git: /private/tmp/interaction/.
+- Code: backend/eventproof/validation/interaction.py; tests: backend/tests/validation/test_interaction.py.
+  TrackSource adds explicit dataset provenance; evaluator and law compiler unchanged.
+
+## Results and limits
+- 1268 approaches from 1254 recording/track identities (not linked between recordings).
+- Numeric grid (13 times x 11 speeds): 119–1073 tickets / 1268, 9.38–84.62%, 75.24 pp spread.
+  Adding any-motion control (156 total cells): 0–1073, 1073 approaches flip across full grid.
+- One live Muse Spark law-mode compile of verbatim CA 22450(a): 1 s and 0.05 frame widths/s.
+  Fixed 100 m width means **5 m/s**, outside grid; separate compiled result 10/1268 (0.79%).
+  Speed labelled QUOTED by Muse with 'shall stop', which contains no numeric speed.
+- EP0 539, EP1 453, MA 276, GL 0. GL's map lanelets stop about 3 m before line; strict lane
+  continuity excludes them. Short MA lanes also excluded. No post-outcome inclusion tuning.
+- No human violation labels, no video or SAM; sensitivity, not accuracy or actual lawful tickets.
 
 ## Verification
-- Backend: 407 passed, 1 skipped; Ruff passed. Frontend: TypeScript and Next build passed.
-- Frozen v1 `traffic_export verify --allow-missing-video` passed. Existing tests unchanged; 30 new street tests.
-- Browser verified eight scenes and two pair videos. Full stop overlay 2.3S PASS and rolling stop overlay
-  0.0S VIOLATION match the contract table; occluding truck inspected. Screenshot in showcase/street-browser.png.
-- Local preview http://localhost:3002/lab, API http://127.0.0.1:8002 (local mode, empty key, both allowances zero).
-  Other studio servers were preserved. No Meta calls/spend, deployment or repo-visibility change.
+- Full backend suite: **415 passed, 1 skipped** including exact report regeneration of every cell,
+  compiled value and dwell boundary using only committed derivatives and no live clients.
+- Ruff import separator corrected; final full pytest and Ruff repeated before final commit.
+- Preregistration push independently confirmed by git ls-remote; final push confirmed before chat handoff.
+- Branch CI is not triggered by push (workflow main/PR only); no branch CI-success claim.
+- No deployment/frontend changes. One live model call, 1967 in / 6395 out tokens; 0 SAM.
+  Actual billed USD unknown; estimated $0.0296 at historical documented rates.
 
 ## Next step
-Review the traffic-visuals diff and evidence, then merge separately if approved. Do not regenerate frozen v1;
-only `python -m eventproof.challenge.street --showcase ../benchmark/traffic_sim/showcase` restyles lab media.
-The task registry remains IN_REVIEW until a reviewed merged SHA exists. Broader project/human decisions remain
-in .progress/tasks.json and docs/DECISIONS.md; no final submission or merge was performed in this session.
+Review the pushed branch and reproduce with `cd backend && uv run pytest -q && uv run ruff check .`.
+Do not call the model again for reproduction. No merge in this session; only a reviewed merged SHA
+can make the tracker DONE_VERIFIED. Separate traffic-visuals remains IN_REVIEW; its frozen evidence
+and earlier handoff are preserved in Git history and docs/WORKLOG.md. Human submission/visibility
+decisions remain outside this task.

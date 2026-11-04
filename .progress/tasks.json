@@ -1445,28 +1445,34 @@
       "title": "Preregistered stop-law threshold sensitivity on INTERACTION drone trajectories",
       "priority": "P1",
       "gate": "G6",
-      "state": "IN_PROGRESS",
+      "state": "IN_REVIEW",
       "dependencies": [
         "P1-23"
       ],
       "owner": "validation",
       "branch": "interaction-stops",
-      "definition_of_done": "Preregged sensitivity report reproduced from committed derived data, tests and Ruff green; separate reviewed merge required",
+      "definition_of_done": "Preregistered sensitivity report reproduced from committed derived data; full tests and Ruff green; separate reviewed merge required",
       "test_commands": [
         "cd backend && uv run pytest -q",
         "cd backend && uv run ruff check ."
       ],
       "evidence_paths": [
         "benchmark/interaction/PREREGISTRATION.md",
-        "benchmark/interaction/FINDINGS.md"
+        "benchmark/interaction/ATTRIBUTION.md",
+        "benchmark/interaction/FINDINGS.md",
+        "benchmark/interaction/report.json",
+        "benchmark/interaction/compile.json",
+        "benchmark/interaction/population.json",
+        "benchmark/interaction/maps.json",
+        "backend/tests/validation/test_interaction.py"
       ],
       "commit_sha": null,
       "pr_url": null,
       "started_at": "2026-11-04T12:00:00Z",
-      "updated_at": "2026-11-04T12:00:00Z",
+      "updated_at": "2026-11-04T12:20:58Z",
       "blocker": null,
-      "next_action": "Extract map STOP approaches after preregistration commit; compile once within two-call cap",
-      "cost_note": "At most 2 authorized Muse Spark live calls; no SAM"
+      "next_action": "Review pushed interaction-stops branch and independent zero-call reproduction; do not merge in this session",
+      "cost_note": "1 live Muse Spark call; 1967 prompt + 6395 completion tokens; ~USD 0.0296 at historical documented rates, actual billed USD unknown; 0 SAM"
     }
   ]
 }

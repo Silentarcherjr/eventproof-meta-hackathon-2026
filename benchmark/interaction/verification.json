@@ -1,0 +1,25 @@
+{
+  "schema": "eventproof-interaction-evidence/1",
+  "preregistration_commit": "6a9329fd3b430a250f5ca622af2d6763dea8120b",
+  "base_commit": "5fc1310ee737c501c88ffa364b49888aa74bc278",
+  "files": {
+    "backend/eventproof/validation/interaction.py": "e042de92123c6bedaa5bfd2f9a1b8533d23cb99e55d0dee2708c3589f93bc9fd",
+    "backend/eventproof/schemas/tracks.py": "f9987b5a75005cb731734f891eb113e5c02bf7b671e2a0e7f90dc46ceaf0f414",
+    "backend/tests/validation/test_interaction.py": "70cf313d4ba2c8ef05353a4aeb8560e9637aabd6b6c056af1369e8179b8a87c4",
+    "benchmark/interaction/PREREGISTRATION.md": "7a26f849a4f39baed3c479d75ce386adc1502af11b41a62ccec79699de3dafdd",
+    "benchmark/interaction/ATTRIBUTION.md": "71e986c280f0a998d597def42a3675f6838ac4e20e6044c839b28583a1b0d520",
+    "benchmark/interaction/compile.json": "990f46d004af9c7e8a000cdb16a16598f118a2d808f5bfe1bfe43479a88a251d",
+    "benchmark/interaction/maps.json": "e7f8c7654da002259f9a712acaecac72be6d745908c9f8e8291e09809380bac3",
+    "benchmark/interaction/population.json": "af005f6148d3d2395495210d5e58be56a0e1edbd6f9676d54bc599b03a3e476f",
+    "benchmark/interaction/derived.json.gz": "ec8989b14c53d3838af7bf47b3d4c1380dccc1b636f5e9168b2be8a8e85447f8",
+    "benchmark/interaction/report.json": "80db8b9a5377cc901f4d1c2979054a461c5c87d954cfe8b93efbfa2d2d40eddd"
+  },
+  "checks": {
+    "pytest": "415 passed, 1 skipped; final repeated before commit",
+    "ruff": "passed; final repeated before commit",
+    "branch_ci": "not triggered by branch push; no claim",
+    "model_calls": 1,
+    "sam_calls": 0,
+    "raw_archive_in_git": false
+  }
+}

@@ -1,0 +1,281 @@
+{
+  "schema": "eventproof-interaction-compile/1",
+  "statute": {
+    "id": "ca-veh-22450a",
+    "jurisdiction": "California, USA",
+    "citation": "Cal. Vehicle Code \u00a7 22450(a)",
+    "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=22450",
+    "retrieved": "2026-11-04",
+    "text": "The driver of any vehicle approaching a stop sign at the entrance to, or within, an intersection shall stop at a limit line, if marked, otherwise before entering the crosswalk on the near side of the intersection.\n\nIf there is no limit line or crosswalk, the driver shall stop at the entrance to the intersecting roadway.",
+    "why": "a second, independently worded stop-line statute"
+  },
+  "layout": {
+    "zones": [
+      {
+        "zone": {
+          "id": "stop_zone",
+          "polygon": [
+            [
+              0.45,
+              0.5
+            ],
+            [
+              0.55,
+              0.5
+            ],
+            [
+              0.55,
+              0.6
+            ],
+            [
+              0.45,
+              0.6
+            ]
+          ]
+        },
+        "description": "Approach lane waiting zone: last 10 metres before marked STOP limit line. Top-down metric square, 100 metres wide/high. Zone drawn 10 m wide for compilation; actual mapped approach-lane polygon is bound for evaluation. +y is inbound/downstream."
+      }
+    ],
+    "lines": [
+      {
+        "line": {
+          "id": "stop_line",
+          "a": [
+            0.45,
+            0.6
+          ],
+          "b": [
+            0.55,
+            0.6
+          ]
+        },
+        "description": "Marked STOP limit line across inbound approach, left to right; vehicles approach from y<0.6 and cross towards y>0.6. Frame width = 100 metres. Boxes represent vehicles viewed from above; their centre is metric position, bottom_center is downstream AABB edge, not wheels."
+      }
+    ]
+  },
+  "live_calls": 1,
+  "preregistration_sha256": "7a26f849a4f39baed3c479d75ce386adc1502af11b41a62ccec79699de3dafdd",
+  "code_commit": "6a9329fd3b430a250f5ca622af2d6763dea8120b",
+  "rule": {
+    "rule_id": "stop-at-limit-line",
+    "version": 1,
+    "entity": {
+      "name": "vehicle",
+      "concept": "vehicle"
+    },
+    "zones": [
+      {
+        "id": "stop_zone",
+        "polygon": [
+          [
+            0.45,
+            0.5
+          ],
+          [
+            0.55,
+            0.5
+          ],
+          [
+            0.55,
+            0.6
+          ],
+          [
+            0.45,
+            0.6
+          ]
+        ]
+      }
+    ],
+    "lines": [
+      {
+        "id": "stop_line",
+        "a": [
+          0.45,
+          0.6
+        ],
+        "b": [
+          0.55,
+          0.6
+        ]
+      }
+    ],
+    "check": {
+      "op": "IMPLIES",
+      "premise": {
+        "op": "OCCURS",
+        "event": {
+          "op": "CROSSES",
+          "line": "stop_line",
+          "direction": "to_right"
+        }
+      },
+      "conclusion": {
+        "op": "BEFORE",
+        "first": {
+          "op": "DWELL",
+          "zone": "stop_zone",
+          "min_ms": 1000.0,
+          "max_speed": 0.05
+        },
+        "then": {
+          "op": "CROSSES",
+          "line": "stop_line",
+          "direction": "to_right"
+        },
+        "within_ms": null
+      }
+    },
+    "params": {
+      "anchor": "center",
+      "max_gap_frames": 3,
+      "min_confidence": 0.0
+    },
+    "normalized_explanation": "Every vehicle that crosses the marked STOP limit line must have first stopped in the approach waiting zone."
+  },
+  "assumptions": [
+    "Marked limit line is present at this site, so only the 'if marked' clause is enforced.",
+    "Crosswalk and intersecting-roadway-entrance alternatives are not checked because no such geometry was provided.",
+    "Any vehicle that crosses the stop line is treated as a vehicle approaching a stop sign at the entrance to or within an intersection.",
+    "Stop is interpreted as remaining continuously stopped inside stop_zone for at least 1000 ms.",
+    "Inbound approach movement (+y) is encoded as CROSSES direction to_right.",
+    "Vehicle position is measured at box centre, which is the metric position for top-down view."
+  ],
+  "model": "muse-spark-1.3",
+  "request_ids": [
+    "chatcmpl-01a1a677-f241-743e-8d45-9eb198032222"
+  ],
+  "attempts": 1,
+  "cached": false,
+  "usage": [
+    {
+      "completion_tokens": 6395,
+      "prompt_tokens": 1967,
+      "total_tokens": 8362,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 5695,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "raw_output": {
+    "anchor": "center",
+    "assumptions": [
+      "Marked limit line is present at this site, so only the 'if marked' clause is enforced.",
+      "Crosswalk and intersecting-roadway-entrance alternatives are not checked because no such geometry was provided.",
+      "Any vehicle that crosses the stop line is treated as a vehicle approaching a stop sign at the entrance to or within an intersection.",
+      "Stop is interpreted as remaining continuously stopped inside stop_zone for at least 1000 ms.",
+      "Inbound approach movement (+y) is encoded as CROSSES direction to_right.",
+      "Vehicle position is measured at box centre, which is the metric position for top-down view."
+    ],
+    "entity_concept": "vehicle",
+    "entity_name": "vehicle",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_right",
+          "line": "stop_line",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": 0.05,
+          "min_ms": 1000,
+          "op": "DWELL",
+          "zone": "stop_zone"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_right",
+          "line": "stop_line",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every vehicle that crosses the marked STOP limit line must have first stopped in the approach waiting zone.",
+    "provenance": [
+      {
+        "param": "entity",
+        "quote": "any vehicle",
+        "reason": "",
+        "source": "QUOTED",
+        "value": "vehicle"
+      },
+      {
+        "param": "anchor",
+        "quote": "",
+        "reason": "Boxes are top-down with centre as metric position; bottom_center is downstream AABB edge, not ground contact, so centre matches zone/line drawing.",
+        "source": "ASSUMED",
+        "value": "center"
+      },
+      {
+        "param": "DWELL.zone",
+        "quote": "shall stop at a limit line, if marked",
+        "reason": "",
+        "source": "QUOTED",
+        "value": "stop_zone"
+      },
+      {
+        "param": "DWELL.min_ms",
+        "quote": "",
+        "reason": "Statute says 'shall stop' with no duration; 1000 ms chosen as minimum reliably detectable stopped interval.",
+        "source": "ASSUMED",
+        "value": "1000"
+      },
+      {
+        "param": "DWELL.max_speed",
+        "quote": "shall stop",
+        "reason": "",
+        "source": "QUOTED",
+        "value": "0.05"
+      },
+      {
+        "param": "CROSSES.line",
+        "quote": "at a limit line, if marked",
+        "reason": "",
+        "source": "QUOTED",
+        "value": "stop_line"
+      },
+      {
+        "param": "CROSSES.direction",
+        "quote": "",
+        "reason": "Statute only says 'approaching'; inbound approach is +y which the line definition encodes as to_right.",
+        "source": "ASSUMED",
+        "value": "to_right"
+      }
+    ],
+    "root": 2,
+    "rule_id": "stop-at-limit-line",
+    "supported": true,
+    "unsupported_reason": ""
+  }
+}

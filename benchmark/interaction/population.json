@@ -1,0 +1,412 @@
+{
+  "schema": "eventproof-interaction-population/1",
+  "archive_sha256": "a43e04dcbbc9961e5fce7b898386b4946c65f3f66274f4b821bc92c84e8e1388",
+  "derived_sha256": "ec8989b14c53d3838af7bf47b3d4c1380dccc1b636f5e9168b2be8a8e85447f8",
+  "counts_track_lanelet_candidates": {
+    "DR_USA_Intersection_EP0:included": 539,
+    "DR_USA_Intersection_EP0:incomplete_10m_approach": 317,
+    "DR_USA_Intersection_EP0:input_tracks": 732,
+    "DR_USA_Intersection_EP0:no_inbound_crossing": 3536,
+    "DR_USA_Intersection_EP1:included": 453,
+    "DR_USA_Intersection_EP1:incomplete_10m_approach": 250,
+    "DR_USA_Intersection_EP1:input_tracks": 657,
+    "DR_USA_Intersection_EP1:left_approach_lanelet": 4,
+    "DR_USA_Intersection_EP1:no_inbound_crossing": 3892,
+    "DR_USA_Intersection_GL:incomplete_10m_approach": 843,
+    "DR_USA_Intersection_GL:input_tracks": 10510,
+    "DR_USA_Intersection_GL:left_approach_lanelet": 2615,
+    "DR_USA_Intersection_GL:no_inbound_crossing": 38582,
+    "DR_USA_Intersection_MA:included": 276,
+    "DR_USA_Intersection_MA:incomplete_10m_approach": 5852,
+    "DR_USA_Intersection_MA:input_tracks": 2982,
+    "DR_USA_Intersection_MA:no_inbound_crossing": 20710
+  },
+  "inputs": [
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP0/vehicle_tracks_000.csv",
+      "sha256": "b9e9cb74659bf7db44a6d92f14b90b523acfe66f91c6223097d1c4f6aa433107"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP0/vehicle_tracks_001.csv",
+      "sha256": "c0937272acbd794ccd780ccecf814d763113ba7b10e90ba7afa487d91e795343"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP0/vehicle_tracks_002.csv",
+      "sha256": "d244b6e4861de3a25e021aae48399046cb0bca11f2ab9df51abcac2a8eee5e3f"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP0/vehicle_tracks_003.csv",
+      "sha256": "473b01e15134b88dbccfb786954c2198a6f4248d353162c9a256c51438833721"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP0/vehicle_tracks_004.csv",
+      "sha256": "bfc6e2174c09d2477fedfdf5e0faf967183e3cf0e7f6a2d212a33f82fa8936de"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP0/vehicle_tracks_005.csv",
+      "sha256": "62162642a3f879aa44b7a77006f9fe46a0ceaafa0da7f5f640690a7cb508304e"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP0/vehicle_tracks_006.csv",
+      "sha256": "b553f6ffe879b5f380d20dee0510134b9cce23783d89c239feb6b6bc4078df2e"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP0/vehicle_tracks_007.csv",
+      "sha256": "54259ab7c7ebd6b20c25b059f04a866c3303e62cac6a63bd525ecd9c21beac29"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP1/vehicle_tracks_000.csv",
+      "sha256": "f99dbf9f4de5b58a91c19355a9e86ac03c61fa44c781cb568d06ab2729957e7c"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP1/vehicle_tracks_001.csv",
+      "sha256": "2dded6e5fe89b57e5921ecd6e3fed95bb11fa0e3670e0ae4720f1ad63bd29524"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP1/vehicle_tracks_002.csv",
+      "sha256": "f983867d784ae3d51d1cf947221aef17e4eb05a01fc13fa9adbb7c396d4b5d77"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP1/vehicle_tracks_003.csv",
+      "sha256": "6fa9b1d856a3328f6f2f966106c0c0b65bff66322694bd2e5c5b18a04ecfc2de"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP1/vehicle_tracks_004.csv",
+      "sha256": "cd62f998f35ca6775b1079a95d3a7bd29dd90806f98e5b7f0e424d50b0a8f5c2"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_EP1/vehicle_tracks_005.csv",
+      "sha256": "c697896d87a2843dd8e93b62a7c2204d4628b1396609a9aeda43c47ff45f3e45"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_000.csv",
+      "sha256": "bd04182c6b93946bb8ce287b6d912d80089bc7e27ec574c36189c026164ff387"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_001.csv",
+      "sha256": "1b41973cec06d97c7804fe4212a63f5dbb8239db91f49a8af3e93f24f00f98b4"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_002.csv",
+      "sha256": "4ac9833e37099f2b548e665e687f2af01a39449dfc7e01d2483cc3d4b76bb737"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_003.csv",
+      "sha256": "630e05dbc016aedb5ab342cf051c1a3e5d20974b1cc5ecba940dc2b114f97b0d"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_004.csv",
+      "sha256": "5368be9db26fef5ac7ab141f9f1ee02d09a972ac1bd5da324c8237fc4b82580a"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_005.csv",
+      "sha256": "8565e1aaf7ec05f03c154c581b61cd201021ea710cafc06439b73fd64a681607"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_006.csv",
+      "sha256": "155b1e1845bd1e3635f705fa49111c01145221fc38bc1e95a039e5a6a2697c77"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_007.csv",
+      "sha256": "93858aa3542428450156758aba1a3604daeae73c0915648176bbf530d0bf3211"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_008.csv",
+      "sha256": "fabe7fe226070be797b415d5bf441fbd8a51c4acb1e0e8f0d2addb68e8c9d933"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_009.csv",
+      "sha256": "61231e49c4953ff6a0b52c426cc99e2444314d8ae9a001576d8a4bc382751434"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_010.csv",
+      "sha256": "10a12ce375c87c254be226284615e424ba00ae48a8995d263eb7347ec65d4972"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_011.csv",
+      "sha256": "73c416b438dcf3ecd5a7ed60f9cf8f05137e8cc13fd69cfe6dfff1c6965ddbc4"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_012.csv",
+      "sha256": "c138e5682b5b152989a739e8daea48bef603b7e411b35e9b6e5eaad4d6b3bfe1"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_013.csv",
+      "sha256": "d39d45bcf0bc1fc98cf1430c6e8493810e777a2eefd85599f162a1adeceb71f3"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_014.csv",
+      "sha256": "a5958e931c28775aa533be0381cf35b40c9c9da0c9d517de518025bb03fac587"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_015.csv",
+      "sha256": "e8ef1da68f077080d409dd802d70118884ca6a0b7d79805c300cdbf2763b9296"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_016.csv",
+      "sha256": "2dab654c56cda35a9153de390aa7d370173a207917f2618ba48093e03cea8110"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_017.csv",
+      "sha256": "13797c493ca176360067b6611bb867b039256bd7a36264642a91bda0ee72f3d0"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_018.csv",
+      "sha256": "a25bdee3ac2b945591abea376e1453d18a2c5c63d836dc739ca62e48ec15c1ce"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_019.csv",
+      "sha256": "baa6ec5bcf0d44db6426ef2badb69f060d56b8b8e9666ab816e5a565611acc11"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_020.csv",
+      "sha256": "f074cda828a4320d983fcdd1600522a7f8ba992956fa1abb728b8d86ed28906e"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_021.csv",
+      "sha256": "a7693649b897079b92497da1b36fbf2d039273b7abe5c67e2cf31ba1b1e641a1"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_022.csv",
+      "sha256": "dd6e7ba6a0482217251db3d14285aaa90b7b4fa50abc1c3889da5722907db54c"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_023.csv",
+      "sha256": "bd15a550f74a0767b2796286713f72689f9b65bdb874778f7dbf7d78f9411f74"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_024.csv",
+      "sha256": "4f4392abb1328cf260319406c2e09d0a57a53a585900249bfea54033acbb66ea"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_025.csv",
+      "sha256": "1597e5f06e945fc6b48f33a8fd478360bfce5ed163f709adf18532bda2a61143"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_026.csv",
+      "sha256": "3b1874683ad63098f61b239913e7d6f4ae7b45a78acab6823c3e87cae73423de"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_027.csv",
+      "sha256": "1ed05c8f5d70388a3a8330d7a144cfc2301ee23b96c199edef43748ed4576afb"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_028.csv",
+      "sha256": "3f759d8e4a0a22a1d62c812038d12d58d7cdd460ab23dc1fbc8824adfdcf10e7"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_029.csv",
+      "sha256": "d436f7f5fe31059da23d21fe953a52cd58be8f52cbac7e8335b8b93a75280d68"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_030.csv",
+      "sha256": "167d1d9c603123a15ea1a9f24c47f67ff0accc802c5df43769a4676362dfe1c5"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_031.csv",
+      "sha256": "923d591aa09c4145a98bd10028907ad2d2def9295c485f969709eee4452a7fbd"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_032.csv",
+      "sha256": "4ddbddb78d748e9995ccc6657d13d625d0e769ae4b3c2b586f9687ee6e80d4c0"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_033.csv",
+      "sha256": "0a16b1cfbeb376f7617885f0ae6c860e988f82978f5de02e23f8bb5e3040adf0"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_034.csv",
+      "sha256": "58e8d9e6752c319675289892c320d1405e4ac6b8d11f5c5d2337e5b0905b3bd0"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_035.csv",
+      "sha256": "ba599ecc75a68f8008f20bdca50d0a13bdf2e87adf4282e1ef5bf2f351a2460b"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_036.csv",
+      "sha256": "c81f0bd5796b791b27bb187d16a8e6ec734f534f9d7e902e4d3d336df4f1cea5"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_037.csv",
+      "sha256": "f152177a52507f2bb38ad4fa8b93f82f566812246985bba3103a5f54917d04e4"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_038.csv",
+      "sha256": "2c648fe7c9dcf32bfeeac76fc81e506a1fd832c0601df54767ee01ee743d1032"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_039.csv",
+      "sha256": "de76f57abd77f71371579dc9045a1f794d019099a2f3a3048b1f38bd2b183330"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_040.csv",
+      "sha256": "5cf49be8c5b1c6000e47d55fe0f7bbb3e67d4d9b14ff44ddf26305755079675f"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_041.csv",
+      "sha256": "966d2239ea4d78a1cee61c4ed1f33a76b2f77c1f9ba14e5509a650537a7b0617"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_042.csv",
+      "sha256": "c874292bdf3219e894c819df665a307e569d4c2951b27e2170600a5e8d2d725d"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_043.csv",
+      "sha256": "594b24998b81dd09cc4730b97fadfdf03fdce93ce1fd10731946b1403dcaebe6"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_044.csv",
+      "sha256": "3eaa2602236e460513ffc02cd6b6363fca8578d2c9863918f35291087daadedc"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_045.csv",
+      "sha256": "caf970d6c2e71739a6165d3c9d56fdbe2d5dbe11f3d9150ae2ce91278d05c2ed"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_046.csv",
+      "sha256": "7997f9983823f91cf573bd1efa7ab4245cbe6079159b11b1515b977080f29565"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_047.csv",
+      "sha256": "e7bac9bd81b33397b3697e88d93ad9eb4c9cadb63c9a8f82c503518a09da6a85"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_048.csv",
+      "sha256": "f71bae32a8dd0e467d6eccc44fd6c9cec02d5bd3cd4b9dc4af2c99afee0849a4"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_049.csv",
+      "sha256": "c18d5dd93da0cb6e2b70194bc432e698e6a0aeebdf55218f71b1d2cd03ba6acd"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_050.csv",
+      "sha256": "2d840d59f599eb42d0829c961c09cf3c349b4ab34be6c25275a44c9b257fefed"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_051.csv",
+      "sha256": "a5bd9e84e1157340f63213d275e1f59626aee1e5e6da8da8a6d9abb59d5cae90"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_052.csv",
+      "sha256": "fafe4ec794f528b947d01348a0c5aae24bc33156709628914c8441b3b2494a0e"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_053.csv",
+      "sha256": "994ce7aa0a86a58564abbbbcb23ece5f8bfcaa348bcd2c57c7fa74c12994d18a"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_054.csv",
+      "sha256": "a6882cd622a63e286e3c04336a7059c58255786fb349c881ea85ba345df45bc0"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_055.csv",
+      "sha256": "e45719d322bb33a84b91d1f92d21f4118e4d6ba2c4be98e912c1ca6a1f51fe8d"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_056.csv",
+      "sha256": "65247aa22b5a8a975a5c46277c7c9d4e0565a5582542f74abbb90f8035a2696a"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_057.csv",
+      "sha256": "b6ffd85af8daaebea4420bfd4f855b82a418f064722ce4415838e70cb81e1147"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_058.csv",
+      "sha256": "0d7b85da2ebc4b0fdd98a5ec49b19a6f74d61e4c9c56a0304070428a974d524c"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_GL/vehicle_tracks_059.csv",
+      "sha256": "19f057e462f226944e5933fe34526f72b6f8fa906213ae64f1f20f8cd3999942"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_000.csv",
+      "sha256": "c19afbfaf39a4f3071ce1fa25ebe208b7696c047599669f83dfc311a8f6e6c02"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_001.csv",
+      "sha256": "2375fd483b87cf2edefc0d46d2acf82bf6486e9dd96e70c9f8bb5e764381662c"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_002.csv",
+      "sha256": "bd92a447b2779dfa3e73d28bb2de031f9eb28d993ebee6f518b4e0b4befcf58d"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_003.csv",
+      "sha256": "04b890cb80491b6308c5d5c23991839174c2f261995bbae4b9f641d870094249"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_004.csv",
+      "sha256": "9565a7aff97e95fb479e26dab97e2568100485280621c712bcb6d0a0140d2903"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_005.csv",
+      "sha256": "6bea8589b94c47465aa414ff1ed953aa3d20afa2234ce77737caa4c81b658869"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_006.csv",
+      "sha256": "6e88b32bbfd87bfd000820aed934fbacf52dbb5a98a37ecf5e11275b78b8a866"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_007.csv",
+      "sha256": "4a76f04f2d78f517118f120871190c5a4392883249995772d45b388429619ea9"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_008.csv",
+      "sha256": "0e41991fc367fb6d0ffa840e01798dd093a5fac217aac67d6629153749d661d3"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_009.csv",
+      "sha256": "0eebb5f8166c287af1ec41a30af311a6786fdcbec57cc177f981a5020700c3ac"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_010.csv",
+      "sha256": "05c1968daf007dbf51075d995636b5e521a0f0ed076655421518f886d448d0d3"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_011.csv",
+      "sha256": "403047471ed2300e9de3df9cccad5c5ec4f2cd5e3e34ff312dc180b04707cdc4"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_012.csv",
+      "sha256": "eccc6e8b5e0eb8d87dce27e3cde11913914c6d78fed05e771287fdf1ccd837d1"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_013.csv",
+      "sha256": "5938c3c5b1e152ac30e6364a6a8248d854d46e3e2c5dd050c3f01908e855f220"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_014.csv",
+      "sha256": "52860fe27314df03a6e145d6babd10081aaa6f036398a652d28d712b46528f73"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_015.csv",
+      "sha256": "d6cd8449b6283d76cb73ad5b72be4b9bd8db6508a0ce384ff75b80b8935763f1"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_016.csv",
+      "sha256": "cdcbbc0b41450a82b8831e7947035b2102c4e00362a6cb043da109b9e4e38aaf"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_017.csv",
+      "sha256": "45b9073236819675103207c2421a9358df001a5820c5995e967b14e6d13eae5f"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_018.csv",
+      "sha256": "dfafa2f7436351147a0411b432f2fecb6a795a6cfd78e943d70749a0b8f34758"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_019.csv",
+      "sha256": "ef3c193ffdb96e478da2760cc01a9f6306d772a1fe6134ee31fe204d0ea6853f"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_020.csv",
+      "sha256": "4795dd137b4874abe9b31e32db7e4192d55017b8a392784ff4ae30352d05e17a"
+    },
+    {
+      "path": "recorded_trackfiles/DR_USA_Intersection_MA/vehicle_tracks_021.csv",
+      "sha256": "f827e2ae9160fa6dabf72900b690e55c6bf21c30a37d56b1e5d7cf3793c350af"
+    }
+  ],
+  "included_approaches": 1268,
+  "unique_recording_tracks": 1254
+}

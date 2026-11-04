@@ -67,3 +67,13 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 - P1-TRAFFIC-VISUALS / traffic-visuals: deterministic Pillow/numpy drawing and local H.264 encoding only.
 - Meta requests: 0; additional Meta spend: $0. Both verification-server allowances were zero, key empty.
 - No hosting deployment, paid API, dataset download or Billing read; existing account totals are unchanged/unknown.
+
+## 2026-11-04 — INTERACTION stop-law sensitivity
+- P1-INTERACTION-STOPS / interaction-stops: **1 live Muse Spark 1.3 call** of maximum 2 authorized; 0 SAM.
+- Request: chatcmpl-01a1a677-f241-743e-8d45-9eb198032222. Usage in benchmark/interaction/compile.json
+  and cache: 1,967 prompt tokens, 6,395 completion (5,695 reasoning), 8,362 total; cache input 0.
+- Actual charge/balance: **UNKNOWN**, Billing not read. At the historical rates already recorded above
+  ($1.25/$4.25 per 1M input/output), estimate = (1967*1.25 + 6395*4.25)/1e6 = **$0.0296375**.
+  This is an estimate, not confirmed spend or a new pricing verification.
+- Dataset download approved by participant; no paid data service, video/SAM processing or deployment.
+  Deterministic grid/reproduction makes zero API calls. Raw archive stays outside Git.

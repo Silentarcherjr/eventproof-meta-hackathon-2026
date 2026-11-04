@@ -215,3 +215,16 @@
   Full backend: 407 passed, 1 skipped; Ruff, TypeScript and Next build pass. Browser /lab on :3002 verified
   all eight scenes/two pair videos, full-stop 2.3S PASS, rolling-stop 0.0S VIOLATION and truck occlusion.
   Screenshot/proof in benchmark/traffic_sim/showcase/street-*. No Meta calls/spend. IN_REVIEW, no merge.
+
+- 2026-11-04 P1-INTERACTION-STOPS (`interaction-stops`, base origin/main 5fc1310): author-approved
+  INTERACTION DR-v1_1, CC BY 4.0, raw archive outside Git in /private/tmp/interaction. Preregistration
+  6a9329f committed/pushed before calls/outcome analysis. Map audit selects 26 STOP-line/lanelet pairs
+  via all_way_stop or explicit usR1-1; 1268 complete approaches / 1254 recording-track identities.
+  1 live Muse Spark law-mode compile of verbatim CA 22450(a): 1 s / 5 m/s (100 m frame); 10 tickets.
+  156-cell numeric/semantic grid recomputed via unchanged deterministic engine: numeric 119–1073
+  tickets (9.38–84.62%, 75.24 pp); with any-motion control 0–1073. GL zero due map gap, MA restricted
+  by short lanelets; no outcome-based relaxation. Source is dataset trajectory, never SAM.
+  No human violation labels, no video, no accuracy claim. 415 tests passed / 1 skipped; Ruff import
+  separator corrected and final full checks repeated before commit. Model usage 1967 in / 6395 out
+  tokens, actual billed dollars unknown (~$0.0296 estimate at historical rates). No merge/main push,
+  deployment or raw archive commit. IN_REVIEW pending separate reviewed merge.

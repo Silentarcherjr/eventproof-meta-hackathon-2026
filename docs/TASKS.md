@@ -57,6 +57,7 @@
 - [x] **P1-22** (G6, DONE_VERIFIED) Compile the law as written (MD, CA statutes, quote-or-assumed): Spark 25/30; 14/30 hang on unwritten numbers — DoD: Pre-registered; CI recomputes (test_law_study)
 - [x] **P1-23** (G6, DONE_VERIFIED) Drag the law (threshold grid: 0-17 tickets), Ticket court (20 cases), contract block; README rebuilt around one ticket — DoD: Grid pre-registered (addendum 1) and recomputed in CI; pages e2e-tested; deployed
 - [ ] **P1-TRAFFIC-VISUALS** (G5, IN_REVIEW) Optional street render style for Traffic lab; frozen measurements preserved — DoD: Street showcase verified in browser; all tests/build pass; protected bytes unchanged; reviewed and merged SHA
+- [ ] **P1-INTERACTION-STOPS** (G6, IN_REVIEW) Preregistered stop-law threshold sensitivity on INTERACTION drone trajectories — DoD: Preregistered sensitivity report reproduced from committed derived data; full tests and Ruff green; separate reviewed merge required
 
 ## P2
 
