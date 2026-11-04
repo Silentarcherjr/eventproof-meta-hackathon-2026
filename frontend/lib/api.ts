@@ -148,5 +148,13 @@ export interface Court {
               auto_issued: { tickets: number; false_tickets: number; upper_95: number };
               held_for_review: { tickets: number; false_tickets: number; by_status: Record<string, number> };
               labels_needed_error_free: Record<string, number> };
+  approvable?: Record<string, string>;
+  gates?: Record<string, Gate>;
+}
+export interface Gate {
+  approved: string[]; decision: "WITHHELD" | "DEPLOYABLE"; reason: string; tickets: number;
+  missing: { family: string; label: string; tickets: number }[];
+  auto_issued: { tickets: number; false_tickets: number };
+  held_for_review: { tickets: number; false_tickets: number; because: string[] };
 }
 export async function getCourt(): Promise<Court> { return json<Court>(await fetch(`${API_URL}/tickets/court`)); }

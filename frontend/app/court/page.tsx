@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getCourt, type Court, type CourtCase } from "@/lib/api";
+import { getCourt, type Court, type CourtCase, type Gate } from "@/lib/api";
 
 const TONE: Record<string, string> = {
   ROBUST: "ring-green-500/50 bg-green-500/10", FRAGILE: "ring-red-500/50 bg-red-500/10",
@@ -58,6 +58,41 @@ function Case({ c }: { c: CourtCase }) {
   );
 }
 
+const MEASURE: Record<string, string> = { anchor: "which point of the car is measured", line_shift: "where exactly the line is",
+  half_frames: "the frame rate" };
+
+function ApprovalGate({ court }: { court: Court }) {
+  const gates = court.gates ?? {};
+  const fams = Object.keys(gates).filter((k) => k && !k.includes(","));
+  const [ok, setOk] = useState<string[]>([]);
+  const g: Gate | undefined = gates[[...ok].sort().join(",")];
+  if (!g) return null;
+  return (
+    <section className="mt-8 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800" data-testid="gate">
+      <h2 className="text-lg font-semibold">Approval gate</h2>
+      <p className="mt-1 text-sm text-zinc-400">The rule leaves choices open that the tickets depend on. Until a person signs a value for each,
+        the rule issues nothing. A signed value becomes part of the contract: changing it is a new contract, not an objection to a ticket.</p>
+      <div className="mt-3 flex flex-wrap gap-3">
+        {fams.map((f) => (
+          <label key={f} className="flex items-center gap-2 rounded bg-zinc-800 px-3 py-1.5 text-sm">
+            <input type="checkbox" data-testid={`approve-${f}`} checked={ok.includes(f)}
+                   onChange={(e) => setOk(e.target.checked ? [...ok, f] : ok.filter((x) => x !== f))} />
+            Approve {court.approvable?.[f] ?? f}
+          </label>
+        ))}
+      </div>
+      {g.decision === "WITHHELD" ? (
+        <p className="mt-3 rounded bg-amber-500/10 p-3 text-sm text-amber-200 ring-1 ring-amber-500/40" data-testid="gate-decision">
+          <b>Rule withheld.</b> {g.missing.map((m) => `${m.label}: no approved value (${m.tickets} tickets depend on it)`).join("; ")}.</p>
+      ) : (
+        <p className="mt-3 rounded bg-green-500/10 p-3 text-sm text-green-200 ring-1 ring-green-500/40" data-testid="gate-decision">
+          <b>Deployable.</b> {g.auto_issued.tickets} of {g.tickets} tickets issue automatically ({g.auto_issued.false_tickets} wrong);
+          {" "}{g.held_for_review.tickets} go to a human because {g.held_for_review.because.map((b) => MEASURE[b] ?? b).join(", ") || "nothing"} still changes them.</p>
+      )}
+    </section>
+  );
+}
+
 export default function CourtPage() {
   const [court, setCourt] = useState<Court | null>(null);
   const [sel, setSel] = useState<number>(-1);
@@ -84,6 +119,7 @@ export default function CourtPage() {
         ))}
       </div>
       {sel >= 0 && <div className="mt-6"><Case c={court.cases[sel]} /></div>}
+      <ApprovalGate court={court} />
       <section className="mt-8 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800" data-testid="contract">
         <h2 className="text-lg font-semibold">Contract acceptance block</h2>
         <p className="mt-1 text-sm text-zinc-400">What a city could write into a camera vendor&apos;s contract, filled in from these labelled tickets. It states what the evidence supports; it is not a certification.</p>

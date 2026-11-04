@@ -59,6 +59,48 @@ def contract(rows: list[dict]) -> dict:
     }
 
 
+# The choices a sentence or statute leaves open. A person can sign a value for each (a contract parameter); measurement
+# changes (line position, measured point, frame rate) are evidence quality and cannot be signed away.
+APPROVABLE = {"min_ms": "how long counts as waiting", "stillness": "how slow counts as standing still",
+              "stillness_meaning": "whether the wait must be standing still", "reading": "which reading of the sentence"}
+
+
+def _families(r: dict) -> set[str]:
+    return {f.split(":")[0] for f in r.get("flipping", [])}
+
+
+def gate(rows: list[dict], approved: set[str]) -> dict:
+    """Approval gate. While any ticket turns on an open choice nobody approved, the rule is WITHHELD: it issues nothing.
+    Once those choices are signed, a change to a signed value is a change of contract, not an objection; a ticket is
+    auto-issued if nothing else overturns it, and held for a human if a measurement change still does."""
+    tickets = [r for r in rows if r.get("verdict") == "VIOLATION" and r.get("status")]
+    open_ = {f for r in tickets for f in _families(r) if f in APPROVABLE} - approved
+    missing = [{"family": f, "label": APPROVABLE[f], "tickets": sum(f in _families(r) for r in tickets)}
+               for f in sorted(open_)]
+    auto = [r for r in tickets if not (_families(r) - approved)] if not open_ else []
+    held = [r for r in tickets if r not in auto] if not open_ else []
+    wrong = lambda xs: sum(r["correct"] == "wrong" for r in xs)  # noqa: E731
+    return {"approved": sorted(approved), "decision": "WITHHELD" if open_ else "DEPLOYABLE",
+            "reason": ("Rule withheld: " + "; ".join(f"{m['label']} has no approved value ({m['tickets']} tickets "
+                                                     "depend on it)" for m in missing)) if open_ else
+                      "Every open choice the tickets depend on has an approved value.",
+            "missing": missing, "tickets": len(tickets),
+            "auto_issued": {"tickets": len(auto), "false_tickets": wrong(auto)},
+            "held_for_review": {"tickets": len(held), "false_tickets": wrong(held),
+                                "because": sorted({f for r in held for f in _families(r) - approved})}}
+
+
+def gates(rows: list[dict]) -> dict[str, dict]:
+    """The gate for every set of approvals over the choices these tickets depend on, keyed by the sorted names
+    joined with ','; '' is nothing approved."""
+    fams = sorted({f for r in rows for f in _families(r) if f in APPROVABLE})
+    out = {}
+    for m in range(1 << len(fams)):
+        sel = {f for i, f in enumerate(fams) if m >> i & 1}
+        out[",".join(sorted(sel))] = gate(rows, sel)
+    return out
+
+
 def apply_audit(rows: list[dict], audit: dict) -> list[dict]:
     """Rows with the corrections of a label audit applied (pre-registered rows are not modified; see label_audit.json)."""
     fix = {(c["set"], audit["clip"], c["object_id"]): c["audited_label"].split()[0] for c in audit["corrections"]}

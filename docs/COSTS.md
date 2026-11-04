@@ -1,6 +1,7 @@
 # Costs and credits
 
 ## Current summary (2026-11-02)
+- Balance read by the participant on 2026-11-04: **$136.41 of $150** ($13.59 spent in total).
 - Balance read by the participant on 2026-11-02: **$138.91 of $150** ($11.09 spent in total).
 - Meta Model API: $150 hackathon credits. **Balance $149.26 → spent $0.74** (read by the participant from the Billing page, 2026-11-01).
 - Live calls made so far (from the rows below): SAM 3.1 = 13 (1 smoke, 10 SAM-vs-mock, 1 E2E, 1 studio confirm);

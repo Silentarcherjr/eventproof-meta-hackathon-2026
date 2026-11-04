@@ -18,7 +18,9 @@ easy half. EventProof checks the half that failed in New York, **the rule the ca
 **One ticket.** A grey hatchback in Wroclaw drives through the stop line without ever stopping, and the camera tickets
 it. The ticket is correct. Muse Spark, acting as the driver's lawyer, finds the one argument that wins: the rule never
 says how slow counts as "stopped". Double that threshold and the ticket disappears. Across **20 real tickets from
-labelled footage, only 4 hold up** against every challenge, and 11 of them rest on a number nobody wrote down.
+labelled footage, all 20 were right** (after a label audit), yet **only 4 stay the same under every challenge**: 11 of
+the others turn on a number nobody wrote down. A correct ticket that rests on an unwritten choice is not one a city
+should issue automatically.
 
 **The law, as written.** Maryland's statute (where Takoma Park tickets) and California's say *"shall stop"* and contain
 no digit. A camera still needs two numbers: how long to stand still, and how slow counts as "still". **Same law, same
@@ -29,7 +31,7 @@ no digit. A camera still needs two numbers: how long to stand still, and how slo
 
 | | |
 |---|---|
-| Real tickets that survive every challenge | **4 of 20** |
+| Real tickets (all 20 correct) that stay the same under every challenge | **4 of 20** |
 | Tickets the same law issues on the same 30 cars, depending on two unwritten numbers | **0 to 17** |
 | Cars judged right by the rule Muse Spark compiled; by a repair that passed every synthetic test | **27/30 vs 16/30** |
 
@@ -47,8 +49,11 @@ reviewer who approves each citation, and the vendor who must prove its rule befo
 2. **Attack.** Every ticket is judged again with the line a few pixels away, another measured point, thresholds ±20 %
    and another meaning of "stop". Muse Spark argues the defense from a closed menu, and the engine decides. Synthetic
    scenes with known truth find the smallest case that fools the rule, and a repair is kept only with zero regressions.
-3. **Issue only what survives.** Robust tickets go out. Every other ticket is held for a human, together with the
-   smallest change that would overturn it. Each rule gets a one-page certificate and a contract block a city can hand
+3. **Withhold, then issue only what survives.** While a ticket turns on a choice nobody approved (how slow counts as
+   standing still, whether "wait" means standing still), the rule issues **nothing**: on the 20 real tickets, *"Rule
+   withheld: 11 tickets depend on the stillness threshold, 13 on what 'wait' means"*. Once a person signs those two
+   values, 17 issue automatically (0 wrong) and 3 go to a human, because where the car is measured still changes them.
+   Every held ticket comes with the smallest change that would overturn it. Each rule gets a one-page certificate and a contract block a city can hand
    to its vendor; no model writes either.
 
 The flagship is a stop line, because the law is short and the footage is public. Nothing in the loop is about stop
@@ -62,7 +67,7 @@ person *with* a hard hat, a box on a conveyor).
 - **Muse Wonder** is the independent second reading that exposes ambiguous sentences.
 - **SAM 3.1** gives text-prompted video tracks with stable ids, with one extra prompt per second concept. It keeps
   overlapping boxes apart where a naive tracker merges them (10/10 tailgating scenes, against 2/10).
-- The whole build spent about $12 of the $150 credits. Live calls need explicit allowances, and everything else replays
+- The whole build spent about $14 of the $150 credits (balance read from Billing: $136.41). Live calls need explicit allowances, and everything else replays
   from recorded responses.
 
 **Try it.** A live studio runs on Vercel: pick a real clip, type a rule, see each object's verdict over the video in
@@ -81,7 +86,7 @@ about 30 s, then attack, repair and print the certificate; open **Ticket court**
 | **Drag the law** (same statutes, same 30 cars; every stop time 0–3 s × every "still" speed, 273 combinations, deterministic) | **0 to 17 tickets** depending only on the two unwritten numbers; Muse Spark's choice issues 13 (25/30 right); the best combinations reach 26/30. Studio page with sliders. [grid](benchmark/law/grid.json) |
 | **Contract acceptance block** (policy: auto-issue only ROBUST tickets) | All 20 tickets: none wrongly issued after the label audit (1 with the pre-registered labels; 95 % upper bound 16 %). 4 are auto-issued, none wrong, but that is too few to promise anything (upper bound 49 %). To promise ≤ 2 % false tickets a city needs **188** labelled error-free tickets; ≤ 5 %: 73. |
 | **The statute itself** (Md. Transp. § 21-707(a), Cal. Veh. Code § 22450(a), verbatim; every value QUOTED or ASSUMED, quotes verified) | Spark: **25/30 cars right** on both. The statutes contain no number, yet **14/30 verdicts hang on the stop time and "still" speed the model had to assume**; Spark even labelled 0.05 as "quoted" from the words "shall stop". Wonder failed 2/4 compiles. [findings](benchmark/law/FINDINGS.md) |
-| **Would the tickets hold up?** 20 real tickets, each re-judged under about a dozen typed changes; Muse Spark as the defense | **4/20 survive everything**; 11 hang on the unwritten "stopped" threshold. Muse's defense won 8 of the 16 beatable tickets and conceded 3 of the 4 robust ones. It also conceded the ticket the pre-registered labels called wrongly issued; the label audit shows that ticket was correct. [findings](benchmark/tickets/FINDINGS.md) |
+| **Would the tickets hold up?** 20 real tickets, each re-judged under about a dozen typed changes; Muse Spark as the defense | **4/20 unchanged under every challenge** (all 20 correct after the label audit); 11 hang on the unwritten "stopped" threshold. Muse's defense won 8 of the 16 beatable tickets and conceded 3 of the 4 robust ones. It also conceded the ticket the pre-registered labels called wrongly issued; the label audit shows that ticket was correct. [findings](benchmark/tickets/FINDINGS.md) |
 | Two readings, 8 phrasings of one rule (Spark vs Wonder, 150 scenes) | "wait" and "remain" are read differently (standing still vs just inside): verdicts differ on **45/150** scenes; the separating pair is found automatically. |
 | Repair on synthetic scenes with known truth (hidden holdout 200, final test 320, evaluated once) | Holdout **144 → 164**, false PASS 40 → 21, 0 regressions; final test 141 → 158/200 and 109 → 117/120 on never-seen scene types; with real SAM 3.1 tracks (80 scenes) **71 → 76**, false PASS 5 → 0. |
 | Two-object rule: *"every pedestrian … must hold an umbrella over their head"* (rainy crossing seen from above) | Muse escalated to the WITH event and SAM 3.1 tracked people and umbrellas separately: **2/4** (a neighbour's umbrella counted for a bare head). |
@@ -187,8 +192,7 @@ can re-verify, and CI recomputes every number above from committed files (no vid
 - **SAM 3.1 (`sam-3.1`)** gives text-prompted video tracks with stable ids. It keeps two overlapping boxes apart where
   a naive tracker merges them (5/5 tailgating cases right with SAM, 0/5 with the mock tracker) and confirms
   counterexamples on real tracks.
-- Meta API spend for the whole build: at most about $6 of the $150 credits ($0.74 read from Billing before the real-footage
-  and SAM final-test passes, plus their per-frame bounds). Live calls need explicit per-process allowances (default 0);
+- Meta API spend for the whole build: about $14 of the $150 credits (balance read from Billing on 2026-11-04: $136.41). Live calls need explicit per-process allowances (default 0);
   everything else is served from a cache of recorded responses.
 
 ## Honest limits

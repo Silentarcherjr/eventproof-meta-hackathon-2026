@@ -410,7 +410,7 @@ def law_grid() -> dict:
 def ticket_court() -> dict:
     """Every real ticket of the ticket study as a case file: prosecution (rule, decisive events), defense (Muse Spark,
     from its closed menu), ruling (the deterministic sweep), plus the contract-acceptance block."""
-    from eventproof.review.triage import apply_audit, contract
+    from eventproof.review.triage import APPROVABLE, apply_audit, contract, gates
 
     rep = json.loads((BENCH / "tickets" / "report.json").read_text())
     audit = json.loads((BENCH / "real" / "santos" / "label_audit.json").read_text())
@@ -433,7 +433,7 @@ def ticket_court() -> dict:
                           "anchor": rule.params.anchor, "events": [e.model_dump() for e in obj.events],
                           "first_frame": obj.first_frame, "last_frame": obj.last_frame})
     return {"summary": rep["summary"], "contract": contract(rows), "contract_pre_registered": contract(rep["rows"]),
-            "audit": audit["finding"], "cases": cases}
+            "audit": audit["finding"], "approvable": APPROVABLE, "gates": gates(rows), "cases": cases}
 
 
 @app.get("/runs/{run_id}/ledger")
