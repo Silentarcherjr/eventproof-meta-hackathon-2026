@@ -1,0 +1,23 @@
+{
+  "written": "../benchmark/real/anchor_v4/report_domains.json",
+  "markdown": "../benchmark/real/anchor_v4/report_domains.md",
+  "clips": 3,
+  "before": {
+    "evaluated": 3,
+    "overall_agree": 3,
+    "objects_agree": 7,
+    "objects_labeled": 8
+  },
+  "after": {
+    "evaluated": 0,
+    "overall_agree": 0,
+    "objects_agree": 0,
+    "objects_labeled": 8
+  },
+  "missed": 1,
+  "extra": 1,
+  "live_calls": {
+    "muse": 2,
+    "sam": 0
+  }
+}

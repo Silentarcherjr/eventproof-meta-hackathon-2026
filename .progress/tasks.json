@@ -1294,6 +1294,33 @@
       "blocker": null,
       "next_action": "none",
       "cost_note": "≈ $0.12"
+    },
+    {
+      "id": "P1-20",
+      "title": "Compiler anchor field (schemas 4/5) + pre-registered re-run of all real sets: 34->38/46, wrong 0->3",
+      "priority": "P1",
+      "gate": "G6",
+      "state": "IN_REVIEW",
+      "dependencies": [
+        "P1-19"
+      ],
+      "owner": "agentic-eval",
+      "branch": null,
+      "definition_of_done": "Pre-registered before calls; CI recomputes (test_anchor_v4)",
+      "test_commands": [
+        "cd backend && uv run pytest tests/validation/test_anchor_v4.py tests/test_muse_rules.py"
+      ],
+      "evidence_paths": [
+        "benchmark/real/anchor_v4/FINDINGS.md",
+        "benchmark/real/anchor_v4/PREREGISTRATION.md (9b87501)"
+      ],
+      "commit_sha": null,
+      "pr_url": null,
+      "started_at": "2026-11-04T00:30:00Z",
+      "updated_at": "2026-11-04T01:10:00Z",
+      "blocker": null,
+      "next_action": "mark DONE_VERIFIED when CI is green",
+      "cost_note": "≈ $0.12"
     }
   ]
 }

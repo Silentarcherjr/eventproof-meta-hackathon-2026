@@ -1,0 +1,304 @@
+{
+  "schema_version": "eventproof-evidence/2",
+  "run_id": "20261103T235444Z-ab7fcf5d",
+  "created_at": "2026-11-03T23:54:44+00:00",
+  "eventproof_version": "0.1.0",
+  "status": "completed",
+  "video": {
+    "filename": "crosswalk_oneway.mp4",
+    "sha256": "e8e0c41a0ef0560adb49e24ce9c8a15759299f5c08b820819fd147f51f61be62",
+    "original_sha256": "e8e0c41a0ef0560adb49e24ce9c8a15759299f5c08b820819fd147f51f61be62",
+    "info": {
+      "width": 640,
+      "height": 360,
+      "fps": 10.0,
+      "frame_count": 137
+    },
+    "duration_s": 13.7,
+    "codec": "h264",
+    "reencoded": false,
+    "reencode_reasons": []
+  },
+  "rule": {
+    "text": "Everyone must cross the middle of the zebra crossing only from left to right.",
+    "text_sha256": "c695d58cbbda64be48c3cfe07579ddad0d9295f0c90128709021d2c3a4a6ba95",
+    "layout": {
+      "zones": [
+        {
+          "zone": {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.05,
+                0.2
+              ],
+              [
+                0.85,
+                0.2
+              ],
+              [
+                0.85,
+                0.9
+              ],
+              [
+                0.05,
+                0.9
+              ]
+            ]
+          },
+          "description": "the zebra crossing seen from above"
+        }
+      ],
+      "lines": [
+        {
+          "line": {
+            "id": "packing_entry",
+            "a": [
+              0.45,
+              0.15
+            ],
+            "b": [
+              0.45,
+              0.95
+            ]
+          },
+          "description": "middle of the zebra crossing; people walk or ride horizontally across the image"
+        }
+      ]
+    },
+    "model": "muse-spark-1.3",
+    "request_ids": [
+      "chatcmpl-01a1a3d6-a961-77c9-b95d-524ef1465aa5"
+    ],
+    "cached": false,
+    "attempts": 1,
+    "usage": [
+      {
+        "completion_tokens": 3964,
+        "prompt_tokens": 1541,
+        "total_tokens": 5505,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3679,
+          "rejected_prediction_tokens": null,
+          "text_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cache_write_tokens": null,
+          "cached_tokens": 0,
+          "image_tokens": null,
+          "text_tokens": null
+        }
+      }
+    ],
+    "compiled_rule": {
+      "check": {
+        "arg": {
+          "event": {
+            "direction": "to_right",
+            "line": "packing_entry",
+            "op": "CROSSES"
+          },
+          "op": "OCCURS"
+        },
+        "op": "NOT"
+      },
+      "entity": {
+        "concept": "person",
+        "name": "person"
+      },
+      "lines": [
+        {
+          "a": [
+            0.45,
+            0.15
+          ],
+          "b": [
+            0.45,
+            0.95
+          ],
+          "id": "packing_entry"
+        }
+      ],
+      "normalized_explanation": "Each person must never cross packing_entry in direction to_right, so any crossing is allowed only in direction to_left from left to right.",
+      "params": {
+        "anchor": "bottom_center",
+        "max_gap_frames": 3,
+        "min_confidence": 0.0
+      },
+      "rule_id": "cross-zebra-left-to-right-only",
+      "version": 1,
+      "zones": [
+        {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.05,
+              0.2
+            ],
+            [
+              0.85,
+              0.2
+            ],
+            [
+              0.85,
+              0.9
+            ],
+            [
+              0.05,
+              0.9
+            ]
+          ]
+        }
+      ]
+    },
+    "rule_hash": "41a88dfc4f53822d4fe12bbec0f4839a5ddcd31bf8730988d76a366da56621d5",
+    "assumptions": [
+      "Left-to-right means moving rightwards (+x), which maps to direction to_left per line description; prohibited direction is to_right (moving leftwards).",
+      "Rule is conditional: a person who never crosses packing_entry passes; only a crossing in direction to_right violates.",
+      "Crossing the middle is represented by CROSSES packing_entry alone; inspection zone is not needed.",
+      "Anchor bottom_center (feet) is used because packing_entry marks a ground location on the zebra crossing."
+    ],
+    "error": null
+  },
+  "perception": {
+    "model": "sam-3.1",
+    "prompt": "person",
+    "source_ref": "sam-3.1:resp_6ae850c6fc5327f149424d03:video=e8e0c41a0ef0560a:prompt='person':cached",
+    "cached": true,
+    "tracks_sha256": "448403e9d7e2a75778b7a6677c2ec8427373a33b0674e8eddddfd624a7103140",
+    "frames_with_detections": 120,
+    "boxes": 287,
+    "track_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "error": null,
+    "context": []
+  },
+  "result": {
+    "rule_id": "cross-zebra-left-to-right-only",
+    "rule_version": 1,
+    "rule_hash": "41a88dfc4f53822d4fe12bbec0f4839a5ddcd31bf8730988d76a366da56621d5",
+    "track_source": "sam-3.1",
+    "track_source_ref": "sam-3.1:resp_6ae850c6fc5327f149424d03:video=e8e0c41a0ef0560a:prompt='person':cached",
+    "overall": "FAIL",
+    "objects": [
+      {
+        "object_id": 0,
+        "verdict": "VIOLATION",
+        "first_frame": 0,
+        "last_frame": 81,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 43,
+            "timestamp_ms": 4300.0,
+            "reason": "crossed packing_entry (to_right) at frame 43"
+          }
+        ],
+        "explanation": "object 0: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 43"
+      },
+      {
+        "object_id": 1,
+        "verdict": "VIOLATION",
+        "first_frame": 0,
+        "last_frame": 71,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 36,
+            "timestamp_ms": 3600.0,
+            "reason": "crossed packing_entry (to_right) at frame 36"
+          }
+        ],
+        "explanation": "object 1: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 36"
+      },
+      {
+        "object_id": 2,
+        "verdict": "PASS",
+        "first_frame": 66,
+        "last_frame": 95,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          }
+        ],
+        "explanation": "object 2: PASS — CROSSES packing_entry: never crossed packing_entry"
+      },
+      {
+        "object_id": 3,
+        "verdict": "PASS",
+        "first_frame": 69,
+        "last_frame": 104,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          }
+        ],
+        "explanation": "object 3: PASS — CROSSES packing_entry: never crossed packing_entry"
+      },
+      {
+        "object_id": 4,
+        "verdict": "PASS",
+        "first_frame": 85,
+        "last_frame": 118,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          }
+        ],
+        "explanation": "object 4: PASS — CROSSES packing_entry: never crossed packing_entry"
+      },
+      {
+        "object_id": 5,
+        "verdict": "PASS",
+        "first_frame": 87,
+        "last_frame": 119,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          }
+        ],
+        "explanation": "object 5: PASS — CROSSES packing_entry: never crossed packing_entry"
+      }
+    ]
+  },
+  "files": {
+    "rule": "rule.json",
+    "tracks": "tracks.json",
+    "evidence": "evidence.json",
+    "video": "video.mp4"
+  },
+  "evidence_sha256": "27ab4d0d660acc4e50eaea3848d3239e1c3e0cb8d9062009ed365d23536e456c"
+}

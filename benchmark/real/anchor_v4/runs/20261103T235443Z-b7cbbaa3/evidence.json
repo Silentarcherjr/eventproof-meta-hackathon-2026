@@ -1,0 +1,214 @@
+{
+  "schema_version": "eventproof-evidence/2",
+  "run_id": "20261103T235443Z-b7cbbaa3",
+  "created_at": "2026-11-03T23:54:44+00:00",
+  "eventproof_version": "0.1.0",
+  "status": "completed",
+  "video": {
+    "filename": "bike_oneway_b.mp4",
+    "sha256": "f636d9c91f413bc8b574807bde4c2343229507ccf0025d61362d1c398d92fab0",
+    "original_sha256": "f636d9c91f413bc8b574807bde4c2343229507ccf0025d61362d1c398d92fab0",
+    "info": {
+      "width": 640,
+      "height": 360,
+      "fps": 10.0,
+      "frame_count": 190
+    },
+    "duration_s": 19.0,
+    "codec": "h264",
+    "reencoded": false,
+    "reencode_reasons": []
+  },
+  "rule": {
+    "text": "Cyclists may ride past the midpoint of the bike lane only from left to right.",
+    "text_sha256": "099be981332369ae68c903a9d96dc0b6b625ada56927db30c27ad980ec229b83",
+    "layout": {
+      "zones": [
+        {
+          "zone": {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.0,
+                0.55
+              ],
+              [
+                1.0,
+                0.55
+              ],
+              [
+                1.0,
+                0.85
+              ],
+              [
+                0.0,
+                0.85
+              ]
+            ]
+          },
+          "description": "the bike lane along the bridge (lower part of the image)"
+        }
+      ],
+      "lines": [
+        {
+          "line": {
+            "id": "packing_entry",
+            "a": [
+              0.5,
+              0.5
+            ],
+            "b": [
+              0.5,
+              0.9
+            ]
+          },
+          "description": "midpoint of the bridge across the bike lane; cyclists ride horizontally"
+        }
+      ]
+    },
+    "model": "muse-spark-1.3",
+    "request_ids": [
+      "chatcmpl-01a1a3d6-2961-74ae-b5d5-df5918baf1d9"
+    ],
+    "cached": true,
+    "attempts": 1,
+    "usage": [
+      {
+        "completion_tokens": 2677,
+        "prompt_tokens": 1548,
+        "total_tokens": 4225,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2423,
+          "rejected_prediction_tokens": null,
+          "text_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cache_write_tokens": null,
+          "cached_tokens": 0,
+          "image_tokens": null,
+          "text_tokens": null
+        }
+      }
+    ],
+    "compiled_rule": {
+      "check": {
+        "arg": {
+          "event": {
+            "direction": "to_right",
+            "line": "packing_entry",
+            "op": "CROSSES"
+          },
+          "op": "OCCURS"
+        },
+        "op": "NOT"
+      },
+      "entity": {
+        "concept": "cyclist",
+        "name": "cyclist"
+      },
+      "lines": [
+        {
+          "a": [
+            0.5,
+            0.5
+          ],
+          "b": [
+            0.5,
+            0.9
+          ],
+          "id": "packing_entry"
+        }
+      ],
+      "normalized_explanation": "Every cyclist must never cross the packing_entry line in the to_right direction corresponding to moving leftwards so only left-to-right crossings are allowed.",
+      "params": {
+        "anchor": "bottom_center",
+        "max_gap_frames": 3,
+        "min_confidence": 0.0
+      },
+      "rule_id": "cyclists-midpoint-left-to-right-only",
+      "version": 1,
+      "zones": [
+        {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.0,
+              0.55
+            ],
+            [
+              1.0,
+              0.55
+            ],
+            [
+              1.0,
+              0.85
+            ],
+            [
+              0.0,
+              0.85
+            ]
+          ]
+        }
+      ]
+    },
+    "rule_hash": "1867a14d7d8b00dcdc78fa94e6f8ccb402dc017d356c79cd2dfd566dccd3b691",
+    "assumptions": [
+      "'left to right' means moving rightwards in +x, which per the line definition corresponds to CROSSES direction to_left",
+      "'ride past the midpoint' is interpreted as CROSSES packing_entry, with no zone or dwell requirement",
+      "The rule is prohibitive only: cyclists that never cross pass, only a crossing in direction to_right corresponding to moving leftwards violates",
+      "Anchor bottom_center was chosen as the wheel-ground contact point for cyclists relative to a line drawn across the bike lane"
+    ],
+    "error": null
+  },
+  "perception": {
+    "model": "sam-3.1",
+    "prompt": "cyclist",
+    "source_ref": "sam-3.1:resp_6ae850ab238b99d86e184f86:video=f636d9c91f413bc8:prompt='cyclist':cached",
+    "cached": true,
+    "tracks_sha256": "9d7bd6a5d2ea7abf985614ddf859fe2f824ea3bd4da51db91c3d40099ace4257",
+    "frames_with_detections": 22,
+    "boxes": 22,
+    "track_ids": [
+      0
+    ],
+    "error": null,
+    "context": []
+  },
+  "result": {
+    "rule_id": "cyclists-midpoint-left-to-right-only",
+    "rule_version": 1,
+    "rule_hash": "1867a14d7d8b00dcdc78fa94e6f8ccb402dc017d356c79cd2dfd566dccd3b691",
+    "track_source": "sam-3.1",
+    "track_source_ref": "sam-3.1:resp_6ae850ab238b99d86e184f86:video=f636d9c91f413bc8:prompt='cyclist':cached",
+    "overall": "FAIL",
+    "objects": [
+      {
+        "object_id": 0,
+        "verdict": "VIOLATION",
+        "first_frame": 149,
+        "last_frame": 170,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 160,
+            "timestamp_ms": 16000.0,
+            "reason": "crossed packing_entry (to_right) at frame 160"
+          }
+        ],
+        "explanation": "object 0: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 160"
+      }
+    ]
+  },
+  "files": {
+    "rule": "rule.json",
+    "tracks": "tracks.json",
+    "evidence": "evidence.json",
+    "video": "video.mp4"
+  },
+  "evidence_sha256": "b382d9e0daf1cc67b9fdbd3d670becb07ae2816368e64fe9b7a44660b04c79c5"
+}

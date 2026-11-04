@@ -1,0 +1,23 @@
+{
+  "written": "../benchmark/real/anchor_v4/report_santos.json",
+  "markdown": "../benchmark/real/anchor_v4/report_santos.md",
+  "clips": 2,
+  "before": {
+    "evaluated": 2,
+    "overall_agree": 2,
+    "objects_agree": 5,
+    "objects_labeled": 8
+  },
+  "after": {
+    "evaluated": 0,
+    "overall_agree": 0,
+    "objects_agree": 0,
+    "objects_labeled": 8
+  },
+  "missed": 1,
+  "extra": 8,
+  "live_calls": {
+    "muse": 2,
+    "sam": 0
+  }
+}

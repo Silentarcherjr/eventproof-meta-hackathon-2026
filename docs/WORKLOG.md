@@ -190,3 +190,6 @@
   wheel assumption but the schema has no anchor field, so the rule kept the centre; the rule check refused it again.
   FINDINGS corrected: the 0/8 anchor was EventProof's default, not Muse's choice. Anchor field deferred (schema version
   bump would invalidate the cached compiles CI recomputes from).
+- 2026-11-04 P1-20 compiler schemas 4/5 with an `anchor` field (model picks where objects are measured); studio uses
+  it. Pre-registered re-run of all 5 frozen real sets (9b87501): 34 -> 38/46 right, never judged 10 -> 3, wrong 0 -> 3
+  (w3 car behind another; 2 Santos riders swapped). Rule check silent on all 10 clips. CI recomputes (test_anchor_v4).

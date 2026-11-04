@@ -1,0 +1,61 @@
+{
+  "rule_id": "cyclists-midpoint-left-to-right-only",
+  "version": 1,
+  "entity": {
+    "name": "cyclist",
+    "concept": "cyclist"
+  },
+  "zones": [
+    {
+      "id": "inspection",
+      "polygon": [
+        [
+          0.0,
+          0.55
+        ],
+        [
+          1.0,
+          0.55
+        ],
+        [
+          1.0,
+          0.85
+        ],
+        [
+          0.0,
+          0.85
+        ]
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "id": "packing_entry",
+      "a": [
+        0.5,
+        0.5
+      ],
+      "b": [
+        0.5,
+        0.9
+      ]
+    }
+  ],
+  "check": {
+    "op": "NOT",
+    "arg": {
+      "op": "OCCURS",
+      "event": {
+        "op": "CROSSES",
+        "line": "packing_entry",
+        "direction": "to_right"
+      }
+    }
+  },
+  "params": {
+    "anchor": "bottom_center",
+    "max_gap_frames": 3,
+    "min_confidence": 0.0
+  },
+  "normalized_explanation": "Every cyclist must never cross the packing_entry line in the to_right direction corresponding to moving leftwards so only left-to-right crossings are allowed."
+}

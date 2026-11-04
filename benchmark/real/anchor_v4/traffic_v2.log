@@ -1,0 +1,23 @@
+{
+  "written": "../benchmark/real/anchor_v4/report_traffic_v2.json",
+  "markdown": "../benchmark/real/anchor_v4/report_traffic_v2.md",
+  "clips": 2,
+  "before": {
+    "evaluated": 2,
+    "overall_agree": 2,
+    "objects_agree": 14,
+    "objects_labeled": 16
+  },
+  "after": {
+    "evaluated": 2,
+    "overall_agree": 1,
+    "objects_agree": 6,
+    "objects_labeled": 16
+  },
+  "missed": 0,
+  "extra": 9,
+  "live_calls": {
+    "muse": 1,
+    "sam": 0
+  }
+}

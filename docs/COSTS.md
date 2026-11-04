@@ -18,6 +18,7 @@ Only confirmed numbers go in "confirmed" columns. Estimates are labelled. AI-ass
 | fecha (Panamá) | plataforma | sesión/tarea | tipo de crédito | saldo confirmado | consumo confirmado | estimado | límite acordado | alerta | fuente |
 |---|---|---|---|---|---|---|---|---|---|
 | 2026-11-02 | Meta Model API | balance read (participant) | hackathon $150 | **$138.91 remaining** | $11.09 total to date | - | participant: use the remaining credits for product work | - | participant message |
+| 2026-11-04 | Meta Model API | Anchor-field compiler, all real sets re-run (P1-20) | hackathon $150 | - | 6 Muse compiles, 0 SAM (cached) | ≈ $0.12 (estimate) | participant: continue product work | - | benchmark/real/anchor_v4/ |
 | 2026-11-04 | Meta Model API | Santos v2, rule rewritten (P1-19) | hackathon $150 | - | 2 Muse compiles + 1 SAM call (200 frames) | ≈ $0.08 (estimate) | participant: re-test approved | - | benchmark/real/santos/report_santos_v2.json |
 | 2026-11-03 | Meta Model API | Santos bike path, real footage (P1-19) | hackathon $150 | - | 2 Muse compiles + 2 SAM calls (200 frames each) | ≈ $0.12 (estimate) | participant: use credits | - | benchmark/real/santos/report_santos.json |
 | 2026-11-03 | Meta Model API | Private hosted studio on Vercel (P1-18): deploy checks | hackathon $150 | - | 2 live Muse compiles (same new rule on two deployments; SAM from cache) | ≈ $0.04 (estimate) | participant: use credits; server caps 40 Muse / 6 SAM per instance | - | deploy/vercel/README.md |

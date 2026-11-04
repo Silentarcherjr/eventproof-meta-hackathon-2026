@@ -1,0 +1,340 @@
+{
+  "schema_version": "eventproof-evidence/2",
+  "run_id": "20261103T235539Z-c2cd9aeb",
+  "created_at": "2026-11-03T23:55:40+00:00",
+  "eventproof_version": "0.1.0",
+  "status": "completed",
+  "video": {
+    "filename": "santos_toward.mp4",
+    "sha256": "c62f0afcc38ec75f48e1b13323f7507dc1343c8d9380ae15c8b275fc651f22aa",
+    "original_sha256": "c62f0afcc38ec75f48e1b13323f7507dc1343c8d9380ae15c8b275fc651f22aa",
+    "info": {
+      "width": 640,
+      "height": 360,
+      "fps": 10.0,
+      "frame_count": 200
+    },
+    "duration_s": 20.0,
+    "codec": "h264",
+    "reencoded": false,
+    "reencode_reasons": []
+  },
+  "rule": {
+    "text": "Cyclists may cross the line on the bike path only toward the camera (from the far end of the path to the near end).",
+    "text_sha256": "dc8430aa7d31c5c0d37f605e60ede82ef9b6daa41a8835879500fa57f8ccb17a",
+    "layout": {
+      "zones": [
+        {
+          "zone": {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.3,
+                0.55
+              ],
+              [
+                0.76,
+                0.55
+              ],
+              [
+                0.8,
+                0.97
+              ],
+              [
+                0.26,
+                0.97
+              ]
+            ]
+          },
+          "description": "the bike path around the line"
+        }
+      ],
+      "lines": [
+        {
+          "line": {
+            "id": "packing_entry",
+            "a": [
+              0.38,
+              0.75
+            ],
+            "b": [
+              0.68,
+              0.75
+            ]
+          },
+          "description": "across the bike path; the camera stands at the near end, so riding toward the camera means moving down the image"
+        }
+      ]
+    },
+    "model": "muse-spark-1.3",
+    "request_ids": [
+      "chatcmpl-01a1a3d7-60d5-7204-81c0-8933e2c305f7"
+    ],
+    "cached": false,
+    "attempts": 1,
+    "usage": [
+      {
+        "completion_tokens": 2850,
+        "prompt_tokens": 1561,
+        "total_tokens": 4411,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2559,
+          "rejected_prediction_tokens": null,
+          "text_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cache_write_tokens": null,
+          "cached_tokens": 1521,
+          "image_tokens": null,
+          "text_tokens": null
+        }
+      }
+    ],
+    "compiled_rule": {
+      "check": {
+        "arg": {
+          "event": {
+            "direction": "to_left",
+            "line": "packing_entry",
+            "op": "CROSSES"
+          },
+          "op": "OCCURS"
+        },
+        "op": "NOT"
+      },
+      "entity": {
+        "concept": "cyclist",
+        "name": "cyclist"
+      },
+      "lines": [
+        {
+          "a": [
+            0.38,
+            0.75
+          ],
+          "b": [
+            0.68,
+            0.75
+          ],
+          "id": "packing_entry"
+        }
+      ],
+      "normalized_explanation": "No cyclist ever crosses packing_entry to_left, so any crossing is only to_right toward the camera.",
+      "params": {
+        "anchor": "bottom_center",
+        "max_gap_frames": 3,
+        "min_confidence": 0.0
+      },
+      "rule_id": "cyclists-toward-camera-only",
+      "version": 1,
+      "zones": [
+        {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.3,
+              0.55
+            ],
+            [
+              0.76,
+              0.55
+            ],
+            [
+              0.8,
+              0.97
+            ],
+            [
+              0.26,
+              0.97
+            ]
+          ]
+        }
+      ]
+    },
+    "rule_hash": "301845ad0387ad1334ea022e1d9bbd59a182f6853fad2a8e500871677fc6df39",
+    "assumptions": [
+      "toward the camera is interpreted as to_right (down-image +y) and away from the camera as to_left per the line description",
+      "anchor bottom_center is used because the line is drawn on the ground across the bike path where a cyclist's wheels touch",
+      "any crossing of packing_entry is treated as on the bike path because the line lies across the path, so the inspection zone is not needed in the expression",
+      "the rule is a permission-only prohibition: objects that never cross pass and to_right crossings are allowed without limit"
+    ],
+    "error": null
+  },
+  "perception": {
+    "model": "sam-3.1",
+    "prompt": "cyclist",
+    "source_ref": "sam-3.1:resp_6aea6a4a6a1d5406a7854764:video=c62f0afcc38ec75f:prompt='cyclist':cached",
+    "cached": true,
+    "tracks_sha256": "e41df151327387eb9494d2627f1af92896817a33e32f583b2b2a2ba29111fe3b",
+    "frames_with_detections": 200,
+    "boxes": 665,
+    "track_ids": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "error": null,
+    "context": []
+  },
+  "result": {
+    "rule_id": "cyclists-toward-camera-only",
+    "rule_version": 1,
+    "rule_hash": "301845ad0387ad1334ea022e1d9bbd59a182f6853fad2a8e500871677fc6df39",
+    "track_source": "sam-3.1",
+    "track_source_ref": "sam-3.1:resp_6aea6a4a6a1d5406a7854764:video=c62f0afcc38ec75f:prompt='cyclist':cached",
+    "overall": "FAIL",
+    "objects": [
+      {
+        "object_id": 0,
+        "verdict": "VIOLATION",
+        "first_frame": 0,
+        "last_frame": 199,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 28,
+            "timestamp_ms": 2800.0,
+            "reason": "crossed packing_entry (to_left) at frame 28"
+          }
+        ],
+        "explanation": "object 0: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_left) at frame 28"
+      },
+      {
+        "object_id": 1,
+        "verdict": "PASS",
+        "first_frame": 0,
+        "last_frame": 72,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          }
+        ],
+        "explanation": "object 1: PASS — CROSSES packing_entry: never crossed packing_entry"
+      },
+      {
+        "object_id": 2,
+        "verdict": "PASS",
+        "first_frame": 4,
+        "last_frame": 168,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          }
+        ],
+        "explanation": "object 2: PASS — CROSSES packing_entry: never crossed packing_entry"
+      },
+      {
+        "object_id": 4,
+        "verdict": "PASS",
+        "first_frame": 28,
+        "last_frame": 39,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          }
+        ],
+        "explanation": "object 4: PASS — CROSSES packing_entry: never crossed packing_entry"
+      },
+      {
+        "object_id": 5,
+        "verdict": "PASS",
+        "first_frame": 70,
+        "last_frame": 199,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          }
+        ],
+        "explanation": "object 5: PASS — CROSSES packing_entry: never crossed packing_entry"
+      },
+      {
+        "object_id": 6,
+        "verdict": "PASS",
+        "first_frame": 104,
+        "last_frame": 199,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          }
+        ],
+        "explanation": "object 6: PASS — CROSSES packing_entry: never crossed packing_entry"
+      },
+      {
+        "object_id": 7,
+        "verdict": "PASS",
+        "first_frame": 128,
+        "last_frame": 199,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          }
+        ],
+        "explanation": "object 7: PASS — CROSSES packing_entry: never crossed packing_entry"
+      },
+      {
+        "object_id": 8,
+        "verdict": "PASS",
+        "first_frame": 192,
+        "last_frame": 199,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          }
+        ],
+        "explanation": "object 8: PASS — CROSSES packing_entry: never crossed packing_entry"
+      }
+    ]
+  },
+  "files": {
+    "rule": "rule.json",
+    "tracks": "tracks.json",
+    "evidence": "evidence.json",
+    "video": "video.mp4"
+  },
+  "evidence_sha256": "b4e88bdb4ecc4af3c052d27437b153656b6359912a6d458713863107348c0ca4"
+}

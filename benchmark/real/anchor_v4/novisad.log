@@ -1,0 +1,23 @@
+{
+  "written": "../benchmark/real/anchor_v4/report_novisad.json",
+  "markdown": "../benchmark/real/anchor_v4/report_novisad.md",
+  "clips": 2,
+  "before": {
+    "evaluated": 2,
+    "overall_agree": 2,
+    "objects_agree": 8,
+    "objects_labeled": 8
+  },
+  "after": {
+    "evaluated": 2,
+    "overall_agree": 2,
+    "objects_agree": 7,
+    "objects_labeled": 8
+  },
+  "missed": 0,
+  "extra": 7,
+  "live_calls": {
+    "muse": 1,
+    "sam": 0
+  }
+}

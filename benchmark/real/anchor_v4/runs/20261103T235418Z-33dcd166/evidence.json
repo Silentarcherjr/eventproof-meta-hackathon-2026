@@ -1,0 +1,631 @@
+{
+  "schema_version": "eventproof-evidence/2",
+  "run_id": "20261103T235418Z-33dcd166",
+  "created_at": "2026-11-03T23:54:18+00:00",
+  "eventproof_version": "0.1.0",
+  "status": "completed",
+  "video": {
+    "filename": "wroclaw_w2.mp4",
+    "sha256": "6ea7f78f326220fe1038674b4cd366bdf7c59982543687c0690a52c2a676ca8a",
+    "original_sha256": "6ea7f78f326220fe1038674b4cd366bdf7c59982543687c0690a52c2a676ca8a",
+    "info": {
+      "width": 330,
+      "height": 290,
+      "fps": 10.0,
+      "frame_count": 190
+    },
+    "duration_s": 19.0,
+    "codec": "h264",
+    "reencoded": false,
+    "reencode_reasons": []
+  },
+  "rule": {
+    "text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+    "text_sha256": "e9f344d1874d02fe6538a5d36846d1021183552d6c3792d80ac983cb64502873",
+    "layout": {
+      "zones": [
+        {
+          "zone": {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.09,
+                0.5207
+              ],
+              [
+                1.0,
+                0.5207
+              ],
+              [
+                0.72,
+                0.1
+              ],
+              [
+                0.12,
+                0.1
+              ]
+            ]
+          },
+          "description": "waiting zone: the approach lanes just before the stop line (camera looks along the road; cars come toward the camera)"
+        }
+      ],
+      "lines": [
+        {
+          "line": {
+            "id": "packing_entry",
+            "a": [
+              0.0,
+              0.5207
+            ],
+            "b": [
+              1.0,
+              0.5207
+            ]
+          },
+          "description": "stop line across the approach lanes; cars travel from top to bottom of the frame"
+        }
+      ]
+    },
+    "model": "muse-spark-1.3",
+    "request_ids": [
+      "chatcmpl-01a1a3d5-c6c0-769e-a6ce-b0a1a3198793"
+    ],
+    "cached": true,
+    "attempts": 1,
+    "usage": [
+      {
+        "completion_tokens": 3351,
+        "prompt_tokens": 1565,
+        "total_tokens": 4916,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2950,
+          "rejected_prediction_tokens": null,
+          "text_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cache_write_tokens": null,
+          "cached_tokens": 0,
+          "image_tokens": null,
+          "text_tokens": null
+        }
+      }
+    ],
+    "compiled_rule": {
+      "check": {
+        "conclusion": {
+          "first": {
+            "max_speed": 0.05,
+            "min_ms": 1500.0,
+            "op": "DWELL",
+            "zone": "inspection"
+          },
+          "op": "BEFORE",
+          "then": {
+            "direction": "to_right",
+            "line": "packing_entry",
+            "op": "CROSSES"
+          },
+          "within_ms": null
+        },
+        "op": "IMPLIES",
+        "premise": {
+          "event": {
+            "direction": "to_right",
+            "line": "packing_entry",
+            "op": "CROSSES"
+          },
+          "op": "OCCURS"
+        }
+      },
+      "entity": {
+        "concept": "car",
+        "name": "car"
+      },
+      "lines": [
+        {
+          "a": [
+            0.0,
+            0.5207
+          ],
+          "b": [
+            1.0,
+            0.5207
+          ],
+          "id": "packing_entry"
+        }
+      ],
+      "normalized_explanation": "Every car that crosses packing_entry to_right must have dwelled stopped for at least 1500 ms in inspection before that crossing.",
+      "params": {
+        "anchor": "bottom_center",
+        "max_gap_frames": 3,
+        "min_confidence": 0.0
+      },
+      "rule_id": "car-wait-before-stop-line",
+      "version": 1,
+      "zones": [
+        {
+          "id": "inspection",
+          "polygon": [
+            [
+              0.09,
+              0.5207
+            ],
+            [
+              1.0,
+              0.5207
+            ],
+            [
+              0.72,
+              0.1
+            ],
+            [
+              0.12,
+              0.1
+            ]
+          ]
+        }
+      ]
+    },
+    "rule_hash": "14e3e9c7325b75b459966c9292810055fa5add3b9b290698db91a6d5267df6f1",
+    "assumptions": [
+      "wait means stopped still, so DWELL uses max_speed 0.05",
+      "1.5 seconds mapped to min_ms 1500 continuously inside",
+      "'waiting zone' mapped to zone 'inspection'",
+      "'stop line' mapped to line 'packing_entry'",
+      "car travel top-to-bottom (+y) mapped to CROSSES direction to_right",
+      "BEFORE has no maximum gap (within_ms null); dwell must only precede the first crossing",
+      "cars that never cross the stop line pass vacuously via IMPLIES idiom",
+      "anchor bottom_center used because inspection zone and stop line are ground-plane road markings tested where wheels touch ground"
+    ],
+    "error": null
+  },
+  "perception": {
+    "model": "sam-3.1",
+    "prompt": "car",
+    "source_ref": "sam-3.1:resp_6ae82d4cba346f9d67aa43b0:video=6ea7f78f326220fe:prompt='car':cached",
+    "cached": true,
+    "tracks_sha256": "93ef6fed943bf8239291cffba3470d0a6d101c9b65ccbd9525f5812bbdc275ce",
+    "frames_with_detections": 190,
+    "boxes": 1289,
+    "track_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "error": null,
+    "context": []
+  },
+  "result": {
+    "rule_id": "car-wait-before-stop-line",
+    "rule_version": 1,
+    "rule_hash": "14e3e9c7325b75b459966c9292810055fa5add3b9b290698db91a6d5267df6f1",
+    "track_source": "sam-3.1",
+    "track_source_ref": "sam-3.1:resp_6ae82d4cba346f9d67aa43b0:video=6ea7f78f326220fe:prompt='car':cached",
+    "overall": "FAIL",
+    "objects": [
+      {
+        "object_id": 0,
+        "verdict": "PASS",
+        "first_frame": 0,
+        "last_frame": 189,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "TRUE",
+            "frame": 174,
+            "timestamp_ms": 17400.0,
+            "reason": "dwelled 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 0: PASS — CROSSES packing_entry: never crossed packing_entry; DWELL inspection: dwelled 1500 ms still in inspection"
+      },
+      {
+        "object_id": 1,
+        "verdict": "VIOLATION",
+        "first_frame": 0,
+        "last_frame": 67,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 49,
+            "timestamp_ms": 4900.0,
+            "reason": "crossed packing_entry (to_right) at frame 49"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 1: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 49; DWELL inspection: never 1500 ms still in inspection"
+      },
+      {
+        "object_id": 2,
+        "verdict": "VIOLATION",
+        "first_frame": 4,
+        "last_frame": 89,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 72,
+            "timestamp_ms": 7200.0,
+            "reason": "crossed packing_entry (to_right) at frame 72"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 2: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 72; DWELL inspection: never 1500 ms still in inspection"
+      },
+      {
+        "object_id": 3,
+        "verdict": "VIOLATION",
+        "first_frame": 23,
+        "last_frame": 103,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 86,
+            "timestamp_ms": 8600.0,
+            "reason": "crossed packing_entry (to_right) at frame 86"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 3: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 86; DWELL inspection: never 1500 ms still in inspection"
+      },
+      {
+        "object_id": 4,
+        "verdict": "VIOLATION",
+        "first_frame": 30,
+        "last_frame": 106,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 89,
+            "timestamp_ms": 8900.0,
+            "reason": "crossed packing_entry (to_right) at frame 89"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 4: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 89; DWELL inspection: never 1500 ms still in inspection"
+      },
+      {
+        "object_id": 5,
+        "verdict": "VIOLATION",
+        "first_frame": 43,
+        "last_frame": 121,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 105,
+            "timestamp_ms": 10500.0,
+            "reason": "crossed packing_entry (to_right) at frame 105"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 5: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 105; DWELL inspection: never 1500 ms still in inspection"
+      },
+      {
+        "object_id": 6,
+        "verdict": "UNKNOWN",
+        "first_frame": 51,
+        "last_frame": 186,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 105,
+            "timestamp_ms": 10500.0,
+            "reason": "crossed packing_entry (to_right) at frame 105"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "UNKNOWN",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "1500 ms still in inspection not observed; 1 blind spot(s) could hide it"
+          }
+        ],
+        "explanation": "object 6: UNKNOWN — CROSSES packing_entry: crossed packing_entry (to_right) at frame 105; DWELL inspection: 1500 ms still in inspection not observed; 1 blind spot(s) could hide it"
+      },
+      {
+        "object_id": 7,
+        "verdict": "UNKNOWN",
+        "first_frame": 52,
+        "last_frame": 189,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 117,
+            "timestamp_ms": 11700.0,
+            "reason": "crossed packing_entry (to_right) at frame 117"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "UNKNOWN",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "1500 ms still in inspection not observed; 1 blind spot(s) could hide it"
+          }
+        ],
+        "explanation": "object 7: UNKNOWN — CROSSES packing_entry: crossed packing_entry (to_right) at frame 117; DWELL inspection: 1500 ms still in inspection not observed; 1 blind spot(s) could hide it"
+      },
+      {
+        "object_id": 8,
+        "verdict": "VIOLATION",
+        "first_frame": 75,
+        "last_frame": 147,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 132,
+            "timestamp_ms": 13200.0,
+            "reason": "crossed packing_entry (to_right) at frame 132"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 8: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 132; DWELL inspection: never 1500 ms still in inspection"
+      },
+      {
+        "object_id": 9,
+        "verdict": "VIOLATION",
+        "first_frame": 77,
+        "last_frame": 178,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 155,
+            "timestamp_ms": 15500.0,
+            "reason": "crossed packing_entry (to_right) at frame 155"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 9: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 155; DWELL inspection: never 1500 ms still in inspection"
+      },
+      {
+        "object_id": 10,
+        "verdict": "VIOLATION",
+        "first_frame": 93,
+        "last_frame": 165,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 150,
+            "timestamp_ms": 15000.0,
+            "reason": "crossed packing_entry (to_right) at frame 150"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 10: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 150; DWELL inspection: never 1500 ms still in inspection"
+      },
+      {
+        "object_id": 11,
+        "verdict": "VIOLATION",
+        "first_frame": 102,
+        "last_frame": 189,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 188,
+            "timestamp_ms": 18800.0,
+            "reason": "crossed packing_entry (to_right) at frame 188"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 11: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 188; DWELL inspection: never 1500 ms still in inspection"
+      },
+      {
+        "object_id": 12,
+        "verdict": "VIOLATION",
+        "first_frame": 119,
+        "last_frame": 189,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "TRUE",
+            "frame": 180,
+            "timestamp_ms": 18000.0,
+            "reason": "crossed packing_entry (to_right) at frame 180"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 12: VIOLATION — CROSSES packing_entry: crossed packing_entry (to_right) at frame 180; DWELL inspection: never 1500 ms still in inspection"
+      },
+      {
+        "object_id": 13,
+        "verdict": "PASS",
+        "first_frame": 127,
+        "last_frame": 189,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 13: PASS — CROSSES packing_entry: never crossed packing_entry; DWELL inspection: never 1500 ms still in inspection"
+      },
+      {
+        "object_id": 14,
+        "verdict": "PASS",
+        "first_frame": 138,
+        "last_frame": 189,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 14: PASS — CROSSES packing_entry: never crossed packing_entry; DWELL inspection: never 1500 ms still in inspection"
+      },
+      {
+        "object_id": 15,
+        "verdict": "PASS",
+        "first_frame": 149,
+        "last_frame": 189,
+        "events": [
+          {
+            "op": "CROSSES",
+            "target": "packing_entry",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never crossed packing_entry"
+          },
+          {
+            "op": "DWELL",
+            "target": "inspection",
+            "status": "FALSE",
+            "frame": null,
+            "timestamp_ms": null,
+            "reason": "never 1500 ms still in inspection"
+          }
+        ],
+        "explanation": "object 15: PASS — CROSSES packing_entry: never crossed packing_entry; DWELL inspection: never 1500 ms still in inspection"
+      }
+    ]
+  },
+  "files": {
+    "rule": "rule.json",
+    "tracks": "tracks.json",
+    "evidence": "evidence.json",
+    "video": "video.mp4"
+  },
+  "evidence_sha256": "53f09934b4fddfd3fcaabfc19a772889cc2b61d35d001d441a5167d94b530454"
+}
