@@ -1,5 +1,5 @@
-// Renders the demo video's cards (title, real-footage results, closing) to 1920x1080 PNGs. Numbers are read from
-// committed files, never typed in: benchmark/real/POOLED_v2.json.
+// Renders the demo video's cards (opening, real-footage evidence, closing) to 1920x1080 PNGs. Numbers are read from
+// committed files, never typed in: benchmark/real/POOLED_v2.json, benchmark/tickets/report.json, benchmark/law/grid.json.
 // Usage: node cards.mjs <out_dir>
 import { createRequire } from "node:module";
 import fs from "node:fs";
@@ -9,7 +9,9 @@ const { chromium } = createRequire(new URL("../../frontend/package.json", import
 const out = process.argv[2];
 const root = new URL("../../", import.meta.url);
 const pooled = JSON.parse(fs.readFileSync(new URL("benchmark/real/POOLED_v2.json", root), "utf8"));
-const figure = "data:image/png;base64," + fs.readFileSync(new URL("docs/media/real_traffic.png", root)).toString("base64");
+const tickets = JSON.parse(fs.readFileSync(new URL("benchmark/tickets/report.json", root), "utf8")).summary;
+const grid = JSON.parse(fs.readFileSync(new URL("benchmark/law/grid.json", root), "utf8"));
+const gt = grid.statutes[0].cells.map((x) => x.tickets);
 
 const r = pooled.readings, sa = pooled.muse_spark_alone_from_video, n = pooled.labelled_cars, c = pooled.clips;
 const STYLE = `
@@ -26,38 +28,27 @@ const STYLE = `
   .models { margin-top: 40px; font-size: 34px; color: #a1a1aa; }`;
 
 const CARDS = {
-  "card_1": `<div class="kicker">Rule QA for vision AI</div><h1>EventProof</h1>
-    <div class="sub">AI-generated vision software that doesn’t just claim to work,<br>but searches for evidence that it might be wrong.</div>
+  "card_1": `<div class="kicker">EventProof</div>
+    <h2 style="font-size:84px;line-height:1.08">Before an AI camera fines anyone,<br>put the rule, and every ticket, on trial.</h2>
+    <table style="margin-top:24px">
+      <tr><td>Takoma Park, Maryland: AI stop-sign camera citations since January 2026</td><td class="num">$40</td></tr>
+      <tr><td>Virginia: AI cameras may cite stop-sign violations (April 2026)</td><td class="num">SB84</td></tr>
+    </table>
     <div class="models">Meta models: Muse Spark · Muse Wonder · SAM 3.1</div>
-    <div class="note">Screen capture of the real studio replaying recorded runs (cached model outputs) · synthetic narration voice</div>`,
-  "card_2": `<div class="kicker">Why now</div>
-    <h2>Cities have started writing stop-sign tickets from AI cameras</h2>
+    <div class="note">Screen capture of the real studio replaying recorded runs (cached Meta outputs) · sources in the README</div>`,
+  "card_7": `<div class="kicker">Real footage · labels frozen and pre-registered before any model call</div>
+    <h2>The numbers, all recomputed in CI</h2>
     <table>
-      <tr><td>Takoma Park, Maryland: automated stop-sign citations since Jan 8, 2026</td><td class="num">$40</td></tr>
-      <tr><td>Virginia: law allowing AI cameras to cite stop-sign violations (April 2026)</td><td class="num">SB84</td></tr>
+      <tr><td>Real tickets that survive every challenge</td><td class="num good">${tickets.tickets - tickets.tickets_beatable_by_menu} of ${tickets.tickets}</td></tr>
+      <tr><td>Tickets the same law issues on the same ${grid.cars.length} cars, depending on two unwritten numbers</td><td class="num">${Math.min(...gt)} to ${Math.max(...gt)}</td></tr>
+      <tr><td>Cars right: Muse Spark's rule → SAM 3.1 → engine</td><td class="num good">${r.muse_spark_rule.objects_right}/${n}</td></tr>
+      <tr><td>Cars right: the repair that passed every synthetic test</td><td class="num bad">${r.muse_spark_rule_plus_synthetic_repair.objects_right}/${n}</td></tr>
+      <tr><td>Muse Spark alone, watching the video: runs that count the cars right</td><td class="num">${sa.counts_exact}/${sa.runs}</td></tr>
     </table>
-    <div class="sub" style="margin-top:40px">“…rarely backed up by independent studies that validate what these AI technologies can really do.”</div>
-    <div class="muted" style="margin-top:12px">Daniel Schwarz, NYCLU, in IEEE Spectrum (2025)</div>
-    <div class="note">Sources: MoCo Show (2026-01-07), WTVR, IEEE Spectrum (2025-07-05) · links in the README</div>`,
-  "card_7a": `<div style="display:flex;flex-direction:column;align-items:center;gap:24px">
-    <h2 style="margin:0;font-size:46px">Same SAM 3.1 tracks, two readings of “wait”: the synthetic-tuned repair passes a real rolling stop</h2>
-    <img src="${figure}" style="width:1600px;border-radius:12px;background:white"></div>`,
-  "card_7b": `<div class="kicker">Real traffic footage · labels frozen before any model ran</div>
-    <h2>${c} clips, 2 cities, ${n} hand-labelled cars</h2>
-    <table>
-      <tr><td>Muse Spark’s rule → SAM 3.1 → deterministic engine</td>
-          <td class="num good">${r.muse_spark_rule.objects_right}/${n} cars</td><td class="num muted">0 wrong verdicts</td></tr>
-      <tr><td>Same rule + the repair that passed every synthetic test</td>
-          <td class="num bad">${r.muse_spark_rule_plus_synthetic_repair.objects_right}/${n} cars</td><td></td></tr>
-      <tr><td>Muse Spark alone, watching the video</td>
-          <td class="num">${sa.counts_exact}/${sa.runs} runs<br><span class="muted">count cars right</span></td>
-          <td class="num muted">${sa.overall_right}/${sa.runs} runs<br>verdict right</td></tr>
-    </table>
-    <div class="note">Pexels-licensed footage (Novi Sad, Wroclaw) · n is small; labels by one person · source: benchmark/real/POOLED_v2.json</div>`,
+    <div class="note">Pexels-licensed footage (Novi Sad, Wroclaw, Santos); statutes copied verbatim · labelled sets are small · sources: benchmark/</div>`,
   "card_8": `<div class="kicker">EventProof</div>
-    <h2 style="font-size:80px">Build it. Break it. Repair it.<br>Certify it on real video.</h2>
-    <div class="sub">Every number in this video is recomputed in CI from committed evidence.</div>
-    <div class="models">Muse Spark · Muse Wonder · SAM 3.1 · MIT licensed</div>`,
+    <h2 style="font-size:84px">Compile the rule.<br>Attack it, and every ticket.<br>Issue only what survives.</h2>
+    <div class="models">Built with Muse Spark · Muse Wonder · SAM 3.1 · MIT licensed</div>`,
 };
 
 const browser = await chromium.launch({ channel: "chrome" });

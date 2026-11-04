@@ -10,10 +10,14 @@ VOICE=${VOICE:-Samantha}
 RATE=${RATE:-172}
 GAP=0.6   # silence between scenes
 
-# 1. narration, one file per scene (docs/DEMO_SCRIPT.md -> narration.txt)
+# 1. narration, one file per scene (narration.txt). With AUDIO_DIR set, use recorded voice files instead
+#    (n1..n8 as .wav/.mp3/.m4a, e.g. from Gemini TTS in AI Studio); otherwise the macOS voice is used.
 i=1
 while IFS= read -r line; do
-  say -v "$VOICE" -r "$RATE" -o "$W/n$i.aiff" "$line"
+  src=""
+  if [ -n "${AUDIO_DIR:-}" ]; then for ext in wav mp3 m4a aiff; do [ -f "$AUDIO_DIR/n$i.$ext" ] && src="$AUDIO_DIR/n$i.$ext" && break; done; fi
+  if [ -n "$src" ]; then ffmpeg -loglevel error -y -i "$src" -ar 48000 -ac 2 "$W/n$i.aiff"
+  else say -v "$VOICE" -r "$RATE" -o "$W/n$i.aiff" "$line"; fi
   i=$((i + 1))
 done < "$HERE/narration.txt"
 dur() { ffprobe -v error -show_entries format=duration -of csv=p=0 "$1"; }
@@ -25,7 +29,7 @@ d = {str(i): float(subprocess.check_output(["ffprobe", "-v", "error", "-show_ent
 json.dump(d, open(f"{w}/durations.json", "w"), indent=1)
 EOF
 
-# 2. studio scenes (3-6) and cards (1, 2, 7a, 7b, 8)
+# 2. studio scenes (2-6) and cards (1, 7, 8)
 node "$HERE/record.mjs" "$W" "$W/durations.json"
 node "$HERE/cards.mjs" "$W"
 
@@ -40,20 +44,13 @@ seg() {  # seg <n> <video input args...>: picture for the narration length + gap
 card() { echo "-loop 1 -framerate 30 -i $W/$1.png"; }
 # shellcheck disable=SC2046
 seg 1 $(card card_1)
-# shellcheck disable=SC2046
-seg 2 $(card card_2)
-for n in 3 4 5 6; do
+for n in 2 3 4 5 6; do
   f=$(python3 -c "import json;print(json.load(open('$W/scenes.json'))['$n']['file'])")
   lead=$(python3 -c "import json;print(json.load(open('$W/scenes.json'))['$n']['lead'])")
   seg "$n" -ss "$lead" -i "$f"
 done
-# scene 7: the figure, then the pooled table (split at 40 % of the narration)
-L7=$(dur "$W/n7.aiff")
-S7=$(python3 -c "print(round($L7 * 0.4, 2))")
-T7=$(python3 -c "print(round($L7 + $GAP + 0.6, 2))")
-ffmpeg -loglevel error -y -loop 1 -framerate 30 -t "$S7" -i "$W/card_7a.png" -loop 1 -framerate 30 -i "$W/card_7b.png" \
-  -i "$W/n7.aiff" -filter_complex "[0:v][1:v]concat=n=2:v=1:a=0,trim=duration=$T7[v];[2:a]apad[a]" \
-  -map "[v]" -map "[a]" -t "$T7" $V $A "$W/seg7.mp4"
+# shellcheck disable=SC2046
+seg 7 $(card card_7)
 # shellcheck disable=SC2046
 seg 8 $(card card_8)
 

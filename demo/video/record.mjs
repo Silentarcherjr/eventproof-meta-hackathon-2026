@@ -45,46 +45,61 @@ const NOVI_CSS = `.lg\\:grid-cols-\\[minmax\\(0\\,3fr\\)_minmax\\(0\\,2fr\\)\\] 
           html { zoom: 1.12; }`;
 
 // each scene: url, extra CSS, ready selector, optional pre-scroll target, and a script of [at_seconds, action]
+const setRange = (p, sel, v) => p.evaluate(([s, val]) => {
+  const el = document.querySelector(s);
+  const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set;
+  setter.call(el, String(val)); el.dispatchEvent(new Event("input", { bubbles: true }));
+}, [sel, v]);
+const sweep = (sel, from, to, at, every) => Array.from({ length: Math.abs(to - from) + 1 }, (_, i) =>
+  [at + i * every, (p) => setRange(p, sel, from + Math.sign(to - from) * i)]);
 const SCENES = {
+  2: {
+    url: `${STUDIO}/law`, ready: "[data-testid=statute]",
+    css: "html { zoom: 1.15 !important; } a[href='/'] { display: none; }",
+    steps: [
+      [0, (p) => caption(p, "Verbatim Maryland statute · Muse Spark's compiled rule · 30 labelled real cars · no model call on this page")],
+      // stillness speed from Spark's 0.05 down to 0.01 (more tickets), then up to "any motion" (none)
+      ...sweep("[data-testid=speed]", 4, 0, 9.0, 0.35),
+      ...sweep("[data-testid=speed]", 0, 20, 11.5, 0.22),
+      [17.0, (p) => setRange(p, "[data-testid=time]", 12)],
+      ...sweep("[data-testid=speed]", 20, 7, 17.5, 0.25),
+    ],
+  },
   3: {
     url: `${STUDIO}/?run=${NOVI_SAD}`, ready: "[data-testid=overall]",
-    css: NOVI_CSS + "[data-testid=objects] > li:has(.text-green-400), [data-testid=ambiguity-panel] { display: none; }",
+    css: NOVI_CSS + "[data-testid=objects] > li:has(.text-green-400), [data-testid=ambiguity-panel], [data-testid=ticket-panel], [data-testid=gallery], [data-testid=hosted-banner] { display: none; }",
     steps: [
       [0, (p) => caption(p, "Real drone footage (Pexels, Novi Sad) · recorded run: Muse Spark + SAM 3.1 outputs from cache")],
       [1.5, (p) => playAll(p, "[data-testid=video]")],
     ],
   },
   4: {
-    url: `${STUDIO}/?run=${NOVI_SAD}`, ready: "[data-testid=overall]",
-    css: NOVI_CSS + "[data-testid=objects] { display: none; } #ep-caption { top: auto !important; bottom: 16px; }",
+    url: `${STUDIO}/court`, ready: "[data-testid=case]", pre: "[data-testid=case]",
+    css: "html { zoom: 1.05 !important; } a[href='/'] { display: none; }",
     steps: [
-      [0, (p) => caption(p, "A new rule on the same clip · Muse Spark + Muse Wonder responses recorded earlier today")],
-      [0.3, (p) => scrollTo(p, "[data-testid=rule-input]", 160)],
-      [1.0, async (p) => { await p.fill("[data-testid=rule-input]", ""); await p.type("[data-testid=rule-input]", LIVE_RULE, { delay: 18 }); }],
-      [3.6, (p) => p.click("[data-testid=run]")],
-      [5.0, (p) => scrollTo(p, "[data-testid=overall]", 160)],
-      [7.0, (p) => scrollTo(p, "[data-testid=ambiguity-panel]", 16)],
-      [8.0, (p) => p.click("[data-testid=ambiguity-ask]")],
-      [9.5, (p) => scrollTo(p, "[data-testid=reading-0]", 110)],
+      [0, (p) => caption(p, "Ticket court · a real ticket (Wroclaw) · Muse Spark's defense recorded earlier, the ruling is deterministic")],
     ],
   },
   5: {
-    url: `${API}/runs/${LIVE_RUN}/certificate`, ready: "h1",
-    css: "html { zoom: 1.0 !important; } body { max-width: 1100px !important; font-size: 19px !important; }",
+    url: `${STUDIO}/court`, ready: "[data-testid=scoreboard]",
+    css: "html { zoom: 1.05 !important; } a[href='/'] { display: none; }",
     steps: [
-      [0, (p) => caption(p, "Rule certificate · built from recorded results, no model call")],
-      [7.5, (p) => p.evaluate(() => window.scrollTo({ top: document.body.scrollHeight * 0.55, behavior: "smooth" }))],
+      [0, (p) => caption(p, "All 20 real tickets from labelled footage")],
+      [13.5, (p) => scrollTo(p, "[data-testid=contract]", 60)],
     ],
   },
   6: {
-    url: `${STUDIO}/?run=${DEMO}`, ready: "[data-testid=ba-final]", pre: "[data-testid=challenge-panel]",
-    css: "",
+    url: `${STUDIO}/?run=${LIVE_RUN}`, ready: "[data-testid=overall]",
+    css: NOVI_CSS + "[data-testid=objects], [data-testid=ticket-panel], [data-testid=gallery], [data-testid=hosted-banner] { display: none; } #ep-caption { top: auto !important; bottom: 16px; }",
     steps: [
-      [0.2, (p) => caption(p, "Warehouse version · Challenge Mode + Muse Spark repair (recorded run)")],
-      [1.0, (p) => playAll(p, "[data-testid=side-by-side] video")],
-      [6.5, (p) => scrollTo(p, "[data-testid=repair-headline]", 40)],
-      [11, (p) => scrollTo(p, "[data-testid=before-after]", 16)],
-      [11.5, (p) => playAll(p, "[data-testid=ba-video] video, video[data-testid=ba-video]")],
+      [0, (p) => caption(p, "A new rule on the same clip · Muse Spark + Muse Wonder responses recorded earlier")],
+      [0.3, (p) => scrollTo(p, "[data-testid=rule-input]", 160)],
+      [1.0, async (p) => { await p.fill("[data-testid=rule-input]", ""); await p.type("[data-testid=rule-input]", LIVE_RULE, { delay: 16 }); }],
+      [4.8, (p) => scrollTo(p, "[data-testid=overall]", 160)],
+      [6.5, (p) => scrollTo(p, "[data-testid=ambiguity-panel]", 16)],
+      [7.2, (p) => p.click("[data-testid=ambiguity-ask]")],
+      [8.6, (p) => scrollTo(p, "[data-testid=reading-0]", 110)],
+      [14.5, async (p) => { await p.goto(`${API}/runs/${LIVE_RUN}/certificate`); await p.addStyleTag({ content: BASE_CSS + "html { zoom: 1.0 !important; } body { max-width: 1100px !important; font-size: 19px !important; }" }); await caption(p, "Rule certificate · built from recorded results, no model call"); }],
     ],
   },
 };
