@@ -32,3 +32,24 @@ Date: 2026-11-04.
 - Spark vs Wonder verdict splits.
 
 No statute text, layout or label is changed after this commit.
+
+## Addendum 1: the unwritten numbers as a grid (written BEFORE computing it, 2026-11-04)
+
+This is deterministic and uses no model. Input: the cached Muse Spark compiles of both statutes (`cache/`), the 30
+cars and their committed tracks, exactly as in `law_study.py`.
+
+**Grid:** every DWELL time from 0.0 s to 3.0 s in 0.25 s steps, crossed with every "still" speed from 0.01 to 0.20 frame
+widths/s in 0.01 steps, plus "any motion" (no speed limit).
+
+**Each cell reports**, per statute and in total:
+- tickets issued (VIOLATION);
+- wrong verdicts against the statute truth;
+- false tickets (VIOLATION where truth is PASS);
+- missed violations (PASS where truth is VIOLATION);
+- abstentions.
+
+**Check:** the cell at Spark's own values (1.0 s, 0.05) must reproduce `report.json`: 25/30 right, 2 wrong, per
+statute.
+
+**Reporting:** the grid is reported whole, with the region where verdicts match the truth. No cell is chosen as "the
+right number".
