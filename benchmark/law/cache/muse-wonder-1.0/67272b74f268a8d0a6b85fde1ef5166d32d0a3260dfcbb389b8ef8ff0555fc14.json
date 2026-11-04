@@ -1,0 +1,150 @@
+{
+  "raw_output": {
+    "anchor": "bottom_center",
+    "assumptions": [
+      "Anchor bottom_center is used because the limit/stop line is a ground marking and bottom_center represents where the vehicle touches the ground.",
+      "The listed line packing_entry is assumed to be the marked limit line in this scene, so the statute's first branch applies; the crosswalk and intersecting-roadway alternatives are not encoded because no geometry for them is provided and a stop line is present.",
+      "The listed zone inspection, described as the waiting zone in the approach lanes just before the stop line, is used as the place where the required stop occurs; exact distance from the line within that zone cannot be distinguished.",
+      "This scene is assumed to be at the entrance to, or within, a stop-sign-controlled intersection; the stop sign and intersection context cannot be verified from the listed geometry and are left out of the rule.",
+      "The statute says the driver shall stop but specifies no stop duration or numerical speed; a stop is operationalised as DWELL for 1000 ms at max_speed 0.05, the task-defined still threshold.",
+      "No maximum interval between stopping and crossing is specified in the statute, so within_ms is null.",
+      "Approaching vehicles cross packing_entry downwards, which the line description defines as to_right; crossings to_left are not treated as approaches.",
+      "Vehicles that never cross packing_entry to_right pass under the IMPLIES idiom, including vehicles that stop and do not proceed."
+    ],
+    "entity_concept": "vehicle",
+    "entity_name": "vehicle",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_right",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every vehicle that crosses the stop line packing_entry to_right must first stop, represented by dwelling still in inspection, before that crossing.",
+    "provenance": [
+      {
+        "param": "entity",
+        "quote": "any vehicle",
+        "reason": "The statute applies to the driver of any vehicle; the tracked entity is the vehicle.",
+        "source": "QUOTED",
+        "value": "vehicle"
+      },
+      {
+        "param": "stop_requirement",
+        "quote": "shall stop at a limit line",
+        "reason": "Exact statutory wording requiring a stop at a limit line.",
+        "source": "QUOTED",
+        "value": "stop before crossing limit line"
+      },
+      {
+        "param": "anchor",
+        "quote": "",
+        "reason": "The limit line is on the ground and bottom_center is the ground-contact point; the statute does not name a tracked point.",
+        "source": "ASSUMED",
+        "value": "bottom_center"
+      },
+      {
+        "param": "zone",
+        "quote": "",
+        "reason": "inspection is described as the waiting zone in the approach lanes just before the stop line, so it is used as the stopping area before the limit line.",
+        "source": "ASSUMED",
+        "value": "inspection"
+      },
+      {
+        "param": "line",
+        "quote": "",
+        "reason": "packing_entry is described as the stop line across the approach lanes and is treated as the marked limit line; the statute does not use this identifier.",
+        "source": "ASSUMED",
+        "value": "packing_entry"
+      },
+      {
+        "param": "direction",
+        "quote": "",
+        "reason": "The line description states approaching cars travel top to bottom and downward crossing is to_right.",
+        "source": "ASSUMED",
+        "value": "to_right"
+      },
+      {
+        "param": "min_ms",
+        "quote": "",
+        "reason": "The statute requires a stop but gives no duration; 1000 ms is assumed as a definite stop.",
+        "source": "ASSUMED",
+        "value": "1000 ms dwell duration"
+      },
+      {
+        "param": "max_speed",
+        "quote": "",
+        "reason": "The statute requires a stop but gives no numerical speed; 0.05 is the task-defined threshold for stopped/still.",
+        "source": "ASSUMED",
+        "value": "0.05 max_speed for DWELL"
+      },
+      {
+        "param": "within_ms",
+        "quote": "",
+        "reason": "The statute gives no maximum time between stopping and proceeding, so no within limit is imposed.",
+        "source": "ASSUMED",
+        "value": "null"
+      }
+    ],
+    "root": 0,
+    "rule_id": "stop_at_limit_line_before_crossing",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-wonder-1.0",
+  "request_ids": [
+    "chatcmpl-01a1a455-26ed-7502-be34-4ea894778a09",
+    "chatcmpl-01a1a456-a51e-7038-ae65-87dd7a1a8a72"
+  ],
+  "schema": "rule-schema/6-law",
+  "attempts": 2,
+  "usage": [
+    {
+      "completion_tokens": 7921,
+      "prompt_tokens": 630,
+      "total_tokens": 8551,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 6714,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    },
+    {
+      "completion_tokens": 9738,
+      "prompt_tokens": 1856,
+      "total_tokens": 11594,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 8821,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "The driver of any vehicle approaching a stop sign at the entrance to, or within, an intersection shall stop at a limit line, if marked, otherwise before entering the crosswalk on the near side of the intersection.\n\nIf there is no limit line or crosswalk, the driver shall stop at the entrance to the intersecting roadway.",
+  "latency_s": 173.22
+}

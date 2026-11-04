@@ -1,0 +1,1924 @@
+{
+  "schema": "eventproof-law-study/1",
+  "preregistration": "benchmark/law/PREREGISTRATION.md",
+  "summary": [
+    {
+      "statute": "md-tr-21-707a",
+      "model": "muse-spark-1.3",
+      "compiled": 2,
+      "of": 2,
+      "cars": 30,
+      "right": 0,
+      "wrong": 0,
+      "hang_on_assumed": 0,
+      "quoted": 5,
+      "assumed": 10
+    },
+    {
+      "statute": "md-tr-21-707a",
+      "model": "muse-wonder-1.0",
+      "compiled": 1,
+      "of": 2,
+      "cars": 22,
+      "right": 0,
+      "wrong": 0,
+      "hang_on_assumed": 0,
+      "quoted": 4,
+      "assumed": 5
+    },
+    {
+      "statute": "ca-veh-22450a",
+      "model": "muse-spark-1.3",
+      "compiled": 2,
+      "of": 2,
+      "cars": 30,
+      "right": 0,
+      "wrong": 0,
+      "hang_on_assumed": 0,
+      "quoted": 8,
+      "assumed": 6
+    },
+    {
+      "statute": "ca-veh-22450a",
+      "model": "muse-wonder-1.0",
+      "compiled": 1,
+      "of": 2,
+      "cars": 22,
+      "right": 0,
+      "wrong": 0,
+      "hang_on_assumed": 0,
+      "quoted": 2,
+      "assumed": 7
+    }
+  ],
+  "rows": [
+    {
+      "statute": "md-tr-21-707a",
+      "model": "muse-spark-1.3",
+      "compiled": true,
+      "cached": false,
+      "request_ids": [
+        "chatcmpl-01a1a44b-91a5-72e5-87b7-f9d7ceed8180"
+      ],
+      "layout": "{\"lines\": [{\"description\": \"stop line at the near edge of th",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "inspection"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_left",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_left",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.1111,
+              0.5513
+            ],
+            "b": [
+              0.5185,
+              0.2692
+            ],
+            "id": "packing_entry"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the packing_entry stop line must first remain stopped in the inspection zone for at least 1000 ms.",
+        "params": {
+          "anchor": "bottom_center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "vehicle-stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.1111,
+                0.5513
+              ],
+              [
+                0.5185,
+                0.2692
+              ],
+              [
+                1.0,
+                0.6026
+              ],
+              [
+                1.0,
+                1.0
+              ],
+              [
+                0.7593,
+                1.0
+              ]
+            ]
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "param": "entity",
+          "quote": "driver of a vehicle",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "vehicle"
+        },
+        {
+          "param": "DWELL.zone",
+          "quote": "at the near side of the intersection at a clearly marked stop line",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "inspection"
+        },
+        {
+          "param": "DWELL.max_speed",
+          "quote": "shall stop",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "0.05"
+        },
+        {
+          "param": "CROSSES.line",
+          "quote": "at a clearly marked stop line",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "packing_entry"
+        },
+        {
+          "param": "DWELL.min_ms",
+          "quote": "",
+          "reason": "Statute states 'shall stop' with no duration; 1000 ms chosen as minimum continuous still time to count as a stop.",
+          "source": "ASSUMED",
+          "value": "1000"
+        },
+        {
+          "param": "CROSSES.direction",
+          "quote": "",
+          "reason": "Line metadata says cars travel from bottom-right to top-left and moving leftwards/upwards across it = to_left; statute gives no direction.",
+          "source": "ASSUMED",
+          "value": "to_left"
+        },
+        {
+          "param": "anchor",
+          "quote": "",
+          "reason": "Zones and lines drawn for ground contact in top-down view; bottom_center is where vehicle touches ground; statute gives no measurement point.",
+          "source": "ASSUMED",
+          "value": "bottom_center"
+        }
+      ],
+      "assumptions": [
+        "Stop is interpreted as remaining still (speed <=0.05) continuously for at least 1000 ms; the statute states 'shall stop' with no minimum duration.",
+        "Zone 'inspection' is taken to be the place described as near-side stop-line approach lanes.",
+        "Line 'packing_entry' is taken to be the clearly marked stop line.",
+        "Crossing direction 'to_left' is assumed from line metadata that cars travel from bottom-right to top-left; the statute states no direction.",
+        "Anchor 'bottom_center' is chosen as the vehicle ground-contact point; the statute states no measurement point.",
+        "'Unless otherwise directed by a police officer or traffic control signal' is behaviour the camera cannot see and is excluded from the check.",
+        "Objects that never cross the stop line vacuously pass; only vehicles that cross are required to have stopped beforehand.",
+        "No maximum time gap is enforced between the stop and the crossing."
+      ],
+      "cars": [
+        {
+          "clip": "novisad_approach_a.mp4",
+          "object_id": 6,
+          "description": "red car entering at the right edge ~2.0 s, rolls through and crosses ~4.2 s without stopping",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_a.mp4",
+          "object_id": 7,
+          "description": "silver sedan entering ~5.5 s, stands still ~7.5-11.5 s, crosses ~13.7 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_a.mp4",
+          "object_id": 8,
+          "description": "white van entering ~13.8 s, rolls through at ~50 px/s (never stops, checked at 5 fps) and crosses ~17.0 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_a.mp4",
+          "object_id": 0,
+          "description": "white car waiting in the left-hand lane the whole clip (upper of the two, lower-left of the frame)",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_a.mp4",
+          "object_id": 1,
+          "description": "white car waiting in the left-hand lane the whole clip (lower, at the bottom-left edge)",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_b.mp4",
+          "object_id": 2,
+          "description": "white SUV already standing in the waiting zone at 0 s, stands still until ~5.5 s, crosses ~6.8 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_b.mp4",
+          "object_id": 0,
+          "description": "white car waiting in the left-hand lane the whole clip (upper of the two, lower-left of the frame)",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_b.mp4",
+          "object_id": 1,
+          "description": "white car waiting in the left-hand lane the whole clip (lower, at the bottom-left edge)",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        }
+      ]
+    },
+    {
+      "statute": "md-tr-21-707a",
+      "model": "muse-spark-1.3",
+      "compiled": true,
+      "cached": false,
+      "request_ids": [
+        "chatcmpl-01a1a44c-8210-7541-ae67-090ed3b3ff02"
+      ],
+      "layout": "{\"lines\": [{\"description\": \"stop line across the approach la",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "inspection"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.0,
+              0.5207
+            ],
+            "b": [
+              1.0,
+              0.5207
+            ],
+            "id": "packing_entry"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line must have first stopped stationary in the inspection zone before crossing.",
+        "params": {
+          "anchor": "bottom_center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-stop-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.09,
+                0.5207
+              ],
+              [
+                1.0,
+                0.5207
+              ],
+              [
+                0.72,
+                0.1
+              ],
+              [
+                0.12,
+                0.1
+              ]
+            ]
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "param": "entity",
+          "quote": "driver of a vehicle",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "vehicle"
+        },
+        {
+          "param": "anchor",
+          "quote": "",
+          "reason": "Vehicles touch the road at wheels; inspection zone and stop line are drawn at road surface so ground-contact point is tested.",
+          "source": "ASSUMED",
+          "value": "bottom_center"
+        },
+        {
+          "param": "DWELL.zone",
+          "quote": "",
+          "reason": "inspection is defined as the approach lanes just before the stop line, corresponding to the near side where the stop must occur.",
+          "source": "ASSUMED",
+          "value": "inspection"
+        },
+        {
+          "param": "DWELL.min_ms",
+          "quote": "",
+          "reason": "Statute states shall stop with no duration; 1000 ms continuous stationary period chosen as minimum observable stop.",
+          "source": "ASSUMED",
+          "value": "1000"
+        },
+        {
+          "param": "DWELL.max_speed",
+          "quote": "",
+          "reason": "Statute says shall stop; 0.05 means only while stopped/still per DSL, enforcing stationary stop.",
+          "source": "ASSUMED",
+          "value": "0.05"
+        },
+        {
+          "param": "CROSSES.line",
+          "quote": "",
+          "reason": "packing_entry is defined as the stop line across approach lanes, corresponding to the clearly marked stop line.",
+          "source": "ASSUMED",
+          "value": "packing_entry"
+        },
+        {
+          "param": "CROSSES.direction",
+          "quote": "",
+          "reason": "Cars travel top to bottom; moving downwards (+y) is defined as to_right, the approaching/crossing direction.",
+          "source": "ASSUMED",
+          "value": "to_right"
+        },
+        {
+          "param": "BEFORE.within_ms",
+          "quote": "",
+          "reason": "Statute states no maximum interval between stop and crossing, so no time limit is imposed.",
+          "source": "ASSUMED",
+          "value": "null"
+        }
+      ],
+      "assumptions": [
+        "inspection zone (approach lanes just before the stop line) is taken as the near side of the intersection where the stop must occur.",
+        "packing_entry line (stop line across the approach lanes) is taken as the clearly marked stop line.",
+        "Downward travel (+y) across the stop line is encoded as direction to_right per line definition and used as the approaching crossing direction.",
+        "A stop is interpreted as remaining continuously stationary (max_speed 0.05) in the inspection zone for at least 1000 ms; the statute states no duration.",
+        "Anchor bottom_center is used because vehicles contact the road at wheels and zones/lines are drawn at road surface.",
+        "No time limit is imposed between the stop and the crossing; any earlier dwell satisfies the rule.",
+        "Vehicles that never cross the stop line pass vacuously via IMPLIES.",
+        "The Unless otherwise directed by a police officer or traffic control signal exception is not visible to the camera and is excluded from the check."
+      ],
+      "cars": [
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 3,
+          "description": "dark Lexus, lane 1, first in the red-light queue; crosses ~4.9 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 0,
+          "description": "white sedan, lane 2, first in queue; crosses ~5.8 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 1,
+          "description": "light blue car, lane 1, second in queue; crosses ~7.4 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 2,
+          "description": "grey-blue car, lane 2, second in queue; crosses ~8.6 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 5,
+          "description": "dark car, lane 2, third in queue; crosses ~10.9 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 4,
+          "description": "white SUV, lane 1, behind the motorcycle in the queue; crosses ~12.1 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 1,
+          "description": "grey hatchback, lane 1; crosses ~4.75 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 2,
+          "description": "white car, lane 2; crosses ~7.4 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 3,
+          "description": "dark green-grey SUV, lane 2; crosses ~8.75 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 4,
+          "description": "silver car, lane 1; crosses ~9.25 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 5,
+          "description": "dark car, lane 1; crosses ~10.6 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 6,
+          "description": "silver hatchback, lane 2; crosses ~11.0 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 7,
+          "description": "white SUV, lane 1; crosses ~12.25 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 8,
+          "description": "grey car, lane 2; crosses ~13.25 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 10,
+          "description": "green SUV, lane 2; crosses ~15.0 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 9,
+          "description": "silver car, lane 1; crosses ~15.7 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 7,
+          "description": "white car, lane 1, already at the line in the first frame; crosses ~0.3 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 5,
+          "description": "silver hatchback, lane 1; crosses ~2.1 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 3,
+          "description": "dark sedan, lane 2; crosses ~2.9 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 6,
+          "description": "silver hatchback, lane 1; crosses ~4.2 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 0,
+          "description": "silver car, lane 1, right behind; crosses ~4.8 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": null,
+          "description": "grey-green SUV, lane 2; crosses ~5.8 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        }
+      ]
+    },
+    {
+      "statute": "md-tr-21-707a",
+      "model": "muse-wonder-1.0",
+      "compiled": false,
+      "error": "RuleCompileError: invalid rule after 2 attempts: unused nodes [0, 1]"
+    },
+    {
+      "statute": "md-tr-21-707a",
+      "model": "muse-wonder-1.0",
+      "compiled": true,
+      "cached": false,
+      "request_ids": [
+        "chatcmpl-01a1a44f-5ae6-70d0-a42c-8b48febb0d2b",
+        "chatcmpl-01a1a44f-fdf8-7029-bc05-503c4567a479"
+      ],
+      "layout": "{\"lines\": [{\"description\": \"stop line across the approach la",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "inspection"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.0,
+              0.5207
+            ],
+            "b": [
+              1.0,
+              0.5207
+            ],
+            "id": "packing_entry"
+          }
+        ],
+        "normalized_explanation": "Every approaching vehicle that crosses the stop line must first dwell, stopped, in the inspection zone before that crossing.",
+        "params": {
+          "anchor": "bottom_center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop_at_stop_line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.09,
+                0.5207
+              ],
+              [
+                1.0,
+                0.5207
+              ],
+              [
+                0.72,
+                0.1
+              ],
+              [
+                0.12,
+                0.1
+              ]
+            ]
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "param": "entity",
+          "quote": "vehicle",
+          "reason": "Tracked object is the vehicle itself.",
+          "source": "QUOTED",
+          "value": "vehicle"
+        },
+        {
+          "param": "anchor",
+          "quote": "at a clearly marked stop line",
+          "reason": "bottom_center (ground contact/wheels) is the point that aligns with the ground-drawn stop line and waiting zone described in the zone/line definitions, rather than the center of the bounding box.",
+          "source": "QUOTED",
+          "value": "bottom_center"
+        },
+        {
+          "param": "zone for DWELL",
+          "quote": "stop at",
+          "reason": "'inspection' is defined as the waiting zone in the approach lanes just before the stop line, matching the statute's stopping location.",
+          "source": "QUOTED",
+          "value": "inspection"
+        },
+        {
+          "param": "line for CROSSES",
+          "quote": "at a clearly marked stop line",
+          "reason": "'packing_entry' is defined as the stop line across the approach lanes.",
+          "source": "QUOTED",
+          "value": "packing_entry"
+        },
+        {
+          "param": "direction for CROSSES",
+          "quote": "approaching",
+          "reason": "Per line definition, cars approaching travel top to bottom of frame, and moving downwards across the line = to_right.",
+          "source": "ASSUMED",
+          "value": "to_right"
+        },
+        {
+          "param": "event semantics: DWELL as stop",
+          "quote": "shall stop",
+          "reason": "DWELL with max_speed threshold operationalises 'stop' in the zone before the line.",
+          "source": "ASSUMED",
+          "value": "DWELL(inspection, 1000, 0.05)"
+        },
+        {
+          "param": "min_ms for DWELL (stop duration)",
+          "quote": "",
+          "reason": "Statute requires a stop but specifies no minimum duration; 1000 ms is a conventional minimum dwell to distinguish a genuine stop from momentary slowing, assumed for measurability.",
+          "source": "ASSUMED",
+          "value": "1000"
+        },
+        {
+          "param": "max_speed for DWELL (still threshold)",
+          "quote": "",
+          "reason": "Statute requires the vehicle to stop but gives no numeric speed; 0.05 is the DSL's stated threshold for stopped/still.",
+          "source": "ASSUMED",
+          "value": "0.05"
+        },
+        {
+          "param": "within_ms for BEFORE",
+          "quote": "shall stop",
+          "reason": "Statute requires stopping before proceeding past the line but specifies no maximum gap between stop and crossing; null = unbounded.",
+          "source": "ASSUMED",
+          "value": "null"
+        }
+      ],
+      "assumptions": [
+        "The exception 'Unless otherwise directed by a police officer or traffic control signal' is omitted because that direction cannot be seen or expressed in the DSL; the rule is applied as if no such direction was given.",
+        "The presence of a stop sign and an intersection is not checked; the provided 'inspection' zone and 'packing_entry' line are assumed to be positioned at that stop sign and intersection.",
+        "The tracked object is the vehicle; the driver's stopping behaviour is represented by the vehicle's motion.",
+        "The anchor is 'bottom_center' because the waiting zone and stop line are on the road surface and this is the vehicle's ground-contact point, whereas 'center' would cross road markings earlier in projection.",
+        "A stop is interpreted as a DWELL in 'inspection', the waiting zone just before the stop line, while still at a maximum speed of 0.05 for at least 1000 ms.",
+        "Approaching traffic is assumed to cross 'packing_entry' in the 'to_right' direction, corresponding to travelling from top to bottom of the frame as described for that line; crossings in the opposite direction do not trigger this rule.",
+        "No time limit is placed on the interval between stopping and crossing, so BEFORE uses within_ms null (unbounded), as the statute states no such limit.",
+        "Vehicles that never cross 'packing_entry' pass the rule, following the IMPLIES(OCCURS(B), BEFORE(A, B)) idiom; stopping outside 'inspection' does not count as stopping at the stop line."
+      ],
+      "cars": [
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 3,
+          "description": "dark Lexus, lane 1, first in the red-light queue; crosses ~4.9 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 0,
+          "description": "white sedan, lane 2, first in queue; crosses ~5.8 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 1,
+          "description": "light blue car, lane 1, second in queue; crosses ~7.4 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 2,
+          "description": "grey-blue car, lane 2, second in queue; crosses ~8.6 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 5,
+          "description": "dark car, lane 2, third in queue; crosses ~10.9 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 4,
+          "description": "white SUV, lane 1, behind the motorcycle in the queue; crosses ~12.1 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 1,
+          "description": "grey hatchback, lane 1; crosses ~4.75 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 2,
+          "description": "white car, lane 2; crosses ~7.4 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 3,
+          "description": "dark green-grey SUV, lane 2; crosses ~8.75 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 4,
+          "description": "silver car, lane 1; crosses ~9.25 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 5,
+          "description": "dark car, lane 1; crosses ~10.6 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 6,
+          "description": "silver hatchback, lane 2; crosses ~11.0 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 7,
+          "description": "white SUV, lane 1; crosses ~12.25 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 8,
+          "description": "grey car, lane 2; crosses ~13.25 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 10,
+          "description": "green SUV, lane 2; crosses ~15.0 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 9,
+          "description": "silver car, lane 1; crosses ~15.7 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 7,
+          "description": "white car, lane 1, already at the line in the first frame; crosses ~0.3 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 5,
+          "description": "silver hatchback, lane 1; crosses ~2.1 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 3,
+          "description": "dark sedan, lane 2; crosses ~2.9 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 6,
+          "description": "silver hatchback, lane 1; crosses ~4.2 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 0,
+          "description": "silver car, lane 1, right behind; crosses ~4.8 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": null,
+          "description": "grey-green SUV, lane 2; crosses ~5.8 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        }
+      ]
+    },
+    {
+      "statute": "ca-veh-22450a",
+      "model": "muse-spark-1.3",
+      "compiled": true,
+      "cached": false,
+      "request_ids": [
+        "chatcmpl-01a1a451-0f84-73e3-978d-b164e65c3da0"
+      ],
+      "layout": "{\"lines\": [{\"description\": \"stop line at the near edge of th",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "inspection"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_left",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_left",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.1111,
+              0.5513
+            ],
+            "b": [
+              0.5185,
+              0.2692
+            ],
+            "id": "packing_entry"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line must have first stopped in the waiting zone before crossing.",
+        "params": {
+          "anchor": "bottom_center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-limit-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.1111,
+                0.5513
+              ],
+              [
+                0.5185,
+                0.2692
+              ],
+              [
+                1.0,
+                0.6026
+              ],
+              [
+                1.0,
+                1.0
+              ],
+              [
+                0.7593,
+                1.0
+              ]
+            ]
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "param": "entity",
+          "quote": "any vehicle",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "vehicle"
+        },
+        {
+          "param": "DWELL.zone",
+          "quote": "shall stop at a limit line, if marked",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "inspection"
+        },
+        {
+          "param": "DWELL.min_ms",
+          "quote": "",
+          "reason": "statute states no stop duration; 1000 ms continuous dwell chosen to distinguish a stop from a slow roll",
+          "source": "ASSUMED",
+          "value": "1000"
+        },
+        {
+          "param": "DWELL.max_speed",
+          "quote": "shall stop",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "0.05"
+        },
+        {
+          "param": "CROSSES.line",
+          "quote": "shall stop at a limit line, if marked",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "packing_entry"
+        },
+        {
+          "param": "CROSSES.direction",
+          "quote": "",
+          "reason": "statute states no direction; camera geometry says cars travel bottom-right to top-left which maps to to_left",
+          "source": "ASSUMED",
+          "value": "to_left"
+        },
+        {
+          "param": "anchor",
+          "quote": "",
+          "reason": "zones and lines are on the road surface; bottom_center measures ground contact where vehicle touches road",
+          "source": "ASSUMED",
+          "value": "bottom_center"
+        }
+      ],
+      "assumptions": [
+        "Every tracked vehicle is treated as approaching a stop sign; stop-sign presence is not checked.",
+        "The limit line is assumed marked and corresponds to line packing_entry with the inspection zone as the waiting area just before it.",
+        "The alternative stopping positions when there is no marked limit line (before the crosswalk, entrance to intersecting roadway) are out of scope and not checked.",
+        "Forward crossing over the stop line is taken as to_left from the camera geometry where cars travel bottom-right to top-left.",
+        "A stop is taken as continuously stopped for at least 1000 ms; the statute states no duration.",
+        "Position is tested at bottom_center because zones and lines are drawn on the road surface for vehicle ground contact."
+      ],
+      "cars": [
+        {
+          "clip": "novisad_approach_a.mp4",
+          "object_id": 6,
+          "description": "red car entering at the right edge ~2.0 s, rolls through and crosses ~4.2 s without stopping",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_a.mp4",
+          "object_id": 7,
+          "description": "silver sedan entering ~5.5 s, stands still ~7.5-11.5 s, crosses ~13.7 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_a.mp4",
+          "object_id": 8,
+          "description": "white van entering ~13.8 s, rolls through at ~50 px/s (never stops, checked at 5 fps) and crosses ~17.0 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_a.mp4",
+          "object_id": 0,
+          "description": "white car waiting in the left-hand lane the whole clip (upper of the two, lower-left of the frame)",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_a.mp4",
+          "object_id": 1,
+          "description": "white car waiting in the left-hand lane the whole clip (lower, at the bottom-left edge)",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_b.mp4",
+          "object_id": 2,
+          "description": "white SUV already standing in the waiting zone at 0 s, stands still until ~5.5 s, crosses ~6.8 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_b.mp4",
+          "object_id": 0,
+          "description": "white car waiting in the left-hand lane the whole clip (upper of the two, lower-left of the frame)",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "novisad_approach_b.mp4",
+          "object_id": 1,
+          "description": "white car waiting in the left-hand lane the whole clip (lower, at the bottom-left edge)",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        }
+      ]
+    },
+    {
+      "statute": "ca-veh-22450a",
+      "model": "muse-spark-1.3",
+      "compiled": true,
+      "cached": false,
+      "request_ids": [
+        "chatcmpl-01a1a452-67a1-75af-a607-6f488486eb32"
+      ],
+      "layout": "{\"lines\": [{\"description\": \"stop line across the approach la",
+      "rule": {
+        "check": {
+          "conclusion": {
+            "first": {
+              "max_speed": 0.05,
+              "min_ms": 1000.0,
+              "op": "DWELL",
+              "zone": "inspection"
+            },
+            "op": "BEFORE",
+            "then": {
+              "direction": "to_right",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "within_ms": null
+          },
+          "op": "IMPLIES",
+          "premise": {
+            "event": {
+              "direction": "to_right",
+              "line": "packing_entry",
+              "op": "CROSSES"
+            },
+            "op": "OCCURS"
+          }
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.0,
+              0.5207
+            ],
+            "b": [
+              1.0,
+              0.5207
+            ],
+            "id": "packing_entry"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line must first come to a stop in the inspection waiting zone.",
+        "params": {
+          "anchor": "bottom_center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop-at-limit-line",
+        "version": 1,
+        "zones": [
+          {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.09,
+                0.5207
+              ],
+              [
+                1.0,
+                0.5207
+              ],
+              [
+                0.72,
+                0.1
+              ],
+              [
+                0.12,
+                0.1
+              ]
+            ]
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "param": "entity",
+          "quote": "any vehicle",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "vehicle"
+        },
+        {
+          "param": "anchor",
+          "quote": "",
+          "reason": "vehicles touch road at wheels; inspection zone and stop line are ground regions drawn for ground contact",
+          "source": "ASSUMED",
+          "value": "bottom_center"
+        },
+        {
+          "param": "DWELL.zone",
+          "quote": "shall stop at a limit line, if marked,",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "inspection"
+        },
+        {
+          "param": "DWELL.min_ms",
+          "quote": "",
+          "reason": "statute states no duration; 1000 ms chosen as minimum observable stopped interval to establish a stop",
+          "source": "ASSUMED",
+          "value": "1000"
+        },
+        {
+          "param": "DWELL.max_speed",
+          "quote": "shall stop",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "0.05"
+        },
+        {
+          "param": "CROSSES.line",
+          "quote": "shall stop at a limit line, if marked,",
+          "reason": "",
+          "source": "QUOTED",
+          "value": "packing_entry"
+        },
+        {
+          "param": "CROSSES.direction",
+          "quote": "",
+          "reason": "approaching traffic moves top-to-bottom, which line definition maps to to_right",
+          "source": "ASSUMED",
+          "value": "to_right"
+        }
+      ],
+      "assumptions": [
+        "Anchor bottom_center used because inspection zone and stop line are ground regions tested where wheels touch the road.",
+        "All vehicles crossing packing_entry are treated as subject to the stop sign; stop-sign presence itself is not detected and location is assumed stop-sign-controlled.",
+        "Limit line is assumed marked and represented by packing_entry stop line and inspection waiting zone just before it.",
+        "Crosswalk alternative and unmarked-entrance alternative from the statute are left out because the camera geometry only provides the limit-line position.",
+        "Approaching direction is taken as top-to-bottom motion which the line definition maps to to_right.",
+        "Statute states no stop duration; 1000 ms continuous stopped dwell is assumed as minimum observable stop.",
+        "Stop at the limit line is interpreted as a stopped dwell inside the inspection zone before crossing the line."
+      ],
+      "cars": [
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 3,
+          "description": "dark Lexus, lane 1, first in the red-light queue; crosses ~4.9 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 0,
+          "description": "white sedan, lane 2, first in queue; crosses ~5.8 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 1,
+          "description": "light blue car, lane 1, second in queue; crosses ~7.4 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 2,
+          "description": "grey-blue car, lane 2, second in queue; crosses ~8.6 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 5,
+          "description": "dark car, lane 2, third in queue; crosses ~10.9 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 4,
+          "description": "white SUV, lane 1, behind the motorcycle in the queue; crosses ~12.1 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 1,
+          "description": "grey hatchback, lane 1; crosses ~4.75 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 2,
+          "description": "white car, lane 2; crosses ~7.4 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 3,
+          "description": "dark green-grey SUV, lane 2; crosses ~8.75 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 4,
+          "description": "silver car, lane 1; crosses ~9.25 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 5,
+          "description": "dark car, lane 1; crosses ~10.6 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 6,
+          "description": "silver hatchback, lane 2; crosses ~11.0 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 7,
+          "description": "white SUV, lane 1; crosses ~12.25 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 8,
+          "description": "grey car, lane 2; crosses ~13.25 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 10,
+          "description": "green SUV, lane 2; crosses ~15.0 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 9,
+          "description": "silver car, lane 1; crosses ~15.7 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 7,
+          "description": "white car, lane 1, already at the line in the first frame; crosses ~0.3 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 5,
+          "description": "silver hatchback, lane 1; crosses ~2.1 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 3,
+          "description": "dark sedan, lane 2; crosses ~2.9 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 6,
+          "description": "silver hatchback, lane 1; crosses ~4.2 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 0,
+          "description": "silver car, lane 1, right behind; crosses ~4.8 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": null,
+          "description": "grey-green SUV, lane 2; crosses ~5.8 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        }
+      ]
+    },
+    {
+      "statute": "ca-veh-22450a",
+      "model": "muse-wonder-1.0",
+      "compiled": false,
+      "error": "RuleCompileError: invalid rule after 2 attempts: BEFORE node 2 must not have children"
+    },
+    {
+      "statute": "ca-veh-22450a",
+      "model": "muse-wonder-1.0",
+      "compiled": true,
+      "cached": false,
+      "request_ids": [
+        "chatcmpl-01a1a455-26ed-7502-be34-4ea894778a09",
+        "chatcmpl-01a1a456-a51e-7038-ae65-87dd7a1a8a72"
+      ],
+      "layout": "{\"lines\": [{\"description\": \"stop line across the approach la",
+      "rule": {
+        "check": {
+          "event": {
+            "direction": "to_right",
+            "line": "packing_entry",
+            "op": "CROSSES"
+          },
+          "op": "OCCURS"
+        },
+        "entity": {
+          "concept": "vehicle",
+          "name": "vehicle"
+        },
+        "lines": [
+          {
+            "a": [
+              0.0,
+              0.5207
+            ],
+            "b": [
+              1.0,
+              0.5207
+            ],
+            "id": "packing_entry"
+          }
+        ],
+        "normalized_explanation": "Every vehicle that crosses the stop line packing_entry to_right must first stop, represented by dwelling still in inspection, before that crossing.",
+        "params": {
+          "anchor": "bottom_center",
+          "max_gap_frames": 3,
+          "min_confidence": 0.0
+        },
+        "rule_id": "stop_at_limit_line_before_crossing",
+        "version": 1,
+        "zones": [
+          {
+            "id": "inspection",
+            "polygon": [
+              [
+                0.09,
+                0.5207
+              ],
+              [
+                1.0,
+                0.5207
+              ],
+              [
+                0.72,
+                0.1
+              ],
+              [
+                0.12,
+                0.1
+              ]
+            ]
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "param": "entity",
+          "quote": "any vehicle",
+          "reason": "The statute applies to the driver of any vehicle; the tracked entity is the vehicle.",
+          "source": "QUOTED",
+          "value": "vehicle"
+        },
+        {
+          "param": "stop_requirement",
+          "quote": "shall stop at a limit line",
+          "reason": "Exact statutory wording requiring a stop at a limit line.",
+          "source": "QUOTED",
+          "value": "stop before crossing limit line"
+        },
+        {
+          "param": "anchor",
+          "quote": "",
+          "reason": "The limit line is on the ground and bottom_center is the ground-contact point; the statute does not name a tracked point.",
+          "source": "ASSUMED",
+          "value": "bottom_center"
+        },
+        {
+          "param": "zone",
+          "quote": "",
+          "reason": "inspection is described as the waiting zone in the approach lanes just before the stop line, so it is used as the stopping area before the limit line.",
+          "source": "ASSUMED",
+          "value": "inspection"
+        },
+        {
+          "param": "line",
+          "quote": "",
+          "reason": "packing_entry is described as the stop line across the approach lanes and is treated as the marked limit line; the statute does not use this identifier.",
+          "source": "ASSUMED",
+          "value": "packing_entry"
+        },
+        {
+          "param": "direction",
+          "quote": "",
+          "reason": "The line description states approaching cars travel top to bottom and downward crossing is to_right.",
+          "source": "ASSUMED",
+          "value": "to_right"
+        },
+        {
+          "param": "min_ms",
+          "quote": "",
+          "reason": "The statute requires a stop but gives no duration; 1000 ms is assumed as a definite stop.",
+          "source": "ASSUMED",
+          "value": "1000 ms dwell duration"
+        },
+        {
+          "param": "max_speed",
+          "quote": "",
+          "reason": "The statute requires a stop but gives no numerical speed; 0.05 is the task-defined threshold for stopped/still.",
+          "source": "ASSUMED",
+          "value": "0.05 max_speed for DWELL"
+        },
+        {
+          "param": "within_ms",
+          "quote": "",
+          "reason": "The statute gives no maximum time between stopping and proceeding, so no within limit is imposed.",
+          "source": "ASSUMED",
+          "value": "null"
+        }
+      ],
+      "assumptions": [
+        "Anchor bottom_center is used because the limit/stop line is a ground marking and bottom_center represents where the vehicle touches the ground.",
+        "The listed line packing_entry is assumed to be the marked limit line in this scene, so the statute's first branch applies; the crosswalk and intersecting-roadway alternatives are not encoded because no geometry for them is provided and a stop line is present.",
+        "The listed zone inspection, described as the waiting zone in the approach lanes just before the stop line, is used as the place where the required stop occurs; exact distance from the line within that zone cannot be distinguished.",
+        "This scene is assumed to be at the entrance to, or within, a stop-sign-controlled intersection; the stop sign and intersection context cannot be verified from the listed geometry and are left out of the rule.",
+        "The statute says the driver shall stop but specifies no stop duration or numerical speed; a stop is operationalised as DWELL for 1000 ms at max_speed 0.05, the task-defined still threshold.",
+        "No maximum interval between stopping and crossing is specified in the statute, so within_ms is null.",
+        "Approaching vehicles cross packing_entry downwards, which the line description defines as to_right; crossings to_left are not treated as approaches.",
+        "Vehicles that never cross packing_entry to_right pass under the IMPLIES idiom, including vehicles that stop and do not proceed."
+      ],
+      "cars": [
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 3,
+          "description": "dark Lexus, lane 1, first in the red-light queue; crosses ~4.9 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 0,
+          "description": "white sedan, lane 2, first in queue; crosses ~5.8 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 1,
+          "description": "light blue car, lane 1, second in queue; crosses ~7.4 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 2,
+          "description": "grey-blue car, lane 2, second in queue; crosses ~8.6 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 5,
+          "description": "dark car, lane 2, third in queue; crosses ~10.9 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w1.mp4",
+          "object_id": 4,
+          "description": "white SUV, lane 1, behind the motorcycle in the queue; crosses ~12.1 s",
+          "truth": "PASS",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 1,
+          "description": "grey hatchback, lane 1; crosses ~4.75 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 2,
+          "description": "white car, lane 2; crosses ~7.4 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 3,
+          "description": "dark green-grey SUV, lane 2; crosses ~8.75 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 4,
+          "description": "silver car, lane 1; crosses ~9.25 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 5,
+          "description": "dark car, lane 1; crosses ~10.6 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 6,
+          "description": "silver hatchback, lane 2; crosses ~11.0 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 7,
+          "description": "white SUV, lane 1; crosses ~12.25 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 8,
+          "description": "grey car, lane 2; crosses ~13.25 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 10,
+          "description": "green SUV, lane 2; crosses ~15.0 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w2.mp4",
+          "object_id": 9,
+          "description": "silver car, lane 1; crosses ~15.7 s",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 7,
+          "description": "white car, lane 1, already at the line in the first frame; crosses ~0.3 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 5,
+          "description": "silver hatchback, lane 1; crosses ~2.1 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 3,
+          "description": "dark sedan, lane 2; crosses ~2.9 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 6,
+          "description": "silver hatchback, lane 1; crosses ~4.2 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": 0,
+          "description": "silver car, lane 1, right behind; crosses ~4.8 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        },
+        {
+          "clip": "wroclaw_w3.mp4",
+          "object_id": null,
+          "description": "grey-green SUV, lane 2; crosses ~5.8 s, never stops",
+          "truth": "VIOLATION",
+          "verdict": null,
+          "right": false,
+          "hangs_on_assumed": []
+        }
+      ]
+    }
+  ],
+  "live_calls": 12,
+  "code_commit": "7703447570d2b601de43c70370408db7e51d16a4"
+}

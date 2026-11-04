@@ -32,6 +32,8 @@ REAL = ROOT / "benchmark" / "real"
 SETS = ("novisad", "traffic_v2", "traffic_v3")
 MODELS = ("muse-spark-1.3", "muse-wonder-1.0")
 # which robustness variant families vary which provenance parameter
+NUMERIC_FAMILIES = ("min_ms", "stillness")  # numbers only; "any motion counts" is a change of meaning
+NUMERIC_PARAMS = ("min_ms", "max_speed", "within_ms")
 FAMILY_PARAM = {"min_ms": "DWELL.min_ms", "stillness": "DWELL.max_speed", "stillness_meaning": "DWELL.max_speed",
                 "anchor": "anchor", "line_shift": "CROSSES.line"}
 
@@ -86,7 +88,10 @@ def study(max_live: int = 0) -> dict:
                 group = [c for c in allc if json.dumps(c["layout"].model_dump(mode="json"), sort_keys=True) == lkey]
                 per_car = []
                 for run_id in sorted({c["run_id"] for c in group}):
-                    t = tracks[run_id]
+                    # the committed SAM 3.1 tracks of these cars, named with the rule's own entity concept (the statute
+                    # says "vehicle"; the tracks were prompted as "car"), so the engine judges them
+                    t = tracks[run_id].model_copy(update={"frames": [
+                        f.model_copy(update={"label": rule.entity.concept}) for f in tracks[run_id].frames]})
                     verdict = {o.object_id: o.verdict for o in evaluate(rule, t).objects}
                     rb = {x.object_id: x for x in robustness(rule, t)}
                     for c in (c for c in group if c["run_id"] == run_id):
@@ -95,9 +100,13 @@ def study(max_live: int = 0) -> dict:
                         flips = rb[oid].flips if oid is not None and oid in rb else []
                         hang = sorted({f["family"] for f in flips if f["verdict"] != "UNKNOWN"
                                        and FAMILY_PARAM.get(f["family"]) in assumed})
+                        # added after the run (disclosed): the statutes contain no digit, so every time or speed
+                        # threshold is a number the law never wrote, whatever the model's provenance label says
+                        unwritten = sorted({f["family"] for f in flips if f["verdict"] != "UNKNOWN"
+                                            and f["family"] in NUMERIC_FAMILIES})
                         per_car.append({"clip": c["clip"], "object_id": oid, "description": c["description"],
                                         "truth": c["truth"], "verdict": v, "right": v == c["truth"],
-                                        "hangs_on_assumed": hang})
+                                        "hangs_on_assumed": hang, "hangs_on_unwritten_number": unwritten})
                 rows.append({"statute": st["id"], "model": model, "compiled": True, "cached": res.cached,
                              "request_ids": res.request_ids, "layout": lkey[:60],
                              "rule": json.loads(rule.canonical_json()), "provenance": prov,
@@ -116,6 +125,10 @@ def summary(rows: list[dict]) -> list[dict]:
                         "cars": len(cs), "right": sum(c["right"] for c in cs),
                         "wrong": sum(c["verdict"] not in (None, "UNKNOWN") and not c["right"] for c in cs),
                         "hang_on_assumed": sum(bool(c["hangs_on_assumed"]) for c in cs),
+                        "hang_on_unwritten_number": sum(bool(c["hangs_on_unwritten_number"]) for c in cs),
+                        "numbers_quoted_from_words_without_digits": sum(
+                            p["source"] == "QUOTED" and any(k in p["param"] for k in NUMERIC_PARAMS)
+                            and not any(ch.isdigit() for ch in p["quote"]) for p in prov),
                         "quoted": sum(p["source"] == "QUOTED" for p in prov),
                         "assumed": sum(p["source"] == "ASSUMED" for p in prov)})
     return out

@@ -1,0 +1,178 @@
+{
+  "raw_output": {
+    "anchor": "bottom_center",
+    "assumptions": [
+      "The exception 'Unless otherwise directed by a police officer or traffic control signal' is omitted because that direction cannot be seen or expressed in the DSL; the rule is applied as if no such direction was given.",
+      "The presence of a stop sign and an intersection is not checked; the provided 'inspection' zone and 'packing_entry' line are assumed to be positioned at that stop sign and intersection.",
+      "The tracked object is the vehicle; the driver's stopping behaviour is represented by the vehicle's motion.",
+      "The anchor is 'bottom_center' because the waiting zone and stop line are on the road surface and this is the vehicle's ground-contact point, whereas 'center' would cross road markings earlier in projection.",
+      "A stop is interpreted as a DWELL in 'inspection', the waiting zone just before the stop line, while still at a maximum speed of 0.05 for at least 1000 ms.",
+      "Approaching traffic is assumed to cross 'packing_entry' in the 'to_right' direction, corresponding to travelling from top to bottom of the frame as described for that line; crossings in the opposite direction do not trigger this rule.",
+      "No time limit is placed on the interval between stopping and crossing, so BEFORE uses within_ms null (unbounded), as the statute states no such limit.",
+      "Vehicles that never cross 'packing_entry' pass the rule, following the IMPLIES(OCCURS(B), BEFORE(A, B)) idiom; stopping outside 'inspection' does not count as stopping at the stop line."
+    ],
+    "entity_concept": "vehicle",
+    "entity_name": "vehicle",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_right",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": 0.05,
+          "min_ms": 1000,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_right",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every approaching vehicle that crosses the stop line must first dwell, stopped, in the inspection zone before that crossing.",
+    "provenance": [
+      {
+        "param": "entity",
+        "quote": "vehicle",
+        "reason": "Tracked object is the vehicle itself.",
+        "source": "QUOTED",
+        "value": "vehicle"
+      },
+      {
+        "param": "anchor",
+        "quote": "at a clearly marked stop line",
+        "reason": "bottom_center (ground contact/wheels) is the point that aligns with the ground-drawn stop line and waiting zone described in the zone/line definitions, rather than the center of the bounding box.",
+        "source": "QUOTED",
+        "value": "bottom_center"
+      },
+      {
+        "param": "zone for DWELL",
+        "quote": "stop at",
+        "reason": "'inspection' is defined as the waiting zone in the approach lanes just before the stop line, matching the statute's stopping location.",
+        "source": "QUOTED",
+        "value": "inspection"
+      },
+      {
+        "param": "line for CROSSES",
+        "quote": "at a clearly marked stop line",
+        "reason": "'packing_entry' is defined as the stop line across the approach lanes.",
+        "source": "QUOTED",
+        "value": "packing_entry"
+      },
+      {
+        "param": "direction for CROSSES",
+        "quote": "approaching",
+        "reason": "Per line definition, cars approaching travel top to bottom of frame, and moving downwards across the line = to_right.",
+        "source": "ASSUMED",
+        "value": "to_right"
+      },
+      {
+        "param": "event semantics: DWELL as stop",
+        "quote": "shall stop",
+        "reason": "DWELL with max_speed threshold operationalises 'stop' in the zone before the line.",
+        "source": "ASSUMED",
+        "value": "DWELL(inspection, 1000, 0.05)"
+      },
+      {
+        "param": "min_ms for DWELL (stop duration)",
+        "quote": "",
+        "reason": "Statute requires a stop but specifies no minimum duration; 1000 ms is a conventional minimum dwell to distinguish a genuine stop from momentary slowing, assumed for measurability.",
+        "source": "ASSUMED",
+        "value": "1000"
+      },
+      {
+        "param": "max_speed for DWELL (still threshold)",
+        "quote": "",
+        "reason": "Statute requires the vehicle to stop but gives no numeric speed; 0.05 is the DSL's stated threshold for stopped/still.",
+        "source": "ASSUMED",
+        "value": "0.05"
+      },
+      {
+        "param": "within_ms for BEFORE",
+        "quote": "shall stop",
+        "reason": "Statute requires stopping before proceeding past the line but specifies no maximum gap between stop and crossing; null = unbounded.",
+        "source": "ASSUMED",
+        "value": "null"
+      }
+    ],
+    "root": 2,
+    "rule_id": "stop_at_stop_line",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-wonder-1.0",
+  "request_ids": [
+    "chatcmpl-01a1a44f-5ae6-70d0-a42c-8b48febb0d2b",
+    "chatcmpl-01a1a44f-fdf8-7029-bc05-503c4567a479"
+  ],
+  "schema": "rule-schema/6-law",
+  "attempts": 2,
+  "usage": [
+    {
+      "completion_tokens": 7700,
+      "prompt_tokens": 605,
+      "total_tokens": 8305,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 6561,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    },
+    {
+      "completion_tokens": 4354,
+      "prompt_tokens": 1761,
+      "total_tokens": 6115,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 3236,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Unless otherwise directed by a police officer or traffic control signal, the driver of a vehicle approaching a stop sign at an intersection shall stop at the near side of the intersection at a clearly marked stop line.",
+  "latency_s": 114.54
+}

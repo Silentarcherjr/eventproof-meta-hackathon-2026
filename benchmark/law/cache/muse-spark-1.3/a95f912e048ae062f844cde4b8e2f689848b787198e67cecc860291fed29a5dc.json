@@ -1,0 +1,151 @@
+{
+  "raw_output": {
+    "anchor": "bottom_center",
+    "assumptions": [
+      "inspection zone (approach lanes just before the stop line) is taken as the near side of the intersection where the stop must occur.",
+      "packing_entry line (stop line across the approach lanes) is taken as the clearly marked stop line.",
+      "Downward travel (+y) across the stop line is encoded as direction to_right per line definition and used as the approaching crossing direction.",
+      "A stop is interpreted as remaining continuously stationary (max_speed 0.05) in the inspection zone for at least 1000 ms; the statute states no duration.",
+      "Anchor bottom_center is used because vehicles contact the road at wheels and zones/lines are drawn at road surface.",
+      "No time limit is imposed between the stop and the crossing; any earlier dwell satisfies the rule.",
+      "Vehicles that never cross the stop line pass vacuously via IMPLIES.",
+      "The Unless otherwise directed by a police officer or traffic control signal exception is not visible to the camera and is excluded from the check."
+    ],
+    "entity_concept": "vehicle",
+    "entity_name": "vehicle",
+    "nodes": [
+      {
+        "children": [],
+        "event": {
+          "direction": "to_right",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "first": null,
+        "op": "OCCURS",
+        "then": null,
+        "within_ms": null
+      },
+      {
+        "children": [],
+        "event": null,
+        "first": {
+          "max_speed": 0.05,
+          "min_ms": 1000,
+          "op": "DWELL",
+          "zone": "inspection"
+        },
+        "op": "BEFORE",
+        "then": {
+          "direction": "to_right",
+          "line": "packing_entry",
+          "op": "CROSSES"
+        },
+        "within_ms": null
+      },
+      {
+        "children": [
+          0,
+          1
+        ],
+        "event": null,
+        "first": null,
+        "op": "IMPLIES",
+        "then": null,
+        "within_ms": null
+      }
+    ],
+    "normalized_explanation": "Every vehicle that crosses the stop line must have first stopped stationary in the inspection zone before crossing.",
+    "provenance": [
+      {
+        "param": "entity",
+        "quote": "driver of a vehicle",
+        "reason": "",
+        "source": "QUOTED",
+        "value": "vehicle"
+      },
+      {
+        "param": "anchor",
+        "quote": "",
+        "reason": "Vehicles touch the road at wheels; inspection zone and stop line are drawn at road surface so ground-contact point is tested.",
+        "source": "ASSUMED",
+        "value": "bottom_center"
+      },
+      {
+        "param": "DWELL.zone",
+        "quote": "",
+        "reason": "inspection is defined as the approach lanes just before the stop line, corresponding to the near side where the stop must occur.",
+        "source": "ASSUMED",
+        "value": "inspection"
+      },
+      {
+        "param": "DWELL.min_ms",
+        "quote": "",
+        "reason": "Statute states shall stop with no duration; 1000 ms continuous stationary period chosen as minimum observable stop.",
+        "source": "ASSUMED",
+        "value": "1000"
+      },
+      {
+        "param": "DWELL.max_speed",
+        "quote": "",
+        "reason": "Statute says shall stop; 0.05 means only while stopped/still per DSL, enforcing stationary stop.",
+        "source": "ASSUMED",
+        "value": "0.05"
+      },
+      {
+        "param": "CROSSES.line",
+        "quote": "",
+        "reason": "packing_entry is defined as the stop line across approach lanes, corresponding to the clearly marked stop line.",
+        "source": "ASSUMED",
+        "value": "packing_entry"
+      },
+      {
+        "param": "CROSSES.direction",
+        "quote": "",
+        "reason": "Cars travel top to bottom; moving downwards (+y) is defined as to_right, the approaching/crossing direction.",
+        "source": "ASSUMED",
+        "value": "to_right"
+      },
+      {
+        "param": "BEFORE.within_ms",
+        "quote": "",
+        "reason": "Statute states no maximum interval between stop and crossing, so no time limit is imposed.",
+        "source": "ASSUMED",
+        "value": "null"
+      }
+    ],
+    "root": 2,
+    "rule_id": "stop-at-stop-line",
+    "supported": true,
+    "unsupported_reason": ""
+  },
+  "model": "muse-spark-1.3",
+  "request_ids": [
+    "chatcmpl-01a1a44c-8210-7541-ae67-090ed3b3ff02"
+  ],
+  "schema": "rule-schema/6-law",
+  "attempts": 1,
+  "usage": [
+    {
+      "completion_tokens": 6395,
+      "prompt_tokens": 1863,
+      "total_tokens": 8258,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 5674,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  ],
+  "text": "Unless otherwise directed by a police officer or traffic control signal, the driver of a vehicle approaching a stop sign at an intersection shall stop at the near side of the intersection at a clearly marked stop line.",
+  "latency_s": 61.58
+}
