@@ -47,8 +47,8 @@ def _video_facts(video: Path) -> tuple[float, float, tuple[int, int]]:
     return float(data["format"]["duration"]), float(Fraction(v["avg_frame_rate"])), (v["width"], v["height"])
 
 
-def propose(set_dir: Path, judge: SparkAlone) -> list[dict]:
-    out_dir = set_dir / "proposals"
+def propose(set_dir: Path, judge: SparkAlone, out_name: str = "proposals") -> list[dict]:
+    out_dir = set_dir / out_name
     out_dir.mkdir(exist_ok=True)
     rows = []
     for p in sorted((set_dir / "drafts").glob("*.json")):
@@ -69,13 +69,13 @@ def _cross_s(obj: dict) -> float | None:
     return obj.get("cross_s", obj.get("approx_cross_time_s"))
 
 
-def compare(set_dir: Path) -> dict:
+def compare(set_dir: Path, proposals: str = "proposals") -> dict:
     clips, tot = [], {"proposed": 0, "labelled": 0, "accepted": 0, "corrected": 0, "deleted": 0, "missed": 0}
     for p in sorted((set_dir / "labels").glob("*.json")):
         if p.name == "MANIFEST.json":
             continue
         lab = json.loads(p.read_text())
-        prop = json.loads((set_dir / "proposals" / p.name).read_text())
+        prop = json.loads((set_dir / proposals / p.name).read_text())
         truth = [o for o in lab["objects"] if o.get("crosses_packing")]
         free = list(range(len(truth)))
         acc = cor = 0
@@ -103,15 +103,21 @@ def main() -> None:
     p = sub.add_parser("propose")
     p.add_argument("--set", type=Path, required=True)
     p.add_argument("--max-live-calls", type=int, default=0)
+    p.add_argument("--model", default="muse-spark-1.3")
+    p.add_argument("--out-name", default="proposals")
     c = sub.add_parser("compare")
     c.add_argument("--set", type=Path, required=True)
     c.add_argument("--out", type=Path)
+    c.add_argument("--proposals", default="proposals")
     a = ap.parse_args()
     if a.cmd == "propose":
-        judge = SparkAlone(MetaSettings.from_env(), cache_dir=a.set / "proposals" / "cache", max_live_calls=a.max_live_calls)
-        print(json.dumps(propose(a.set, judge), indent=1))
+        import dataclasses
+
+        settings = dataclasses.replace(MetaSettings.from_env(), muse_model=a.model)
+        judge = SparkAlone(settings, cache_dir=a.set / a.out_name / "cache", max_live_calls=a.max_live_calls)
+        print(json.dumps(propose(a.set, judge, a.out_name), indent=1))
     else:
-        rep = compare(a.set)
+        rep = compare(a.set, a.proposals)
         if a.out:
             a.out.write_text(json.dumps(rep, indent=1) + "\n")
         print(json.dumps(rep["total"]))

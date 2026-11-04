@@ -39,3 +39,11 @@ the 6 clips, with a Wilson 95 % interval.
   how many are ROBUST, how many depend on an open choice, how many would auto-issue once the open choices are approved.
 
 **Reporting.** Everything is reported as is, including failures and any clip with no crossings. No re-run, no repair.
+
+## Addendum 1 (2026-11-04, before the calls it describes and before any review)
+
+Muse Wonder 1.0 receives the same prompt and clips as Muse Spark (one call per clip, 6 in total) and its proposals are
+stored in `proposals_wonder/`. They are **never shown** to the reviewer: the review page reads only `proposals/`
+(Muse Spark). After the labels are frozen, both models' proposals are scored the same way against the person's labels
+(matched by crossing time within 1.0 s; accepted = same verdict). Spark's acceptance rate is anchored by the review
+(the person saw its proposals); Wonder's comparison is blind. Both are reported, with that difference stated.
