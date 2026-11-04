@@ -2,7 +2,7 @@
  "schema": "eventproof-label-audit/1",
  "date": "2026-11-04",
  "clip": "drone_south_1.mp4",
- "finding": "The frozen labels (Muse Spark's proposals, accepted in review) list one southbound car crossing the stop line. Watching the clip again after the run, the participant counts five complete crossings, none with a stop, plus one car already halfway across in the first frame (an edge transient, not labelled, as in the other sets). Spark's proposals missed four of the five cars and the first review did not catch it. Muse Wonder's blind proposals listed four of the five; SAM 3.1 + the engine tracked all five.",
+ "finding": "The frozen labels (Muse Spark's proposals, accepted in review) list one southbound car crossing the stop line. Watching the clip again after the run, the participant counts five complete crossings, none with a stop, plus one car already halfway across in the first frame (an edge transient, not labelled, as in the other sets). Spark's proposals missed four of the five cars and the first review did not catch it. Muse Wonder's blind proposals matched three of the five within 1.0 s (a fourth, at 9.6 s, was 1.2 s off); SAM 3.1 + the engine tracked all five.",
  "audited_crossings_s": [2.9, 4.7, 6.1, 6.7, 10.8],
  "audited_verdict": "VIOLATION for all five (none stands still in the zone)",
  "evidence": {

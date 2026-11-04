@@ -22,9 +22,9 @@ had one (`label_audit.json`). With the audit, the four added cars are all judged
 
 | | Muse Spark (shown to the reviewer) | Muse Wonder (never shown; blind) |
 |---|---|---|
-| Crossings proposed that match an audited crossing | 9 of 13 | 12 of 13 |
-| Missed | 4 (all in `drone_south_1`) | 1 |
-| Extra entries | 0 | 1 (a car already halfway across in the first frame) |
+| Crossings proposed that match an audited crossing (within 1.0 s, as pre-registered) | 9 of 13 | 11 of 13 (a 12th, at 9.6 s, is 1.2 s from the real 10.8 s) |
+| Missed | 4 (all in `drone_south_1`) | 2 (both in `drone_south_1`) |
+| Extra entries | 0 | 2 (a car already halfway across in the first frame; the 9.6 s entry) |
 
 The reviewer accepted all of Spark's proposals unchanged, including the clip where it missed four of five cars. One model
 proposing and one person confirming was not enough; a second, independent reading (Wonder) and the tracked evidence
