@@ -67,6 +67,8 @@ person *with* a hard hat, a box on a conveyor).
 - **Muse Wonder** is the independent second reading that exposes ambiguous sentences.
 - **SAM 3.1** gives text-prompted video tracks with stable ids, with one extra prompt per second concept. It keeps
   overlapping boxes apart where a naive tracker merges them (10/10 tailgating scenes, against 2/10).
+- What each model adds, measured against a matched alternative, and where each one failed:
+  [benchmark/META_CONTRIBUTION.md](benchmark/META_CONTRIBUTION.md).
 - The whole build spent about $14 of the $150 credits (balance read from Billing: $136.41). Live calls need explicit allowances, and everything else replays
   from recorded responses.
 
@@ -190,7 +192,7 @@ can re-verify, and CI recomputes every number above from committed files (no vid
 - **Muse Wonder (`muse-wonder-1.0`)** gives an independent second reading of every rule through the same strict schema,
   so EventProof can detect ambiguous sentences and ask the user, instead of trusting one model's interpretation.
 - **SAM 3.1 (`sam-3.1`)** gives text-prompted video tracks with stable ids. It keeps two overlapping boxes apart where
-  a naive tracker merges them (5/5 tailgating cases right with SAM, 0/5 with the mock tracker) and confirms
+  a naive tracker merges them (10/10 tailgating scenes of the pre-registered final test right with SAM, 2/10 with the mock tracker) and confirms
   counterexamples on real tracks.
 - Meta API spend for the whole build: about $14 of the $150 credits (balance read from Billing on 2026-11-04: $136.41). Live calls need explicit per-process allowances (default 0);
   everything else is served from a cache of recorded responses.
