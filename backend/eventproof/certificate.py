@@ -151,8 +151,21 @@ def build(run_id: str, runs_dir: Path | None = None, chosen: str | None = None) 
     seen = {x["clip_sha256"] for x in cert["field"]}
     cert["field"] += [x for x in clip_check(run_dir, ev) if x["clip_sha256"] not in seen]
     cert["checks"] = run_checks(run_dir, ev)
+    cert["tickets"] = ticket_robustness(run_dir, ev)
     cert["status"] = status(cert)
     return cert
+
+
+def ticket_robustness(run_dir: Path, ev: Evidence) -> list[dict]:
+    """Would each VIOLATION verdict hold up under the typed variant menu (review.robustness; deterministic)."""
+    from eventproof.review.robustness import robustness
+
+    tracks = run_dir / "tracks.json"
+    if ev.status != "completed" or not ev.rule.compiled_rule or not tracks.is_file():
+        return []
+    rows = robustness(VisualRule.model_validate(ev.rule.compiled_rule), TrackSet.model_validate_json(tracks.read_text()))
+    return [{"object_id": x.object_id, "status": x.status, "smallest_flip": x.smallest_flip}
+            for x in rows if x.verdict == "VIOLATION"]
 
 
 def run_checks(run_dir: Path, ev: Evidence) -> list[dict]:
@@ -295,6 +308,15 @@ def render_html(c: dict) -> str:
     else:
         section("5 · Field check on labelled real footage",
                 "<p class='muted'>No labelled footage for this rule text yet.</p>")
+    tk = c.get("tickets") or []
+    if tk:
+        tr = "".join(f"<tr><td>#{x['object_id']}</td><td>{_e(x['status'].replace('_', ' ').lower())}</td>"
+                     f"<td>{_e(x['smallest_flip'] or '–')}</td></tr>" for x in tk)
+        section("5b · Would the tickets hold up?",
+                f"<p>{sum(x['status'] == 'ROBUST' for x in tk)} of {len(tk)} tickets survive every change in the menu "
+                "(line ±1–3 % of the frame, measured point, thresholds ±20 %, stillness ×0.5/×2, half the frames, "
+                "another meaning of stopping).</p><table><tr><th>ticket</th><th>status</th><th>smallest change that "
+                f"overturns it</th></tr>{tr}</table>")
     h = c["hashes"]
     section("6 · Re-verify", f"<p class='mono'>run {_e(c['run_id'])} · evidence {_e(h['evidence_sha256'][:16])}… · ledger "
             f"{_e(h['ledger_sha256'][:16])}… ({h['files']} files) · video {_e(h['video_sha256'][:16])}… · rule "
