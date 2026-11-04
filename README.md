@@ -19,35 +19,50 @@ no digit. A camera still needs two numbers: how long to stand still, and how slo
 30 real cars, same model: anywhere from 0 to 17 tickets**, depending only on those two numbers. Muse Spark picked
 1.0 s at ≤ 0.05 frame widths/s (13 tickets, 25/30 right), and labelled 0.05 as "quoted" from the words "shall stop".
 
-**Who needs it now.** Takoma Park, Maryland, has issued $40 citations from AI stop-sign cameras since January 2026 (a
-city study found violation rates up to 87% at some intersections); Virginia allowed AI cameras to cite stop-sign and
-crosswalk violations in April 2026. Someone writes down what "full stop" means, and such systems' claims are *"rarely
-backed up by independent studies"* (NYCLU, in IEEE Spectrum). EventProof is that independent check, before deployment,
-for the **program manager** who signs off on the rule and the **reviewer** who approves every citation. A false PASS is
-a dangerous driver never cited; a false FAIL is a $40 ticket for a resident who stopped. The same loop works for any
-zone, time, direction or two-object rule a camera checks (inspection steps on a line, restricted areas, a worker near a
-forklift).
+**Three numbers, all on labelled real footage, all pre-registered:**
 
-## How it works (three beats)
-1. **Compile.** Muse Spark turns the sentence or the verbatim statute into a typed rule (strict JSON schema, never
-   executed as code). Every value is quoted from the text or marked ASSUMED, and quotes are verified. SAM 3.1 tracks the
-   objects, and a deterministic engine gives a verdict per object with its frames. Muse Wonder reads the sentence
-   independently, and if the readings differ, EventProof shows the smallest pair of scenes that separates them.
-2. **Attack.**
-   - Challenge Mode finds the smallest synthetic scene that fools the rule, and Muse Spark proposes bounded repairs
-     that are kept only with zero regressions on a hidden holdout.
-   - On real footage, every ticket is re-judged with the line a few pixels away, another measured point, thresholds
-     ±20 % and another meaning of "stop".
-   - Muse Spark argues each ticket's defense from a closed menu, and the engine decides.
-3. **Issue only what survives.** ROBUST tickets go out; every other ticket is held for a human reviewer, with the
-   smallest change that overturns it. One printable certificate per rule, and a contract-acceptance block a city can
-   hand to its vendor. No model writes either.
+| | |
+|---|---|
+| Real tickets that survive every challenge | **4 of 20** |
+| Tickets the same law issues on the same 30 cars, depending on two unwritten numbers | **0 to 17** |
+| Cars judged right by the rule Muse Spark compiled; by a repair that passed every synthetic test | **27/30 vs 16/30** |
 
-The flagship is traffic, because that is where AI cameras issue fines today. The same loop judges any zone, time,
-direction or two-object rule: pedestrians on a crossing, cyclists on a path, umbrellas over heads, a box on a
-conveyor.
+**Who it is for.** Takoma Park, Maryland, issues $40 citations from AI stop-sign cameras, and Virginia allowed them in
+April 2026. Such systems' claims are *"rarely backed up by independent studies"* (NYCLU, in IEEE Spectrum).
+EventProof is that independent check, for the program manager who signs off on a camera rule and the reviewer who
+approves each citation.
 
-## Evidence (labels frozen and pushed before any model call; CI recomputes every number)
+## How it works
+1. **Compile.** Muse Spark turns the sentence, or the statute, into a typed rule. It never writes code, and every value
+   is either quoted from the text or marked as assumed. SAM 3.1 tracks the objects, and a deterministic engine judges
+   each one. Muse Wonder reads the sentence a second time; if the two readings differ, EventProof shows the scene that
+   separates them.
+2. **Attack.** Every ticket is judged again with the line a few pixels away, another measured point, thresholds ±20 %
+   and another meaning of "stop". Muse Spark argues the defense from a closed menu, and the engine decides. Synthetic
+   scenes with known truth find the smallest case that fools the rule, and a repair is kept only with zero regressions.
+3. **Issue only what survives.** Robust tickets go out. Every other ticket is held for a human, together with the
+   smallest change that would overturn it. Each rule gets a one-page certificate and a contract block a city can hand
+   to its vendor; no model writes either.
+
+The flagship is traffic, because that is where AI cameras fine people today. The same loop judges any zone, time,
+direction or two-object rule: pedestrians, cyclists, umbrellas over heads, boxes on a conveyor.
+
+## Why Meta models
+- **Muse Spark** compiles rules through a small strict schema (about 1.4k prompt tokens). It escalates to a
+  two-object schema only when a sentence needs one, picks where objects are measured, drafts zones from the first
+  frame, argues the defense and proposes repairs.
+- **Muse Wonder** is the independent second reading that exposes ambiguous sentences.
+- **SAM 3.1** gives text-prompted video tracks with stable ids, with one extra prompt per second concept. It keeps
+  overlapping boxes apart where a naive tracker merges them (10/10 tailgating scenes, against 2/10).
+- The whole build spent about $12 of the $150 credits. Live calls need explicit allowances, and everything else replays
+  from recorded responses.
+
+**Try it.** A live studio runs on Vercel: pick a real clip, type a rule, see each object's verdict over the video in
+about 30 s, then attack, repair and print the certificate; open **Ticket court** (20 real cases) and **Drag the law**. Locally, with no API key: `docker compose up`.
+
+![Real footage: the same SAM 3.1 tracks judged by two readings of "wait"](docs/media/real_traffic.png)
+
+## Evidence in detail (labels frozen and pushed before any model call; CI recomputes every number)
 | What was tested | Result |
 |---|---|
 | Real traffic, 5 clips from 2 cities (Novi Sad, Wroclaw), 30 labelled cars | Rule compiled by Muse Spark: **27/30 right, 0 wrong verdicts**. A repair that passed every synthetic test: **16/30**, it lets real rolling stops through. |
@@ -62,21 +77,6 @@ conveyor.
 | Two readings, 8 phrasings of one rule (Spark vs Wonder, 150 scenes) | "wait" and "remain" are read differently (standing still vs just inside): verdicts differ on **45/150** scenes; the separating pair is found automatically. |
 | Repair on synthetic scenes with known truth (hidden holdout 200, final test 320, evaluated once) | Holdout **144 → 164**, false PASS 40 → 21, 0 regressions; final test 141 → 158/200 and 109 → 117/120 on never-seen scene types; with real SAM 3.1 tracks (80 scenes) **71 → 76**, false PASS 5 → 0. |
 | Two-object rule: *"every pedestrian … must hold an umbrella over their head"* (rainy crossing seen from above) | Muse escalated to the WITH event and SAM 3.1 tracked people and umbrellas separately: **2/4** (a neighbour's umbrella counted for a bare head). |
-
-## Why Meta models
-- **Muse Spark** compiles the rule through a constant-size strict schema (~1.4k prompt tokens), escalates to a
-  two-concept schema only when the sentence needs a second object type, picks where objects are measured, drafts zones
-  from the first frame, and diagnoses failures and proposes repairs.
-- **Muse Wonder** gives the independent second reading that exposes ambiguous sentences.
-- **SAM 3.1** gives text-prompted video tracks with stable ids; one extra prompt per second concept (umbrella, hard hat).
-  It keeps overlapping boxes apart where a naive tracker merges them (10/10 tailgating scenes vs 2/10).
-- Meta spend for the whole build: about $12 of the $150 credits ($11.09 read from Billing on Nov 2, plus logged
-  estimates since). Live calls need explicit allowances; everything else replays from recorded responses.
-
-**Try it.** A live studio runs on Vercel: pick a real clip, type a rule, see each object's verdict over the video in
-about 30 s, then attack, repair and print the certificate; open **Ticket court** (20 real cases) and **Drag the law**. Locally, with no API key: `docker compose up`.
-
-![Real footage: the same SAM 3.1 tracks judged by two readings of "wait"](docs/media/real_traffic.png)
 
 ## The problem
 An AI model can turn a sentence like "every car must wait 1.5 s before the stop line" into a working video check almost
