@@ -1,0 +1,47 @@
+{
+  "output": {
+    "challenges": [
+      {
+        "argument": "A few-pixel error in drawing packing_entry is plausible, so shifting it 1% lower tests whether the frame-49 crossing was triggered early and cut off dwell that would otherwise reach 1500 ms.",
+        "id": "line_shift:0.01"
+      },
+      {
+        "argument": "The rule applies to the car as a whole, so using bottom_center instead of center could mislocate the car relative to inspection and packing_entry.",
+        "id": "anchor:center"
+      },
+      {
+        "argument": "The rule does not define the pixel threshold for stopped, so doubling it tests whether box jitter or idle vibration wrongly prevented 1500 ms of stillness in inspection from counting.",
+        "id": "stillness:2.0"
+      },
+      {
+        "argument": "With 100 ms frame steps an exact 1500 ms cutoff has no measurement tolerance, so testing a 20% shorter requirement checks whether this is a borderline timing case.",
+        "id": "min_ms:0.8"
+      }
+    ],
+    "concede": false,
+    "concession": "",
+    "strongest": "stillness:2.0"
+  },
+  "request_id": "chatcmpl-01a1a456-e07c-70be-80e6-53be27c4cb4f",
+  "model": "muse-spark-1.3",
+  "usage": {
+    "completion_tokens": 8383,
+    "prompt_tokens": 852,
+    "total_tokens": 9235,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 8149,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 0,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  },
+  "latency_s": 90.86
+}

@@ -1,0 +1,30 @@
+{
+  "output": {
+    "challenges": [],
+    "concede": true,
+    "concession": "Evidence shows a to_left crossing at frame 28 where only to_right toward the camera is allowed, with bottom_center tracking over frames 0-199, and no evidence provided that a 4-11px line shift, center anchor, or halved frame rate would change the direction finding.",
+    "strongest": "none"
+  },
+  "request_id": "chatcmpl-01a1a464-debb-73d2-8f48-6ecb5107047d",
+  "model": "muse-spark-1.3",
+  "usage": {
+    "completion_tokens": 3051,
+    "prompt_tokens": 662,
+    "total_tokens": 3713,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 2966,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 0,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  },
+  "latency_s": 29.87
+}

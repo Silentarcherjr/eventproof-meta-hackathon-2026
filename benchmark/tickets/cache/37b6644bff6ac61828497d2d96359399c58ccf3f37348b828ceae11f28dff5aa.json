@@ -1,0 +1,30 @@
+{
+  "output": {
+    "challenges": [],
+    "concede": true,
+    "concession": "Concede because the camera's 1500ms stopped dwell directly implements the 1.5s wait rule and the decisive events show crossing at frame 42 with never 1500ms still, with no evidence that a few-pixel line shift, anchor, timing tolerance or stillness change would create the missing stop.",
+    "strongest": "none"
+  },
+  "request_id": "chatcmpl-01a1a45f-c1dd-7782-b022-1f0e3a693fe4",
+  "model": "muse-spark-1.3",
+  "usage": {
+    "completion_tokens": 4604,
+    "prompt_tokens": 852,
+    "total_tokens": 5456,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 4514,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 0,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  },
+  "latency_s": 47.88
+}

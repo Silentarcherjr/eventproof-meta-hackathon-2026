@@ -1,0 +1,39 @@
+{
+  "output": {
+    "challenges": [
+      {
+        "argument": "The rule requires waiting in the zone rather than a complete stop, so counting time in inspection even while moving slowly could provide 1500 ms before frame 132.",
+        "id": "stillness_meaning:any_motion"
+      },
+      {
+        "argument": "The stillness detector may treat video jitter or slow creep as motion, so doubling the stillness tolerance could reveal a qualifying 1500 ms stop before the crossing.",
+        "id": "stillness:2.0"
+      }
+    ],
+    "concede": false,
+    "concession": "",
+    "strongest": "stillness_meaning:any_motion"
+  },
+  "request_id": "chatcmpl-01a1a45c-4e71-744c-8204-2576dfcf8d28",
+  "model": "muse-spark-1.3",
+  "usage": {
+    "completion_tokens": 4299,
+    "prompt_tokens": 852,
+    "total_tokens": 5151,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 4180,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 0,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  },
+  "latency_s": 45.89
+}

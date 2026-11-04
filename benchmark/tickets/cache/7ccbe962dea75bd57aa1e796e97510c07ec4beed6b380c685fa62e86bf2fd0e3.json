@@ -1,0 +1,30 @@
+{
+  "output": {
+    "challenges": [],
+    "concede": true,
+    "concession": "Evidence records crossing packing_entry to_left at frame 44 and never 1500 ms still in inspection, which directly matches the rule's 1.5 s wait before crossing with no mismatch in direction, zone, or stopped-dwell meaning and no evidence that a small line, anchor, stillness, or timing perturbation would flip either event.",
+    "strongest": "none"
+  },
+  "request_id": "chatcmpl-01a1a454-af3a-762a-b7d7-a5f25ccafa70",
+  "model": "muse-spark-1.3",
+  "usage": {
+    "completion_tokens": 4578,
+    "prompt_tokens": 862,
+    "total_tokens": 5440,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 4483,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 0,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  },
+  "latency_s": 49.77
+}

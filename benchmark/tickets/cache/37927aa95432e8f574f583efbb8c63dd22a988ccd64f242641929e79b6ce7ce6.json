@@ -1,0 +1,30 @@
+{
+  "output": {
+    "challenges": [],
+    "concede": true,
+    "concession": "No allowed line, anchor, or frame challenge can be shown from this record to overturn the violation, as the evidence records only a single to_right crossing at frame 36 with no trajectory or sensitivity data showing a 4-11px shift, center measurement, or dropped frames would prevent it.",
+    "strongest": "none"
+  },
+  "request_id": "chatcmpl-01a1a462-e117-7022-8d69-84f7a98133c1",
+  "model": "muse-spark-1.3",
+  "usage": {
+    "completion_tokens": 3018,
+    "prompt_tokens": 657,
+    "total_tokens": 3675,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 2933,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 0,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  },
+  "latency_s": 29.28
+}

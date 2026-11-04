@@ -1,0 +1,30 @@
+{
+  "output": {
+    "challenges": [],
+    "concede": true,
+    "concession": "Track spans 63 frames/6300ms before crossing at frame 86 to frame 103 with never 1500ms still in inspection, so 3-9px line shifts or center anchor would still leave a crossing and cannot create 1500ms stillness, with no evidence of a near-miss for min_ms or stillness tolerance, and wait requires stopped so any_motion contradicts the rule.",
+    "strongest": "none"
+  },
+  "request_id": "chatcmpl-01a1a459-d819-71c7-b669-67c7492db8c9",
+  "model": "muse-spark-1.3",
+  "usage": {
+    "completion_tokens": 5872,
+    "prompt_tokens": 852,
+    "total_tokens": 6724,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 5764,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 0,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  },
+  "latency_s": 68.0
+}

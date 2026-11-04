@@ -1,0 +1,47 @@
+{
+  "output": {
+    "challenges": [
+      {
+        "argument": "Dwell depends on being inside inspection, and bottom_center versus center can place the point on different sides of that zone boundary, so the never-still finding is sensitive to anchor choice.",
+        "id": "anchor:center"
+      },
+      {
+        "argument": "With 100 ms sampling a strict 1500 ms cutoff leaves no tolerance for quantization and jitter, so a 20% shorter requirement tests whether the failure was borderline rather than robust.",
+        "id": "min_ms:0.8"
+      },
+      {
+        "argument": "A strict stillness threshold can label pixel jitter as motion and prevent any 1500 ms still period, while a doubled threshold tests whether a true stop was missed for that reason.",
+        "id": "stillness:2.0"
+      },
+      {
+        "argument": "Dropping every other frame tests whether brief inter-frame tracking noise broke an otherwise continuous still period needed for the 1500 ms dwell.",
+        "id": "frames:0.5"
+      }
+    ],
+    "concede": false,
+    "concession": "",
+    "strongest": "stillness:2.0"
+  },
+  "request_id": "chatcmpl-01a1a460-d168-7470-bd0f-08730fa2051b",
+  "model": "muse-spark-1.3",
+  "usage": {
+    "completion_tokens": 6342,
+    "prompt_tokens": 852,
+    "total_tokens": 7194,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 6113,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 0,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  },
+  "latency_s": 69.57
+}

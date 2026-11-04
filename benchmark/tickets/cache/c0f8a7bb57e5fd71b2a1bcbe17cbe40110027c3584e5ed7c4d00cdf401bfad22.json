@@ -1,0 +1,30 @@
+{
+  "output": {
+    "challenges": [],
+    "concede": true,
+    "concession": "Crossing to_left away from camera is prohibited by the rule and was detected at frame 20 with bottom-center tracking, with no evidence that a few-pixel line shift, center anchor, or halved frame rate would change the result.",
+    "strongest": "none"
+  },
+  "request_id": "chatcmpl-01a1a463-f6f2-7482-9eab-41338fedfc84",
+  "model": "muse-spark-1.3",
+  "usage": {
+    "completion_tokens": 2986,
+    "prompt_tokens": 665,
+    "total_tokens": 3651,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 2913,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 0,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  },
+  "latency_s": 29.17
+}

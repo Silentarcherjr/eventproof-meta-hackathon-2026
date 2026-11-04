@@ -1,0 +1,39 @@
+{
+  "output": {
+    "challenges": [
+      {
+        "argument": "Measuring a car at its image center rather than its bottom-center can misplace the point off the ground-level inspection zone due to height and perspective, so a qualifying 1500 ms stopped dwell may have been missed.",
+        "id": "anchor:bottom_center"
+      },
+      {
+        "argument": "A strict stillness threshold can treat minor video jitter or slow queue creep as motion, so relaxing it twofold could reveal a 1500 ms stopped interval that the camera rejected.",
+        "id": "stillness:2.0"
+      }
+    ],
+    "concede": false,
+    "concession": "",
+    "strongest": "anchor:bottom_center"
+  },
+  "request_id": "chatcmpl-01a1a455-7c9e-7349-91af-8736aed983cb",
+  "model": "muse-spark-1.3",
+  "usage": {
+    "completion_tokens": 4934,
+    "prompt_tokens": 862,
+    "total_tokens": 5796,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 4793,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 0,
+      "image_tokens": null,
+      "text_tokens": null
+    }
+  },
+  "latency_s": 52.62
+}
