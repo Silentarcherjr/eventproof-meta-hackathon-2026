@@ -1300,7 +1300,7 @@
       "title": "Compiler anchor field (schemas 4/5) + pre-registered re-run of all real sets: 34->38/46, wrong 0->3",
       "priority": "P1",
       "gate": "G6",
-      "state": "IN_REVIEW",
+      "state": "DONE_VERIFIED",
       "dependencies": [
         "P1-19"
       ],
@@ -1311,15 +1311,16 @@
         "cd backend && uv run pytest tests/validation/test_anchor_v4.py tests/test_muse_rules.py"
       ],
       "evidence_paths": [
+        "GitHub Actions success on 98ed5fa",
         "benchmark/real/anchor_v4/FINDINGS.md",
         "benchmark/real/anchor_v4/PREREGISTRATION.md (9b87501)"
       ],
-      "commit_sha": null,
+      "commit_sha": "98ed5fa",
       "pr_url": null,
       "started_at": "2026-11-04T00:30:00Z",
       "updated_at": "2026-11-04T01:10:00Z",
       "blocker": null,
-      "next_action": "mark DONE_VERIFIED when CI is green",
+      "next_action": "none",
       "cost_note": "≈ $0.12"
     }
   ]
