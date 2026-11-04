@@ -1,0 +1,34 @@
+{
+ "model": "muse-wonder-1.0",
+ "response_id": "resp_6aeaea42746e56ea42304459",
+ "video_sha256": "0ab686bc8cd52457dd071425471923d5c592fa8dc10f751d0ba65f8cd45bbd33",
+ "run": 0,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 17.0, \"description\": \"red and white car in right northbound lane\", \"verdict\": \"PASS\", \"waited_s\": 16.0}], \"notes\": \"Silver, black and blue cars behind never cross the stop line in the video.\", \"overall\": \"PASS\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 17.0,
+    "description": "red and white car in right northbound lane",
+    "verdict": "PASS",
+    "waited_s": 16.0
+   }
+  ],
+  "notes": "Silver, black and blue cars behind never cross the stop line in the video.",
+  "overall": "PASS"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 1658,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 0
+  },
+  "output_tokens": 3668,
+  "output_tokens_details": {
+   "reasoning_tokens": 3587
+  },
+  "total_tokens": 5326
+ },
+ "latency_s": 44.32
+}

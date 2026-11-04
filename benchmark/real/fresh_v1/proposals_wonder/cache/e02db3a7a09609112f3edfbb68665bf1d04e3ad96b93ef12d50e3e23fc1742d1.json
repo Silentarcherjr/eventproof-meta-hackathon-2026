@@ -1,0 +1,40 @@
+{
+ "model": "muse-wonder-1.0",
+ "response_id": "resp_6aeaed30b2d0f069c7154fb3",
+ "video_sha256": "d2c0fe42ce7b48aef2ff0c22b2cb42553984df987373762865625164a23d2498",
+ "run": 0,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 16.0, \"description\": \"dark blue sedan, leading car in the southbound approach lane\", \"verdict\": \"PASS\", \"waited_s\": 13.5}, {\"approx_cross_time_s\": 17.8, \"description\": \"white sedan with dark roof, second car in the southbound approach lane\", \"verdict\": \"PASS\", \"waited_s\": 14.5}], \"notes\": \"Only blue and white cars cross the stop line from the southbound approach. Both were stationary in the waiting zone from the start of the video for well over 1.5s.\", \"overall\": \"PASS\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 16.0,
+    "description": "dark blue sedan, leading car in the southbound approach lane",
+    "verdict": "PASS",
+    "waited_s": 13.5
+   },
+   {
+    "approx_cross_time_s": 17.8,
+    "description": "white sedan with dark roof, second car in the southbound approach lane",
+    "verdict": "PASS",
+    "waited_s": 14.5
+   }
+  ],
+  "notes": "Only blue and white cars cross the stop line from the southbound approach. Both were stationary in the waiting zone from the start of the video for well over 1.5s.",
+  "overall": "PASS"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 1549,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 0
+  },
+  "output_tokens": 14572,
+  "output_tokens_details": {
+   "reasoning_tokens": 14420
+  },
+  "total_tokens": 16121
+ },
+ "latency_s": 175.26
+}

@@ -1,0 +1,17 @@
+{
+ "schema": "eventproof-label-proposal/1",
+ "clip": "drone_north_2.mp4",
+ "clip_sha256": "0ab686bc8cd52457dd071425471923d5c592fa8dc10f751d0ba65f8cd45bbd33",
+ "model": "muse-wonder-1.0",
+ "response_id": "resp_6aeaea42746e56ea42304459",
+ "error": null,
+ "crossings": [
+  {
+   "approx_cross_time_s": 17.0,
+   "description": "red and white car in right northbound lane",
+   "verdict": "PASS",
+   "waited_s": 16.0
+  }
+ ],
+ "notes": "Silver, black and blue cars behind never cross the stop line in the video."
+}

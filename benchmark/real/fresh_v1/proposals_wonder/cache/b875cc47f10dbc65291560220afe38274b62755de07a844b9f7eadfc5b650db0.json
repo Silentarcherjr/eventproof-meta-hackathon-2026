@@ -1,0 +1,52 @@
+{
+ "model": "muse-wonder-1.0",
+ "response_id": "resp_6aeaeaa6be8d5455291d49cf",
+ "video_sha256": "0fac432542ab33ece9a9d5db057c4a7ef0d9f7a15346af6589df6b2015255df1",
+ "run": 0,
+ "prompt_version": "spark-alone/1",
+ "raw": "{\"crossings\": [{\"approx_cross_time_s\": 1.0, \"description\": \"light grey/silver sedan, right northbound lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0}, {\"approx_cross_time_s\": 2.6, \"description\": \"dark grey/black car, right northbound lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0}, {\"approx_cross_time_s\": 4.6, \"description\": \"dark blue sedan, right northbound lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0}, {\"approx_cross_time_s\": 7.0, \"description\": \"black SUV, right northbound lane\", \"verdict\": \"VIOLATION\", \"waited_s\": 0}], \"notes\": \"All four northbound cars rolled through the waiting zone and over the stop line without ever coming to a complete stop, so each waited 0 s (< 1.5 s).\", \"overall\": \"FAIL\"}",
+ "parsed": {
+  "crossings": [
+   {
+    "approx_cross_time_s": 1.0,
+    "description": "light grey/silver sedan, right northbound lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0
+   },
+   {
+    "approx_cross_time_s": 2.6,
+    "description": "dark grey/black car, right northbound lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0
+   },
+   {
+    "approx_cross_time_s": 4.6,
+    "description": "dark blue sedan, right northbound lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0
+   },
+   {
+    "approx_cross_time_s": 7.0,
+    "description": "black SUV, right northbound lane",
+    "verdict": "VIOLATION",
+    "waited_s": 0
+   }
+  ],
+  "notes": "All four northbound cars rolled through the waiting zone and over the stop line without ever coming to a complete stop, so each waited 0 s (< 1.5 s).",
+  "overall": "FAIL"
+ },
+ "error": null,
+ "usage": {
+  "input_tokens": 1658,
+  "input_tokens_details": {
+   "cache_write_tokens": null,
+   "cached_tokens": 0
+  },
+  "output_tokens": 8244,
+  "output_tokens_details": {
+   "reasoning_tokens": 8018
+  },
+  "total_tokens": 9902
+ },
+ "latency_s": 100.28
+}

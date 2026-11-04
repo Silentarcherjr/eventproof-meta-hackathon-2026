@@ -1,0 +1,23 @@
+{
+ "schema": "eventproof-label-proposal/1",
+ "clip": "drone_south_3.mp4",
+ "clip_sha256": "d2c0fe42ce7b48aef2ff0c22b2cb42553984df987373762865625164a23d2498",
+ "model": "muse-wonder-1.0",
+ "response_id": "resp_6aeaed30b2d0f069c7154fb3",
+ "error": null,
+ "crossings": [
+  {
+   "approx_cross_time_s": 16.0,
+   "description": "dark blue sedan, leading car in the southbound approach lane",
+   "verdict": "PASS",
+   "waited_s": 13.5
+  },
+  {
+   "approx_cross_time_s": 17.8,
+   "description": "white sedan with dark roof, second car in the southbound approach lane",
+   "verdict": "PASS",
+   "waited_s": 14.5
+  }
+ ],
+ "notes": "Only blue and white cars cross the stop line from the southbound approach. Both were stationary in the waiting zone from the start of the video for well over 1.5s."
+}

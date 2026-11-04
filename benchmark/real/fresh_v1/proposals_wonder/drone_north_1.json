@@ -1,0 +1,10 @@
+{
+ "schema": "eventproof-label-proposal/1",
+ "clip": "drone_north_1.mp4",
+ "clip_sha256": "8101c819af72ab7aa6753783a3c2dc6a4fa7640859a436a0a163941a32f45118",
+ "model": "muse-wonder-1.0",
+ "response_id": "resp_6aeaea15b4d46eeadc5d4286",
+ "error": null,
+ "crossings": [],
+ "notes": ""
+}

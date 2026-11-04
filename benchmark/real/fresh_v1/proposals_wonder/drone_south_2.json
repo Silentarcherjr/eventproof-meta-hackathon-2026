@@ -1,0 +1,17 @@
+{
+ "schema": "eventproof-label-proposal/1",
+ "clip": "drone_south_2.mp4",
+ "clip_sha256": "08b8be35905664865c37dac985c4f3f9cfef8e87be67d095c61af3261f54a7df",
+ "model": "muse-wonder-1.0",
+ "response_id": "resp_6aeaec81a7e706e7eb99459b",
+ "error": null,
+ "crossings": [
+  {
+   "approx_cross_time_s": 17.5,
+   "description": "Dark grey/black sedan, right southbound lane",
+   "verdict": "PASS",
+   "waited_s": 5.0
+  }
+ ],
+ "notes": ""
+}

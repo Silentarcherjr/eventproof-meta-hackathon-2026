@@ -1,0 +1,41 @@
+{
+ "schema": "eventproof-label-proposal/1",
+ "clip": "drone_south_1.mp4",
+ "clip_sha256": "7d09d1aa8f0fceb5380b6f1653348e10ed088a6dcd945ec0c9980f95d75f5e32",
+ "model": "muse-wonder-1.0",
+ "response_id": "resp_6aeaebe47090650886af4e76",
+ "error": null,
+ "crossings": [
+  {
+   "approx_cross_time_s": 0.5,
+   "description": "white sedan, centre southbound lane",
+   "verdict": "VIOLATION",
+   "waited_s": 0.0
+  },
+  {
+   "approx_cross_time_s": 2.8,
+   "description": "black sedan, centre southbound lane",
+   "verdict": "VIOLATION",
+   "waited_s": 0.0
+  },
+  {
+   "approx_cross_time_s": 4.8,
+   "description": "black sedan, right-hand southbound lane",
+   "verdict": "VIOLATION",
+   "waited_s": 0.0
+  },
+  {
+   "approx_cross_time_s": 6.8,
+   "description": "black SUV, centre southbound lane",
+   "verdict": "VIOLATION",
+   "waited_s": 0.0
+  },
+  {
+   "approx_cross_time_s": 9.6,
+   "description": "dark grey sedan, right-hand southbound lane",
+   "verdict": "VIOLATION",
+   "waited_s": 0.0
+  }
+ ],
+ "notes": "All crossed without stopping in inspection zone. Turn-off cars (blue, black, silver) and northbound traffic did not cross packing_entry."
+}
