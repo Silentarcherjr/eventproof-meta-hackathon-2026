@@ -1,0 +1,22 @@
+{
+  "identity_events_fail": [],
+  "identity_events_pass": [],
+  "perception_divergence_frame": 56,
+  "decisive_frames": [
+    56
+  ],
+  "decisive_pngs": [
+    "decisive_f0056.png"
+  ],
+  "scene_difference": {
+    "frames_compared": 82,
+    "frames_differing": 27,
+    "first_differing_frame": 30,
+    "max_pixels_differing_in_a_frame": 620
+  },
+  "fail_scene_sha256": "65460d1086e53e0c4e508485d845288d4e6521b71506189408eac8b011e838a4",
+  "pass_scene_sha256": "a00bdc4a8beb4d82efce646c7c2f911b19d938f27e2c99f39037a768edb71836",
+  "frames_sha256": "3d0a1ad8cba0f26662813fffb2847c77676d3acc2b4679ee691080e841c8b315",
+  "side_by_side_mp4": "side_by_side.mp4",
+  "mp4_sha256": "9a36cf33ff8ca6dac3020115b6708c6d2c898ea8fe0c23039e1fa3d32b878fd7"
+}

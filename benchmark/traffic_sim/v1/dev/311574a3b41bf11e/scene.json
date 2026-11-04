@@ -1,0 +1,129 @@
+{
+  "seed": 0,
+  "generator": "traffic-gen/1",
+  "width": 480,
+  "height": 270,
+  "fps": 10.0,
+  "n_frames": 77,
+  "zones": [
+    {
+      "id": "waiting",
+      "polygon": [
+        [
+          0.54,
+          0.36
+        ],
+        [
+          0.7,
+          0.36
+        ],
+        [
+          0.7,
+          0.72
+        ],
+        [
+          0.54,
+          0.72
+        ]
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "id": "stop_line",
+      "a": [
+        0.72,
+        0.34
+      ],
+      "b": [
+        0.72,
+        0.74
+      ]
+    }
+  ],
+  "objects": [
+    {
+      "object_id": 0,
+      "color": "blue",
+      "size": [
+        0.065,
+        0.075
+      ],
+      "waypoints": [
+        {
+          "frame": 0,
+          "x": 0.1,
+          "y": 0.53
+        },
+        {
+          "frame": 28,
+          "x": 0.653611,
+          "y": 0.53
+        },
+        {
+          "frame": 54,
+          "x": 0.653611,
+          "y": 0.53
+        },
+        {
+          "frame": 73,
+          "x": 0.92,
+          "y": 0.53
+        }
+      ]
+    },
+    {
+      "object_id": 1,
+      "color": "blue",
+      "size": [
+        0.065,
+        0.075
+      ],
+      "waypoints": [
+        {
+          "frame": 0,
+          "x": 0.026274,
+          "y": 0.53
+        },
+        {
+          "frame": 28,
+          "x": 0.579885,
+          "y": 0.53
+        },
+        {
+          "frame": 54,
+          "x": 0.579885,
+          "y": 0.53
+        },
+        {
+          "frame": 73,
+          "x": 0.846274,
+          "y": 0.53
+        }
+      ]
+    },
+    {
+      "object_id": 10,
+      "color": "green",
+      "size": [
+        0.045,
+        0.1
+      ],
+      "waypoints": [
+        {
+          "frame": 0,
+          "x": 0.84,
+          "y": 0.12
+        },
+        {
+          "frame": 73,
+          "x": 0.84,
+          "y": 0.88
+        }
+      ]
+    }
+  ],
+  "occluders": [],
+  "family": "tailgate",
+  "notes": "{\"box_jitter\":0.001006,\"camera_tilt\":0.046452,\"cross_traffic\":true,\"lanes\":1}"
+}

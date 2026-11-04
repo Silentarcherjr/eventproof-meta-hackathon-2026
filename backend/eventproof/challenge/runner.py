@@ -23,6 +23,8 @@ from pydantic import BaseModel
 from eventproof.challenge.families import FAMILIES
 from eventproof.challenge.render import ground_truth, oracle_view
 from eventproof.challenge.scene import SceneSpec
+from eventproof.challenge.traffic import TrafficTruth, is_traffic, perfect_perceiver, traffic_rule
+from eventproof.challenge.traffic import scene_truth as traffic_truth
 from eventproof.challenge.truth import ObjectTruth, intended_overall, scene_truth
 from eventproof.engine.evaluator import evaluate
 from eventproof.perception import mock
@@ -44,7 +46,7 @@ class CaseResult(BaseModel):
     oracle_verdict: str
     detector_verdict: str
     outcome: Outcome
-    truths: list[ObjectTruth]
+    truths: list[ObjectTruth | TrafficTruth]
     notes: str = ""
 
 
@@ -77,7 +79,7 @@ def bind_rule(rule: VisualRule, scene: SceneSpec) -> VisualRule:
     if missing:
         raise WorldMismatch(f"rule references {missing}; the synthetic world has zones {sorted(zones)} "
                             f"and lines {sorted(lines)}")
-    label = scene.objects[0].label if scene.objects else rule.entity.concept
+    label = "car" if is_traffic(scene) else (scene.objects[0].label if scene.objects else rule.entity.concept)
     return rule.model_copy(update={"zones": [zones[z.id] for z in rule.zones], "lines": [lines[ln.id] for ln in rule.lines],
                                    "entity": rule.entity.model_copy(update={"concept": label})})
 
@@ -97,7 +99,7 @@ def classify(intended: str, oracle: str, detector: str) -> Outcome:
 def run_case(scene: SceneSpec, rule: VisualRule, perceiver: Perceiver = mock_perceiver,
              min_stop_ms: float = 1000.0) -> CaseResult:
     gt = ground_truth(scene)
-    truths = scene_truth(scene, rule.entity.concept, min_stop_ms)
+    truths = traffic_truth(scene) if is_traffic(scene) else scene_truth(scene, rule.entity.concept, min_stop_ms)
     intended = intended_overall(truths)
     oracle = evaluate(rule, oracle_view(gt)).overall
     perceived = perceiver(scene, gt)
@@ -112,13 +114,29 @@ def run_case(scene: SceneSpec, rule: VisualRule, perceiver: Perceiver = mock_per
 
 
 def run_suite(families: list[str], seeds: list[int], dwell_ms: float = 1500.0,
-              perceiver: Perceiver = mock_perceiver) -> list[CaseResult]:
+              perceiver: Perceiver = mock_perceiver, world: str = "conveyor") -> list[CaseResult]:
+    registry = family_registry(world)
     results = []
     for fam in families:
         for s in seeds:
-            scene = FAMILIES[fam](s)
-            results.append(run_case(scene, inspection_rule(scene, dwell_ms), perceiver))
+            if world == "traffic":
+                from eventproof.challenge.traffic import require_dev_seed
+
+                require_dev_seed(s)
+            scene = registry[fam](s)
+            rule = traffic_rule(scene, dwell_ms / 1000) if world == "traffic" else inspection_rule(scene, dwell_ms)
+            results.append(run_case(scene, rule, perceiver))
     return results
+
+
+def family_registry(world: str) -> dict[str, Callable[[int], SceneSpec]]:
+    if world == "conveyor":
+        return FAMILIES
+    if world == "traffic":
+        from eventproof.challenge.traffic import TRAFFIC_FAMILIES
+
+        return TRAFFIC_FAMILIES
+    raise ValueError(f"unknown challenge world {world!r}")
 
 
 def summarize(results: list[CaseResult]) -> dict[str, dict[str, int]]:
@@ -135,26 +153,32 @@ def _seeds(spec: str) -> list[int]:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--families", default=",".join(FAMILIES))
+    ap.add_argument("--world", choices=["conveyor", "traffic"], default="conveyor")
+    ap.add_argument("--families", help="comma-separated; default: all families of selected world")
     ap.add_argument("--seeds", default="0-19")
     ap.add_argument("--dwell-ms", type=float, default=1500.0)
     ap.add_argument("--out", help="write all case results as JSON lines")
-    ap.add_argument("--perception", choices=["mock", "sam"], default="mock")
+    ap.add_argument("--perception", choices=["mock", "sam", "perfect"], default="mock")
     ap.add_argument("--max-live-calls", type=int, default=0,
                     help="SAM only: live (billed) calls allowed in this run; cached results are free")
     args = ap.parse_args()
     perceiver: Perceiver = mock_perceiver
+    if args.perception == "perfect":
+        perceiver = perfect_perceiver
     if args.perception == "sam":
         from eventproof.perception.sam import SamTracker, sam_perceiver
 
         tracker = SamTracker(max_live_calls=args.max_live_calls)
         perceiver = sam_perceiver(tracker)
-    results = run_suite(args.families.split(","), _seeds(args.seeds), args.dwell_ms, perceiver)
+    families = args.families.split(",") if args.families else list(family_registry(args.world))
+    results = run_suite(families, _seeds(args.seeds), args.dwell_ms, perceiver, world=args.world)
     if args.out:
         with open(args.out, "w") as fh:
             for r in results:
                 fh.write(r.model_dump_json() + "\n")
-    label = "mock (NOT SAM)" if args.perception == "mock" else f"sam-3.1 ({tracker.live_calls} live calls, rest cached)"
+    label = {"mock": "mock (NOT SAM)", "perfect": "synthetic perfect tracks (NOT SAM)"}.get(args.perception)
+    if args.perception == "sam":
+        label = f"sam-3.1 ({tracker.live_calls} live calls, rest cached)"
     print(json.dumps({"perception": label, "dwell_ms": args.dwell_ms, "cases": len(results),
                       "by_family": summarize(results)}, indent=2))
 

@@ -20,6 +20,7 @@ from pathlib import Path
 import numpy as np
 
 from eventproof.challenge.scene import COLORS, SceneSpec, canonical_scene
+from eventproof.challenge.traffic import TrafficTracks, box_at, is_traffic, object_label
 from eventproof.schemas.tracks import Box, TrackFrame, TrackSet, VideoInfo
 
 BG = (34, 37, 43)
@@ -52,7 +53,37 @@ def _blend(img: np.ndarray, x1: int, y1: int, x2: int, y2: int, color: tuple[int
     img[y1:y2, x1:x2] = ((region * (256 - alpha_num) + c * alpha_num) >> 8).astype(np.uint8)
 
 
+def _traffic_layer(scene: SceneSpec) -> np.ndarray:
+    """A horizontal approach, vertical cross street, waiting zone and painted stop line."""
+    img = np.empty((scene.height, scene.width, 3), dtype=np.uint8)
+    img[:] = (46, 74, 49)
+    left, top = _px(scene, 0, 0.34)
+    right, bottom = _px(scene, 1, 0.74)
+    img[top:bottom, left:right] = (57, 60, 63)
+    xa, _ = _px(scene, 0.77, 0)
+    xb, _ = _px(scene, 0.92, 0)
+    img[:, xa:xb] = (57, 60, 63)
+    for z in scene.zones:
+        xs, ys = [p[0] for p in z.polygon], [p[1] for p in z.polygon]
+        x1, y1 = _px(scene, min(xs), min(ys))
+        x2, y2 = _px(scene, max(xs), max(ys))
+        _blend(img, x1, y1, x2, y2, INSPECTION_TINT, 50)
+    if json.loads(scene.notes)["lanes"] == 2:
+        _, mid = _px(scene, 0, 0.54)
+        for x in range(0, round(0.70 * scene.width), 30):
+            img[mid - 1:mid + 1, x:x + 16] = (210, 210, 193)
+    for y in (top, bottom):
+        img[y - 1:y + 1, :xa] = (230, 230, 210)
+    line = next(ln for ln in scene.lines if ln.id == "stop_line")
+    x, y1 = _px(scene, *line.a)
+    _, y2 = _px(scene, *line.b)
+    img[y1:y2, x - 2:x + 3] = (245, 245, 245)
+    return img
+
+
 def _static_layer(scene: SceneSpec) -> np.ndarray:
+    if is_traffic(scene):
+        return _traffic_layer(scene)
     img = np.empty((scene.height, scene.width, 3), dtype=np.uint8)
     img[:] = BG
     for lane_y in sorted({round(o.waypoints[0].y, 3) for o in scene.objects}):
@@ -80,6 +111,9 @@ def render_frames(scene: SceneSpec):
         for obj in scene.objects:
             c = obj.center_at(f)
             rect = c and box_pixels(scene, c[0], c[1], obj.size)
+            if is_traffic(scene) and (box := box_at(scene, obj, f)) is not None:
+                rect = (max(0, round(box.x1)), max(0, round(box.y1)),
+                        min(scene.width, round(box.x2)), min(scene.height, round(box.y2)))
             if not rect:
                 continue
             x1, y1, x2, y2 = rect
@@ -90,12 +124,21 @@ def render_frames(scene: SceneSpec):
                 band = max(1, (y2 - y1) // 6)
                 img[y1 + 2:y1 + 2 + band, x1 + 2:x2 - 2] = np.clip(color + 40, 0, 255).astype(np.uint8)  # lid
                 mid = (x1 + x2) // 2
-                img[y1 + 2:y2 - 2, mid:mid + 2] = (200, 185, 140)  # tape
+                if is_traffic(scene):
+                    # Dark windshield at the front and rear; cars remain axis-aligned rectangles.
+                    img[y1 + 3:y2 - 3, x1 + 3:x1 + 6] = (31, 44, 52)
+                    img[y1 + 3:y2 - 3, x2 - 7:x2 - 4] = (31, 44, 52)
+                else:
+                    img[y1 + 2:y2 - 2, mid:mid + 2] = (200, 185, 140)  # tape
         for occ in scene.occluders:
             if occ.active(f):
                 x1, y1 = _px(scene, occ.x1, occ.y1)
                 x2, y2 = _px(scene, occ.x2, occ.y2)
                 img[y1:y2, x1:x2] = OCCLUDER
+                if is_traffic(scene):
+                    img[y1 + 2:y2 - 2, x2 - 9:x2 - 3] = (35, 52, 66)  # truck cab
+                    img[y1 + 3:y1 + 6, x1 + 6:x2 - 6] = (55, 55, 55)
+                    img[y2 - 6:y2 - 3, x1 + 6:x2 - 6] = (55, 55, 55)
         yield f, img
 
 
@@ -114,11 +157,15 @@ def ground_truth(scene: SceneSpec) -> TrackSet:
                 continue
             x1, y1, x2, y2 = rect
             hidden = any(o.active(f) and o.x1 <= c[0] <= o.x2 and o.y1 <= c[1] <= o.y2 for o in scene.occluders)
+            box = box_at(scene, obj, f) if is_traffic(scene) else Box(x1=x1, y1=y1, x2=x2, y2=y2)
             frames.append(TrackFrame(frame_index=f, timestamp_ms=f * 1000.0 / scene.fps, object_id=obj.object_id,
-                                     label=obj.label, box=Box(x1=x1, y1=y1, x2=x2, y2=y2), confidence=1.0,
+                                     label=object_label(obj) if is_traffic(scene) else obj.label,
+                                     box=box, confidence=1.0,
                                      occluded=hidden))
-    return TrackSet(video=VideoInfo(width=scene.width, height=scene.height, fps=scene.fps, frame_count=scene.n_frames),
-                    frames=frames, source="synthetic_ground_truth", source_ref=f"scene:{scene.scene_hash()}")
+    track_type = TrafficTracks if is_traffic(scene) else TrackSet
+    return track_type(video=VideoInfo(width=scene.width, height=scene.height, fps=scene.fps, frame_count=scene.n_frames),
+                      frames=frames, source="synthetic" if is_traffic(scene) else "synthetic_ground_truth",
+                      source_ref=f"scene:{scene.scene_hash()}")
 
 
 def oracle_view(gt: TrackSet) -> TrackSet:

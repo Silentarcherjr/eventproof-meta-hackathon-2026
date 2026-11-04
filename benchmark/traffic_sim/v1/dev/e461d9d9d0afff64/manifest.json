@@ -1,0 +1,26 @@
+{
+  "family": "occluded",
+  "files_sha256": {
+    "ground_truth.json": "877b70a5c7cdb61a2d492a1c0df33aa43d9649a3e77291f1130ed8652a31f97b",
+    "labels.json": "5f651759718d15a2c3d7880c3c8e4bf2b680ccce2a3f9b9d7d2157241cbe8206",
+    "scene.json": "f3833b42d6e3ea145ae9ee946d4f1eb16de52c88ca05f73b87ddafda54b7a2b4",
+    "tracks.json": "f39c090cbdcc7eb59c942c67c66d27f713b9d75496d5f19dcda7c1a3b37c8f1f",
+    "video.mp4": "4c5f425a0db27c4fe847cda2f0b718f1d191e8343ea5f731c227d0424822e177"
+  },
+  "fps": 10.0,
+  "frames_sha256": "7e6abd8522cffd1e5f5161df0d4cb33977e25e3d9a681d3073d4b945e7963aac",
+  "generator": "traffic-gen/1",
+  "ground_truth_frames": 64,
+  "mp4_sha256": "4c5f425a0db27c4fe847cda2f0b718f1d191e8343ea5f731c227d0424822e177",
+  "n_frames": 67,
+  "objects": 1,
+  "origin": "synthetic, own work",
+  "scene_sha256": "e461d9d9d0afff646a8245ab0f04303d0bad42bca27fed08df802e1b78f05c65",
+  "seed": 33,
+  "size": [
+    480,
+    270
+  ],
+  "source": "synthetic",
+  "truth_version": "traffic-truth/1"
+}
