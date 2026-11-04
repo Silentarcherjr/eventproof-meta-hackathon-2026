@@ -1,0 +1,52 @@
+{
+ "schema_version": "eventproof-real-labels/1",
+ "packing_line": "packing_entry",
+ "rule_text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+ "layout": {
+  "zones": [
+   {
+    "zone": {
+     "id": "inspection",
+     "polygon": [
+      [
+       0.175,
+       0.6964
+      ],
+      [
+       0.4688,
+       0.7554
+      ],
+      [
+       0.7656,
+       0.2679
+      ],
+      [
+       0.0781,
+       0.2679
+      ]
+     ]
+    },
+    "description": "waiting zone: the southbound approach lanes just before the stop line (top-down drone view; cars come from the top of the frame)"
+   }
+  ],
+  "lines": [
+   {
+    "line": {
+     "id": "packing_entry",
+     "a": [
+      0.175,
+      0.6964
+     ],
+     "b": [
+      0.4688,
+      0.7554
+     ]
+    },
+    "description": "stop line across the southbound approach lanes; cars travel from top to bottom of the frame"
+   }
+  ]
+ },
+ "clip": "drone_south_2.mp4",
+ "clip_sha256": "08b8be35905664865c37dac985c4f3f9cfef8e87be67d095c61af3261f54a7df",
+ "notes": "Pexels video 35172060 (Pexels License; not redistributed), static top-down drone over a signalised intersection, never used before in this repository; southbound approach, source t 18.7-37.4 s, crop x300-620 y0-560 of the 720x1280 file, 10 fps, metadata stripped."
+}
