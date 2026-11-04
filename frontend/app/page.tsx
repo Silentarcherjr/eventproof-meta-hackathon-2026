@@ -132,6 +132,27 @@ export default function Studio() {
           <p className="text-sm text-zinc-400">Describe a visual rule in plain language. Muse Spark turns it into a checkable rule, SAM 3.1 tracks the objects, and every verdict comes with its frames.</p>
         </div>
       </header>
+      <section className="mb-6 rounded-xl bg-zinc-900 p-4 ring-1 ring-zinc-800" data-testid="hero">
+        <p className="text-lg font-semibold">Before an AI camera fines anyone, test whether the rule would hold up.</p>
+        <p className="mt-1 text-sm text-zinc-400">
+          A stop law says &ldquo;shall stop&rdquo; but never for how long, or how slow counts as stopped. A camera has to pick
+          both numbers, and nobody checks them. Start with one of these, or open a real clip below and write your own rule.
+        </p>
+        <div className="mt-3 grid gap-3 sm:grid-cols-3">
+          <Link href="/court" className="rounded-lg bg-zinc-800 p-3 ring-1 ring-zinc-700 hover:ring-sky-500">
+            <div className="text-sm font-semibold text-sky-300">Ticket court</div>
+            <div className="text-sm text-zinc-300">20 real tickets, all correct under the rule: only 4 survive every reasonable challenge.</div>
+          </Link>
+          <Link href="/law" className="rounded-lg bg-zinc-800 p-3 ring-1 ring-zinc-700 hover:ring-sky-500">
+            <div className="text-sm font-semibold text-sky-300">Drag the law</div>
+            <div className="text-sm text-zinc-300">Same statute, same 30 real cars: 0 to 17 tickets, moved only by the two unwritten numbers.</div>
+          </Link>
+          <Link href="/lab" className="rounded-lg bg-zinc-800 p-3 ring-1 ring-zinc-700 hover:ring-sky-500">
+            <div className="text-sm font-semibold text-sky-300">Traffic lab</div>
+            <div className="text-sm text-zinc-300">Scenes with known truth: flip one open choice and watch verdicts change, frame by frame.</div>
+          </Link>
+        </div>
+      </section>
       {showcase && (
         <div className="mb-4 rounded-lg bg-sky-500/10 p-3 text-sm text-sky-200 ring-1 ring-sky-500/40" data-testid="showcase-banner">
           Showcase server: it replays recorded runs (real Muse Spark and SAM 3.1 outputs, served from their cache) and makes no

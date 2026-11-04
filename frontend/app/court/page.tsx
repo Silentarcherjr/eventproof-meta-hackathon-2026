@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getCourt, type Court, type CourtCase, type Gate } from "@/lib/api";
+import { clipNames, relabel } from "@/lib/labels";
 
 const TONE: Record<string, string> = {
   ROBUST: "ring-green-500/50 bg-green-500/10", FRAGILE: "ring-red-500/50 bg-red-500/10",
@@ -17,28 +18,30 @@ const pct = (x: number) => `${Math.round(x * 100)} %`;
 
 function Case({ c }: { c: CourtCase }) {
   const d = c.defense;
+  const names = clipNames(c.clip);
+  const T = (s: string) => relabel(s, names);
   return (
     <div className="grid gap-3 lg:grid-cols-3" data-testid="case">
       <div className="min-w-0 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800 [overflow-wrap:anywhere]">
         <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">1 · Prosecution</h3>
         <p className="text-sm text-zinc-200">&ldquo;{c.rule_text}&rdquo;</p>
-        <p className="mt-2 text-sm text-zinc-400">{c.explanation}</p>
+        <p className="mt-2 text-sm text-zinc-400">{T(c.explanation)}</p>
         <p className="mt-2 text-sm text-zinc-400">Measured at the object&apos;s {c.anchor.replace("_", " ")}. SAM 3.1 track #{c.object_id}, frames {c.first_frame}–{c.last_frame}.</p>
         <ul className="mt-2 space-y-1 text-xs text-zinc-300">
-          {c.events.map((e, i) => <li key={i}><span className="font-mono">{e.op}</span> {e.target}: {e.status}{e.frame != null ? ` at frame ${e.frame}` : ""}</li>)}
+          {c.events.map((e, i) => <li key={i}><span className="font-mono">{e.op}</span> {T(e.target)}: {e.status}{e.frame != null ? ` at frame ${e.frame}` : ""}</li>)}
         </ul>
         <p className="mt-3 text-sm"><span className="rounded bg-red-500/20 px-2 py-0.5 text-red-200">Ticket: {c.verdict}</span></p>
         <a href={`/?run=${c.run_id}`} className="mt-2 inline-block text-xs text-sky-300 underline">open this clip in the studio</a>
       </div>
       <div className="min-w-0 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800 [overflow-wrap:anywhere]">
         <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">2 · Defense (Muse Spark)</h3>
-        {d.concede ? <p className="text-sm text-zinc-300">The defense <b>concedes</b>: {d.concession}</p> : (
+        {d.concede ? <p className="text-sm text-zinc-300">The defense <b>concedes</b>: {T(d.concession)}</p> : (
           <ul className="space-y-2 text-sm">
             {d.arguments.map((a) => (
               <li key={a.id}>
                 <span className={c.flipping.includes(a.id) ? "text-red-300" : "text-zinc-500"}>{c.flipping.includes(a.id) ? "wins" : "does not change it"}</span>
                 {" · "}<span className="font-mono text-xs text-zinc-400">{a.id}</span>
-                <p className="text-zinc-300">{a.argument}</p>
+                <p className="text-zinc-300">{T(a.argument)}</p>
               </li>
             ))}
           </ul>
@@ -48,7 +51,7 @@ function Case({ c }: { c: CourtCase }) {
       <div className="min-w-0 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800 [overflow-wrap:anywhere]">
         <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">3 · Ruling (deterministic sweep)</h3>
         <p className="text-sm text-zinc-200">This ticket <b>{WORDS[c.status] ?? c.status}</b>.</p>
-        {c.smallest_flip && <p className="mt-1 text-sm text-zinc-400">Smallest change that overturns it: {c.smallest_flip}</p>}
+        {c.smallest_flip && <p className="mt-1 text-sm text-zinc-400">Smallest change that overturns it: {T(c.smallest_flip)}</p>}
         <p className="mt-2 text-sm text-zinc-400">{c.flipping.length} of the challenges in the menu overturn it.</p>
         <p className="mt-3 text-sm">Frozen label (truth under the rule as written): <b>{c.intended}</b>{c.audited ? " (after the label audit)" : ""} — the ticket was <b className={c.correct === "wrong" ? "text-red-300" : "text-green-300"}>{c.correct === "wrong" ? "wrongly issued" : "correctly issued"}</b>.</p>
         {c.status !== "ROBUST" && c.correct !== "wrong" && <p className="mt-1 text-sm text-amber-200">Correct under the rule, yet it would not hold up: it rests on a choice nobody wrote down (and the rule cannot see the traffic signal).</p>}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { aliases } from "@/lib/labels";
 import type { Layout, ObjectVerdict, Pt, TrackFrame, VideoInfo } from "@/lib/types";
 
 export type Tool = "none" | "zone" | "line";
@@ -25,6 +26,7 @@ const clamp = (v: number) => Math.min(1, Math.max(0, v));
 export default function VideoStage({ src, layout, onLayoutChange, tool, tracksByFrame, info, verdicts, onFrame, seekFrame }: Props) {
   const video = useRef<HTMLVideoElement>(null);
   const svg = useRef<SVGSVGElement>(null);
+  const names = aliases(layout);
   const [frame, setFrame] = useState(0);
   const [aspect, setAspect] = useState(16 / 9);
   const [drag, setDrag] = useState<{ start: Pt; end: Pt } | null>(null);
@@ -94,14 +96,14 @@ export default function VideoStage({ src, layout, onLayoutChange, tool, tracksBy
           <g key={zone.id}>
             <polygon points={zone.polygon.map((p) => p.join(",")).join(" ")} fill="rgba(250,204,21,0.15)"
                      stroke="#facc15" strokeWidth={0.004} vectorEffect="non-scaling-stroke" />
-            <text x={zone.polygon[0][0] + 0.005} y={zone.polygon[0][1] + 0.04} fontSize={0.035} fill="#facc15">{zone.id}</text>
+            <text x={zone.polygon[0][0] + 0.005} y={zone.polygon[0][1] + 0.04} fontSize={0.035} fill="#facc15">{names[zone.id] ?? zone.id}</text>
           </g>
         ))}
         {layout.lines.map(({ line }) => (
           <g key={line.id}>
             <line x1={line.a[0]} y1={line.a[1]} x2={line.b[0]} y2={line.b[1]} stroke="#38bdf8" strokeWidth={3}
                   vectorEffect="non-scaling-stroke" strokeDasharray="6 4" />
-            <text x={line.a[0] + 0.008} y={line.a[1] + 0.04} fontSize={0.035} fill="#38bdf8">{line.id}</text>
+            <text x={line.a[0] + 0.008} y={line.a[1] + 0.04} fontSize={0.035} fill="#38bdf8">{names[line.id] ?? line.id}</text>
           </g>
         ))}
         {drag && tool === "zone" && (

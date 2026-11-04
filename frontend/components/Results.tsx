@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment } from "react";
+import { aliases, relabel } from "@/lib/labels";
 import type { Evidence } from "@/lib/types";
 
 const OVERALL: Record<string, string> = {
@@ -14,6 +15,7 @@ const short = (s: string | null | undefined, n = 12) => (s ? `${s.slice(0, n)}â€
 
 export default function Results({ ev, onSeek }: { ev: Evidence; onSeek: (f: number) => void }) {
   const r = ev.result;
+  const names = aliases(ev.rule.layout);
   return (
     <div className="space-y-5" data-testid="results">
       {ev.status !== "completed" ? (
@@ -41,7 +43,7 @@ export default function Results({ ev, onSeek }: { ev: Evidence; onSeek: (f: numb
                 {o.events.map((e) => (
                   <li key={`${e.op}-${e.target}`} className="flex items-start gap-2">
                     <span className="font-mono text-xs text-zinc-500">{e.op}</span>
-                    <span className="flex-1">{e.reason}</span>
+                    <span className="flex-1">{relabel(e.reason, names)}</span>
                     {e.frame != null && (
                       <button className="rounded bg-zinc-800 px-1.5 font-mono text-xs text-sky-300 hover:bg-zinc-700"
                               onClick={() => onSeek(e.frame!)}>f{e.frame}</button>
