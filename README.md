@@ -1,45 +1,22 @@
 # EventProof
 
-**Before an AI camera fines anyone, EventProof puts the rule, and every ticket, on trial.**
+**Before an AI camera fines anyone, EventProof tests whether the rule would hold up.**
 
-**This already happens.** In 2024, New York's AI bus-lane cameras (Hayden AI, an $83 million contract, about 1,020
-buses) issued about **3,800 mistaken violations**, more than 870 of them to cars parked legally. By the MTA's account
-the problem was the *rule*, not the detection: the cameras "had not been programed to know" about the legal parking zones, and
-the warning period was not respected. Human review did not catch it; the tickets were voided and refunded afterwards.
+The law says "shall stop". It never says for how long, or how slow counts as stopped. A camera has to pick both
+numbers, and nobody checks them. **Same law, same 30 real cars, same model: anywhere from 0 to 17 tickets**, depending
+only on those two numbers. New York learned this the hard way: its AI bus-lane cameras issued about 3,800 mistaken
+violations in 2024 because the *rule* was wrong, not the detection.
 
-AI cameras now fine people for stop signs, bus lanes, phones at the wheel and red lights. Detecting the event is the
-easy half. EventProof checks the half that failed in New York, **the rule the camera runs**, and asks of every ticket:
-**would it hold up?**
-- **Muse Spark** compiles the sentence, or the statute itself, into a video check.
-- **SAM 3.1** tracks every car.
-- **Muse Wonder** reads the sentence a second time.
-- **EventProof** then attacks the rule and every ticket it issues, and keeps only what survives.
+EventProof is the check before a camera rule goes live:
+1. **Compile.** Muse Spark turns the sentence or the statute into a typed rule (never code); SAM 3.1 tracks every car.
+2. **Attack.** Every ticket is re-judged under small, reasonable changes; Muse Spark argues the driver's defense and
+   Muse Wonder reads the rule a second time. Of 20 real tickets, all correct under the rule, **only 4 survive every
+   challenge**.
+3. **Withhold.** While a ticket rests on a choice nobody approved, the rule issues nothing. A person signs the open
+   numbers; then 17 of 20 issue automatically (0 wrong) and 3 go to a human.
 
-**One ticket.** A grey hatchback in Wroclaw drives through the stop line without ever stopping, and the camera tickets
-it. Under the rule as written, the ticket is correct. Muse Spark, acting as the driver's lawyer, finds the one argument that wins: the rule never
-says how slow counts as "stopped". Double that threshold and the ticket disappears. Across **20 real tickets from
-labelled footage, all 20 were right under the rule as written** (after a label audit), yet **only 4 stay the same under every challenge**: 11 of
-the others turn on a number nobody wrote down. A correct ticket that rests on an unwritten choice is not one a city
-should issue automatically.
-
-**The law, as written.** Maryland's statute (where Takoma Park tickets) and California's say *"shall stop"* and contain
-no digit. A camera still needs two numbers: how long to stand still, and how slow counts as "still". **Same law, same
-30 real cars, same model: anywhere from 0 to 17 tickets**, depending only on those two numbers. Muse Spark picked
-1.0 s at ≤ 0.05 frame widths/s (13 tickets, 25/30 right), and labelled 0.05 as "quoted" from the words "shall stop".
-
-**Three numbers, all on labelled real footage, all pre-registered:**
-
-| | |
-|---|---|
-| Real tickets (all 20 correct under the rule) that stay the same under every challenge | **4 of 20** |
-| Tickets the same law issues on the same 30 cars, depending on two unwritten numbers | **0 to 17** |
-| Cars judged right by the rule Muse Spark compiled; by a repair that passed every synthetic test | **27/30 vs 16/30** |
-
-**Who it is for.** Every city and transit agency that lets an AI camera issue fines: New York's bus lanes, Takoma
-Park's $40 stop-sign citations, Virginia since April 2026. Such systems' claims are *"rarely backed up by independent
-studies"* (NYCLU, in IEEE Spectrum), and New York shows what a wrong rule costs: thousands of refunds and public trust.
-EventProof is that independent check, for the program manager who signs off on a camera rule before it goes live, the
-reviewer who approves each citation, and the vendor who must prove its rule before the contract pays.
+The same engine judges any camera rule built from zones, times, crossings and "with" relations (a worker with a hard
+hat, a box on a conveyor). Every number below is pre-registered and recomputed in CI.
 
 ## How it works
 1. **Compile.** Muse Spark turns the sentence, or the statute, into a typed rule. It never writes code, and every value
