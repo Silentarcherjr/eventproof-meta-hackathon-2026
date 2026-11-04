@@ -232,4 +232,6 @@ Solo developer (Indie Developer track), built during the hackathon window (Oct 2
 
 ## License
 MIT ([`LICENSE`](LICENSE)) for the code in this repository. Third-party components and media keep their own licenses
-(`docs/compliance/LICENSE_INVENTORY.md`); the Pexels clips are not redistributed, only referenced by URL and sha256.
+(`docs/compliance/LICENSE_INVENTORY.md`); the Pexels clips are not committed, only referenced by URL and sha256 (the live studio streams the
+clips it judges, as the Pexels License allows). INTERACTION trajectories: CC BY 4.0, see
+[`benchmark/interaction/ATTRIBUTION.md`](benchmark/interaction/ATTRIBUTION.md).
