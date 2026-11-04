@@ -208,3 +208,10 @@
 - 2026-11-04 P1-24 MEVA (CC BY 4.0, participant-approved): 1,392 moving vehicle tracks with Kitware 'vehicle_stops'
   labels, pre-registered (c3fdf67). Muse rule agrees 24 %; design invalid (tracks span only their activity: stop tracks
   end at rest, start tracks begin at rest). Documented in benchmark/meva/FINDINGS.md; not used as an accuracy result.
+
+- 2026-11-04 P1-TRAFFIC-VISUALS (`traffic-visuals`, base fac447c): optional street/1 drawing style,
+  ten seed-0 showcase videos restyled (46-75 KB), contract-prefix overlays, old default renderer preserved.
+  All 2,634 protected artifacts stayed byte-identical; frozen v1 verification and 30 new regression tests pass.
+  Full backend: 407 passed, 1 skipped; Ruff, TypeScript and Next build pass. Browser /lab on :3002 verified
+  all eight scenes/two pair videos, full-stop 2.3S PASS, rolling-stop 0.0S VIOLATION and truck occlusion.
+  Screenshot/proof in benchmark/traffic_sim/showcase/street-*. No Meta calls/spend. IN_REVIEW, no merge.

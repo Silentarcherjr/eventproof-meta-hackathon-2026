@@ -1,13 +1,15 @@
 {
   "family": "wrong_way",
   "fps": 10.0,
-  "frames_sha256": "a95ca8e382b0629f4f948f48dddb3a36c31d9c219ef923f7bd9ab07d95532c82",
+  "frames_sha256": "27d0e36a38f31f4d35f652a62c3b8410cc91f2c22b076b65721fc2c2515bc64d",
   "generator": "traffic-gen/1",
   "ground_truth_frames": 96,
-  "mp4_sha256": "90608d80d1e2388c9154102263affa611bcbb889eb72e69d3298720a49736fdf",
+  "mp4_sha256": "1951d9a85daa73cb3e00898285758cc7d7001faeccaf9c8a54b7187067121978",
   "n_frames": 51,
   "objects": 2,
   "origin": "synthetic, own work",
+  "overlay": true,
+  "render_style": "street/1",
   "scene_sha256": "5a69fec38bd44bd82638525254bf0322919120369fbf580271435b8dd5aaac6a",
   "seed": 0,
   "size": [

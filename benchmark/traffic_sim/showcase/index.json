@@ -1,52 +1,84 @@
 {
+  "overlay": true,
   "pair": {
     "fail": {
       "directory": "pair/65460d1086e53e0c",
+      "frames_sha256": "d8eb4fb49fb82b8b178917161f3bd858d94ba9ead466eb5bd563ac3e78ea2d88",
+      "manifest_sha256": "4ec7be4c54dfd8b2f341a307638daab42e121b99a7aef18345b929990847f414",
+      "mp4_sha256": "a30087cf4cb3f69ff5bf2e29fbb859053561f382a84c35220ac1f445d1939f75",
       "scene_sha256": "65460d1086e53e0c4e508485d845288d4e6521b71506189408eac8b011e838a4"
     },
     "pass": {
       "directory": "pair/a00bdc4a8beb4d82",
+      "frames_sha256": "d10a250ea6a4173e8d155aac63c6d2bed28f02081d3bcab31ccb5185ff43318f",
+      "manifest_sha256": "61aaeca721dd2dea12d474b8e321d3375c0a1fb4034d19f7a39ddac727f46ef1",
+      "mp4_sha256": "539ce555b9ec83f9d302a11f7bdfd8bcad79abc18041fa0085e3a0452b2e5f87",
       "scene_sha256": "a00bdc4a8beb4d82efce646c7c2f911b19d938f27e2c99f39037a768edb71836"
     }
   },
+  "render_style": "street/1",
   "scenes": {
     "brief_stop": {
       "directory": "scenes/33f587208802d55d",
+      "frames_sha256": "59dbf4c56909f4c37da97ee49837af6b7a24b15b53595ba13d7c8be63ba66736",
+      "manifest_sha256": "3343f8ee1b827d17c1f7c273332997ee5e952c3118daa5f50b1c5a9dbde3e6d9",
+      "mp4_sha256": "a9b15f3756dc105790508656f2122172927eb1d30cafcb1913e19cbee9a9e7f1",
       "scene_sha256": "33f587208802d55d5e396c376e620d61e13abeef30dc872d1eb94f76ca25137d",
       "seed": 0
     },
     "full_stop": {
       "directory": "scenes/a0b7801f1c1dc4a3",
+      "frames_sha256": "34da7d9ea03437833fb30e7c87989adf94a5e90d946a7e28a61e15c269b07308",
+      "manifest_sha256": "95adb1f6896ebeeb84abf54be87e55fde691064236d3b3037286e339e5b12fcf",
+      "mp4_sha256": "ebd4d18f0ee139ff77a4a4de75eb089b4916ff850ea0776e5bb5c6a433d97b1c",
       "scene_sha256": "a0b7801f1c1dc4a3cf1753d5c0d9781eb2eaaab884662ecd460b2a8c550f54cd",
       "seed": 0
     },
     "no_stop": {
       "directory": "scenes/eaf28145e808ac24",
+      "frames_sha256": "e09f5ed842adbf9b99eb340751bab6ae4352d6aa73805d8d6f55cd3ee091a43b",
+      "manifest_sha256": "d064212c10aab8a29c3010f66225037fc178297c24fdfad76d103862ece0efc2",
+      "mp4_sha256": "88928b463dda1dcc085ad26c41ade81f9a270011ced52bc0bdd1b4d8c9c04a73",
       "scene_sha256": "eaf28145e808ac2421c1cad9afa427409f16f57482b9da7920e8c8e8d794cc0b",
       "seed": 0
     },
     "occluded": {
       "directory": "scenes/da0fa53fe2d0aa57",
+      "frames_sha256": "0dd66aae275ab2c1994cb9a06bfb11a8d1766b2daa492fbe2e93abb871a2309a",
+      "manifest_sha256": "89cd7caf1c71823e6613f8a1090e354239c4a2389fe2ab583d536e72a12449c8",
+      "mp4_sha256": "32130ee3f13bb3333a1dfda90932756d2319a7be75236792e671206bc8af6655",
       "scene_sha256": "da0fa53fe2d0aa5710bf7643382e561797891e4ffd2c555096c3e2679e34b1da",
       "seed": 0
     },
     "queue": {
       "directory": "scenes/d0b4339061e8f672",
+      "frames_sha256": "4311119e7723ded2ed7eb2c7a45c992341431b51b792f899a3cba28b794d2c50",
+      "manifest_sha256": "6c6518d23ad165c2d742ed280c942f88a875dc9689c046cc6300097efc8ae927",
+      "mp4_sha256": "b70c4aab87293ed488beffd35ae7f94c53315b7b19466475f7154e2af70cf830",
       "scene_sha256": "d0b4339061e8f672c4258a7cd7f1d58a8dc8ce185c8d2990f0360a7284e87ad0",
       "seed": 0
     },
     "rolling_stop": {
       "directory": "scenes/c4b45177bd2ff3a2",
+      "frames_sha256": "f006d7780054a81833ca93419018c6812783fdb6695814f755bdcd26c63e818c",
+      "manifest_sha256": "326998ac3783e317dd312a6268978f23dafc77992ca2ca28dd5a5a30d728ffbc",
+      "mp4_sha256": "9ecb1bd1a2a903cb8bbe0090db16fbed96fd51909195422fc7cceb502971b816",
       "scene_sha256": "c4b45177bd2ff3a2eca2e91003cec255c7e033931d9b59fdc1b2f7d93930fc81",
       "seed": 0
     },
     "tailgate": {
       "directory": "scenes/311574a3b41bf11e",
+      "frames_sha256": "189946662e48126ce9ce8cdde4b6558db7fc12fc407aa5a0e3ed6c813bcac6fd",
+      "manifest_sha256": "70868dba9f03b6ff0d528a842c543c8632218aa0342589573ae3c61ee0752bb9",
+      "mp4_sha256": "eabcce590646f32418e96727d870c7ad10f1bf5f93249bb47e4a3c9c6fd49a73",
       "scene_sha256": "311574a3b41bf11eab5095f8b566ab7826c8469e6c7f6c956aa56345dc85687a",
       "seed": 0
     },
     "wrong_way": {
       "directory": "scenes/5a69fec38bd44bd8",
+      "frames_sha256": "27d0e36a38f31f4d35f652a62c3b8410cc91f2c22b076b65721fc2c2515bc64d",
+      "manifest_sha256": "fe437b371cc1670ae0e18d85e5942a4aeb1ef49b10d79783961fdf10cab337f2",
+      "mp4_sha256": "1951d9a85daa73cb3e00898285758cc7d7001faeccaf9c8a54b7187067121978",
       "scene_sha256": "5a69fec38bd44bd82638525254bf0322919120369fbf580271435b8dd5aaac6a",
       "seed": 0
     }

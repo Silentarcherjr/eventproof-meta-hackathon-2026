@@ -1079,7 +1079,7 @@
       "updated_at": "2026-11-02T06:04:28Z",
       "blocker": null,
       "next_action": "demo shot",
-      "cost_note": "24 live compiles; ≈ $1.4 cached + ≈ $2 uncached (estimate)"
+      "cost_note": "24 live compiles; \u2248 $1.4 cached + \u2248 $2 uncached (estimate)"
     },
     {
       "id": "P1-12",
@@ -1110,7 +1110,7 @@
       "updated_at": "2026-11-02T06:45:20Z",
       "blocker": null,
       "next_action": "CI green -> DONE_VERIFIED",
-      "cost_note": "≈ $0.5"
+      "cost_note": "\u2248 $0.5"
     },
     {
       "id": "P1-13",
@@ -1134,7 +1134,7 @@
       "blocker": null,
       "started_at": "2026-11-02T00:00:00Z",
       "updated_at": "2026-11-02T21:00:00Z",
-      "cost_note": "≈ $0.2 (estimate), see docs/COSTS.md",
+      "cost_note": "\u2248 $0.2 (estimate), see docs/COSTS.md",
       "next_action": "none"
     },
     {
@@ -1159,7 +1159,7 @@
       "blocker": null,
       "started_at": "2026-11-02T00:00:00Z",
       "updated_at": "2026-11-02T21:00:00Z",
-      "cost_note": "≈ $0.05 (estimate)",
+      "cost_note": "\u2248 $0.05 (estimate)",
       "next_action": "none"
     },
     {
@@ -1184,7 +1184,7 @@
       "blocker": null,
       "started_at": "2026-11-02T00:00:00Z",
       "updated_at": "2026-11-02T21:00:00Z",
-      "cost_note": "≈ $0.05 (estimate)",
+      "cost_note": "\u2248 $0.05 (estimate)",
       "next_action": "none"
     },
     {
@@ -1209,7 +1209,7 @@
       "blocker": null,
       "started_at": "2026-11-02T00:00:00Z",
       "updated_at": "2026-11-02T21:00:00Z",
-      "cost_note": "≈ $0.15 (estimate)",
+      "cost_note": "\u2248 $0.15 (estimate)",
       "next_action": "none"
     },
     {
@@ -1236,7 +1236,7 @@
       "blocker": null,
       "started_at": "2026-11-02T00:00:00Z",
       "updated_at": "2026-11-02T21:30:00Z",
-      "cost_note": "≈ $0.05 (estimate)",
+      "cost_note": "\u2248 $0.05 (estimate)",
       "next_action": "none"
     },
     {
@@ -1265,7 +1265,7 @@
       "updated_at": "2026-11-03T22:40:00Z",
       "blocker": null,
       "next_action": "none",
-      "cost_note": "≈ $0.04 Meta; Vercel $0"
+      "cost_note": "\u2248 $0.04 Meta; Vercel $0"
     },
     {
       "id": "P1-19",
@@ -1293,7 +1293,7 @@
       "updated_at": "2026-11-03T23:40:00Z",
       "blocker": null,
       "next_action": "none",
-      "cost_note": "≈ $0.12"
+      "cost_note": "\u2248 $0.12"
     },
     {
       "id": "P1-20",
@@ -1321,7 +1321,7 @@
       "updated_at": "2026-11-04T01:10:00Z",
       "blocker": null,
       "next_action": "none",
-      "cost_note": "≈ $0.12"
+      "cost_note": "\u2248 $0.12"
     },
     {
       "priority": "P1",
@@ -1348,7 +1348,7 @@
         "benchmark/tickets/FINDINGS.md"
       ],
       "commit_sha": "ee5d021",
-      "cost_note": "≈ $0.6"
+      "cost_note": "\u2248 $0.6"
     },
     {
       "priority": "P1",
@@ -1375,7 +1375,7 @@
         "benchmark/law/FINDINGS.md"
       ],
       "commit_sha": "584ab21",
-      "cost_note": "≈ $0.3"
+      "cost_note": "\u2248 $0.3"
     },
     {
       "id": "P1-23",
@@ -1406,6 +1406,39 @@
       "blocker": null,
       "next_action": "none",
       "cost_note": "$0 (deterministic)"
+    },
+    {
+      "id": "P1-TRAFFIC-VISUALS",
+      "title": "Optional street render style for Traffic lab; frozen measurements preserved",
+      "priority": "P1",
+      "gate": "G5",
+      "state": "IN_REVIEW",
+      "dependencies": [
+        "G2-01",
+        "G1-06"
+      ],
+      "owner": "challenge",
+      "branch": "traffic-visuals",
+      "definition_of_done": "Street showcase verified in browser; all tests/build pass; protected bytes unchanged; reviewed and merged SHA",
+      "test_commands": [
+        "cd backend && uv run pytest -q",
+        "cd backend && uv run ruff check .",
+        "cd frontend && npx tsc --noEmit",
+        "cd frontend && npx next build"
+      ],
+      "evidence_paths": [
+        "backend/tests/challenge/test_street.py",
+        "benchmark/traffic_sim/README.md",
+        "benchmark/traffic_sim/showcase/street-browser.png",
+        "benchmark/traffic_sim/showcase/street-verification.json"
+      ],
+      "commit_sha": null,
+      "pr_url": null,
+      "started_at": "2026-11-04T11:31:41Z",
+      "updated_at": "2026-11-04T11:39:16Z",
+      "blocker": null,
+      "next_action": "Review traffic-visuals and merge separately; all local checks passed; no merge performed",
+      "cost_note": "$0 Meta; deterministic drawing only"
     }
   ]
 }

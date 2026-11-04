@@ -1,13 +1,15 @@
 {
   "family": "tailgate",
   "fps": 10.0,
-  "frames_sha256": "12bee035868a313465035925aa132dcdd0357f02d12882315c5ef93354122da9",
+  "frames_sha256": "189946662e48126ce9ce8cdde4b6558db7fc12fc407aa5a0e3ed6c813bcac6fd",
   "generator": "traffic-gen/1",
   "ground_truth_frames": 222,
-  "mp4_sha256": "ab3f192a1981e8089770540f03fe8df4334ff350019518ac93fc08310ebc4e61",
+  "mp4_sha256": "eabcce590646f32418e96727d870c7ad10f1bf5f93249bb47e4a3c9c6fd49a73",
   "n_frames": 77,
   "objects": 3,
   "origin": "synthetic, own work",
+  "overlay": true,
+  "render_style": "street/1",
   "scene_sha256": "311574a3b41bf11eab5095f8b566ab7826c8469e6c7f6c956aa56345dc85687a",
   "seed": 0,
   "size": [

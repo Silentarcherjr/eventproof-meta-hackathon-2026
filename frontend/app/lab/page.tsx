@@ -84,7 +84,7 @@ export default function LabPage() {
             </select>
             <p className="mt-3 text-xs font-semibold text-amber-200">Synthetic scene, perfect tracks (not SAM)</p>
             {scene ? <video key={scene.video_url} src={labMediaUrl(scene.video_url)} controls loop muted playsInline preload="metadata" className="mt-2 w-full rounded-lg bg-black" aria-label={`${title(family)} synthetic scene`} /> : null}
-            <p className="mt-2 text-xs text-zinc-400">Yellow: waiting zone · white: stop line · blue: cars · green: cross traffic. Car 0 leads; car 1 follows when present.</p>
+            <p className="mt-2 text-xs text-zinc-400">Gold: waiting zone · white: stop line · numbered cars · muted cross traffic. Video labels show contract truth, not the adjustable rule. Car 0 leads; car 1 follows when present.</p>
           </section>
           <section className={`${card} space-y-5`} aria-label="Your rule controls">
             <h2 className="text-lg font-semibold">Your rule</h2>
