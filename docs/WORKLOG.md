@@ -193,3 +193,9 @@
 - 2026-11-04 P1-20 compiler schemas 4/5 with an `anchor` field (model picks where objects are measured); studio uses
   it. Pre-registered re-run of all 5 frozen real sets (9b87501): 34 -> 38/46 right, never judged 10 -> 3, wrong 0 -> 3
   (w3 car behind another; 2 Santos riders swapped). Rule check silent on all 10 clips. CI recomputes (test_anchor_v4).
+- 2026-11-04 Idea workshop (54 agents: 12 lenses, novelty check vs 536 repos, 5 judges) -> two features built:
+  P1-21 "Would these tickets hold up?" (review/robustness.py: measurement/threshold/meaning tiers; Muse Spark defense
+  from a closed menu; studio panel; certificate section): 4/20 real tickets robust, defense wins 8/16 beatable, misses
+  the one wrongly issued ticket. P1-22 law mode (statute verbatim, every value QUOTED-and-verified or ASSUMED): Spark
+  25/30 on MD and CA statutes; 14/30 verdicts hang on numbers the law never wrote; first law report had a concept-label
+  scoring bug (kept as report_v0_scoring_bug.json). Both pre-registered; CI recomputes.
