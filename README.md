@@ -5,8 +5,10 @@
 The law says "shall stop". It never says for how long, or how slow counts as stopped. A camera has to pick both
 numbers, and nobody checks them. **Same law, same 30 real cars, same model: anywhere from 0 to 17 tickets**, depending
 only on those two numbers. At scale it is the same: on **1,268 real STOP-sign approaches at US intersections**
-(drone trajectories from the public INTERACTION dataset), the verbatim California statute tickets **anywhere from 9 % to
-85 % of drivers**, again only by those two numbers. Even human coders have to pick them: a Minnesota DOT study of
+(drone trajectories measured by the INTERACTION dataset authors), the verbatim California statute would ticket **anywhere
+from 9 % to 85 % of drivers**, again only by those two numbers. There are no violation labels to check that against, and
+there cannot be: labelling a stop needs the same two numbers. Asked 40 times, Muse silently picks the same lenient pair
+(about 1 s and 5 m/s, under 1 % ticketed): stable, unwritten, and exactly what a person must sign. Even human coders have to pick them: a Minnesota DOT study of
 20,825 stop-sign events counted a "complete stop" as 10+ video frames (about 0.7 s at its 15 fps) and a car slowed to
 3 mph or less as a roll ([MnDOT report 2020-17](https://www.lrl.mn.gov/docs/2021/other/210035.pdf), Table 3.9). New York learned this the hard way: its AI bus-lane cameras issued about 3,800 mistaken
 violations in 2024 because the *rule* was wrong, not the detection.
