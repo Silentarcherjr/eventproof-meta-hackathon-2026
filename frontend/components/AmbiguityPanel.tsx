@@ -38,11 +38,11 @@ export default function AmbiguityPanel({ runId, defaultText }: { runId: string; 
         <h2 className="text-lg font-bold">Two readings</h2>
         <p className="text-xs text-zinc-400">Muse Spark and Muse Wonder each turn your sentence into a rule. If the rules behave differently, you see the smallest pair of scenes that separates them, and you decide what you meant.</p>
       </div>
-      <div className="flex flex-col gap-2 sm:flex-row">
-        <textarea rows={2} value={text} onChange={(e) => setText(e.target.value)} data-testid="ambiguity-text"
-                  className="flex-1 rounded bg-zinc-800 p-2 text-sm" />
+      <div className="flex flex-col gap-2">
+        <textarea rows={3} value={text} onChange={(e) => setText(e.target.value)} data-testid="ambiguity-text"
+                  className="w-full resize-y rounded bg-zinc-800 p-2 text-sm" />
         <button onClick={ask} disabled={busy || text.trim().length < 10} data-testid="ambiguity-ask"
-                className="rounded-lg bg-teal-600 px-3 py-2 text-sm font-semibold text-white disabled:opacity-40">
+                className="self-start rounded-lg bg-teal-600 px-3 py-2 text-sm font-semibold text-white disabled:opacity-40">
           {busy ? "Asking both models…" : "Ask both models"}
         </button>
       </div>
@@ -53,7 +53,7 @@ export default function AmbiguityPanel({ runId, defaultText }: { runId: string; 
           <div className="grid gap-3 md:grid-cols-2">
             {res.readings.map((r, i) => (
               <div key={r.model} data-testid={`reading-${i}`}
-                   className={`rounded-lg p-3 ring-1 ${choice === i ? "bg-teal-500/10 ring-teal-400" : "bg-zinc-900 ring-zinc-800"}`}>
+                   className={`min-w-0 rounded-lg p-3 ring-1 [overflow-wrap:anywhere] ${choice === i ? "bg-teal-500/10 ring-teal-400" : "bg-zinc-900 ring-zinc-800"}`}>
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-semibold">{names[i]} <span className="text-zinc-500">(reading {SIDE[i]})</span></span>
                   {r.ok ? <span className="text-xs text-zinc-400">{r.cached ? "recorded response" : "live"}</span>

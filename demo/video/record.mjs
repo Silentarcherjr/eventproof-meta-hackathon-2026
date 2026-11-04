@@ -75,14 +75,14 @@ const SCENES = {
   },
   4: {
     url: `${STUDIO}/court`, ready: "[data-testid=case]", pre: "[data-testid=case]",
-    css: "html { zoom: 1.05 !important; } a[href='/'] { display: none; }",
+    css: "html { zoom: 1.05 !important; } a[href='/'] { display: none; } #ep-caption { top: auto !important; bottom: 16px; }",
     steps: [
       [0, (p) => caption(p, "Ticket court · a real ticket (Wroclaw) · Muse Spark's defense recorded earlier, the ruling is deterministic")],
     ],
   },
   5: {
     url: `${STUDIO}/court`, ready: "[data-testid=scoreboard]",
-    css: "html { zoom: 1.05 !important; } a[href='/'] { display: none; }",
+    css: "html { zoom: 1.05 !important; } a[href='/'] { display: none; } #ep-caption { top: auto !important; bottom: 16px; }",
     steps: [
       [0, (p) => caption(p, "All 20 real tickets from labelled footage")],
       [18.8, (p) => scrollTo(p, "[data-testid=contract]", 60)],

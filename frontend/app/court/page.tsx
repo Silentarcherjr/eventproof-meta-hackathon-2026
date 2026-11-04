@@ -19,7 +19,7 @@ function Case({ c }: { c: CourtCase }) {
   const d = c.defense;
   return (
     <div className="grid gap-3 lg:grid-cols-3" data-testid="case">
-      <div className="rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800">
+      <div className="min-w-0 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800 [overflow-wrap:anywhere]">
         <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">1 · Prosecution</h3>
         <p className="text-sm text-zinc-200">&ldquo;{c.rule_text}&rdquo;</p>
         <p className="mt-2 text-sm text-zinc-400">{c.explanation}</p>
@@ -30,7 +30,7 @@ function Case({ c }: { c: CourtCase }) {
         <p className="mt-3 text-sm"><span className="rounded bg-red-500/20 px-2 py-0.5 text-red-200">Ticket: {c.verdict}</span></p>
         <a href={`/?run=${c.run_id}`} className="mt-2 inline-block text-xs text-sky-300 underline">open this clip in the studio</a>
       </div>
-      <div className="rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800">
+      <div className="min-w-0 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800 [overflow-wrap:anywhere]">
         <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">2 · Defense (Muse Spark)</h3>
         {d.concede ? <p className="text-sm text-zinc-300">The defense <b>concedes</b>: {d.concession}</p> : (
           <ul className="space-y-2 text-sm">
@@ -45,7 +45,7 @@ function Case({ c }: { c: CourtCase }) {
         )}
         <p className="mt-3 text-xs text-zinc-500">Muse picks only from a closed menu of challenges; the engine decides which ones win.</p>
       </div>
-      <div className="rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800">
+      <div className="min-w-0 rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800 [overflow-wrap:anywhere]">
         <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">3 · Ruling (deterministic sweep)</h3>
         <p className="text-sm text-zinc-200">This ticket <b>{WORDS[c.status] ?? c.status}</b>.</p>
         {c.smallest_flip && <p className="mt-1 text-sm text-zinc-400">Smallest change that overturns it: {c.smallest_flip}</p>}
@@ -76,8 +76,8 @@ export default function CourtPage() {
       <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-5 lg:grid-cols-10" data-testid="scoreboard">
         {court.cases.map((c, i) => (
           <button key={`${c.run_id}-${c.object_id}`} onClick={() => setSel(i)}
-                  className={`rounded-lg p-2 text-left text-xs ring-1 ${TONE[c.status] ?? ""} ${i === sel ? "outline outline-2 outline-sky-400" : ""}`}>
-            <span className="block font-semibold text-zinc-100">{c.clip.replace(".mp4", "")} #{c.object_id}</span>
+                  className={`min-w-0 rounded-lg p-2 text-left text-xs ring-1 [overflow-wrap:anywhere] ${TONE[c.status] ?? ""} ${i === sel ? "outline outline-2 outline-sky-400" : ""}`}>
+            <span className="block font-semibold text-zinc-100">{c.clip.replace(".mp4", "").replaceAll("_", " ")} #{c.object_id}</span>
             <span className="block text-zinc-300">{WORDS[c.status]}</span>
             {c.correct === "wrong" && <span className="block text-red-300">wrongly issued</span>}
           </button>
