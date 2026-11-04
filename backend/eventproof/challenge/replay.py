@@ -17,6 +17,7 @@ from pydantic import BaseModel
 from eventproof.challenge.minimize import Counterexample
 from eventproof.challenge.render import encode_frames, ground_truth, render_frames, sha256_file
 from eventproof.challenge.scene import SceneSpec
+from eventproof.challenge.traffic import perfect_perceiver
 from eventproof.perception.mock import iou
 from eventproof.schemas.tracks import Box, TrackSet
 
@@ -147,7 +148,10 @@ def export_pair(cx: Counterexample, out_dir: Path, video: bool = True) -> dict:
     assert pair is not None
     fail_s, pass_s = pair.fail_scene, pair.pass_scene
     gt_f, gt_p = ground_truth(fail_s), ground_truth(pass_s)
-    pr_f, pr_p = mock_perceiver(fail_s, gt_f), mock_perceiver(pass_s, gt_p)
+    if cx.perception not in ("mock", "synthetic_ground_truth", "synthetic"):
+        raise ValueError("replay needs the recorded perceiver; cannot substitute a mock for model output")
+    perceive = perfect_perceiver if cx.perception in ("synthetic_ground_truth", "synthetic") else mock_perceiver
+    pr_f, pr_p = perceive(fail_s, gt_f), perceive(pass_s, gt_p)
     ev_f, ev_p = identity_events(gt_f, pr_f), identity_events(gt_p, pr_p)
     by_f, by_p = _tracks_by_frame(pr_f), _tracks_by_frame(pr_p)
 
@@ -194,5 +198,6 @@ def _rule_event_frames(cx: Counterexample, scene: SceneSpec) -> list[int]:
     from eventproof.engine.evaluator import evaluate
 
     rule = Evaluator(cx.dwell_ms, mock_perceiver, cx.rule).rule_for(scene)
-    rep = evaluate(rule, mock_perceiver(scene, ground_truth(scene)))
+    perceive = perfect_perceiver if cx.perception in ("synthetic_ground_truth", "synthetic") else mock_perceiver
+    rep = evaluate(rule, perceive(scene, ground_truth(scene)))
     return [e.frame for o in rep.objects for e in o.events if e.status == "TRUE" and e.frame is not None]

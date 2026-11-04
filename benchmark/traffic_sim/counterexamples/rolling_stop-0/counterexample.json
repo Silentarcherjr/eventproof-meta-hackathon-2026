@@ -1,0 +1,434 @@
+{
+  "family": "rolling_stop",
+  "seed": 0,
+  "dwell_ms": 1500.0,
+  "rule": {
+    "rule_id": "wait-before-stop-line",
+    "version": 1,
+    "entity": {
+      "name": "vehicle",
+      "concept": "car"
+    },
+    "zones": [
+      {
+        "id": "waiting",
+        "polygon": [
+          [
+            0.54,
+            0.36
+          ],
+          [
+            0.7,
+            0.36
+          ],
+          [
+            0.7,
+            0.72
+          ],
+          [
+            0.54,
+            0.72
+          ]
+        ]
+      }
+    ],
+    "lines": [
+      {
+        "id": "stop_line",
+        "a": [
+          0.72,
+          0.34
+        ],
+        "b": [
+          0.72,
+          0.74
+        ]
+      }
+    ],
+    "check": {
+      "op": "IMPLIES",
+      "premise": {
+        "op": "OCCURS",
+        "event": {
+          "op": "CROSSES",
+          "line": "stop_line",
+          "direction": "any"
+        }
+      },
+      "conclusion": {
+        "op": "BEFORE",
+        "first": {
+          "op": "DWELL",
+          "zone": "waiting",
+          "min_ms": 1500.0,
+          "max_speed": null
+        },
+        "then": {
+          "op": "CROSSES",
+          "line": "stop_line",
+          "direction": "any"
+        },
+        "within_ms": null
+      }
+    },
+    "params": {
+      "anchor": "center",
+      "max_gap_frames": 3,
+      "min_confidence": 0.0
+    },
+    "normalized_explanation": "Every car must wait at least 1.5 seconds in the waiting zone before crossing."
+  },
+  "perception": "synthetic",
+  "original": {
+    "family": "rolling_stop",
+    "seed": 0,
+    "scene_sha256": "c4b45177bd2ff3a2eca2e91003cec255c7e033931d9b59fdc1b2f7d93930fc81",
+    "perception_source": "synthetic",
+    "rule_hash": "cbbb3794163003f697f7ff227c2c509c69052adefd49cbdfd7bab75660918c09",
+    "intended": "FAIL",
+    "oracle_verdict": "PASS",
+    "detector_verdict": "PASS",
+    "outcome": "spec_error",
+    "truths": [
+      {
+        "object_id": 0,
+        "label": "car",
+        "crossed_line": true,
+        "crossing_frame": 67,
+        "direction": "forward",
+        "standing_still_seconds": 0.0,
+        "stationary_seconds": 0.0,
+        "intended": "VIOLATION"
+      }
+    ],
+    "notes": "{\"box_jitter\":0.001006,\"camera_tilt\":0.046452,\"cross_traffic\":false,\"lanes\":1}"
+  },
+  "reduction": {
+    "steps": [
+      "trim tail to 82 frames"
+    ],
+    "frames_before": 83,
+    "frames_after": 82,
+    "objects_before": 1,
+    "objects_after": 1,
+    "occluders_before": 0,
+    "occluders_after": 0
+  },
+  "reduced": {
+    "family": "rolling_stop",
+    "seed": 0,
+    "scene_sha256": "c9c988f418e1e19b849a1d147e2586dce044ea35469dbac748742b8b2d3f123c",
+    "perception_source": "synthetic",
+    "rule_hash": "cbbb3794163003f697f7ff227c2c509c69052adefd49cbdfd7bab75660918c09",
+    "intended": "FAIL",
+    "oracle_verdict": "PASS",
+    "detector_verdict": "PASS",
+    "outcome": "spec_error",
+    "truths": [
+      {
+        "object_id": 0,
+        "label": "car",
+        "crossed_line": true,
+        "crossing_frame": 67,
+        "direction": "forward",
+        "standing_still_seconds": 0.0,
+        "stationary_seconds": 0.0,
+        "intended": "VIOLATION"
+      }
+    ],
+    "notes": "{\"box_jitter\":0.001006,\"camera_tilt\":0.046452,\"cross_traffic\":false,\"lanes\":1}"
+  },
+  "reduced_scene": {
+    "seed": 0,
+    "generator": "traffic-gen/1",
+    "width": 480,
+    "height": 270,
+    "fps": 10.0,
+    "n_frames": 82,
+    "zones": [
+      {
+        "id": "waiting",
+        "polygon": [
+          [
+            0.54,
+            0.36
+          ],
+          [
+            0.7,
+            0.36
+          ],
+          [
+            0.7,
+            0.72
+          ],
+          [
+            0.54,
+            0.72
+          ]
+        ]
+      }
+    ],
+    "lines": [
+      {
+        "id": "stop_line",
+        "a": [
+          0.72,
+          0.34
+        ],
+        "b": [
+          0.72,
+          0.74
+        ]
+      }
+    ],
+    "objects": [
+      {
+        "object_id": 0,
+        "color": "blue",
+        "size": [
+          0.065,
+          0.075
+        ],
+        "waypoints": [
+          {
+            "frame": 0,
+            "x": 0.1,
+            "y": 0.53
+          },
+          {
+            "frame": 28,
+            "x": 0.56,
+            "y": 0.53
+          },
+          {
+            "frame": 60,
+            "x": 0.626067,
+            "y": 0.53
+          },
+          {
+            "frame": 79,
+            "x": 0.92,
+            "y": 0.53
+          }
+        ]
+      }
+    ],
+    "occluders": [],
+    "family": "rolling_stop",
+    "notes": "{\"box_jitter\":0.001006,\"camera_tilt\":0.046452,\"cross_traffic\":false,\"lanes\":1}"
+  },
+  "pair": {
+    "knob": "traffic crawl speed",
+    "t_fail": 0.3949218750000001,
+    "t_pass": 0.3951171875000001,
+    "iterations": 28,
+    "fail": {
+      "family": "rolling_stop",
+      "seed": 0,
+      "scene_sha256": "65460d1086e53e0c4e508485d845288d4e6521b71506189408eac8b011e838a4",
+      "perception_source": "synthetic",
+      "rule_hash": "cbbb3794163003f697f7ff227c2c509c69052adefd49cbdfd7bab75660918c09",
+      "intended": "FAIL",
+      "oracle_verdict": "PASS",
+      "detector_verdict": "PASS",
+      "outcome": "spec_error",
+      "truths": [
+        {
+          "object_id": 0,
+          "label": "car",
+          "crossed_line": true,
+          "crossing_frame": 44,
+          "direction": "forward",
+          "standing_still_seconds": 0.0,
+          "stationary_seconds": 0.0,
+          "intended": "VIOLATION"
+        }
+      ],
+      "notes": "{\"box_jitter\":0.001006,\"camera_tilt\":0.046452,\"cross_traffic\":false,\"lanes\":1}"
+    },
+    "passing": {
+      "family": "rolling_stop",
+      "seed": 0,
+      "scene_sha256": "a00bdc4a8beb4d82efce646c7c2f911b19d938f27e2c99f39037a768edb71836",
+      "perception_source": "synthetic",
+      "rule_hash": "cbbb3794163003f697f7ff227c2c509c69052adefd49cbdfd7bab75660918c09",
+      "intended": "FAIL",
+      "oracle_verdict": "FAIL",
+      "detector_verdict": "FAIL",
+      "outcome": "correct",
+      "truths": [
+        {
+          "object_id": 0,
+          "label": "car",
+          "crossed_line": true,
+          "crossing_frame": 43,
+          "direction": "forward",
+          "standing_still_seconds": 0.0,
+          "stationary_seconds": 0.0,
+          "intended": "VIOLATION"
+        }
+      ],
+      "notes": "{\"box_jitter\":0.001006,\"camera_tilt\":0.046452,\"cross_traffic\":false,\"lanes\":1}"
+    },
+    "fail_scene": {
+      "seed": 0,
+      "generator": "traffic-gen/1",
+      "width": 480,
+      "height": 270,
+      "fps": 10.0,
+      "n_frames": 82,
+      "zones": [
+        {
+          "id": "waiting",
+          "polygon": [
+            [
+              0.54,
+              0.36
+            ],
+            [
+              0.7,
+              0.36
+            ],
+            [
+              0.7,
+              0.72
+            ],
+            [
+              0.54,
+              0.72
+            ]
+          ]
+        }
+      ],
+      "lines": [
+        {
+          "id": "stop_line",
+          "a": [
+            0.72,
+            0.34
+          ],
+          "b": [
+            0.72,
+            0.74
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "object_id": 0,
+          "color": "blue",
+          "size": [
+            0.065,
+            0.075
+          ],
+          "waypoints": [
+            {
+              "frame": 0,
+              "x": 0.1,
+              "y": 0.53
+            },
+            {
+              "frame": 28,
+              "x": 0.56,
+              "y": 0.53
+            },
+            {
+              "frame": 37,
+              "x": 0.626067,
+              "y": 0.53
+            },
+            {
+              "frame": 56,
+              "x": 0.92,
+              "y": 0.53
+            }
+          ]
+        }
+      ],
+      "occluders": [],
+      "family": "rolling_stop",
+      "notes": "{\"box_jitter\":0.001006,\"camera_tilt\":0.046452,\"cross_traffic\":false,\"lanes\":1}"
+    },
+    "pass_scene": {
+      "seed": 0,
+      "generator": "traffic-gen/1",
+      "width": 480,
+      "height": 270,
+      "fps": 10.0,
+      "n_frames": 82,
+      "zones": [
+        {
+          "id": "waiting",
+          "polygon": [
+            [
+              0.54,
+              0.36
+            ],
+            [
+              0.7,
+              0.36
+            ],
+            [
+              0.7,
+              0.72
+            ],
+            [
+              0.54,
+              0.72
+            ]
+          ]
+        }
+      ],
+      "lines": [
+        {
+          "id": "stop_line",
+          "a": [
+            0.72,
+            0.34
+          ],
+          "b": [
+            0.72,
+            0.74
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "object_id": 0,
+          "color": "blue",
+          "size": [
+            0.065,
+            0.075
+          ],
+          "waypoints": [
+            {
+              "frame": 0,
+              "x": 0.1,
+              "y": 0.53
+            },
+            {
+              "frame": 28,
+              "x": 0.56,
+              "y": 0.53
+            },
+            {
+              "frame": 36,
+              "x": 0.626067,
+              "y": 0.53
+            },
+            {
+              "frame": 55,
+              "x": 0.92,
+              "y": 0.53
+            }
+          ]
+        }
+      ],
+      "occluders": [],
+      "family": "rolling_stop",
+      "notes": "{\"box_jitter\":0.001006,\"camera_tilt\":0.046452,\"cross_traffic\":false,\"lanes\":1}"
+    }
+  },
+  "evaluations": 31,
+  "note": "Local minimum within the search budget; not a global minimum."
+}

@@ -21,9 +21,17 @@ from pathlib import Path
 
 from pydantic import BaseModel, Field
 
-from eventproof.challenge.families import FAMILIES
-from eventproof.challenge.runner import CaseResult, Perceiver, bind_rule, inspection_rule, mock_perceiver, run_case
+from eventproof.challenge.runner import (
+    CaseResult,
+    Perceiver,
+    bind_rule,
+    family_registry,
+    inspection_rule,
+    mock_perceiver,
+    run_case,
+)
 from eventproof.challenge.scene import SceneSpec, Waypoint
+from eventproof.challenge.traffic import TRAFFIC_KNOBS, is_traffic, perfect_perceiver, require_dev_seed, traffic_rule
 from eventproof.schemas.rules import VisualRule
 
 MIN_FRAMES = 50  # SAM bills at least 50 frames; never produce shorter clips
@@ -47,7 +55,9 @@ class Evaluator:
         self.dwell_ms, self.perceiver, self.rule, self.calls = dwell_ms, perceiver, rule, 0
 
     def rule_for(self, scene: SceneSpec) -> VisualRule:
-        return bind_rule(self.rule, scene) if self.rule else inspection_rule(scene, self.dwell_ms)
+        if self.rule:
+            return bind_rule(self.rule, scene)
+        return traffic_rule(scene, self.dwell_ms / 1000) if is_traffic(scene) else inspection_rule(scene, self.dwell_ms)
 
     def __call__(self, scene: SceneSpec) -> CaseResult:
         self.calls += 1
@@ -244,14 +254,17 @@ class Counterexample(BaseModel):
 
 
 def minimize(family: str, seed: int, dwell_ms: float = 1500.0, perceiver: Perceiver = mock_perceiver,
-             budget: int = 60, rule: VisualRule | None = None) -> Counterexample:
-    scene = FAMILIES[family](seed)
+             budget: int = 60, rule: VisualRule | None = None, world: str = "conveyor") -> Counterexample:
+    if world == "traffic":
+        require_dev_seed(seed)
+    scene = family_registry(world)[family](seed)
     ev = Evaluator(dwell_ms, perceiver, rule)
     original = ev(scene)
     reduced_scene, reduced, red = reduce_scene(scene, ev, budget=budget // 2)
     pair = None
-    if family in KNOBS:
-        name, knob = KNOBS[family]
+    knobs = TRAFFIC_KNOBS if is_traffic(scene) else KNOBS
+    if family in knobs:
+        name, knob = knobs[family]
         pair = boundary_pair(reduced_scene, name, knob, ev, reduced)
     return Counterexample(family=family, seed=seed, dwell_ms=dwell_ms, rule=rule, perception=original.perception_source,
                           original=original, reduction=red, reduced=reduced, reduced_scene=reduced_scene,
@@ -260,23 +273,37 @@ def minimize(family: str, seed: int, dwell_ms: float = 1500.0, perceiver: Percei
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--family", required=True, choices=sorted(FAMILIES))
+    ap.add_argument("--world", choices=["conveyor", "traffic"], default="conveyor")
+    ap.add_argument("--family", required=True)
+    ap.add_argument("--perfect", action="store_true", help="use perfect tracks; no model calls")
+    ap.add_argument("--naive-traffic", action="store_true", help="omit speed condition to expose rolling-stop bug")
     ap.add_argument("--seed", default="auto", help="integer, or 'auto' = first failing seed in 0-99")
     ap.add_argument("--dwell-ms", type=float, default=1500.0)
     ap.add_argument("--out", type=Path, default=Path("../artifacts/counterexamples"))
     ap.add_argument("--no-video", action="store_true")
     args = ap.parse_args()
+    registry = family_registry(args.world)
+    if args.family not in registry:
+        ap.error(f"family must be one of {sorted(registry)}")
+    perceiver = perfect_perceiver if args.perfect else mock_perceiver
+    rule = None
+    if args.naive_traffic:
+        if args.world != "traffic":
+            ap.error("--naive-traffic requires --world traffic")
+        rule = traffic_rule(registry[args.family](0), args.dwell_ms / 1000, max_speed=None)
     if args.seed == "auto":
-        ev = Evaluator(args.dwell_ms, mock_perceiver)
-        seed = next((s for s in range(100) if is_failure(ev(FAMILIES[args.family](s)))), None)
+        ev = Evaluator(args.dwell_ms, perceiver, rule)
+        seed = next((s for s in range(100) if is_failure(ev(registry[args.family](s)))), None)
         if seed is None:
             raise SystemExit(f"no failing case for {args.family} in seeds 0-99")
     else:
         seed = int(args.seed)
-        if not is_failure(Evaluator(args.dwell_ms, mock_perceiver)(FAMILIES[args.family](seed))):
+        if args.world == "traffic":
+            require_dev_seed(seed)
+        if not is_failure(Evaluator(args.dwell_ms, perceiver, rule)(registry[args.family](seed))):
             raise SystemExit(f"{args.family} seed {seed} is judged correctly; nothing to minimize")
     args.seed = seed
-    cx = minimize(args.family, seed, args.dwell_ms)
+    cx = minimize(args.family, seed, args.dwell_ms, perceiver=perceiver, rule=rule, world=args.world)
     d = args.out / f"{args.family}-{args.seed}"
     d.mkdir(parents=True, exist_ok=True)
     (d / "counterexample.json").write_text(cx.model_dump_json(indent=2))
