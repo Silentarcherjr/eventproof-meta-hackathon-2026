@@ -1,7 +1,8 @@
 """Sealed traffic holdout: the rule Muse Spark compiles vs the generator's stated contract, on perfect synthetic tracks
 (pre-registered in `benchmark/traffic_sim/HOLDOUT_PREREGISTRATION.md`). Measures the rule, not perception.
 
-    uv run python -m eventproof.validation.traffic_holdout --max-live 1 --out ../benchmark/traffic_sim/holdout_eval/report.json
+    uv run python -m eventproof.validation.traffic_holdout --max-live 1 \
+        --out ../benchmark/traffic_sim/holdout_eval/report.json
 """
 
 from __future__ import annotations
