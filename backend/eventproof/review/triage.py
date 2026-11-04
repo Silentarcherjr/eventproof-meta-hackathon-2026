@@ -57,3 +57,16 @@ def contract(rows: list[dict]) -> dict:
                                           for s in sorted({r["status"] for r in held})}},
         "labels_needed_error_free": {"2%": labels_needed(0.02), "5%": labels_needed(0.05)},
     }
+
+
+def apply_audit(rows: list[dict], audit: dict) -> list[dict]:
+    """Rows with the corrections of a label audit applied (pre-registered rows are not modified; see label_audit.json)."""
+    fix = {(c["set"], audit["clip"], c["object_id"]): c["audited_label"].split()[0] for c in audit["corrections"]}
+    out = []
+    for r in rows:
+        lab = fix.get((r.get("set"), r.get("clip"), r.get("object_id")))
+        if lab is None or r.get("verdict") in (None, "UNKNOWN"):
+            out.append(r)
+        else:
+            out.append(r | {"intended": lab, "correct": "right" if r["verdict"] == lab else "wrong", "audited": True})
+    return out

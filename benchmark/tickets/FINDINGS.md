@@ -37,3 +37,22 @@ the tier split, as disclosed there. Part 2 made 20 live Muse Spark calls. `repor
 - There are 43 tracked objects and 20 tickets.
 - The menu is fixed and finite: "holds up" means against these changes, not every possible objection.
 - The defense sees text evidence (events and frames), not the video.
+
+
+## Erratum, 2026-11-04: label audit (`benchmark/real/santos/label_audit.json`)
+
+The ticket counted above as "wrongly issued" (Santos, toward-camera clip, track 0) was correct. The hand-labelled crossing
+times of the first two riders did not match the footage, so crossing-order matching paired each label with the other
+rider's track. The tracks show that track 0 is the man with the red crate riding away from the camera, which is the
+forbidden direction, so the VIOLATION is right. Track 1 is the woman in the white helmet riding toward the camera, and
+her PASS is right too.
+
+After the audit:
+- **0 of the 20 tickets are wrongly issued.**
+- **Muse Spark's concession on that ticket was right.**
+- The deterministic sweep "overturns" it only by measuring the rider at the box centre, which would have been a wrong
+  acquittal.
+- Wrong verdicts among the 43 tracked objects: 1, the Wroclaw w3 car, which is FRAGILE.
+- ROBUST verdicts contain 0 wrong ones.
+
+The pre-registered figures above are not rewritten. A test checks the track evidence (`tests/validation/test_label_audit.py`).

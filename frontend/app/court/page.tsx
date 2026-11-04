@@ -50,7 +50,8 @@ function Case({ c }: { c: CourtCase }) {
         <p className="text-sm text-zinc-200">This ticket <b>{WORDS[c.status] ?? c.status}</b>.</p>
         {c.smallest_flip && <p className="mt-1 text-sm text-zinc-400">Smallest change that overturns it: {c.smallest_flip}</p>}
         <p className="mt-2 text-sm text-zinc-400">{c.flipping.length} of the challenges in the menu overturn it.</p>
-        <p className="mt-3 text-sm">Frozen label (truth): <b>{c.intended}</b> — the ticket was <b className={c.correct === "wrong" ? "text-red-300" : "text-green-300"}>{c.correct === "wrong" ? "wrongly issued" : "correctly issued"}</b>.</p>
+        <p className="mt-3 text-sm">Frozen label (truth): <b>{c.intended}</b>{c.audited ? " (after the label audit)" : ""} — the ticket was <b className={c.correct === "wrong" ? "text-red-300" : "text-green-300"}>{c.correct === "wrong" ? "wrongly issued" : "correctly issued"}</b>.</p>
+        {c.status !== "ROBUST" && c.correct !== "wrong" && <p className="mt-1 text-sm text-amber-200">A correct ticket that still would not hold up: it rests on a choice nobody wrote down.</p>}
         <p className="mt-1 text-sm text-zinc-400">Policy: {c.status === "ROBUST" ? "auto-issue" : "hold for a human reviewer"}.</p>
       </div>
     </div>
@@ -60,7 +61,8 @@ function Case({ c }: { c: CourtCase }) {
 export default function CourtPage() {
   const [court, setCourt] = useState<Court | null>(null);
   const [sel, setSel] = useState<number>(-1);
-  useEffect(() => { getCourt().then((c) => { setCourt(c); setSel(Math.max(0, c.cases.findIndex((x) => x.correct === "wrong"))); }).catch(() => setCourt(null)); }, []);
+  // open on a correct ticket that hangs on an unwritten number and that the defense beats
+  useEffect(() => { getCourt().then((c) => { setCourt(c); setSel(Math.max(0, c.cases.findIndex((x) => x.status === "DEPENDS_ON_THRESHOLD" && x.defense.strongest_overturns))); }).catch(() => setCourt(null)); }, []);
   if (!court) return <main className="mx-auto max-w-7xl px-4 py-6 text-zinc-400">Loading the 20 real tickets…</main>;
   const k = court.contract;
   const robust = court.cases.filter((c) => c.status === "ROBUST").length;
@@ -87,7 +89,7 @@ export default function CourtPage() {
         <p className="mt-1 text-sm text-zinc-400">What a city could write into a camera vendor&apos;s contract, filled in from these labelled tickets. It states what the evidence supports; it is not a certification.</p>
         <ul className="mt-2 space-y-1 text-sm text-zinc-200">
           <li><b>Policy:</b> {k.policy}.</li>
-          <li><b>All tickets:</b> {k.all_tickets.false_tickets} wrong of {k.all_tickets.tickets} (95 % upper bound {pct(k.all_tickets.upper_95)}).</li>
+          <li><b>All tickets:</b> {k.all_tickets.false_tickets} wrong of {k.all_tickets.tickets} (95 % upper bound {pct(k.all_tickets.upper_95)}){court.contract_pre_registered && court.contract_pre_registered.all_tickets.false_tickets !== k.all_tickets.false_tickets ? ` after a label audit; pre-registered labels: ${court.contract_pre_registered.all_tickets.false_tickets} wrong` : ""}.</li>
           <li><b>Auto-issued under the policy:</b> {k.auto_issued.tickets}, {k.auto_issued.false_tickets} wrong (upper bound {pct(k.auto_issued.upper_95)}: too few to promise anything yet).</li>
           <li><b>Held for review:</b> {k.held_for_review.tickets}, including the {k.held_for_review.false_tickets} wrongly issued one.</li>
           <li><b>To promise ≤ 2 % false tickets:</b> {k.labels_needed_error_free["2%"]} labelled error-free tickets; ≤ 5 %: {k.labels_needed_error_free["5%"]}.</li>

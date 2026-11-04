@@ -35,3 +35,11 @@ clip. `tests/validation/test_anchor_v4.py` recomputes every verdict from the com
 - That is why the certificate checks each rule against labelled footage of its own scene, instead of trusting a
   compiler version.
 - The studio now compiles new rules with this schema. Recorded runs keep the rules they were judged with.
+
+
+## Erratum, 2026-11-04: label audit (`benchmark/real/santos/label_audit.json`)
+
+The two Santos "wrong" verdicts come from our labels, not from the engine. The crossing times labelled for the first two
+riders of the toward-camera clip are in the wrong order, so the matching swapped them. The tracks show both verdicts were
+right. After the audit the new compiler judges **40/46 right with 1 wrong** (the Wroclaw w3 car); pre-registered, it was
+38/46 with 3 wrong. Santos goes from 5/8 to 7/8.

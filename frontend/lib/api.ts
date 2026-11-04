@@ -135,14 +135,15 @@ export async function getLawGrid(): Promise<LawGrid> { return json<LawGrid>(awai
 
 export interface CourtCase {
   set: string; clip: string; object_id: number; description: string; intended: string; verdict: string; correct: string;
-  status: string; smallest_flip: string | null; flipping: string[]; run_id: string; rule_text: string; explanation: string;
+  status: string; smallest_flip: string | null; flipping: string[]; run_id: string; rule_text: string; explanation: string; audited?: boolean;
   anchor: string; first_frame: number; last_frame: number;
   events: { op: string; target: string; status: string; frame: number | null; timestamp_ms: number | null; reason: string }[];
   defense: { chosen: string[]; strongest: string; concede: boolean; concession: string; strongest_overturns: boolean; any_overturns: boolean;
              arguments: { id: string; argument: string }[]; request_id?: string };
 }
 export interface Court {
-  summary: Record<string, unknown>; cases: CourtCase[];
+  summary: Record<string, unknown>; cases: CourtCase[]; audit?: string;
+  contract_pre_registered?: { all_tickets: { tickets: number; false_tickets: number; upper_95: number } };
   contract: { policy: string; all_tickets: { tickets: number; false_tickets: number; upper_95: number };
               auto_issued: { tickets: number; false_tickets: number; upper_95: number };
               held_for_review: { tickets: number; false_tickets: number; by_status: Record<string, number> };

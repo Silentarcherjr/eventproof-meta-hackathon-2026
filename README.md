@@ -9,10 +9,10 @@ the event is the easy half. EventProof answers the half nobody checks: **would t
 - **Muse Wonder** reads the sentence a second time.
 - **EventProof** then attacks the rule and every ticket it issues, and keeps only what survives.
 
-**One ticket.** A rider on a bike path rode the allowed way, and the compiled rule still ticketed her. Muse Spark, acting
-as her lawyer, looked at the evidence and conceded. EventProof's deterministic sweep overturned the ticket: measured at
-the box centre instead of the wheels, she never crossed the line the wrong way. Across **20 real tickets from labelled
-footage, only 4 hold up** against every challenge. 11 hang on a number nobody wrote down.
+**One ticket.** A grey hatchback in Wroclaw drives through the stop line without ever stopping, and the camera tickets
+it. The ticket is correct. Muse Spark, acting as the driver's lawyer, finds the one argument that wins: the rule never
+says how slow counts as "stopped". Double that threshold and the ticket disappears. Across **20 real tickets from
+labelled footage, only 4 hold up** against every challenge, and 11 of them rest on a number nobody wrote down.
 
 **The law, as written.** Maryland's statute (where Takoma Park tickets) and California's say *"shall stop"* and contain
 no digit. A camera still needs two numbers: how long to stand still, and how slow counts as "still". **Same law, same
@@ -67,13 +67,13 @@ about 30 s, then attack, repair and print the certificate; open **Ticket court**
 |---|---|
 | Real traffic, 5 clips from 2 cities (Novi Sad, Wroclaw), 30 labelled cars | Rule compiled by Muse Spark: **27/30 right, 0 wrong verdicts**. A repair that passed every synthetic test: **16/30**, it lets real rolling stops through. |
 | Same clips, **Muse Spark alone** judging the video directly (5 runs per clip) | Clip verdicts right, but crossings and violations counted exactly in only **11/25** runs. |
-| Every frozen real set with the current compiler: 10 clips, 46 objects (cars, pedestrians, cyclists; Serbia, Poland, Brazil, plus two clips of unstated location) | **38/46 right**, 3 wrong, 2 abstained, 3 never judged. |
-| A bug found in the field: bike path in Santos, Brazil | First run **0/8**: the compiler measured riders at the box centre, which never reaches a line at the wheels. The new rule check flagged it; the schema now lets Muse pick the point; re-run **5/8**. All runs pre-registered and kept. |
+| Every frozen real set with the current compiler: 10 clips, 46 objects (cars, pedestrians, cyclists; Serbia, Poland, Brazil, plus two clips of unstated location) | **38/46 right**, 3 wrong, 2 abstained, 3 never judged, as pre-registered. A later label audit found that 2 of the 3 "wrong" verdicts were our own labelling error, giving **40/46, 1 wrong** ([audit](benchmark/real/santos/label_audit.json)). |
+| A bug found in the field: bike path in Santos, Brazil | First run **0/8**: the compiler measured riders at the box centre, which never reaches a line at the wheels. The new rule check flagged it, and the schema now lets Muse pick the point. Re-run: **5/8**, and 7/8 after the label audit. All runs are pre-registered and kept. |
 | A rule typed live: *"remain behind the stop line for at least 2 seconds"* | Muse Spark **and** Muse Wonder both read it as "be present", not "stop". Certificate against the clip's labels: **NOT CERTIFIED (3/5)**. |
 | **Drag the law** (same statutes, same 30 cars; every stop time 0–3 s × every "still" speed, 273 combinations, deterministic) | **0 to 17 tickets** depending only on the two unwritten numbers; Muse Spark's choice issues 13 (25/30 right); the best combinations reach 26/30. Studio page with sliders. [grid](benchmark/law/grid.json) |
-| **Contract acceptance block** (policy: auto-issue only ROBUST tickets) | All 20 tickets: 1 wrongly issued (95 % upper bound 24 %). Auto-issued: 4, none wrong, but too few to promise anything (upper bound 49 %). The wrongly issued ticket is held for review. To promise ≤ 2 % false tickets a city needs **188** labelled error-free tickets; ≤ 5 %: 73. |
+| **Contract acceptance block** (policy: auto-issue only ROBUST tickets) | All 20 tickets: none wrongly issued after the label audit (1 with the pre-registered labels; 95 % upper bound 16 %). 4 are auto-issued, none wrong, but that is too few to promise anything (upper bound 49 %). To promise ≤ 2 % false tickets a city needs **188** labelled error-free tickets; ≤ 5 %: 73. |
 | **The statute itself** (Md. Transp. § 21-707(a), Cal. Veh. Code § 22450(a), verbatim; every value QUOTED or ASSUMED, quotes verified) | Spark: **25/30 cars right** on both. The statutes contain no number, yet **14/30 verdicts hang on the stop time and "still" speed the model had to assume**; Spark even labelled 0.05 as "quoted" from the words "shall stop". Wonder failed 2/4 compiles. [findings](benchmark/law/FINDINGS.md) |
-| **Would the tickets hold up?** 20 real tickets, each re-judged under about a dozen typed changes; Muse Spark as the defense | **4/20 survive everything**; 11 hang on the unwritten "stopped" threshold. Muse's defense won 8 of 16 beatable tickets, conceded 3 of 4 robust ones, and missed the one wrongly issued ticket, which the sweep overturns. [findings](benchmark/tickets/FINDINGS.md) |
+| **Would the tickets hold up?** 20 real tickets, each re-judged under about a dozen typed changes; Muse Spark as the defense | **4/20 survive everything**; 11 hang on the unwritten "stopped" threshold. Muse's defense won 8 of the 16 beatable tickets and conceded 3 of the 4 robust ones. It also conceded the ticket the pre-registered labels called wrongly issued; the label audit shows that ticket was correct. [findings](benchmark/tickets/FINDINGS.md) |
 | Two readings, 8 phrasings of one rule (Spark vs Wonder, 150 scenes) | "wait" and "remain" are read differently (standing still vs just inside): verdicts differ on **45/150** scenes; the separating pair is found automatically. |
 | Repair on synthetic scenes with known truth (hidden holdout 200, final test 320, evaluated once) | Holdout **144 → 164**, false PASS 40 → 21, 0 regressions; final test 141 → 158/200 and 109 → 117/120 on never-seen scene types; with real SAM 3.1 tracks (80 scenes) **71 → 76**, false PASS 5 → 0. |
 | Two-object rule: *"every pedestrian … must hold an umbrella over their head"* (rainy crossing seen from above) | Muse escalated to the WITH event and SAM 3.1 tracked people and umbrellas separately: **2/4** (a neighbour's umbrella counted for a bare head). |
@@ -138,7 +138,7 @@ crossings and violations exactly in only 11/25. [pooled](benchmark/real/traffic_
 | Test | Result |
 |---|---|
 | **New domains, same engine** — pedestrians on a zebra crossing and cyclists on a bike lane (Pexels), one-way rules typed in plain English | Muse Spark compiled both to NOT CROSSES(wrong direction), stating how it mapped "left to right". **7/8 labelled objects right, 0 wrong verdicts** (1 person got no matching track). [findings](benchmark/real/domains/FINDINGS.md) |
-| **Compiler fix from the field: the model picks where objects are measured** — every frozen real set re-run (10 clips, 46 labelled objects) | Muse Spark kept the box centre on the drone view and chose the ground point everywhere else. Right **34 → 38/46**, never judged **10 → 3**, Santos **0 → 5/8**, and the rule check now fires on no clip. But wrong verdicts went **0 → 3**: one car behind another in the footbridge view, and two Santos riders that cross 1.4 s apart, swapped. This is why the certificate checks every rule on footage of its own scene. [findings](benchmark/real/anchor_v4/FINDINGS.md) |
+| **Compiler fix from the field: the model picks where objects are measured** — every frozen real set re-run (10 clips, 46 labelled objects) | Muse Spark kept the box centre on the drone view and chose the ground point everywhere else. Right **34 → 38/46**, never judged **10 → 3**, Santos **0 → 5/8**, and the rule check now fires on no clip. But wrong verdicts went **0 → 3**: one car behind another in the footbridge view, and two Santos riders that cross 1.4 s apart, swapped. A label audit later traced the Santos pair to our own labels: the engine was right on both. This is why the certificate checks every rule on footage of its own scene. [findings](benchmark/real/anchor_v4/FINDINGS.md) |
 | **New country, same rule shape** — a bike path in Santos, Brazil, 2 clips, 8 labelled crossings: *"Cyclists may cross the line on the bike path only toward the camera"* | **0/8.** Muse Spark got the direction right, but EventProof's compiler silently measured each rider at the box centre: its schema had no way to say where objects are measured. The camera looks along the path, so no centre ever reached the line drawn at the wheels, and every rider passed. EventProof now checks this against the tracks (a deterministic rule check). The studio says "the rule cannot see what it judges" and the certificate refuses. The check fires on these 2 runs and on no other recorded real run. A pre-registered re-run with the sentence saying "measure each rider where the wheels touch the path": **1/8**. Muse wrote that assumption, but the compiler schema has no field for it, so the rule still used the centre and the check refused it again. [findings](benchmark/real/santos/FINDINGS.md) |
 | **Two-object rule on real footage** — *"Every pedestrian in the crossing zone must hold an umbrella over their head"* (Pexels, rainy crossing seen from above, 4 labelled people) | Muse Spark escalated to the WITH schema and SAM 3.1 tracked pedestrians and umbrellas separately. Overall FAIL as labelled; **2/4 right, 1 wrong, 1 not tracked**. The wrong one: a neighbour's umbrella touched a bare-headed man's box for 0.4 s, and Muse had chosen no minimum duration, a gap in the sentence that a model filled silently. [findings](benchmark/real/with_umbrella/FINDINGS.md) |
 | **Field repair** — repair from real failures (Novi Sad), accept only with 0 regressions on another city (Wroclaw, 22 cars) **and** on the 200 synthetic hidden scenes | Muse Spark's 4 patches all fixed the real footage (Wroclaw **9 → 19/22**) but also moved "1.5 s" to "1.0 s", breaking 7 synthetic cases → all rejected. A grid patch (stillness ≤ 0.04/s, ≥ 0.8 s): Wroclaw 9 → 19/22, synthetic 164 → 166/200, 0 regressions in both → accepted. [findings](benchmark/field_repair/FINDINGS.md) |
@@ -184,8 +184,9 @@ can re-verify, and CI recomputes every number above from committed files (no vid
 - Real footage is small: 46 labelled objects in 10 clips with the current compiler (plus 4 people in the umbrella pilot
   and 8 parcels in a perception check), labelled by one person from frame sheets. It shows concrete failures and fixes;
   it is not an accuracy benchmark.
-- The compiler fix that lets Muse pick where objects are measured judges more objects (never judged 10 → 3) but added 3
-  wrong verdicts (0 → 3). That is why the certificate checks each rule on labelled footage of its own scene.
+- The compiler fix that lets Muse pick where objects are measured judges more objects (never judged 10 → 3). As
+  pre-registered, it added 3 wrong verdicts (0 → 3). A label audit traced 2 of them to our own labelling, so 1 remains.
+  That is why the certificate checks each rule on labelled footage of its own scene.
 - The large-scale evidence is synthetic (a conveyor world with scripted truth). Holdout and final scoring use a
   deterministic mock tracker; an 80-scene subset re-run with real SAM 3.1 tracks gives the same conclusion.
 - Challenge Mode and two readings do not yet cover two-concept (WITH) rules; the studio says so.
@@ -193,7 +194,8 @@ can re-verify, and CI recomputes every number above from committed files (no vid
   invalid, because MEVA tracks span only each activity, so a 'start' track begins at rest. It is documented in
   [`benchmark/meva/FINDINGS.md`](benchmark/meva/FINDINGS.md) and not counted anywhere.
 - Labels are hand-matched to tracks in crossing order; two objects crossing close together in opposite directions can
-  be swapped (seen once in Santos).
+  be swapped. In Santos the cause was our own label times; it was found by an audit, and the pre-registered figures are
+  kept next to the audited ones.
 
 ## Run it
 ```

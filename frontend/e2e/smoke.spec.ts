@@ -219,7 +219,7 @@ test("drag the law: sliders change tickets issued on the 30 real cars", async ({
   await expect(page.getByTestId("counters")).toContainText("0tickets issued");
 });
 
-test("ticket court: scoreboard, the wrongly issued ticket opens first, contract block", async ({ page }) => {
+test("ticket court: scoreboard, a ticket the defense beats opens first, contract block", async ({ page }) => {
   const base = { set: "s", description: "d", intended: "VIOLATION", verdict: "VIOLATION", smallest_flip: null, flipping: [],
                  rule_text: "rule", explanation: "x", anchor: "bottom_center", first_frame: 0, last_frame: 9,
                  events: [{ op: "CROSSES", target: "line", status: "TRUE", frame: 5, timestamp_ms: 500, reason: "" }],
@@ -227,14 +227,17 @@ test("ticket court: scoreboard, the wrongly issued ticket opens first, contract 
   await page.route("http://api.test/tickets/court", (r) => r.fulfill({ json: {
     summary: {}, cases: [
       { ...base, clip: "a.mp4", object_id: 1, run_id: "r1", correct: "right", status: "ROBUST" },
-      { ...base, clip: "b.mp4", object_id: 2, run_id: "r2", correct: "wrong", intended: "PASS", status: "FRAGILE",
-        smallest_flip: "measured at its center -> PASS", flipping: ["anchor:center"] }],
+      { ...base, clip: "b.mp4", object_id: 2, run_id: "r2", correct: "right", status: "DEPENDS_ON_THRESHOLD",
+        smallest_flip: "'standing still' threshold x2 -> PASS", flipping: ["stillness:2.0"],
+        defense: { ...base.defense, concede: false, strongest: "stillness:2.0", strongest_overturns: true, any_overturns: true,
+                   arguments: [{ id: "stillness:2.0", argument: "'Still' is never defined." }] } }],
     contract: { policy: "auto-issue only ROBUST", all_tickets: { tickets: 2, false_tickets: 1, upper_95: 0.9 },
                 auto_issued: { tickets: 1, false_tickets: 0, upper_95: 0.79 }, held_for_review: { tickets: 1, false_tickets: 1, by_status: {} },
                 labels_needed_error_free: { "2%": 188, "5%": 73 } } } }));
   await page.goto("/court");
   await expect(page.getByTestId("headline")).toContainText("1 of 2 hold up");
-  await expect(page.getByTestId("case")).toContainText("wrongly issued");
-  await expect(page.getByTestId("case")).toContainText("concedes");
+  await expect(page.getByTestId("case")).toContainText("correctly issued");
+  await expect(page.getByTestId("case")).toContainText("rests on a choice nobody wrote down");
+  await expect(page.getByTestId("case")).toContainText("wins");
   await expect(page.getByTestId("contract")).toContainText("188");
 });

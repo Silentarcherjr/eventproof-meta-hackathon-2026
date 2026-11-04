@@ -1,0 +1,16 @@
+{
+  "schema": "eventproof-label-audit/1",
+  "date": "2026-11-04",
+  "clip": "santos_toward.mp4",
+  "finding": "The crossing times hand-labelled for the first two riders do not match the footage order, so crossing-order matching paired each label with the other rider's track. The SAM 3.1 tracks show the engine judged both riders correctly.",
+  "evidence": {
+    "run": "benchmark/real/anchor_v4/runs/20261103T235539Z-c2cd9aeb",
+    "track_0": "starts below the line at x 0.57 (right side, the man with the red crate) and moves up the image, away from the camera: forbidden direction, verdict VIOLATION, correct",
+    "track_1": "starts above the line at x 0.47 (the woman in the white helmet) and moves down, toward the camera: allowed, verdict PASS, correct"
+  },
+  "corrections": [
+    {"set": "santos", "object_id": 0, "pre_registered_label": "PASS (woman in white helmet)", "audited_label": "VIOLATION (man with red crate)"},
+    {"set": "santos", "object_id": 1, "pre_registered_label": "VIOLATION (man with red crate)", "audited_label": "PASS (woman in white helmet)"}
+  ],
+  "policy": "Pre-registered reports are not rewritten. Figures 'after the label audit' apply only these two corrections and are always shown next to the pre-registered figures."
+}

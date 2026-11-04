@@ -410,15 +410,17 @@ def law_grid() -> dict:
 def ticket_court() -> dict:
     """Every real ticket of the ticket study as a case file: prosecution (rule, decisive events), defense (Muse Spark,
     from its closed menu), ruling (the deterministic sweep), plus the contract-acceptance block."""
-    from eventproof.review.triage import contract
+    from eventproof.review.triage import apply_audit, contract
 
     rep = json.loads((BENCH / "tickets" / "report.json").read_text())
+    audit = json.loads((BENCH / "real" / "santos" / "label_audit.json").read_text())
+    rows = apply_audit(rep["rows"], audit)
     runs = {}
     for s in ("novisad", "traffic_v2", "traffic_v3", "domains", "santos"):
         for c in json.loads((BENCH / "real" / "anchor_v4" / f"report_{s}.json").read_text())["clips"]:
             runs[(s, c["clip"])] = c["run_id"]
     cases = []
-    for r in rep["rows"]:
+    for r in rows:
         if "defense" not in r:
             continue
         run_id = runs[(r["set"], r["clip"])]
@@ -430,7 +432,8 @@ def ticket_court() -> dict:
         cases.append(r | {"run_id": run_id, "rule_text": ev.rule.text, "explanation": rule.normalized_explanation,
                           "anchor": rule.params.anchor, "events": [e.model_dump() for e in obj.events],
                           "first_frame": obj.first_frame, "last_frame": obj.last_frame})
-    return {"summary": rep["summary"], "contract": contract(rep["rows"]), "cases": cases}
+    return {"summary": rep["summary"], "contract": contract(rows), "contract_pre_registered": contract(rep["rows"]),
+            "audit": audit["finding"], "cases": cases}
 
 
 @app.get("/runs/{run_id}/ledger")
