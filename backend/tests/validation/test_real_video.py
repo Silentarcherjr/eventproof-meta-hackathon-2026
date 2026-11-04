@@ -297,3 +297,19 @@ def test_hash_facts(clip):
     f = rv.hash_facts(src)
     assert f["sha256"] == rv.sha256_file(src) and f["size"] == "640x360" and f["location_tags"] == []
     assert f["reencode_on_ingest"] == []
+
+
+def test_timed_matching_pairs_by_side_and_time():
+    from eventproof.validation.real_video import LabeledObject, Perceived, match_objects
+
+    lab = [LabeledObject(description="rides away", crosses_packing=True, stood_still_s=0, intended="VIOLATION",
+                         cross_s=1.5, cross_dir="to_left"),
+           LabeledObject(description="rides toward", crosses_packing=True, stood_still_s=0, intended="PASS",
+                         cross_s=1.6, cross_dir="to_right")]
+    # the toward-camera rider crosses first in the tracks: crossing order would swap them
+    per = [Perceived(7, "TRUE", 14, 0, 1400.0, "to_right"), Perceived(9, "TRUE", 28, 0, 2800.0, "to_left"),
+           Perceived(3, "FALSE", None, 0)]
+    m = match_objects(lab, per)
+    assert m.pairs == [(1, 7)] and m.missed == [0]  # rider 0's track crosses to_left at 2.8 s: 1.3 s away, too far
+    lab[0] = lab[0].model_copy(update={"cross_s": 2.5})
+    assert match_objects(lab, per).pairs == [(0, 9), (1, 7)]

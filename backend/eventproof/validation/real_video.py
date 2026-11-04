@@ -70,6 +70,11 @@ class LabeledObject(BaseModel):
     crosses_packing: bool
     stood_still_s: float = Field(ge=0, le=60, description="approx seconds standing still at the station before packing")
     intended: Literal["PASS", "VIOLATION"]
+    # optional, for clips where many objects cross close together: approximate crossing time (s, clip time) and side
+    # (to_left / to_right of the packing line walked a -> b, as in CROSSES). When every crossing object has both,
+    # matching pairs labels and tracks by side and nearest time instead of by crossing order.
+    cross_s: float | None = Field(default=None, ge=0)
+    cross_dir: Literal["to_left", "to_right"] | None = None
 
 
 class ClipLabel(BaseModel):
@@ -185,6 +190,8 @@ class Perceived:
     crossing: str  # TRUE / FALSE / UNKNOWN for CROSSES(packing line)
     cross_frame: int | None
     first_frame: int
+    cross_ms: float | None = None
+    cross_dir: str | None = None  # side of the first crossing: to_left / to_right
 
     @property
     def crosses(self) -> bool:
@@ -196,8 +203,30 @@ def perceive(rule: VisualRule, tracks: TrackSet, line_id: str) -> list[Perceived
     out = []
     for t in build_tracks(rule, tracks):
         r = eval_event(ev, t, rule)
-        out.append(Perceived(t.object_id, r.status, r.frame, t.first_frame))
+        side = None
+        if r.status == "TRUE":
+            sides = {d: eval_event(Crosses(line=line_id, direction=d), t, rule).frame for d in ("to_left", "to_right")}
+            side = min((f, d) for d, f in sides.items() if f is not None)[1]
+        out.append(Perceived(t.object_id, r.status, r.frame, t.first_frame,
+                             tracks.video.frame_to_ms(r.frame) if r.frame is not None else None, side))
     return out
+
+
+MATCH_WINDOW_S = 1.0
+
+
+def _match_by_time(lab: list[tuple[int, LabeledObject]], per: list[Perceived]) -> tuple[list, list, list]:
+    """Same side, nearest crossing time (<= MATCH_WINDOW_S), each track used once; closest pairs first."""
+    cands = sorted((abs(p.cross_ms / 1000 - o.cross_s), i, p.object_id)
+                   for i, o in lab for p in per if p.cross_dir == o.cross_dir and p.cross_ms is not None
+                   and abs(p.cross_ms / 1000 - o.cross_s) <= MATCH_WINDOW_S)
+    pairs, used_l, used_p = [], set(), set()
+    for _, i, oid in cands:
+        if i not in used_l and oid not in used_p:
+            pairs.append((i, oid))
+            used_l.add(i)
+            used_p.add(oid)
+    return pairs, [i for i, _ in lab if i not in used_l], [p.object_id for p in per if p.object_id not in used_p]
 
 
 @dataclass
@@ -209,7 +238,13 @@ class Match:
 
 def match_objects(labeled: list[LabeledObject], perceived: list[Perceived]) -> Match:
     pairs, missed, extra = [], [], []
+    crossing = [(i, o) for i, o in enumerate(labeled) if o.crosses_packing]
+    timed = bool(crossing) and all(o.cross_s is not None and o.cross_dir for _, o in crossing)
     for want in (True, False):
+        if want and timed:
+            p, m, e = _match_by_time(crossing, [p for p in perceived if p.crosses])
+            pairs, missed, extra = pairs + p, missed + m, extra + e
+            continue
         lab = [i for i, o in enumerate(labeled) if o.crosses_packing is want]
         per = sorted((p for p in perceived if p.crosses is want),
                      key=lambda p: (p.cross_frame if want else p.first_frame, p.object_id))
