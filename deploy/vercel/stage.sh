@@ -15,6 +15,7 @@ mkdir -p "$OUT/artifacts/runs"
 for c in muse_cache sam_cache muse_layout_cache; do test -d "artifacts/$c" && cp -R "artifacts/$c" "$OUT/artifacts/"; done
 cp -R artifacts/runs/. "$OUT/artifacts/runs/"
 for r in benchmark/real/*/runs/*/; do cp -R "${r%/}" "$OUT/artifacts/runs/"; done
+test -d benchmark/real/fresh_v1/videos && mkdir -p "$OUT/benchmark/real/fresh_v1" && cp -R benchmark/real/fresh_v1/videos "$OUT/benchmark/real/fresh_v1/"
 for r in docs/evidence/runs/*/; do test -e "$OUT/artifacts/runs/$(basename "$r")" || cp -R "${r%/}" "$OUT/artifacts/runs/"; done
 
 cp deploy/vercel/Dockerfile.api "$OUT/Dockerfile"
