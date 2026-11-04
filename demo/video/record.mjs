@@ -32,6 +32,19 @@ const scrollTo = (page, sel, offset = 24) => page.evaluate(([s, o]) => {
   if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - o, behavior: "smooth" });
 }, [sel, offset]);
 
+// A pulsing highlight on one element for a few seconds (ring drawn on the element itself, so zoom and scroll follow it).
+const hl = (page, sel, ms = 4000) => page.evaluate(([s, m]) => {
+  const el = document.querySelector(s);
+  if (!el) return;
+  if (!document.getElementById("ep-hl-style")) {
+    const st = document.createElement("style"); st.id = "ep-hl-style";
+    st.textContent = "@keyframes ep-pulse { 0%,100% { box-shadow: 0 0 0 4px #facc15, 0 0 18px 4px rgba(250,204,21,.45); } 50% { box-shadow: 0 0 0 6px #facc15, 0 0 34px 10px rgba(250,204,21,.7); } } .ep-hl { animation: ep-pulse 1.1s ease-in-out infinite; border-radius: 10px; position: relative; z-index: 5; }";
+    document.head.appendChild(st);
+  }
+  el.classList.add("ep-hl");
+  setTimeout(() => el.classList.remove("ep-hl"), m);
+}, [sel, ms]);
+
 const playAll = (page, sel) => page.evaluate((s) => document.querySelectorAll(s).forEach((v) => { v.muted = true; v.currentTime = 0; v.play(); }), sel);
 
 // each scene: url, extra CSS, ready selector, and a script of [at_seconds, action]
@@ -59,6 +72,8 @@ const SCENES = {
     css: "html { zoom: 1.32 !important; } a[href='/'] { display: none; } #ep-caption { top: auto !important; bottom: 16px; }",
     steps: [
       [0, (p) => caption(p, "Verbatim Maryland statute · Muse Spark's compiled rule · 30 labelled real cars · no model call on this page")],
+      [5.7, (p) => hl(p, "[data-testid=statute]", 4500)],
+      [18.0, (p) => hl(p, "[data-testid=counters]", 8000)],
       // stillness speed from Spark's 0.05 down to 0.01 (more tickets), then up to "any motion" (none)
       ...sweep("[data-testid=speed]", 4, 0, 18.5, 0.35),
       ...sweep("[data-testid=speed]", 0, 20, 20.1, 0.18),
@@ -72,6 +87,7 @@ const SCENES = {
     steps: [
       [0, (p) => caption(p, "Real drone footage (Pexels, Novi Sad) · recorded run: Muse Spark + SAM 3.1 outputs from cache")],
       [1.5, (p) => playAll(p, "[data-testid=video]")],
+      [17.6, (p) => hl(p, "[data-testid=objects] > li:has(.text-red-400)", 5000)],
     ],
   },
   4: {
@@ -79,6 +95,7 @@ const SCENES = {
     css: "html { zoom: 1.05 !important; } a[href='/'] { display: none; } #ep-caption { top: auto !important; bottom: 16px; }",
     steps: [
       [0, (p) => caption(p, "Ticket court · a real ticket (Wroclaw) · Muse Spark's defense recorded earlier, the ruling is deterministic")],
+      [15.2, (p) => hl(p, "[data-testid=case] li:has(> span.text-red-300)", 6000)],
     ],
   },
   5: {
@@ -87,6 +104,8 @@ const SCENES = {
     steps: [
       [0, (p) => caption(p, "All 20 real tickets from labelled footage")],
       [11.8, (p) => scrollTo(p, "[data-testid=gate]", 60)],
+      [9.6, (p) => hl(p, "[data-testid=headline]", 2200)],
+      [15.6, (p) => hl(p, "[data-testid=gate-decision]", 4500)],
       [13.4, (p) => p.click("[data-testid=approve-scope]")],
       [14.2, (p) => p.click("[data-testid=approve-stillness]")],
       [15.0, (p) => p.click("[data-testid=approve-stillness_meaning]")],

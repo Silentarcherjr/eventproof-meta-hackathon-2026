@@ -31,7 +31,7 @@ EOF
 
 # 2. studio scenes (2-6) and cards (1, 7, 8)
 node "$HERE/record.mjs" "$W" "$W/durations.json"
-node "$HERE/cards.mjs" "$W"
+node "$HERE/cards.mjs" "$W" "$W/durations.json"
 
 # 3. one MP4 per scene: picture + its narration + a short gap
 V="-c:v libx264 -pix_fmt yuv420p -preset medium -crf 20 -r 30"
@@ -39,9 +39,13 @@ A="-c:a aac -b:a 160k -ar 48000 -ac 2"
 seg() {  # seg <n> <video input args...>: picture for the narration length + gap
   n=$1; shift
   len=$(python3 -c "print(round($(dur "$W/n$n.aiff") + $GAP + ${PAD:-0.6}, 2))")
-  ffmpeg -loglevel error -y "$@" -i "$W/n$n.aiff" -filter_complex "[1:a]apad[a]" -map 0:v -map "[a]" -t "$len" $V $A "$W/seg$n.mp4"
+  fo=$(python3 -c "print(round($len - 0.3, 2))")
+  ffmpeg -loglevel error -y "$@" -i "$W/n$n.aiff" -filter_complex "[0:v]fade=t=in:st=0:d=0.25,fade=t=out:st=$fo:d=0.3[v];[1:a]apad[a]" -map "[v]" -map "[a]" -t "$len" $V $A "$W/seg$n.mp4"
 }
-card() { echo "-loop 1 -framerate 30 -i $W/$1.png"; }
+card() {  # the animated clip when cards.mjs recorded one, else the still
+  if [ -f "$W/cards.json" ]; then python3 -c "import json;c=json.load(open('$W/cards.json'))['$1'];print('-ss', c['lead'], '-i', c['file'])"
+  else echo "-loop 1 -framerate 30 -i $W/$1.png"; fi
+}
 # shellcheck disable=SC2046
 seg 1 $(card card_1)
 for n in 2 3 4 5 6; do
