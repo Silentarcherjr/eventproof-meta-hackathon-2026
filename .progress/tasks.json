@@ -1439,6 +1439,34 @@
       "blocker": null,
       "next_action": "Review traffic-visuals and merge separately; all local checks passed; no merge performed",
       "cost_note": "$0 Meta; deterministic drawing only"
+    },
+    {
+      "id": "P1-INTERACTION-STOPS",
+      "title": "Preregistered stop-law threshold sensitivity on INTERACTION drone trajectories",
+      "priority": "P1",
+      "gate": "G6",
+      "state": "IN_PROGRESS",
+      "dependencies": [
+        "P1-23"
+      ],
+      "owner": "validation",
+      "branch": "interaction-stops",
+      "definition_of_done": "Preregged sensitivity report reproduced from committed derived data, tests and Ruff green; separate reviewed merge required",
+      "test_commands": [
+        "cd backend && uv run pytest -q",
+        "cd backend && uv run ruff check ."
+      ],
+      "evidence_paths": [
+        "benchmark/interaction/PREREGISTRATION.md",
+        "benchmark/interaction/FINDINGS.md"
+      ],
+      "commit_sha": null,
+      "pr_url": null,
+      "started_at": "2026-11-04T12:00:00Z",
+      "updated_at": "2026-11-04T12:00:00Z",
+      "blocker": null,
+      "next_action": "Extract map STOP approaches after preregistration commit; compile once within two-call cap",
+      "cost_note": "At most 2 authorized Muse Spark live calls; no SAM"
     }
   ]
 }
