@@ -1,0 +1,20 @@
+{
+  "schema_version": "eventproof-real-labels/1",
+  "frozen_at": "2026-11-04T10:09:17+00:00",
+  "labels": {
+    "drone_north_1.json": "4db1786482431911ee352c9ca988c1134ee235ce41834d3b2799a47697857976",
+    "drone_north_2.json": "ab34b0cc7a1bd216654f4ae1ac23b4f139879f9e41f3891cf6f1165bb9d89426",
+    "drone_north_3.json": "a56293a13e1ccf75a05b1a845d576a81f339adbc6183b7a55e9be13a3c7eeae8",
+    "drone_south_1.json": "15a40250ea767553ed9964f68e4c6e7c1ae9ef6e50d301010d3b4379c45267ea",
+    "drone_south_2.json": "4d95ac87af68cd5e4fa4270fb52bb28ef0c9fa685d2c8a7f605866d13dc4f806",
+    "drone_south_3.json": "91385ec06092054bb1837b9d9535dc921364e0948890c970bd80ec2ef709487a"
+  },
+  "clips": {
+    "drone_north_1.mp4": "8101c819af72ab7aa6753783a3c2dc6a4fa7640859a436a0a163941a32f45118",
+    "drone_north_2.mp4": "0ab686bc8cd52457dd071425471923d5c592fa8dc10f751d0ba65f8cd45bbd33",
+    "drone_north_3.mp4": "0fac432542ab33ece9a9d5db057c4a7ef0d9f7a15346af6589df6b2015255df1",
+    "drone_south_1.mp4": "7d09d1aa8f0fceb5380b6f1653348e10ed088a6dcd945ec0c9980f95d75f5e32",
+    "drone_south_2.mp4": "08b8be35905664865c37dac985c4f3f9cfef8e87be67d095c61af3261f54a7df",
+    "drone_south_3.mp4": "d2c0fe42ce7b48aef2ff0c22b2cb42553984df987373762865625164a23d2498"
+  }
+}

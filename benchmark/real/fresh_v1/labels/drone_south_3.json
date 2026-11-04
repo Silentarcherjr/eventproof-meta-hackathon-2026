@@ -1,0 +1,73 @@
+{
+ "schema_version": "eventproof-real-labels/1",
+ "packing_line": "packing_entry",
+ "rule_text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+ "layout": {
+  "zones": [
+   {
+    "zone": {
+     "id": "inspection",
+     "polygon": [
+      [
+       0.175,
+       0.6964
+      ],
+      [
+       0.4688,
+       0.7554
+      ],
+      [
+       0.7656,
+       0.2679
+      ],
+      [
+       0.0781,
+       0.2679
+      ]
+     ]
+    },
+    "description": "waiting zone: the southbound approach lanes just before the stop line (top-down drone view; cars come from the top of the frame)"
+   }
+  ],
+  "lines": [
+   {
+    "line": {
+     "id": "packing_entry",
+     "a": [
+      0.175,
+      0.6964
+     ],
+     "b": [
+      0.4688,
+      0.7554
+     ]
+    },
+    "description": "stop line across the southbound approach lanes; cars travel from top to bottom of the frame"
+   }
+  ]
+ },
+ "clip": "drone_south_3.mp4",
+ "clip_sha256": "d2c0fe42ce7b48aef2ff0c22b2cb42553984df987373762865625164a23d2498",
+ "notes": "Pexels video 35172060 (Pexels License; not redistributed), static top-down drone over a signalised intersection, never used before in this repository; southbound approach, source t 37.4-56.2 s, crop x300-620 y0-560 of the 720x1280 file, 10 fps, metadata stripped.",
+ "objects": [
+  {
+   "cross_dir": "to_right",
+   "stood_still_s": 14.0,
+   "intended": "PASS",
+   "cross_s": 16.5,
+   "crosses_packing": true,
+   "description": "blue SUV in left southbound lane"
+  },
+  {
+   "cross_dir": "to_right",
+   "stood_still_s": 14.5,
+   "intended": "PASS",
+   "cross_s": 17.9,
+   "crosses_packing": true,
+   "description": "white SUV in right southbound lane"
+  }
+ ],
+ "expected_overall": "PASS",
+ "labeled_by": "participant (reviewed every clip in the studio's review page while watching the video and accepted Muse Spark's proposals unchanged; the one non-crossing car in drone_north_1 was added from Muse's note)",
+ "labeled_at": "2026-11-04T05:09:06-05:00"
+}
