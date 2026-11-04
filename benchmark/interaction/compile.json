@@ -55,7 +55,7 @@
   },
   "live_calls": 1,
   "preregistration_sha256": "7a26f849a4f39baed3c479d75ce386adc1502af11b41a62ccec79699de3dafdd",
-  "code_commit": "6a9329fd3b430a250f5ca622af2d6763dea8120b",
+  "code_commit": "1d04084167d9f3ebb820c97b5ddd226177c5dbcd",
   "rule": {
     "rule_id": "stop-at-limit-line",
     "version": 1,

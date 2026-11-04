@@ -1,6 +1,6 @@
 # Umbrella pilot: a two-object rule on real footage (findings)
 
-Pre-registered in `PREREGISTRATION.md` (commit 291009f) before any model call. Run once:
+Pre-registered in `PREREGISTRATION.md` (commit 90a2cab) before any model call. Run once:
 `with_pilot run --max-muse 2 --max-sam 2`, 2 Muse Spark calls + 2 SAM 3.1 requests. `report.json` recomputes from
 the recorded run with 0 API calls (`with_pilot report`, tested in CI).
 

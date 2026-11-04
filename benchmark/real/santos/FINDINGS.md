@@ -1,6 +1,6 @@
 # Santos bike path: findings
 
-Pre-registered in `PREREGISTRATION.md` (commit 2eae88a) before any model call. Run once: `real_video run`, with
+Pre-registered in `PREREGISTRATION.md` (commit 8166afb) before any model call. Run once: `real_video run`, with
 2 Muse Spark compiles and 2 SAM 3.1 calls. The report is `report_santos.json` / `.md`.
 
 **Result: 0/8 labelled crossings judged.** Both clip verdicts were PASS, where FAIL was expected.
@@ -37,7 +37,7 @@ it, because both work on synthetic scenes whose geometry is chosen to fit the ru
 
 A re-run with a changed rule or layout would be a new pre-registered test; none was made.
 
-## v2: the rule rewritten to say where riders are measured (pre-registered in `PREREGISTRATION_v2.md`, 24755c4)
+## v2: the rule rewritten to say where riders are measured (pre-registered in `PREREGISTRATION_v2.md`, e3d7b8a)
 
 **Result: 1/8.**
 - `santos_away`: clip verdict PASS, expected FAIL. No crossing was seen, and the rule check fired again.

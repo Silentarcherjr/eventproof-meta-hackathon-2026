@@ -2,7 +2,7 @@
 
 **Real-world data, n=2 clips, no tuning.** Real-world videos (the participant's own recordings or licensed public footage; source in each label's notes), labelled by hand and frozen before any model ran. Reported separately from the synthetic results; never used to tune rules, thresholds, repairs or the grader.
 
-- created 2026-11-02T06:27:33+00:00, eventproof 0.1.0, commit `730d351cdc1a`
+- created 2026-11-02T06:27:33+00:00, eventproof 0.1.0, commit `8a0eb8f4e3b6`
 - labels manifest sha256 `15c344751eef333631902699a2760e95a8694eafd151d8ea315a41566b72d8b5`
 - live calls this run: Muse 1, SAM 2 (allowances 1 / 2); everything else served from cache
 - repair ("after"): `muse-spark-1.3-r3-0` = DWELL(inspection) >= 0.80 s; DWELL(inspection) counts only while speed <= 0.08/s (first accepted proposal in the proposer's order; from `docs/evidence/runs/20261028T023754Z-a922b5bb/challenge/repair_muse.json`, sha256 `8031f8f43d3b`)

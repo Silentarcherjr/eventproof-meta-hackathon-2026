@@ -1,6 +1,6 @@
 # Real traffic v2 (Pexels, Wroclaw) and the pooled real-traffic result
 
-Pre-registration: [`PREREGISTRATION.md`](PREREGISTRATION.md) (730d351, labels + manifest pushed before any call).
+Pre-registration: [`PREREGISTRATION.md`](PREREGISTRATION.md) (8a0eb8f, labels + manifest pushed before any call).
 Data: [`report_wroclaw.json`](report_wroclaw.json) / [`.md`](report_wroclaw.md), run evidence and SAM 3.1 tracks in
 [`runs/`](runs/), Muse Spark alone in [`spark_alone_wroclaw.json`](spark_alone_wroclaw.json), pooled numbers in
 [`../POOLED.json`](../POOLED.json). CI recomputes all of them from committed files (no video, no API).

@@ -1,6 +1,6 @@
 # Compiler with an anchor field, all frozen real sets re-run (findings)
 
-Pre-registered in `PREREGISTRATION.md` (commit 9b87501) before any model call. The run used 6 live Muse Spark compiles
+Pre-registered in `PREREGISTRATION.md` (commit 27395f4) before any model call. The run used 6 live Muse Spark compiles
 (clips that share a rule text and layout reuse one compile) and 0 new SAM calls: Muse named the same concept on every
 clip. `tests/validation/test_anchor_v4.py` recomputes every verdict from the committed rules and tracks.
 

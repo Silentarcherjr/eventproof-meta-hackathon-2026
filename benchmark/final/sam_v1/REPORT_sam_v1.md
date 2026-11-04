@@ -1,6 +1,6 @@
 # final_v1 — live SAM 3.1 pass (80 scenes), reported separately
 
-Pre-registration: [`../PREREGISTRATION_SAM_v1.md`](../PREREGISTRATION_SAM_v1.md) (commit 3c32c7b, pushed before the first
+Pre-registration: [`../PREREGISTRATION_SAM_v1.md`](../PREREGISTRATION_SAM_v1.md) (commit 0db2b2d, pushed before the first
 call). Data: [`report_sam_v1.json`](report_sam_v1.json), per-scene log [`tracking.json`](tracking.json), raw SAM output
 [`sam_cache/`](sam_cache/) (80 responses, request ids in the report). CI recomputes every number below from those files
 with 0 API calls (`backend/tests/validation/test_sam_pass.py`). The primary final_v1 result (mock tracker, 320 scenes) is

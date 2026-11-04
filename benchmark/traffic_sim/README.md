@@ -76,7 +76,7 @@ Development only: **320/320 scenes correct** with perfect synthetic tracks (`dev
 no holdout evaluation was run. The CLI replay used 31 evaluations and changed only one crawl
 frame to flip the naive detector PASS→FAIL, while both physical truth labels remain VIOLATION.
 
-Generator/search implementation was committed as `f6e98a8` before this release was frozen.
+Generator/search implementation was committed as `d3aa8a7` before this release was frozen.
 Release SHA-256: `fd9f6567d5859796ea87bd0d6fe92cb71bbf5a5119aef1e862efa2594036bb7b`.
 The release manifest seals the separate development and holdout manifests and every case's files.
 Remaining: studio UI integration, model-perception evaluation and real-world validation are outside

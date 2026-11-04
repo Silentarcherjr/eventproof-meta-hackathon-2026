@@ -1,6 +1,6 @@
 # Muse Spark alone vs. EventProof on the same real clips
 
-Pre-registration: [`PREREGISTRATION.md`](PREREGISTRATION.md) (d9531ee, pushed before the calls). Data:
+Pre-registration: [`PREREGISTRATION.md`](PREREGISTRATION.md) (62822d3, pushed before the calls). Data:
 [`report.json`](report.json), raw responses in [`cache/`](cache/) (10 live `muse-spark-1.3` calls, 26.7k input /
 42.6k output tokens, about $0.21). CI recomputes every metric from the committed answers (`test_spark_alone.py`).
 Clips, rule text, layout and labels are exactly those of [`../novisad/`](../novisad/FINDINGS.md); n is small (2 clips).

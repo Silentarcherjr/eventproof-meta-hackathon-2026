@@ -1,6 +1,6 @@
 # Real traffic v3 (Wroclaw, one more window) and the updated pooled result
 
-Pre-registration: [`PREREGISTRATION.md`](PREREGISTRATION.md) (45ba9ba, labels + manifest pushed before any call).
+Pre-registration: [`PREREGISTRATION.md`](PREREGISTRATION.md) (adab6f6, labels + manifest pushed before any call).
 Data: [`report_wroclaw_w3.json`](report_wroclaw_w3.json), [`runs/`](runs/), [`spark_alone_wroclaw_w3.json`](spark_alone_wroclaw_w3.json),
 pooled numbers [`../POOLED_v2.json`](../POOLED_v2.json) (the first pooled result, [`../POOLED.json`](../POOLED.json), stays).
 Live calls: SAM 3.1 1 (91 frames), Muse Spark 5 video calls; the rule compile came from cache (same text and layout).

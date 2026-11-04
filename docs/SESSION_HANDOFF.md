@@ -4,9 +4,9 @@ Written: 2026-11-04, America/Panama (UTC-5).
 
 ## Current branch and scope
 - `interaction-stops`, isolated worktree `/Users/anthonymorell/Desktop/eventproof-interaction`,
-  created from origin/main **5fc1310** (parent main CI verified green before work).
+  created from origin/main **d31abdf** (parent main CI verified green before work).
 - P1-INTERACTION-STOPS: IN_REVIEW; no merge requested or performed. Do not push main.
-- Preregistration **6a9329f** was pushed before any outcome analysis or live call.
+- Preregistration **1d04084** was pushed before any outcome analysis or live call.
 - Main evidence: benchmark/interaction/FINDINGS.md, report.json, compile.json, maps.json, population.json,
   derived.json.gz (3.2 MiB), ATTRIBUTION.md. Raw archive/CSVs outside Git: /private/tmp/interaction/.
 - Code: backend/eventproof/validation/interaction.py; tests: backend/tests/validation/test_interaction.py.

@@ -108,7 +108,7 @@
   fresh clone replays it with no key (verified in Docker from a clean clone). 0 Meta calls.
 ## 2026-11-01 · session 1 (cont.) · local macOS · orchestrator — P1-07 live SAM 3.1 pass on final_v1
 - Participant approved up to $5. Subset fixed by seed index (40000–40009 × 8 families = 80 scenes) and pre-registered in
-  `benchmark/final/PREREGISTRATION_SAM_v1.md`, committed and pushed (3c32c7b) before the first call.
+  `benchmark/final/PREREGISTRATION_SAM_v1.md`, committed and pushed (0db2b2d) before the first call.
 - `validation/sam_pass.py`: resumable tracking with a hard live-call cap, report computed from the cache only (0 calls),
   refuses to overwrite. 2 trial calls, then 78: 80/80 ok, 0 parse errors, ~7 s each. Raw outputs committed (1.4 MB).
 - Result: Muse-run rule 71 → 76 / 80 with SAM tracks after the accepted patch, false PASS 5 → 0, 0 regressions; remaining
@@ -117,46 +117,46 @@
 ## 2026-11-01 · session 1 (cont.) · local macOS · orchestrator — P1-08 Pexels real-footage check
 - Participant approved using 2 Pexels clips. Reviewed ~15 Pexels clips first (frames only): none shows a box stopping at a
   station, so only a perception check is possible. Clip 4156510 excluded before any call (moving camera).
-- Clip 5903898: hand labels (8 right-to-left crossings of the center line) + pre-registration pushed (c1907a7) before the call.
+- Clip 5903898: hand labels (8 right-to-left crossings of the center line) + pre-registration pushed (b67a0d7) before the call.
 - 1 live SAM call: **2/8 crossings found**, 0 false, no merges. Cause: 16 objects/frame cap filled at frame 0 (9 of them static
   clutter), no new tracks for parcels arriving later. Reported as is; mitigations (crop, windowed tracking) not run.
-- v2 (approved): crop to belt + 8 overlapping 50-frame windows + IoU stitching, pre-registered (3fa782f) before the calls.
+- v2 (approved): crop to belt + 8 overlapping 50-frame windows + IoU stitching, pre-registered (eb3b53a) before the calls.
   8 live SAM calls: **8/8 crossings, 0 false, median |dt| 0.2 s, 8 distinct ids**. v1 kept as the first result.
 ## 2026-11-01 · session 1 (cont.) · local macOS · orchestrator — P1-09 real traffic footage, full loop
 - No usable stop-sign footage on Pexels; chose a top-down drone view of a signalised crossing in Novi Sad (15411757).
   Camera checked fixed (landmarks at 0/50/100 %). Cropped to one approach, 2 clips of <= 20 s (ingest limit).
 - Labels (2 clips, 6 cars: 2 rolling through incl. a slow-roll van, 2 stopping 4-5.5 s, 2 waiting all clip) + manifest +
-  pre-registration pushed (45bde5e) before any call. 1 Muse + 2 SAM live calls.
+  pre-registration pushed (e309c7d) before any call. 1 Muse + 2 SAM live calls.
 - Result: Muse compiled "wait" as stopped (max_speed 0.05): 8/8 objects right. Synthetic-accepted repair r3-0 (<= 0.08/s,
   0.8 s): 7/8, passes the slow-roll van (crawl 0.04-0.09/s). Reported as is; post-hoc label notes in FINDINGS.md.
 ## 2026-11-02 · session 1 (cont.) · local macOS · orchestrator — P1-10 Muse Spark-alone baseline
 - Participant approved up to $60 more. Official prices read (SAM $0.20 / 1k frames; Spark $1.25 / $4.25 per 1M tokens).
 - Screened ~20 more Pexels traffic clips (frames only); usable fixed-camera ones downloaded for later labelling (Wroclaw
   36366105, Taiwan 9322364); the winter one is a time-lapse with cuts (rejected).
-- Baseline pre-registered (d9531ee) then run: Muse Spark judging from video, 5 runs per Novi Sad clip. Overall verdict 10/10,
+- Baseline pre-registered (62822d3) then run: Muse Spark judging from video, 5 runs per Novi Sad clip. Overall verdict 10/10,
   counts exact 5/10 (0/5 on the rolling-stop clip); rolling van flagged 1/5; waiting cars reported as crossing in 3/5.
 - P1-11 ambiguity finder (`eventproof/ambiguity.py`): Muse Spark and Muse Wonder compile 8 phrasings; behaviour compared on
-  the 150-scene dev suite with oracle tracks; minimal pair by knob bisection. Pre-registered (19bfe76). Both compiled 6;
+  the 150-scene dev suite with oracle tracks; minimal pair by knob bisection. Pre-registered (e5c09e6). Both compiled 6;
   agreed on 4; "wait" and "remain" read differently (Spark: still, Wonder: present), 45/150 scenes differ, minimal pairs
   found (belt speed 0.11777/0.11797; stop knob 0.24434/0.24453). Wonder: 1 malformed runaway output, 1 declined.
-- Studio "Two readings" panel + API `/runs/{id}/ambiguity` (854f8c6): both readings with assumptions, disagreement count, the
+- Studio "Two readings" panel + API `/runs/{id}/ambiguity` (9f27e92): both readings with assumptions, disagreement count, the
   minimal pair rendered as two clips with scene facts (stood still / inside the zone), the user picks the meaning. Live
   readings take from the Muse allowance; the readings cache ships in the backend image. CI 41397438034 green.
 - C-04: MIT license added at the participant's choice (2026-11-02, provisional until the rules are checked).
 ## 2026-11-02 · session 1 (cont.) · local macOS · orchestrator — P1-12 real traffic v2 (Wroclaw) + pooled result
 - Screened Taiwan (rejected: almost no crossings) and Wroclaw; 2 Wroclaw clips (red-light queue; green free flow), 16 cars
-  labelled at 4 fps, frozen + pre-registered (730d351) before any call.
+  labelled at 4 fps, frozen + pre-registered (8a0eb8f) before any call.
 - Muse rule 14/16 (2 abstained); synthetic-accepted repair 6/16 (perspective: far cars < 0.08/s for 1.2-2.0 s); Wonder = Spark
   reading; Spark alone overall 10/10, counts exact 6/10. Pooled 4 clips / 24 cars: Muse rule 22/24, repair 13/24, Spark alone
   counts exact 11/20. One car crossing at 18.4 s in w2 was not labelled (post-hoc note). `real_pooled.py` + CI test.
-- CI 41401253197 failed: Wonder's Wroclaw reading was not committed (cache file untracked); committed in c7ec295, CI 41401675641 green.
+- CI 41401253197 failed: Wonder's Wroclaw reading was not committed (cache file untracked); committed in ee52055, CI 41401675641 green.
 ## 2026-11-02 · session 1 (cont.) · local macOS · orchestrator — certificate, more real footage
-- Rule certificate (7812f91): one printable page per run with a fixed status rule; API `/runs/{id}/certificate`; studio links.
+- Rule certificate (fccd5c7): one printable page per run with a fixed status rule; API `/runs/{id}/certificate`; studio links.
 - Factory footage: ~15 Pexels factory/forklift/bottling clips screened; none usable for a zone-time rule with a fixed camera.
-- Wroclaw w3 (t 81.5-90.6 s, 6 cars) pre-registered (45ba9ba): rule 5/6 (1 car never tracked by SAM), repair 3/6, Spark alone
+- Wroclaw w3 (t 81.5-90.6 s, 6 cars) pre-registered (adab6f6): rule 5/6 (1 car never tracked by SAM), repair 3/6, Spark alone
   counts exact 0/5. Pooled 5 clips / 30 cars: rule 27/30 (0 wrong verdicts), repair 16/30. Certificate: untracked objects
   make a rule CONDITIONAL (perception gap), wrong verdicts make it NOT CERTIFIED.
-- New-rule-on-same-video (1d9fbfb). Demo rule typed on the Novi Sad clip: "Every car must remain behind the stop line for at
+- New-rule-on-same-video (4f95021). Demo rule typed on the Novi Sad clip: "Every car must remain behind the stop line for at
   least 2 seconds before it crosses it." Muse Spark and Muse Wonder both read it as presence (no stopping); verdicts all PASS;
   Challenge Mode 36/150 failures; certificate checks the run against the clip's frozen labels: 3/5, the 2 cars that never
   stopped judged PASS -> NOT CERTIFIED. Evidence in docs/evidence/runs/20261102T080747Z-6b0ae7d4.
@@ -172,7 +172,7 @@
   (ambiguous truth, or rules about objects that never cross, which the label format does not cover).
 - 2026-11-02 P1-17 two-object rules on real footage: 99 Pexels clips screened (subagent) for hard hats, forklifts, helmets,
   umbrellas, dogs; 1 usable (39488108, rainy crossing from above). `on_top` changed to box overlap with the head band
-  (disclosed), labels frozen and pre-registered (291009f) before any call. Run: Muse escalated to WITH, SAM tracked
+  (disclosed), labels frozen and pre-registered (90a2cab) before any call. Run: Muse escalated to WITH, SAM tracked
   pedestrians + umbrellas; overall FAIL as labelled, 2/4 right, 1 wrong (neighbour's umbrella, min_ms 0), 1 not tracked.
   `with_pilot report` recomputes with 0 calls (CI test). ≈ $0.05.
 - 2026-11-03 P1-18 private hosted studio: Vercel project eventproof-studio (team HACKS, Hobby) with two services, studio
@@ -181,17 +181,17 @@
   (Muse), SAM from cache. Verified on production: live rule 30 s, Challenge, certificate. Certificate fix: right on
   labelled footage but fooled by synthetic scenes -> CONDITIONAL: COUNTEREXAMPLES FOUND (was CERTIFIED).
 - 2026-11-03 P1-19 more real footage: 159 more Pexels clips screened (subagent); only the Santos (Brazil) bike path
-  passed (2 clips, 8 crossings), pre-registered (2eae88a). Result 0/8: the compiled rule used anchor=center (EventProof's default; the
+  passed (2 clips, 8 crossings), pre-registered (8166afb). Result 0/8: the compiled rule used anchor=center (EventProof's default; the
   compiler schema has no anchor field, corrected 2026-11-04), the line was at the
   wheels, no centre ever crossed. New deterministic rule check engine/lint.py (anchor_check): studio warning +
   certificate NOT CERTIFIED; fires on both Santos runs, on no other real run (CI test). Post-hoc bottom anchor 5/8, not
   counted. README pitch rewritten; e2e for the hosted gallery.
-- 2026-11-04 Santos v2 (pre-registered 24755c4): rule text says "measure where the wheels touch": 1/8. Muse wrote the
+- 2026-11-04 Santos v2 (pre-registered e3d7b8a): rule text says "measure where the wheels touch": 1/8. Muse wrote the
   wheel assumption but the schema has no anchor field, so the rule kept the centre; the rule check refused it again.
   FINDINGS corrected: the 0/8 anchor was EventProof's default, not Muse's choice. Anchor field deferred (schema version
   bump would invalidate the cached compiles CI recomputes from).
 - 2026-11-04 P1-20 compiler schemas 4/5 with an `anchor` field (model picks where objects are measured); studio uses
-  it. Pre-registered re-run of all 5 frozen real sets (9b87501): 34 -> 38/46 right, never judged 10 -> 3, wrong 0 -> 3
+  it. Pre-registered re-run of all 5 frozen real sets (27395f4): 34 -> 38/46 right, never judged 10 -> 3, wrong 0 -> 3
   (w3 car behind another; 2 Santos riders swapped). Rule check silent on all 10 clips. CI recomputes (test_anchor_v4).
 - 2026-11-04 Idea workshop (54 agents: 12 lenses, novelty check vs 536 repos, 5 judges) -> two features built:
   P1-21 "Would these tickets hold up?" (review/robustness.py: measurement/threshold/meaning tiers; Muse Spark defense
@@ -202,23 +202,23 @@
 - 2026-11-04 Round-2 workshop (56 agents incl. research on past winners: domain-specific projects win most #1s; frame
   as a platform shown through one deep flagship; LlamaCon 2025 #3 was plain-language CCTV event detection, so lead with
   trial-of-the-ticket, not detection). Built P1-23: Drag the law (grid over the two unwritten numbers, pre-registered
-  398f05a: 0-17 tickets on the same 30 cars, Spark's cell reproduces 25/30), Ticket court page (20 cases: prosecution,
+  7aa2e30: 0-17 tickets on the same 30 cars, Spark's cell reproduces 25/30), Ticket court page (20 cases: prosecution,
   defense, ruling), contract-acceptance block (auto-issue only ROBUST; 188 labels for <= 2 %). README rebuilt around one
   ticket and one number.
 - 2026-11-04 P1-24 MEVA (CC BY 4.0, participant-approved): 1,392 moving vehicle tracks with Kitware 'vehicle_stops'
-  labels, pre-registered (c3fdf67). Muse rule agrees 24 %; design invalid (tracks span only their activity: stop tracks
+  labels, pre-registered (509e4aa). Muse rule agrees 24 %; design invalid (tracks span only their activity: stop tracks
   end at rest, start tracks begin at rest). Documented in benchmark/meva/FINDINGS.md; not used as an accuracy result.
 
-- 2026-11-04 P1-TRAFFIC-VISUALS (`traffic-visuals`, base fac447c): optional street/1 drawing style,
+- 2026-11-04 P1-TRAFFIC-VISUALS (`traffic-visuals`, base 42bc2b3): optional street/1 drawing style,
   ten seed-0 showcase videos restyled (46-75 KB), contract-prefix overlays, old default renderer preserved.
   All 2,634 protected artifacts stayed byte-identical; frozen v1 verification and 30 new regression tests pass.
   Full backend: 407 passed, 1 skipped; Ruff, TypeScript and Next build pass. Browser /lab on :3002 verified
   all eight scenes/two pair videos, full-stop 2.3S PASS, rolling-stop 0.0S VIOLATION and truck occlusion.
   Screenshot/proof in benchmark/traffic_sim/showcase/street-*. No Meta calls/spend. IN_REVIEW, no merge.
 
-- 2026-11-04 P1-INTERACTION-STOPS (`interaction-stops`, base origin/main 5fc1310): author-approved
+- 2026-11-04 P1-INTERACTION-STOPS (`interaction-stops`, base origin/main d31abdf): author-approved
   INTERACTION DR-v1_1, CC BY 4.0, raw archive outside Git in /private/tmp/interaction. Preregistration
-  6a9329f committed/pushed before calls/outcome analysis. Map audit selects 26 STOP-line/lanelet pairs
+  1d04084 committed/pushed before calls/outcome analysis. Map audit selects 26 STOP-line/lanelet pairs
   via all_way_stop or explicit usR1-1; 1268 complete approaches / 1254 recording-track identities.
   1 live Muse Spark law-mode compile of verbatim CA 22450(a): 1 s / 5 m/s (100 m frame); 10 tickets.
   156-cell numeric/semantic grid recomputed via unchanged deterministic engine: numeric 119–1073
@@ -228,3 +228,9 @@
   separator corrected and final full checks repeated before commit. Model usage 1967 in / 6395 out
   tokens, actual billed dollars unknown (~$0.0296 estimate at historical rates). No merge/main push,
   deployment or raw archive commit. IN_REVIEW pending separate reviewed merge.
+
+## 2026-11-04 · history cleanup · local macOS · orchestrator
+- Commit history rewritten once to drop private session notes; commit ids cited in reports and docs now point at the
+  rewritten commits. Frozen preregistrations keep their original bytes (their SHA-256 is checked), so the ids they cite
+  map as: 5fc1310 = d31abdf (INTERACTION base), 45bde5e = e309c7d (Spark-alone base). Merged branches interaction-stops,
+  traffic-lab, traffic-sim and traffic-visuals deleted. 415 tests passed / 1 skipped.

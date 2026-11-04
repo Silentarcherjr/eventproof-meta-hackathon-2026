@@ -1,6 +1,6 @@
 # Two Meta models, one sentence: where Muse Spark and Muse Wonder read a rule differently
 
-Pre-registration: [`PREREGISTRATION.md`](PREREGISTRATION.md) (19bfe76, pushed before the calls). Data:
+Pre-registration: [`PREREGISTRATION.md`](PREREGISTRATION.md) (e5c09e6, pushed before the calls). Data:
 [`report.json`](report.json); raw compiler outputs and declines in [`cache/`](cache/). CI recomputes the report from the
 cache with 0 calls (`backend/tests/test_ambiguity.py`). 8 phrasings × 2 models, conveyor layout of the demo run;
 differences measured on the 150-scene development suite with ground-truth tracks (interpretation only, no perception).

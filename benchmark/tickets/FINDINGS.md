@@ -1,6 +1,6 @@
 # Would these tickets hold up? Findings
 
-Pre-registered in `PREREGISTRATION.md` (commit 243dfa6). Part 1 (robustness) was explored on these same objects before
+Pre-registered in `PREREGISTRATION.md` (commit 1d3b793). Part 1 (robustness) was explored on these same objects before
 the tier split, as disclosed there. Part 2 made 20 live Muse Spark calls. `report.json` recomputes from the cache with
 0 calls (`tests/validation/test_ticket_study.py`).
 

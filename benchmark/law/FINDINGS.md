@@ -1,6 +1,6 @@
 # Compile the law as written: findings
 
-Pre-registered in `PREREGISTRATION.md` (commit 243dfa6). There were 12 live calls (8 compiles plus retries).
+Pre-registered in `PREREGISTRATION.md` (commit 1d3b793). There were 12 live calls (8 compiles plus retries).
 `report.json` recomputes from the cached compiles with 0 calls (`tests/validation/test_law_study.py`).
 
 **The statutes** are copied verbatim from the legislatures:

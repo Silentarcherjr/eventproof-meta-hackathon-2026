@@ -1,7 +1,7 @@
 # Real footage (Pexels) — SAM 3.1 line-crossing check: 2 of 8 found
 
 Pre-registration: [`PREREGISTRATION.md`](PREREGISTRATION.md) and hand labels [`labels.json`](labels.json), committed and
-pushed (c1907a7) before the SAM call. Data: [`report_pexels.json`](report_pexels.json), raw SAM output in
+pushed (b67a0d7) before the SAM call. Data: [`report_pexels.json`](report_pexels.json), raw SAM output in
 [`sam_cache/`](sam_cache/). CI recomputes the report from the cached output (`backend/tests/validation/test_line_check.py`).
 Perception only; no rule, repair or grader was tuned on this.
 

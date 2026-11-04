@@ -1,6 +1,6 @@
 # Real traffic footage (Pexels, Novi Sad) — the full loop on real video: findings
 
-Pre-registration: [`PREREGISTRATION.md`](PREREGISTRATION.md), labels + manifest frozen and pushed (45bde5e) before any
+Pre-registration: [`PREREGISTRATION.md`](PREREGISTRATION.md), labels + manifest frozen and pushed (e309c7d) before any
 model call. Machine report: [`report_novisad.json`](report_novisad.json) / [`report_novisad.md`](report_novisad.md).
 Committed run evidence (rule, SAM 3.1 tracks, sealed evidence; no video): [`runs/`](runs/). CI recomputes every verdict
 from those files (`backend/tests/validation/test_novisad.py`). n = 2 clips, 6 labelled objects (4 crossing). Small.

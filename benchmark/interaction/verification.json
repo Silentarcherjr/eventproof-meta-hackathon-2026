@@ -1,7 +1,7 @@
 {
   "schema": "eventproof-interaction-evidence/1",
-  "preregistration_commit": "6a9329fd3b430a250f5ca622af2d6763dea8120b",
-  "base_commit": "5fc1310ee737c501c88ffa364b49888aa74bc278",
+  "preregistration_commit": "1d04084167d9f3ebb820c97b5ddd226177c5dbcd",
+  "base_commit": "d31abdf7072669d6e245034213c1fdeffca4efa2",
   "files": {
     "backend/eventproof/validation/interaction.py": "e042de92123c6bedaa5bfd2f9a1b8533d23cb99e55d0dee2708c3589f93bc9fd",
     "backend/eventproof/schemas/tracks.py": "f9987b5a75005cb731734f891eb113e5c02bf7b671e2a0e7f90dc46ceaf0f414",

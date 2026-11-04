@@ -953,11 +953,11 @@
       ],
       "evidence_paths": [
         "GitHub Actions run 41379950836 success",
-        "benchmark/final/PREREGISTRATION_SAM_v1.md (3c32c7b, before any call)",
+        "benchmark/final/PREREGISTRATION_SAM_v1.md (0db2b2d, before any call)",
         "benchmark/final/sam_v1/REPORT_sam_v1.md",
         "benchmark/final/sam_v1/report_sam_v1.json"
       ],
-      "commit_sha": "4b3f9c2",
+      "commit_sha": "e2169bb",
       "pr_url": null,
       "started_at": "2026-11-02T02:49:21Z",
       "updated_at": "2026-11-02T02:55:30Z",
@@ -983,12 +983,12 @@
       "evidence_paths": [
         "GitHub Actions run 41384281488 success",
         "GitHub Actions run 41385163221 success",
-        "benchmark/real/pexels/PREREGISTRATION.md (c1907a7, before the call)",
-        "benchmark/real/pexels/PREREGISTRATION_v2.md (3fa782f, before v2 calls)",
+        "benchmark/real/pexels/PREREGISTRATION.md (b67a0d7, before the call)",
+        "benchmark/real/pexels/PREREGISTRATION_v2.md (eb3b53a, before v2 calls)",
         "benchmark/real/pexels/REPORT_pexels.md",
         "benchmark/real/pexels/REPORT_pexels_v2.md"
       ],
-      "commit_sha": "59205d0",
+      "commit_sha": "a5143fc",
       "pr_url": null,
       "started_at": "2026-11-02T03:37:28Z",
       "updated_at": "2026-11-02T03:52:35Z",
@@ -1014,10 +1014,10 @@
       "evidence_paths": [
         "GitHub Actions run 41387194810 success",
         "benchmark/real/novisad/FINDINGS.md",
-        "benchmark/real/novisad/PREREGISTRATION.md (45bde5e, before calls)",
+        "benchmark/real/novisad/PREREGISTRATION.md (e309c7d, before calls)",
         "benchmark/real/novisad/report_novisad.json"
       ],
-      "commit_sha": "60ffb09",
+      "commit_sha": "bad3771",
       "pr_url": null,
       "started_at": "2026-11-02T04:10:54Z",
       "updated_at": "2026-11-02T04:15:38Z",
@@ -1043,9 +1043,9 @@
       "evidence_paths": [
         "GitHub Actions run 41397438034 success",
         "benchmark/real/spark_alone/FINDINGS.md",
-        "benchmark/real/spark_alone/PREREGISTRATION.md (d9531ee)"
+        "benchmark/real/spark_alone/PREREGISTRATION.md (62822d3)"
       ],
-      "commit_sha": "27db3df",
+      "commit_sha": "8b3fd28",
       "pr_url": null,
       "started_at": "2026-11-02T05:24:58Z",
       "updated_at": "2026-11-02T06:04:28Z",
@@ -1071,9 +1071,9 @@
       "evidence_paths": [
         "GitHub Actions run 41397438034 success",
         "benchmark/ambiguity/FINDINGS.md",
-        "benchmark/ambiguity/PREREGISTRATION.md (19bfe76)"
+        "benchmark/ambiguity/PREREGISTRATION.md (e5c09e6)"
       ],
-      "commit_sha": "854f8c6",
+      "commit_sha": "9f27e92",
       "pr_url": null,
       "started_at": "2026-11-02T05:52:12Z",
       "updated_at": "2026-11-02T06:04:28Z",
@@ -1102,9 +1102,9 @@
         "GitHub Actions run 41401675641 success",
         "benchmark/real/POOLED.json",
         "benchmark/real/traffic_v2/FINDINGS.md",
-        "benchmark/real/traffic_v2/PREREGISTRATION.md (730d351)"
+        "benchmark/real/traffic_v2/PREREGISTRATION.md (8a0eb8f)"
       ],
-      "commit_sha": "c7ec295",
+      "commit_sha": "ee52055",
       "pr_url": null,
       "started_at": "2026-11-02T06:37:08Z",
       "updated_at": "2026-11-02T06:45:20Z",
@@ -1125,7 +1125,7 @@
         "docs/evidence/runs/20261102T080747Z-6b0ae7d4",
         "backend/tests/test_certificate.py"
       ],
-      "commit_sha": "13b9f11",
+      "commit_sha": "462bdc8",
       "priority": "P1",
       "gate": "G6",
       "owner": "agentic-eval",
@@ -1148,9 +1148,9 @@
       ],
       "evidence_paths": [
         "benchmark/layout/report.json",
-        "benchmark/layout/PREREGISTRATION.md (3b05f16)"
+        "benchmark/layout/PREREGISTRATION.md (cb59e07)"
       ],
-      "commit_sha": "45c3a03",
+      "commit_sha": "180c438",
       "priority": "P1",
       "gate": "G6",
       "owner": "agentic-eval",
@@ -1173,9 +1173,9 @@
       ],
       "evidence_paths": [
         "benchmark/field_repair/report.json",
-        "benchmark/field_repair/PREREGISTRATION.md (ff6fbc5)"
+        "benchmark/field_repair/PREREGISTRATION.md (623454c)"
       ],
-      "commit_sha": "dae386c",
+      "commit_sha": "f4e3ed3",
       "priority": "P1",
       "gate": "G6",
       "owner": "agentic-eval",
@@ -1198,9 +1198,9 @@
       ],
       "evidence_paths": [
         "benchmark/real/domains/report_domains.json",
-        "benchmark/real/domains/PREREGISTRATION.md (268a48c)"
+        "benchmark/real/domains/PREREGISTRATION.md (57aeac1)"
       ],
-      "commit_sha": "82ba0aa",
+      "commit_sha": "e4e50dd",
       "priority": "P1",
       "gate": "G6",
       "owner": "agentic-eval",
@@ -1224,10 +1224,10 @@
       "evidence_paths": [
         "GitHub Actions run 41422353556 success",
         "benchmark/real/with_umbrella/FINDINGS.md",
-        "benchmark/real/with_umbrella/PREREGISTRATION.md (291009f)",
-        "d716c82"
+        "benchmark/real/with_umbrella/PREREGISTRATION.md (90a2cab)",
+        "f51c963"
       ],
-      "commit_sha": "ffc3c73",
+      "commit_sha": "7ba1b92",
       "priority": "P1",
       "gate": "G6",
       "owner": "agentic-eval",
@@ -1259,7 +1259,7 @@
         "deploy/vercel/README.md",
         "https://eventproof-studio.vercel.app (private)"
       ],
-      "commit_sha": "3181ef4",
+      "commit_sha": "17aa63a",
       "pr_url": null,
       "started_at": "2026-11-03T21:00:00Z",
       "updated_at": "2026-11-03T22:40:00Z",
@@ -1283,11 +1283,11 @@
         "cd backend && uv run pytest tests/engine/test_lint.py tests/test_certificate.py"
       ],
       "evidence_paths": [
-        "GitHub Actions success on d6d379a",
+        "GitHub Actions success on e84d074",
         "benchmark/real/santos/FINDINGS.md",
-        "benchmark/real/santos/PREREGISTRATION.md (2eae88a)"
+        "benchmark/real/santos/PREREGISTRATION.md (8166afb)"
       ],
-      "commit_sha": "d6d379a",
+      "commit_sha": "e84d074",
       "pr_url": null,
       "started_at": "2026-11-03T23:00:00Z",
       "updated_at": "2026-11-03T23:40:00Z",
@@ -1311,11 +1311,11 @@
         "cd backend && uv run pytest tests/validation/test_anchor_v4.py tests/test_muse_rules.py"
       ],
       "evidence_paths": [
-        "GitHub Actions success on 98ed5fa",
+        "GitHub Actions success on ab3bc28",
         "benchmark/real/anchor_v4/FINDINGS.md",
-        "benchmark/real/anchor_v4/PREREGISTRATION.md (9b87501)"
+        "benchmark/real/anchor_v4/PREREGISTRATION.md (27395f4)"
       ],
-      "commit_sha": "98ed5fa",
+      "commit_sha": "ab3bc28",
       "pr_url": null,
       "started_at": "2026-11-04T00:30:00Z",
       "updated_at": "2026-11-04T01:10:00Z",
@@ -1344,10 +1344,10 @@
         "cd backend && uv run pytest tests/review tests/validation/test_ticket_study.py"
       ],
       "evidence_paths": [
-        "GitHub Actions success on 1a77a4c",
+        "GitHub Actions success on 96d968b",
         "benchmark/tickets/FINDINGS.md"
       ],
-      "commit_sha": "ee5d021",
+      "commit_sha": "dd2ba07",
       "cost_note": "≈ $0.6"
     },
     {
@@ -1371,10 +1371,10 @@
         "cd backend && uv run pytest tests/validation/test_law_study.py"
       ],
       "evidence_paths": [
-        "GitHub Actions success on 1a77a4c",
+        "GitHub Actions success on 96d968b",
         "benchmark/law/FINDINGS.md"
       ],
-      "commit_sha": "584ab21",
+      "commit_sha": "bce74c6",
       "cost_note": "≈ $0.3"
     },
     {
@@ -1395,11 +1395,11 @@
         "cd frontend && npx playwright test"
       ],
       "evidence_paths": [
-        "GitHub Actions success on ca2493e",
+        "GitHub Actions success on f040b5d",
         "benchmark/law/grid.json",
-        "benchmark/law/PREREGISTRATION.md (398f05a)"
+        "benchmark/law/PREREGISTRATION.md (7aa2e30)"
       ],
-      "commit_sha": "ca2493e",
+      "commit_sha": "f040b5d",
       "pr_url": null,
       "started_at": "2026-11-04T03:00:00Z",
       "updated_at": "2026-11-04T04:30:00Z",

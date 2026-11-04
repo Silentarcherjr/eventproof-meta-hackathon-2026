@@ -6,7 +6,7 @@
   "disclaimer": "Real-world videos (the participant's own recordings or licensed public footage; source in each label's notes), labelled by hand and frozen before any model ran. Reported separately from the synthetic results; never used to tune rules, thresholds, repairs or the grader.",
   "created_at": "2026-11-04T10:12:07+00:00",
   "eventproof_version": "0.1.0",
-  "code_commit": "59cacdd9fcc5a355d53c8da67edd5816db035779",
+  "code_commit": "e53a4fa8ee96a4a74004e3c83d17f4ef0a1d1b43",
   "labels_manifest_sha256": "721c60e787c2c91be17f760ca663ec5ccd7053d1e11ece98b882e97ce60f40b0",
   "matching": "crossing objects paired in crossing order; others in first-frame order; leftovers reported",
   "repair": {

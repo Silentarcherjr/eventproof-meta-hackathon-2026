@@ -1,6 +1,6 @@
 # Real footage (Pexels) — v2: cropped + windowed SAM 3.1 finds 8 of 8 crossings
 
-Pre-registration: [`PREREGISTRATION_v2.md`](PREREGISTRATION_v2.md), pushed (3fa782f) before any v2 call, after v1.
+Pre-registration: [`PREREGISTRATION_v2.md`](PREREGISTRATION_v2.md), pushed (eb3b53a) before any v2 call, after v1.
 Data: [`report_pexels_v2.json`](report_pexels_v2.json), per-window log [`tracking_v2.json`](tracking_v2.json), raw SAM
 output in [`sam_cache/`](sam_cache/). CI recomputes it from the cached output (`backend/tests/validation/test_line_check_v2.py`).
 **v1 stays the first result:** [`REPORT_pexels.md`](REPORT_pexels.md) (single request on the full frame: 2/8).

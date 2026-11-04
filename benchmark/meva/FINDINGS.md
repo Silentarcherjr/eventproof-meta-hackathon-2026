@@ -1,6 +1,6 @@
 # MEVA: findings. The study as designed does not measure rule accuracy (reported, not used as a result)
 
-Pre-registered in `PREREGISTRATION.md` (commit c3fdf67). The data was extracted (0b4ffc2) before the run. The run made
+Pre-registered in `PREREGISTRATION.md` (commit 509e4aa). The data was extracted (476b4ee) before the run. The run made
 2 Muse calls: Muse Spark compiled the rule, and Muse Wonder declined it as unsupported. `report.json` holds the result.
 
 **Pre-registered result:**

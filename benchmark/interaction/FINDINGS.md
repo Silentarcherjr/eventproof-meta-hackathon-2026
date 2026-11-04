@@ -5,8 +5,8 @@ only the numeric interpretation of “stop” changes predicted tickets from 119
 1,073 (9.38% to 84.62%; 75.24 percentage points).** This is sensitivity, not accuracy.
 The separate “any motion” semantic control brings the lower bound to zero.
 
-Preregistration: `PREREGISTRATION.md`, committed and pushed as **6a9329f** before
-any live model call or trajectory-outcome analysis; base main **5fc1310** (CI green).
+Preregistration: `PREREGISTRATION.md`, committed and pushed as **1d04084** before
+any live model call or trajectory-outcome analysis; base main **d31abdf** (CI green).
 Worktree branch **interaction-stops**. No merge, main push, video download or SAM call.
 
 The sole live Muse Spark call compiled the **verbatim California Vehicle Code
