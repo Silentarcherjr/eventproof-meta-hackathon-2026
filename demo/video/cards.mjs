@@ -67,7 +67,8 @@ const CARDS = {
     <div class="note">Pexels-licensed footage (Novi Sad, Wroclaw, Santos); INTERACTION trajectories (CC BY 4.0) · statutes copied verbatim · labelled sets are small · sources: benchmark/</div>`,
   "card_8": `<div class="kicker">EventProof</div>
     <h2 style="font-size:84px"><span data-at="0.3">Compile the rule.</span><br><span data-at="1.8">Attack it, and every ticket.</span><br><span data-at="4.4">Issue only what survives.</span></h2>
-    <div class="models" data-at="6.5">Built with Muse Spark · Muse Wonder · SAM 3.1 · MIT licensed</div>`,
+    <div class="models" data-at="6.5">Built with Muse Spark · Muse Wonder · SAM 3.1 · MIT licensed</div>
+    <div class="models" data-at="7.5" style="color:#fafafa;font-size:40px;margin-top:28px">Try it: <b>eventproof-studio.vercel.app</b><br><span style="font-size:30px;color:#a1a1aa">github.com/Silentarcherjr/eventproof-meta-hackathon-2026</span></div>`,
 };
 
 const durFile = process.argv[3];
