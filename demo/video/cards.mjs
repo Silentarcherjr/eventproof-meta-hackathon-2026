@@ -54,7 +54,7 @@ const CARDS = {
     </table>
     <div class="models" data-at="12.5">Meta models: Muse Spark · Muse Wonder · SAM 3.1</div>
     <div class="note">Screen capture of the real studio replaying recorded runs (cached Meta outputs) · sources in the README</div>`,
-  "card_7": `<div class="kicker">Real footage · labels frozen and pre-registered before any model call</div>
+  "card_7": `<div class="kicker">Real footage and real trajectories · pre-registered before any model call</div>
     <h2>The numbers, all recomputed in CI</h2>
     <table>
       <tr data-at="1.0"><td>Real tickets (all correct under the rule) unchanged under every challenge</td><td class="num good">${tickets.tickets - tickets.tickets_beatable_by_menu} of ${tickets.tickets}</td></tr>

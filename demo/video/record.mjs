@@ -130,7 +130,7 @@ const SCENES = {
 
 // Early recorded runs kept the form's default ids on street footage; show the studio's readable names (display only).
 const ALIAS = () => {
-  const swap = (n) => { if (n.nodeType === 3) { const t = n.nodeValue.replace(/packing_entry/g, "stop_line").replace(/\binspection\b/g, "waiting_zone"); if (t !== n.nodeValue) n.nodeValue = t; } else n.childNodes.forEach(swap); };
+  const swap = (n) => { if (n.nodeType === 3) { const t = n.nodeValue.replace(/packing_entry/g, "stop_line").replace(/\binspection\b(?! before packing)/g, "waiting_zone"); if (t !== n.nodeValue) n.nodeValue = t; } else n.childNodes.forEach(swap); };
   new MutationObserver((ms) => ms.forEach((m) => { m.addedNodes.forEach(swap); if (m.type === "characterData") swap(m.target); }))
     .observe(document, { subtree: true, childList: true, characterData: true });
   document.addEventListener("DOMContentLoaded", () => swap(document.body));
