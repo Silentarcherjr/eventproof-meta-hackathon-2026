@@ -58,7 +58,7 @@ and recomputed in CI.
   overlapping boxes apart where a naive tracker merges them (10/10 tailgating scenes, against 2/10).
 - What each model adds, measured against a matched alternative, and where each one failed:
   [benchmark/META_CONTRIBUTION.md](benchmark/META_CONTRIBUTION.md).
-- The whole build spent about $14 of the $150 credits (balance read from Billing: $136.41). Live calls need explicit allowances, and everything else replays
+- The whole build spent under $20 of the $150 credits. Live calls need explicit allowances, and everything else replays
   from recorded responses.
 
 **Try it.** The live studio runs at [eventproof-studio.vercel.app](https://eventproof-studio.vercel.app) (no sign-in): pick a real clip, type a rule, see each object's verdict over the video in
@@ -187,7 +187,7 @@ can re-verify, and CI recomputes every number above from committed files (no vid
 - **SAM 3.1 (`sam-3.1`)** gives text-prompted video tracks with stable ids. It keeps two overlapping boxes apart where
   a naive tracker merges them (10/10 tailgating scenes of the pre-registered final test right with SAM, 2/10 with the mock tracker) and confirms
   counterexamples on real tracks.
-- Meta API spend for the whole build: about $14 of the $150 credits (balance read from Billing on 2026-11-04: $136.41). Live calls need explicit per-process allowances (default 0);
+- Meta API spend for the whole build: under $20 of the $150 credits. Live calls need explicit per-process allowances (default 0);
   everything else is served from a cache of recorded responses.
 
 ## Honest limits
