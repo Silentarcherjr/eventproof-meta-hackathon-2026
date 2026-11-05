@@ -23,7 +23,7 @@ function Events({ verdict }: { verdict: LabVerdict }) {
 export default function LabPage() {
   const [data, setData] = useState<LabScenes | null>(null);
   const [pair, setPair] = useState<LabPair | null>(null);
-  const [family, setFamily] = useState("full_stop");
+  const [family, setFamily] = useState("rolling_stop");
   const [speed, setSpeed] = useState<number | null>(null);
   const [anyDirection, setAnyDirection] = useState(false);
   const [judgment, setJudgment] = useState<LabJudgment | null>(null);

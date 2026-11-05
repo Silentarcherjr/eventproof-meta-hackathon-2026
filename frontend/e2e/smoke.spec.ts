@@ -205,19 +205,63 @@ test("tickets panel: robustness per object and Muse Spark's defense of a ticket"
   expect(posted).toBe(true);
 });
 
-test("drag the law: sliders change tickets issued on the 30 real cars", async ({ page }) => {
-  const cell = (min_s: number, speed: number | null, verdicts: string, tickets: number) =>
-    ({ min_s, speed, verdicts, tickets, right: 1, false_tickets: 0, missed: 0, abstained: 0, untracked: 0 });
-  await page.route("http://api.test/law/grid", (r) => r.fulfill({ json: {
-    times_s: [0, 1], speeds: [0.05, null], cars: [{ clip: "a.mp4", object_id: 1, description: "car", truth: "VIOLATION" }],
-    statutes: [{ id: "md", citation: "Md. Code § 21-707(a)", text: "shall stop at a clearly marked stop line.", spark_values: { min_s: 1, speed: 0.05 },
-                 cells: [cell(0, 0.05, "V", 1), cell(0, null, "P", 0), cell(1, 0.05, "V", 1), cell(1, null, "P", 0)] }] } }));
+test("drag the law: compare against the selected statute's Spark cell and reset", async ({ page }) => {
+  // Frozen real grid; alter only the second statute's chosen indices to exercise switching.
+  const grid: import("../lib/api").LawGrid = JSON.parse(readFileSync(path.join(__dirname, "../../benchmark/law/grid.json"), "utf8"));
+  const first = grid.statutes[0];
+  const base = first.cells.find((c) => c.min_s === first.spark_values!.min_s && c.speed === first.spark_values!.speed)!;
+  const different = first.cells.find((c) => c.verdicts !== base.verdicts)!;
+  const second = grid.statutes[1];
+  const secondBase = second.cells.find((c) => c.verdicts !== base.verdicts && c.speed !== null)!;
+  second.spark_values = { min_s: secondBase.min_s, speed: secondBase.speed! };
+  await page.route("http://api.test/law/grid", (r) => r.fulfill({ json: grid }));
   await page.goto("/law");
-  await expect(page.getByTestId("statute")).toContainText("shall stop");
-  await expect(page.getByTestId("counters")).toContainText("1tickets issued");
-  await page.getByTestId("speed").fill("1");
-  await expect(page.getByTestId("counters")).toContainText("0tickets issued");
+  const count = page.getByTestId("law-changed");
+  const changed = page.locator('[data-testid="law-car"][data-changed="true"]');
+  await expect(count).toHaveText("0 cars changed verdict from Spark’s interpretation");
+  // Label disagreement must stay distinct from a change from Spark.
+  expect(base.verdicts.split("").some((v, i) => v !== grid.cars[i].truth[0] && v !== "-")).toBe(true);
+  await expect(changed).toHaveCount(0);
+  await expect(page.getByTestId("law-car").filter({ hasText: /^U$/ }).first()).not.toHaveClass(/ring-white/);
+  await expect(page.locator('[data-testid="law-car"].ring-white').first()).toBeVisible();
+  await page.getByTestId("time").fill(String(grid.times_s.indexOf(different.min_s)));
+  await page.getByTestId("speed").fill(String(grid.speeds.indexOf(different.speed)));
+  const flips = different.verdicts.split("").filter((v, i) => v !== base.verdicts[i]).length;
+  expect(flips).toBeGreaterThan(0);
+  await expect(count).toHaveText(`${flips} ${flips === 1 ? "car" : "cars"} changed verdict from Spark’s interpretation`);
+  await expect(changed).toHaveCount(flips);
+  await expect(changed.first()).toHaveAttribute("aria-label", /changed from Spark’s/);
+  await expect(changed.first()).toHaveAttribute("title", /changed from Spark’s/);
+  await expect(changed.first().locator(".bg-sky-300")).toBeVisible();
+  await page.getByRole("button", { name: "Reset to Spark", exact: true }).click();
+  await expect(page.getByTestId("time")).toHaveValue(String(grid.times_s.indexOf(base.min_s)));
+  await expect(page.getByTestId("speed")).toHaveValue(String(grid.speeds.indexOf(base.speed)));
+  await expect(count).toHaveText("0 cars changed verdict from Spark’s interpretation");
+  await expect(changed).toHaveCount(0);
+  await page.getByRole("button", { name: second.citation, exact: true }).click();
+  await expect(page.getByTestId("time")).toHaveValue(String(grid.times_s.indexOf(secondBase.min_s)));
+  await expect(page.getByTestId("speed")).toHaveValue(String(grid.speeds.indexOf(secondBase.speed)));
+  await expect(count).toHaveText("0 cars changed verdict from Spark’s interpretation");
+  await expect(changed).toHaveCount(0);
+  await page.getByTestId("time").fill("12");
+  await page.getByRole("button", { name: "Reset to Spark", exact: true }).click();
+  await expect(page.getByTestId("time")).toHaveValue(String(grid.times_s.indexOf(secondBase.min_s)));
+  await expect(count).toHaveText("0 cars changed verdict from Spark’s interpretation");
 });
+
+for (const missing of [null, { min_s: 99, speed: 0.05 }]) {
+  test(`drag the law: ${missing ? "unavailable Spark cell" : "missing Spark values"} never reuses another statute's baseline`, async ({ page }) => {
+  const grid: import("../lib/api").LawGrid = JSON.parse(readFileSync(path.join(__dirname, "../../benchmark/law/grid.json"), "utf8"));
+  grid.statutes[1].spark_values = missing;
+  await page.route("http://api.test/law/grid", (r) => r.fulfill({ json: grid }));
+  await page.goto("/law");
+  await expect(page.getByTestId("law-changed")).toContainText("0 cars changed");
+  await page.getByRole("button", { name: grid.statutes[1].citation, exact: true }).click();
+  await expect(page.getByTestId("law-changed")).toHaveText("Spark comparison unavailable for this statute.");
+  await expect(page.getByRole("button", { name: "Reset to Spark", exact: true })).toBeDisabled();
+  await expect(page.locator('[data-testid="law-car"][data-changed="true"]')).toHaveCount(0);
+  });
+}
 
 test("ticket court: scoreboard, a ticket the defense beats opens first, contract block", async ({ page }) => {
   const base = { set: "s", description: "d", intended: "VIOLATION", verdict: "VIOLATION", smallest_flip: null, flipping: [],
@@ -240,4 +284,34 @@ test("ticket court: scoreboard, a ticket the defense beats opens first, contract
   await expect(page.getByTestId("case")).toContainText("rests on a choice nobody wrote down");
   await expect(page.getByTestId("case")).toContainText("wins");
   await expect(page.getByTestId("contract")).toContainText("188");
+});
+
+// Recorded from local lab functions on development seed 0; synthetic perfect tracks, no model call.
+const rollingStopLab = JSON.parse(readFileSync(fx("lab-rolling-stop.json"), "utf8"));
+
+test("traffic lab: rolling stop opens first, contract changes the same car, reset restores Spark", async ({ page }) => {
+  const queries: string[] = [];
+  await page.route("http://api.test/lab/scenes", (r) => r.fulfill({ json: rollingStopLab.scenes }));
+  await page.route("http://api.test/lab/pair", (r) => r.fulfill({ json: rollingStopLab.pair }));
+  await page.route("http://api.test/lab/*/0/judge?*", (r) => {
+    const url = new URL(r.request().url());
+    queries.push(url.pathname + url.search);
+    const contract = url.searchParams.get("max_speed") === "0.01" && url.searchParams.get("any_direction") === "true";
+    return r.fulfill({ json: contract ? rollingStopLab.contract : rollingStopLab.spark });
+  });
+  await page.route("http://api.test/lab/**/video", (r) => r.fulfill({ path: fx("tailgate-7.mp4"), contentType: "video/mp4" }));
+  await page.goto("/lab");
+  await expect(page.getByTestId("lab-scene")).toHaveValue("rolling_stop");
+  await expect(page.getByText("Synthetic scene, perfect tracks (not SAM)", { exact: true })).toBeVisible();
+  const car = page.getByTestId("lab-verdicts").locator("tbody tr").first();
+  await expect(car.locator("td").nth(2)).toContainText("PASS");
+  await page.getByTestId("lab-contract").click();
+  await expect(page.getByTestId("lab-flip")).toContainText("Car 0: PASS → VIOLATION after changing standing-still speed.");
+  await expect(car.locator("td").nth(1)).toContainText("PASS");
+  await expect(car.locator("td").nth(2)).toContainText("VIOLATION");
+  await page.getByRole("button", { name: "Reset to Spark", exact: true }).click();
+  await expect(page.getByTestId("lab-flip")).toContainText("No car flips relative to Spark");
+  await expect(car.locator("td").nth(2)).toContainText("PASS");
+  expect(queries.length).toBeGreaterThanOrEqual(3);
+  expect(queries.every((q) => q.startsWith("/lab/rolling_stop/0/judge?"))).toBe(true);
 });

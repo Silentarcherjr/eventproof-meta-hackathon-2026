@@ -1,0 +1,275 @@
+{
+  "scenes": {
+    "source": "synthetic",
+    "rule_text": "Every car must wait at least 1.5 seconds in the waiting zone before it crosses the stop line.",
+    "defaults": {
+      "max_speed": 0.05,
+      "any_direction": false,
+      "travel_direction": "to_left",
+      "contract_max_speed": 0.01,
+      "contract_any_direction": true,
+      "wait_seconds": 1.5
+    },
+    "assumptions": [
+      "'wait' interpreted as stopped still dwell, so DWELL max_speed 0.05",
+      "crossing means travel direction left-to-right, which per line mapping is direction to_left",
+      "BEFORE has no time limit, any earlier qualifying dwell satisfies",
+      "objects that never cross pass vacuously",
+      "anchor center chosen because top-down waiting zone and stop line are drawn for object centers"
+    ],
+    "summary": {
+      "scenes": 200,
+      "correct": 150,
+      "disagreements": 50,
+      "by_family": {
+        "rolling_stop": 25,
+        "wrong_way": 25
+      },
+      "two_choices_explain_all": true
+    },
+    "scenes": [
+      {
+        "family": "rolling_stop",
+        "seed": 0,
+        "truths": [
+          {
+            "object_id": 0,
+            "label": "car",
+            "crossed_line": true,
+            "crossing_frame": 67,
+            "direction": "forward",
+            "standing_still_seconds": 0.0,
+            "stationary_seconds": 0.0,
+            "intended": "VIOLATION"
+          }
+        ],
+        "video_url": "/lab/rolling_stop/0/video"
+      }
+    ]
+  },
+  "pair": {
+    "knob": "traffic crawl speed",
+    "motion_frame_difference": 1,
+    "source": "synthetic",
+    "sides": {
+      "fail": {
+        "video_url": "/lab/pair/fail/video",
+        "t": 0.3949218750000001,
+        "cars": [
+          {
+            "truth": {
+              "object_id": 0,
+              "label": "car",
+              "crossed_line": true,
+              "crossing_frame": 44,
+              "direction": "forward",
+              "standing_still_seconds": 0.0,
+              "stationary_seconds": 0.0,
+              "intended": "VIOLATION"
+            },
+            "naive": {
+              "verdict": "PASS",
+              "events": [
+                {
+                  "op": "CROSSES",
+                  "target": "stop_line",
+                  "status": "TRUE",
+                  "frame": 44,
+                  "timestamp_ms": 4400.0,
+                  "reason": "crossed stop_line (to_left) at frame 44"
+                },
+                {
+                  "op": "DWELL",
+                  "target": "waiting",
+                  "status": "TRUE",
+                  "frame": 41,
+                  "timestamp_ms": 4100.0,
+                  "reason": "dwelled 1500 ms in waiting"
+                }
+              ],
+              "explanation": "object 0: PASS \u2014 CROSSES stop_line: crossed stop_line (to_left) at frame 44; DWELL waiting: dwelled 1500 ms in waiting"
+            }
+          }
+        ]
+      },
+      "pass": {
+        "video_url": "/lab/pair/pass/video",
+        "t": 0.3951171875000001,
+        "cars": [
+          {
+            "truth": {
+              "object_id": 0,
+              "label": "car",
+              "crossed_line": true,
+              "crossing_frame": 43,
+              "direction": "forward",
+              "standing_still_seconds": 0.0,
+              "stationary_seconds": 0.0,
+              "intended": "VIOLATION"
+            },
+            "naive": {
+              "verdict": "VIOLATION",
+              "events": [
+                {
+                  "op": "CROSSES",
+                  "target": "stop_line",
+                  "status": "TRUE",
+                  "frame": 43,
+                  "timestamp_ms": 4300.0,
+                  "reason": "crossed stop_line (to_left) at frame 43"
+                },
+                {
+                  "op": "DWELL",
+                  "target": "waiting",
+                  "status": "FALSE",
+                  "frame": null,
+                  "timestamp_ms": null,
+                  "reason": "never 1500 ms in waiting"
+                }
+              ],
+              "explanation": "object 0: VIOLATION \u2014 CROSSES stop_line: crossed stop_line (to_left) at frame 43; DWELL waiting: never 1500 ms in waiting"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "spark": {
+    "family": "rolling_stop",
+    "seed": 0,
+    "source": "synthetic",
+    "cars": [
+      {
+        "object_id": 0,
+        "truth": {
+          "object_id": 0,
+          "label": "car",
+          "crossed_line": true,
+          "crossing_frame": 67,
+          "direction": "forward",
+          "standing_still_seconds": 0.0,
+          "stationary_seconds": 0.0,
+          "intended": "VIOLATION"
+        },
+        "spark": {
+          "verdict": "PASS",
+          "events": [
+            {
+              "op": "CROSSES",
+              "target": "stop_line",
+              "status": "TRUE",
+              "frame": 67,
+              "timestamp_ms": 6700.0,
+              "reason": "crossed stop_line (to_left) at frame 67"
+            },
+            {
+              "op": "DWELL",
+              "target": "waiting",
+              "status": "TRUE",
+              "frame": 46,
+              "timestamp_ms": 4600.0,
+              "reason": "dwelled 1500 ms still in waiting"
+            }
+          ],
+          "explanation": "object 0: PASS \u2014 CROSSES stop_line: crossed stop_line (to_left) at frame 67; DWELL waiting: dwelled 1500 ms still in waiting"
+        },
+        "your": {
+          "verdict": "PASS",
+          "events": [
+            {
+              "op": "CROSSES",
+              "target": "stop_line",
+              "status": "TRUE",
+              "frame": 67,
+              "timestamp_ms": 6700.0,
+              "reason": "crossed stop_line (to_left) at frame 67"
+            },
+            {
+              "op": "DWELL",
+              "target": "waiting",
+              "status": "TRUE",
+              "frame": 46,
+              "timestamp_ms": 4600.0,
+              "reason": "dwelled 1500 ms still in waiting"
+            }
+          ],
+          "explanation": "object 0: PASS \u2014 CROSSES stop_line: crossed stop_line (to_left) at frame 67; DWELL waiting: dwelled 1500 ms still in waiting"
+        }
+      }
+    ],
+    "controls": {
+      "max_speed": 0.05,
+      "any_direction": false
+    },
+    "explanation": "No car flips relative to Spark at these choices."
+  },
+  "contract": {
+    "family": "rolling_stop",
+    "seed": 0,
+    "source": "synthetic",
+    "cars": [
+      {
+        "object_id": 0,
+        "truth": {
+          "object_id": 0,
+          "label": "car",
+          "crossed_line": true,
+          "crossing_frame": 67,
+          "direction": "forward",
+          "standing_still_seconds": 0.0,
+          "stationary_seconds": 0.0,
+          "intended": "VIOLATION"
+        },
+        "spark": {
+          "verdict": "PASS",
+          "events": [
+            {
+              "op": "CROSSES",
+              "target": "stop_line",
+              "status": "TRUE",
+              "frame": 67,
+              "timestamp_ms": 6700.0,
+              "reason": "crossed stop_line (to_left) at frame 67"
+            },
+            {
+              "op": "DWELL",
+              "target": "waiting",
+              "status": "TRUE",
+              "frame": 46,
+              "timestamp_ms": 4600.0,
+              "reason": "dwelled 1500 ms still in waiting"
+            }
+          ],
+          "explanation": "object 0: PASS \u2014 CROSSES stop_line: crossed stop_line (to_left) at frame 67; DWELL waiting: dwelled 1500 ms still in waiting"
+        },
+        "your": {
+          "verdict": "VIOLATION",
+          "events": [
+            {
+              "op": "CROSSES",
+              "target": "stop_line",
+              "status": "TRUE",
+              "frame": 67,
+              "timestamp_ms": 6700.0,
+              "reason": "crossed stop_line (to_left) at frame 67"
+            },
+            {
+              "op": "DWELL",
+              "target": "waiting",
+              "status": "FALSE",
+              "frame": null,
+              "timestamp_ms": null,
+              "reason": "never 1500 ms still in waiting"
+            }
+          ],
+          "explanation": "object 0: VIOLATION \u2014 CROSSES stop_line: crossed stop_line (to_left) at frame 67; DWELL waiting: never 1500 ms still in waiting"
+        }
+      }
+    ],
+    "controls": {
+      "max_speed": 0.01,
+      "any_direction": true
+    },
+    "explanation": "Car 0: PASS \u2192 VIOLATION after changing standing-still speed."
+  }
+}
