@@ -2,7 +2,7 @@
 
 **Before an AI camera fines anyone, EventProof tests whether the rule would hold up.**
 
-**Try it live (no sign-in):** [eventproof-studio.vercel.app](https://eventproof-studio.vercel.app) · Ticket court · Drag the law · Traffic lab
+**Demo video (2:45):** [youtu.be/jb2WpuKylzg](https://youtu.be/jb2WpuKylzg) · **Try it live (no sign-in):** [eventproof-studio.vercel.app](https://eventproof-studio.vercel.app) · Ticket court · Drag the law · Traffic lab
 
 A driver who came to a full stop can still be fined, and one who rolled through can drive away: it depends on two
 numbers the law never wrote.
@@ -47,7 +47,7 @@ and recomputed in CI.
 | **Impact (30 %)** | AI cameras already fine people, and the rule is where they fail: New York's bus-lane cameras issued about 3,800 mistaken violations, more than 870 to legally parked drivers, because the rule was wrong, not the detection. Takoma Park, MD now issues $40 stop-sign tickets from AI cameras after a city study found 87 % violation rates. Whether a rolling stop is a violation depends on two numbers no statute writes: on the same 30 real cars, 0 to 17 tickets; on 1,268 real US approaches, 9 % to 85 % of drivers. EventProof is the acceptance test before such a rule fines anyone: for the vendor that ships it, the city that signs it and the driver who contests it. |
 | **Use of Meta AI (25 %)** | Muse Spark compiles the sentence or statute into a typed rule (never code, every value quoted or marked assumed), drafts the zones, argues each driver's defense and proposes repairs. Muse Wonder is the independent second reading (it disagrees with Spark on 45 of 150 scenes for "wait" vs "remain"). SAM 3.1 tracks every car (10/10 tailgating scenes kept apart, against 2/10 for a naive tracker). Measured: Spark's compiled rule gets 27/30 real cars right; Spark alone watching the video counts them right in 11 of 25 runs. |
 | **Technical depth (20 %)** | A deterministic engine judges every object with its frames; every ticket is re-judged under a menu of reasonable changes; an approval gate withholds the rule while a ticket rests on an unsigned choice; repairs are kept only with zero regressions on hidden scenes. Every test is pre-registered before any model call and recomputed in CI (420 tests); limits are stated, including the small labelled sets. |
-| **Demo (25 %)** | The live studio, no sign-in: **Ticket court** (20 real tickets on trial, then sign the open numbers and watch 17 issue with 0 wrong), **Drag the law** (two sliders, 0 to 17 tickets), **Traffic lab** (scenes with known truth, flip one choice). The 3-minute video walks the same path. |
+| **Demo (25 %)** | The live studio, no sign-in: **Ticket court** (20 real tickets on trial, then sign the open numbers and watch 17 issue with 0 wrong), **Drag the law** (two sliders, 0 to 17 tickets), **Traffic lab** (scenes with known truth, flip one choice). The [3-minute video](https://youtu.be/jb2WpuKylzg) walks the same path. |
 
 ## Why Meta models
 - **Muse Spark** compiles rules through a small strict schema (about 1.4k prompt tokens). It escalates to a
