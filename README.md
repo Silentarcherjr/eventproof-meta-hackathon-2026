@@ -224,7 +224,7 @@ calls explicitly: `EVENTPROOF_MAX_LIVE_MUSE_CALLS=6 EVENTPROOF_MAX_LIVE_SAM_CALL
 Without Docker: `cd backend && uv sync && uv run pytest && uv run uvicorn eventproof.api.main:app` and
 `cd frontend && npm ci && npm run dev`.
 
-Engineering: FastAPI + Pydantic backend, Next.js studio, 289 backend tests + Playwright end-to-end tests in CI,
+Engineering: FastAPI + Pydantic backend, Next.js studio, 420 backend tests + Playwright end-to-end tests in CI,
 regression tests that recompute every published number, images pinned by digest. Showcase deployment (no key, no
 uploads, rate-limited) in [`deploy/`](deploy/).
 
